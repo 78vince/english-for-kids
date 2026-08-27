@@ -1,0 +1,159 @@
+[
+  {
+    "id": "sent.weather_nature.b1.001",
+    "en": "The sky is sunny and blue today.",
+    "zh": "今天的天空晴朗又湛藍。",
+    "topic": "weather_nature",
+    "stage": "B",
+    "grammar_point": "be動詞 + 形容詞並列",
+    "vocab_ids": [
+      "voc.weather_nature.005",
+      "voc.weather_nature.002"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.weather_nature.b1.002",
+    "en": "It is cold and windy in winter.",
+    "zh": "冬天又冷又刮風。",
+    "topic": "weather_nature",
+    "stage": "B",
+    "grammar_point": "It is + 形容詞（描述天氣）",
+    "vocab_ids": [
+      "voc.weather_nature.013",
+      "voc.weather_nature.011"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.weather_nature.b1.003",
+    "en": "We saw a rainbow after the rain.",
+    "zh": "下雨後我們看到了彩虹。",
+    "topic": "weather_nature",
+    "stage": "B",
+    "grammar_point": "see 過去式 saw + 受詞",
+    "vocab_ids": [
+      "voc.weather_nature.015",
+      "voc.weather_nature.006"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.weather_nature.b1.004",
+    "en": "The sun and the moon are in the sky.",
+    "zh": "太陽和月亮都在天空中。",
+    "topic": "weather_nature",
+    "stage": "B",
+    "grammar_point": "and 連接兩個主詞",
+    "vocab_ids": [
+      "voc.weather_nature.001",
+      "voc.weather_nature.003",
+      "voc.weather_nature.005"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.weather_nature.b1.005",
+    "en": "It is foggy today, and I can't see the mountain.",
+    "zh": "今天有霧，我看不到那座山。",
+    "topic": "weather_nature",
+    "stage": "B",
+    "grammar_point": "It is + 形容詞（描述天氣）+ and 連接子句",
+    "vocab_ids": [
+      "voc.weather_nature.018"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.weather_nature.b1.006",
+    "en": "A big storm is coming, with thunder and lightning.",
+    "zh": "一場大暴風雨要來了，還有打雷和閃電。",
+    "topic": "weather_nature",
+    "stage": "B",
+    "grammar_point": "with 表示伴隨狀態",
+    "vocab_ids": [
+      "voc.weather_nature.020",
+      "voc.weather_nature.025",
+      "voc.weather_nature.024"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.weather_nature.b1.007",
+    "en": "The typhoon brought a lot of rain, and the road is very wet.",
+    "zh": "颱風帶來了很多雨，路上非常潮濕。",
+    "topic": "weather_nature",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": [
+      "voc.weather_nature.022",
+      "voc.weather_nature.027"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.weather_nature.b1.008",
+    "en": "The clothes are dry now, so we can put them away.",
+    "zh": "衣服現在乾了，所以我們可以把它們收起來。",
+    "topic": "weather_nature",
+    "stage": "B",
+    "grammar_point": "so 表示結果",
+    "vocab_ids": [
+      "voc.weather_nature.028"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.weather_nature.b1.009",
+    "en": "In winter, the lake turns to ice, and it is very snowy.",
+    "zh": "冬天，湖水結成冰，而且下很多雪。",
+    "topic": "weather_nature",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": [
+      "voc.weather_nature.032",
+      "voc.weather_nature.026",
+      "voc.weather_nature.017"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.weather_nature.b1.010",
+    "en": "I like spring and summer, but my sister likes fall best.",
+    "zh": "我喜歡春天和夏天，但我妹妹最喜歡秋天。",
+    "topic": "weather_nature",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": [
+      "voc.weather_nature.029",
+      "voc.weather_nature.030",
+      "voc.weather_nature.031"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.weather_nature.b1.011",
+    "en": "The thick fog made the stormy sky look gray, with only one cloud in sight.",
+    "zh": "濃霧讓暴風雨的天空看起來灰灰的，只看得到一朵雲。",
+    "topic": "weather_nature",
+    "stage": "B",
+    "grammar_point": "with 表示伴隨狀態",
+    "vocab_ids": [
+      "voc.weather_nature.019",
+      "voc.weather_nature.021",
+      "voc.weather_nature.023"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

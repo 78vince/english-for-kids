@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>Little Nest English — Design Tokens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --color-primary-700:#0052A3;
+    --color-primary-500:#2E7BD6;
+    --color-primary-100:#C4E2EF;
+    --color-secondary-500:#5B7CCB;
+    --color-accent-orange:#FF8A61;
+    --color-accent-pink:#FFBDEF;
+    --color-accent-yellow:#FFD166;
+    --color-success:#6FCF97;
+    --color-error:#FF6B6B;
+    --color-bg:#F7F2F8;
+    --color-surface:#FFFFFF;
+    --color-ink:#2B2A4A;
+    --color-ink-muted:#6B6789;
+    --color-border:#E4D9EA;
+    --font-display:'Huninn','Noto Sans TC',sans-serif;
+    --font-body:'Huninn','Noto Sans TC',sans-serif;
+    --radius-sm:8px;--radius-md:16px;--radius-lg:24px;--radius-xl:32px;--radius-pill:999px;--radius-circle:50%;
+    --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--space-8:64px;
+    --shadow-sm:0 2px 8px rgba(0,82,163,.08);
+    --shadow-md:0 6px 16px rgba(0,82,163,.12);
+    --shadow-lg:0 12px 28px rgba(0,82,163,.16);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--color-bg); color:var(--color-ink);
+    font-family:var(--font-body); padding:var(--space-7) var(--space-5) var(--space-8);
+  }
+  .wrap{max-width:1040px;margin:0 auto;}
+  h1.hero{font-family:var(--font-display);font-size:40px;color:var(--color-primary-700);margin:0 0 4px;}
+  p.sub{color:var(--color-ink-muted);font-size:18px;margin:0 0 var(--space-7);}
+  section{margin-bottom:var(--space-8);}
+  h2.section-title{
+    font-family:var(--font-display);font-size:22px;color:var(--color-primary-700);
+    margin:0 0 var(--space-4); display:flex;align-items:center;gap:var(--space-2);
+  }
+  h2.section-title::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--color-accent-orange);display:inline-block;}
+
+  /* Hero banner */
+  .hero-card{
+    background:linear-gradient(135deg,var(--color-primary-700),var(--color-secondary-500));
+    border-radius:var(--radius-xl); padding:var(--space-7); color:#fff; box-shadow:var(--shadow-lg);
+    display:flex; align-items:center; justify-content:space-between; gap:var(--space-6); flex-wrap:wrap;
+  }
+  .hero-card .txt h3{font-family:var(--font-display);font-size:28px;margin:0 0 8px;}
+  .hero-card .txt p{margin:0;opacity:.9;font-size:16px;max-width:420px;}
+  .mascot{
+    width:96px;height:96px;border-radius:var(--radius-circle);
+    background:var(--color-accent-yellow); display:flex;align-items:center;justify-content:center;
+    font-size:44px; box-shadow:var(--shadow-md); flex-shrink:0;
+  }
+  .btn-row{display:flex;gap:var(--space-3);margin-top:var(--space-5);flex-wrap:wrap;}
+  .btn{
+    font-family:var(--font-display); font-size:15px; padding:12px 26px; border:none;
+    border-radius:var(--radius-pill); cursor:pointer; box-shadow:var(--shadow-sm);
+  }
+  .btn-primary{background:var(--color-primary-500);color:#fff;}
+  .btn-reward{background:var(--color-accent-orange);color:#fff;}
+  .btn-ghost{background:#fff;color:var(--color-primary-700);border:2px solid var(--color-primary-100);}
+
+  /* Color tokens */
+  .swatch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:var(--space-4);}
+  .swatch{background:var(--color-surface);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);overflow:hidden;}
+  .swatch .chip{height:70px;}
+  .swatch .label{padding:var(--space-3);font-size:13px;color:var(--color-ink-muted);}
+  .swatch .label b{display:block;color:var(--color-ink);font-family:var(--font-display);font-size:14px;}
+
+  /* Typography */
+  .type-card{background:var(--color-surface);border-radius:var(--radius-lg);padding:var(--space-6);box-shadow:var(--shadow-sm);}
+  .type-row{display:flex;align-items:baseline;gap:var(--space-4);padding:10px 0;border-bottom:1px dashed var(--color-border);}
+  .type-row:last-child{border-bottom:none;}
+  .type-row .tag{width:90px;flex-shrink:0;font-size:12px;color:var(--color-ink-muted);}
+  .type-row .sample{font-family:var(--font-display);color:var(--color-ink);}
+
+  /* Radius demo */
+  .radius-grid{display:flex;gap:var(--space-5);flex-wrap:wrap;}
+  .radius-item{text-align:center;font-size:13px;color:var(--color-ink-muted);}
+  .radius-box{
+    width:88px;height:88px;background:var(--color-primary-100);margin-bottom:8px;
+    display:flex;align-items:center;justify-content:center;font-family:var(--font-display);color:var(--color-primary-700);
+  }
+
+  /* Lesson cards */
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--space-5);}
+  .lesson-card{
+    background:var(--color-surface);border-radius:var(--radius-lg);padding:var(--space-5);
+    box-shadow:var(--shadow-sm); border:1px solid var(--color-border);
+  }
+  .lesson-thumb{
+    height:96px;border-radius:var(--radius-md);margin-bottom:var(--space-3);
+    display:flex;align-items:center;justify-content:center;font-size:34px;
+  }
+  .thumb-1{background:var(--color-accent-pink);}
+  .thumb-2{background:var(--color-primary-100);}
+  .thumb-3{background:var(--color-accent-orange);}
+  .lesson-card h4{font-family:var(--font-display);margin:0 0 4px;font-size:17px;}
+  .lesson-card p{margin:0 0 var(--space-3);font-size:13px;color:var(--color-ink-muted);}
+  .progress{height:10px;border-radius:var(--radius-pill);background:var(--color-primary-100);overflow:hidden;margin-bottom:var(--space-3);}
+  .progress i{display:block;height:100%;background:var(--color-success);border-radius:var(--radius-pill);}
+  .stars{display:flex;gap:4px;}
+  .star{width:22px;height:22px;border-radius:var(--radius-circle);background:var(--color-accent-yellow);display:flex;align-items:center;justify-content:center;font-size:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1 class="hero">Little Nest English 🐑</h1>
+  <p class="sub">Design Tokens Preview — 由 Indigo Purls 品牌指南萃取並調整為兒童英語學習平台風格（字體：Huninn 開源粉圓體）</p>
+
+  <section>
+    <div class="hero-card">
+      <div class="txt">
+        <h3>Hi, 小恐龍！準備好today's lesson了嗎？</h3>
+        <p>柔和的靛藍與活潑的珊瑚橘、粉色搭配，維持原品牌氣質，同時加入圓角與大按鈕，讓小朋友操作更輕鬆安心。</p>
+        <div class="btn-row">
+          <button class="btn btn-primary">開始上課 Start</button>
+          <button class="btn btn-reward">✨ 領取星星</button>
+          <button class="btn btn-ghost">稍後再說</button>
+        </div>
+      </div>
+      <div class="mascot">🐑</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Color Tokens</h2>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="chip" style="background:var(--color-primary-700)"></div><div class="label"><b>Primary 700</b>#0052A3</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-primary-500)"></div><div class="label"><b>Primary 500</b>#2E7BD6</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-secondary-500)"></div><div class="label"><b>Secondary</b>#5B7CCB</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-accent-orange)"></div><div class="label"><b>Accent Orange</b>#FF8A61</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-accent-pink)"></div><div class="label"><b>Accent Pink</b>#FFBDEF</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-accent-yellow)"></div><div class="label"><b>Accent Yellow</b>#FFD166 (新增)</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-success)"></div><div class="label"><b>Success</b>#6FCF97 (新增)</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-error)"></div><div class="label"><b>Error</b>#FF6B6B (新增)</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Typography — Huninn 開源粉圓體</h2>
+    <div class="type-card">
+      <div class="type-row"><span class="tag">Display 40</span><span class="sample" style="font-size:40px">Let's learn English!</span></div>
+      <div class="type-row"><span class="tag">H1 32</span><span class="sample" style="font-size:32px">今天的單字</span></div>
+      <div class="type-row"><span class="tag">H2 24</span><span class="sample" style="font-size:24px">Animals 動物家族</span></div>
+      <div class="type-row"><span class="tag">Body 16</span><span class="sample" style="font-size:16px;font-family:var(--font-body)">A sheep says "baa"! 綿羊會說 baa 喔。</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Radius Tokens（新增項目）</h2>
+    <div class="radius-grid">
+      <div class="radius-item"><div class="radius-box" style="border-radius:var(--radius-sm)">sm</div>8px</div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:var(--radius-md)">md</div>16px</div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:var(--radius-lg)">lg</div>24px</div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:var(--radius-xl)">xl</div>32px</div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:var(--radius-pill);width:120px">pill</div>999px</div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:var(--radius-circle)">●</div>50%</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">應用範例 — 課程卡片</h2>
+    <div class="card-grid">
+      <div class="lesson-card">
+        <div class="lesson-thumb thumb-1">🌸</div>
+        <h4>Colors 顏色</h4>
+        <p>Lesson 3 · 8 words</p>
+        <div class="progress"><i style="width:70%"></i></div>
+        <div class="stars"><div class="star">★</div><div class="star">★</div><div class="star" style="background:var(--color-primary-100)">☆</div></div>
+      </div>
+      <div class="lesson-card">
+        <div class="lesson-thumb thumb-2">🐾</div>
+        <h4>Animals 動物</h4>
+        <p>Lesson 5 · 12 words</p>
+        <div class="progress"><i style="width:40%"></i></div>
+        <div class="stars"><div class="star">★</div><div class="star" style="background:var(--color-primary-100)">☆</div><div class="star" style="background:var(--color-primary-100)">☆</div></div>
+      </div>
+      <div class="lesson-card">
+        <div class="lesson-thumb thumb-3">🍎</div>
+        <h4>Food 食物</h4>
+        <p>Lesson 1 · 10 words</p>
+        <div class="progress"><i style="width:100%"></i></div>
+        <div class="stars"><div class="star">★</div><div class="star">★</div><div class="star">★</div></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

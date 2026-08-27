@@ -1,0 +1,232 @@
+[
+  {
+    "id": "sent.colors.b1.001",
+    "en": "My bag is red.",
+    "zh": "我的書包是紅色的。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "be動詞 + 顏色形容詞",
+    "vocab_ids": [
+      "voc.colors.010"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.002",
+    "en": "The sky is blue, and the grass is green.",
+    "zh": "天空是藍色的，草地是綠色的。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": [
+      "voc.colors.002",
+      "voc.colors.006"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.003",
+    "en": "What color is your shirt? It is yellow.",
+    "zh": "你的襯衫是什麼顏色？是黃色的。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "Wh-question: what color",
+    "vocab_ids": [
+      "voc.colors.012"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.004",
+    "en": "I have a black cat and a white dog.",
+    "zh": "我有一隻黑貓和一隻白狗。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "have + 顏色形容詞 + 名詞",
+    "vocab_ids": [
+      "voc.colors.001",
+      "voc.colors.011"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.005",
+    "en": "My watch is gold, and my ring is silver.",
+    "zh": "我的手錶是金色的，我的戒指是銀色的。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": [
+      "voc.colors.013",
+      "voc.colors.014"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.006",
+    "en": "The rainbow has red, orange, yellow, green, blue, indigo, and purple.",
+    "zh": "彩虹有紅、橙、黃、綠、藍、靛、紫七種顏色。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "have + 多個並列名詞",
+    "vocab_ids": [
+      "voc.colors.015"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.007",
+    "en": "I like light blue, but my sister likes dark blue.",
+    "zh": "我喜歡淺藍色，但我妹妹喜歡深藍色。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": [
+      "voc.colors.016",
+      "voc.colors.017"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.008",
+    "en": "The bright, colorful balloons make me happy.",
+    "zh": "這些明亮又多彩的氣球讓我很開心。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "多個形容詞修飾同一個名詞",
+    "vocab_ids": [
+      "voc.colors.018",
+      "voc.colors.019"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.017",
+    "en": "What color is the mouse? It is gray.",
+    "zh": "老鼠是什麼顏色？是灰色的。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "Wh-question: what color",
+    "vocab_ids": ["voc.colors.004", "voc.colors.005"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.018",
+    "en": "My dog is brown, and the pumpkin is orange.",
+    "zh": "我的狗是咖啡色的，南瓜是橘色的。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.colors.003", "voc.colors.007"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.019",
+    "en": "I have a pink cup and a purple bag.",
+    "zh": "我有一個粉紅色的杯子和一個紫色的包包。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "have + 顏色形容詞 + 名詞",
+    "vocab_ids": ["voc.colors.008", "voc.colors.009"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.009",
+    "en": "I dip my brush into the paint.",
+    "zh": "我把畫筆沾進顏料裡。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "dip...into...",
+    "vocab_ids": ["voc.colors.021", "voc.colors.020"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.010",
+    "en": "Use the scissors to cut the paper, then use glue to stick it.",
+    "zh": "用剪刀把紙剪開，再用膠水黏起來。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "祈使句 + then 子句",
+    "vocab_ids": ["voc.colors.022", "voc.colors.023"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.011",
+    "en": "I like crayons, but my brother likes markers.",
+    "zh": "我喜歡蠟筆，但我弟弟喜歡麥克筆。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.colors.024", "voc.colors.025"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.012",
+    "en": "I put a sticker on my paper.",
+    "zh": "我在紙上貼了一張貼紙。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "put + 受詞 + on + 地點",
+    "vocab_ids": ["voc.colors.026", "voc.colors.027"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.013",
+    "en": "Art is my favorite class, and I love making crafts.",
+    "zh": "美術是我最喜歡的課，我也喜歡做手工藝。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.colors.029", "voc.colors.028"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.014",
+    "en": "I mix colors on my palette before I paint on the canvas.",
+    "zh": "我在畫布上畫之前，會先在調色盤上調色。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "before 表示先後順序",
+    "vocab_ids": ["voc.colors.031", "voc.colors.030"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.015",
+    "en": "My painting stands on an easel, and my clay cup is next to it.",
+    "zh": "我的畫立在畫架上，我的黏土杯就放在旁邊。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.colors.032", "voc.colors.033"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.colors.b1.016",
+    "en": "I made a quick sketch before I made the sculpture.",
+    "zh": "我在做雕塑之前先畫了一張快速素描。",
+    "topic": "colors",
+    "stage": "B",
+    "grammar_point": "before 表示先後順序",
+    "vocab_ids": ["voc.colors.034", "voc.colors.035"],
+    "audio": null,
+    "status": "published"
+  }
+]

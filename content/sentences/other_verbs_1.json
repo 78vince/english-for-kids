@@ -1,0 +1,338 @@
+[
+  {
+    "id": "sent.other_verbs_1.b1.001",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "The dog likes to bite my shoes.",
+    "zh": "這隻狗喜歡咬我的鞋子。",
+    "grammar_point": "動詞 bite",
+    "vocab_ids": [
+      "voc.other_verbs_1.001"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.002",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "The ball bounces on the floor.",
+    "zh": "球在地板上彈跳。",
+    "grammar_point": "動詞 bounce",
+    "vocab_ids": [
+      "voc.other_verbs_1.002"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.003",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "I brush my hair every morning.",
+    "zh": "我每天早上梳頭髮。",
+    "grammar_point": "動詞 brush",
+    "vocab_ids": [
+      "voc.other_verbs_1.003"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.004",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "I will call you after dinner.",
+    "zh": "我晚餐後會打給你。",
+    "grammar_point": "動詞 call",
+    "vocab_ids": [
+      "voc.other_verbs_1.004"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.005",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "Everyone clapped for the singer.",
+    "zh": "大家為歌手鼓掌。",
+    "grammar_point": "動詞 clap",
+    "vocab_ids": [
+      "voc.other_verbs_1.005"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.006",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "Please close the window.",
+    "zh": "請關上窗戶。",
+    "grammar_point": "動詞 close",
+    "vocab_ids": [
+      "voc.other_verbs_1.006"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.007",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "She combs her hair before school.",
+    "zh": "她上學前梳頭髮。",
+    "grammar_point": "動詞 comb",
+    "vocab_ids": [
+      "voc.other_verbs_1.007"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.008",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "Please come to my party.",
+    "zh": "請來參加我的派對。",
+    "grammar_point": "動詞 come",
+    "vocab_ids": [
+      "voc.other_verbs_1.008"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.009",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "I can count to one hundred.",
+    "zh": "我會數到一百。",
+    "grammar_point": "動詞 count",
+    "vocab_ids": [
+      "voc.other_verbs_1.009"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.010",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "The baby cried all night.",
+    "zh": "這個嬰兒哭了一整晚。",
+    "grammar_point": "動詞 cry",
+    "vocab_ids": [
+      "voc.other_verbs_1.010"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.011",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "We enjoy playing in the park.",
+    "zh": "我們喜歡在公園裡玩。",
+    "grammar_point": "動詞 enjoy",
+    "vocab_ids": [
+      "voc.other_verbs_1.011"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.012",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "Be careful not to fall.",
+    "zh": "小心不要跌倒。",
+    "grammar_point": "動詞 fall",
+    "vocab_ids": [
+      "voc.other_verbs_1.012"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.013",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "I feed my cat every morning.",
+    "zh": "我每天早上餵我的貓。",
+    "grammar_point": "動詞 feed",
+    "vocab_ids": [
+      "voc.other_verbs_1.013"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.014",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "I feel great today.",
+    "zh": "我今天感覺很棒。",
+    "grammar_point": "動詞 feel",
+    "vocab_ids": [
+      "voc.other_verbs_1.014"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.015",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "I can't find my keys.",
+    "zh": "我找不到我的鑰匙。",
+    "grammar_point": "動詞 find",
+    "vocab_ids": [
+      "voc.other_verbs_1.015"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.016",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "I get good grades in school.",
+    "zh": "我在學校成績很好。",
+    "grammar_point": "動詞 get",
+    "vocab_ids": [
+      "voc.other_verbs_1.016"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.017",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "I give my sister my old toys.",
+    "zh": "我把舊玩具給我妹妹。",
+    "grammar_point": "動詞 give",
+    "vocab_ids": [
+      "voc.other_verbs_1.017"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.018",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "Let's go to the park.",
+    "zh": "我們去公園吧。",
+    "grammar_point": "動詞 go",
+    "vocab_ids": [
+      "voc.other_verbs_1.018"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.019",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "This plant grows very fast.",
+    "zh": "這株植物長得很快。",
+    "grammar_point": "動詞 grow",
+    "vocab_ids": [
+      "voc.other_verbs_1.019"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.020",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "I have two brothers.",
+    "zh": "我有兩個兄弟。",
+    "grammar_point": "動詞 have",
+    "vocab_ids": [
+      "voc.other_verbs_1.020"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.021",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "I help my mom cook dinner.",
+    "zh": "我幫媽媽煮晚餐。",
+    "grammar_point": "動詞 help",
+    "vocab_ids": [
+      "voc.other_verbs_1.021"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.022",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "He hit the ball hard.",
+    "zh": "他用力打了球。",
+    "grammar_point": "動詞 hit",
+    "vocab_ids": [
+      "voc.other_verbs_1.022"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.023",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "Please hold my hand.",
+    "zh": "請握著我的手。",
+    "grammar_point": "動詞 hold",
+    "vocab_ids": [
+      "voc.other_verbs_1.023"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.024",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "The rabbit hops across the yard.",
+    "zh": "兔子在院子裡跳來跳去。",
+    "grammar_point": "動詞 hop",
+    "vocab_ids": [
+      "voc.other_verbs_1.024"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.025",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "I hope it will be sunny tomorrow.",
+    "zh": "我希望明天是晴天。",
+    "grammar_point": "動詞 hope",
+    "vocab_ids": [
+      "voc.other_verbs_1.025"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.026",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "Hurry, or we will be late!",
+    "zh": "快點，不然我們會遲到！",
+    "grammar_point": "動詞 hurry",
+    "vocab_ids": [
+      "voc.other_verbs_1.026"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.027",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "My foot hurts a little.",
+    "zh": "我的腳有點痛。",
+    "grammar_point": "動詞 hurt",
+    "vocab_ids": [
+      "voc.other_verbs_1.027"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_1.b1.028",
+    "topic": "other_verbs_1",
+    "stage": "B",
+    "en": "The kids jump on the trampoline.",
+    "zh": "孩子們在彈跳床上跳來跳去。",
+    "grammar_point": "動詞 jump",
+    "vocab_ids": [
+      "voc.other_verbs_1.028"
+    ],
+    "status": "published"
+  }
+]

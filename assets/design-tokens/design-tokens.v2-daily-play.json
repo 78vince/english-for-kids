@@ -1,0 +1,113 @@
+{
+  "$description": "「每天玩一點，英語變好玩」風格改版 Design Tokens 提案（v2）。以 design-tokens.json（原稿）為基礎，品牌色不重做，聚焦放大字級、中性色調整、新增功能列與徽章分級元件 token。確認採用後再合併回主檔案，此檔案為獨立提案版本。",
+  "$meta": {
+    "basedOn": "assets/design-tokens/design-tokens.json",
+    "concept": "每天玩一點，英語變好玩（平台名稱直接採用口號全文）",
+    "styleDirection": "簡單大器：字級加大、留白乾淨、明確功能列導覽",
+    "relatedProposal": "英語島 EnglishIsle（島嶼主題改版）為另一風格提案，兩者互為替代方案，非疊加"
+  },
+
+  "color": {
+    "brand": {
+      "$note": "沿用原稿，不更動色相，降低實作風險",
+      "primary": {
+        "700": { "value": "#0052A3" },
+        "500": { "value": "#2E7BD6" },
+        "100": { "value": "#C4E2EF" }
+      },
+      "secondary": {
+        "500": { "value": "#5B7CCB" }
+      }
+    },
+    "accent": {
+      "orange": { "value": "#FF8A61" },
+      "pink":   { "value": "#FFBDEF", "usage": "沿用原色值，但建議降低使用頻率，僅用於少量遊戲化強調，呼應大器風格" },
+      "yellow": { "value": "#FFD166" }
+    },
+    "feedback": {
+      "success": { "value": "#6FCF97" },
+      "error":   { "value": "#FF6B6B" }
+    },
+    "neutral": {
+      "background": { "value": "#F4F6F9", "usage": "由原稿 #F7F2F8（淡紫）改為中性灰藍，降低粉嫩感，呼應簡單大器風格" },
+      "surface":    { "value": "#FFFFFF" },
+      "ink":        { "value": "#2B2A4A" },
+      "inkMuted":   { "value": "#6B6789" },
+      "border":     { "value": "#DCE2EA", "usage": "由原稿 #E4D9EA 改中性灰藍邊框" }
+    },
+    "badgeTier": {
+      "$note": "新增：成就徽章系統分級色（銅／銀／金）",
+      "bronze":       { "value": "#B9835A", "usage": "銅牌徽章外框／圖示" },
+      "bronzeBg":     { "value": "#F6E9DF", "usage": "銅牌徽章底色" },
+      "silver":       { "value": "#A6AEBD", "usage": "銀牌徽章外框／圖示" },
+      "silverBg":     { "value": "#EEF0F3", "usage": "銀牌徽章底色" },
+      "gold":         { "value": "#E8B84B", "usage": "金牌徽章外框／圖示" },
+      "goldBg":       { "value": "#FBF1DA", "usage": "金牌徽章底色" },
+      "locked":       { "value": "#C9CDD4", "usage": "未解鎖徽章剪影色" },
+      "lockedBg":     { "value": "#F1F2F4", "usage": "未解鎖徽章底色" }
+    }
+  },
+
+  "typography": {
+    "fontFamily": {
+      "display": "'Huninn', 'Noto Sans TC', sans-serif",
+      "body": "'Huninn', 'Noto Sans TC', sans-serif"
+    },
+    "scale": {
+      "$note": "全面放大字級，呼應「較大字級」需求；括號為原稿數值對照",
+      "display": { "size": "48px", "lineHeight": "1.2",  "weight": 700, "was": "40px" },
+      "h1":      { "size": "36px", "lineHeight": "1.25", "weight": 700, "was": "32px" },
+      "h2":      { "size": "28px", "lineHeight": "1.3",  "weight": 700, "was": "24px" },
+      "h3":      { "size": "24px", "lineHeight": "1.35", "weight": 600, "was": "20px" },
+      "bodyLg":  { "size": "20px", "lineHeight": "1.6",  "weight": 400, "was": "18px" },
+      "body":    { "size": "18px", "lineHeight": "1.6",  "weight": 400, "was": "16px" },
+      "caption": { "size": "15px", "lineHeight": "1.5",  "weight": 400, "was": "14px" }
+    }
+  },
+
+  "radius": {
+    "sm":    { "value": "8px" },
+    "md":    { "value": "16px" },
+    "lg":    { "value": "24px" },
+    "xl":    { "value": "32px" },
+    "pill":  { "value": "999px" },
+    "circle":{ "value": "50%" }
+  },
+
+  "spacing": {
+    "1": "4px", "2": "8px", "3": "12px", "4": "16px",
+    "5": "24px", "6": "32px", "7": "48px", "8": "64px"
+  },
+
+  "shadow": {
+    "sm": { "value": "0 2px 8px rgba(0, 82, 163, 0.08)" },
+    "md": { "value": "0 6px 16px rgba(0, 82, 163, 0.12)" },
+    "lg": { "value": "0 12px 28px rgba(0, 82, 163, 0.16)" }
+  },
+
+  "component": {
+    "$note": "新增元件：功能列 nav、徽章分級卡",
+    "functionNav": {
+      "height": "64px",
+      "background": "{color.neutral.surface}",
+      "border": "1px solid {color.neutral.border}",
+      "itemColor": "{color.neutral.inkMuted}",
+      "itemActiveBackground": "{color.brand.primary.700}",
+      "itemActiveColor": "#FFFFFF",
+      "itemRadius": "{radius.md}",
+      "usage": "全站固定功能列（首頁／挑戰紀錄／成就徽章／我的），建議行動裝置置底、桌機置頂"
+    },
+    "badgeCard": {
+      "lockedBackground": "{color.badgeTier.lockedBg}",
+      "lockedBorder": "{color.badgeTier.locked}",
+      "bronzeBackground": "{color.badgeTier.bronzeBg}",
+      "bronzeBorder": "{color.badgeTier.bronze}",
+      "silverBackground": "{color.badgeTier.silverBg}",
+      "silverBorder": "{color.badgeTier.silver}",
+      "goldBackground": "{color.badgeTier.goldBg}",
+      "goldBorder": "{color.badgeTier.gold}",
+      "radius": "{radius.lg}",
+      "shadow": "{shadow.sm}"
+    }
+  }
+}

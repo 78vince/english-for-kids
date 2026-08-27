@@ -1,0 +1,401 @@
+[
+  {
+    "id": "voc.bathroom.001",
+    "en": "toothbrush",
+    "zh": "牙刷",
+    "pos": "名詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "This is my toothbrush.",
+      "zh": "這是我的牙刷。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.002",
+    "en": "toothpaste",
+    "zh": "牙膏",
+    "pos": "名詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Put toothpaste on your toothbrush.",
+      "zh": "把牙膏擠在牙刷上。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.003",
+    "en": "soap",
+    "zh": "肥皂",
+    "pos": "名詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Use soap to wash your hands.",
+      "zh": "用肥皂洗手。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.004",
+    "en": "shampoo",
+    "zh": "洗髮精",
+    "pos": "名詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I use shampoo to wash my hair.",
+      "zh": "我用洗髮精洗頭髮。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.005",
+    "en": "towel",
+    "zh": "毛巾",
+    "pos": "名詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Dry your hands with a towel.",
+      "zh": "用毛巾把手擦乾。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.006",
+    "en": "bathtub",
+    "zh": "浴缸",
+    "pos": "名詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The bathtub is full of water.",
+      "zh": "浴缸裡裝滿了水。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.007",
+    "en": "shower",
+    "zh": "淋浴",
+    "pos": "名詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I take a shower every night.",
+      "zh": "我每天晚上淋浴。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.008",
+    "en": "toilet",
+    "zh": "馬桶",
+    "pos": "名詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Please flush the toilet.",
+      "zh": "請沖馬桶。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.009",
+    "en": "mirror",
+    "zh": "鏡子",
+    "pos": "名詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I look at myself in the mirror.",
+      "zh": "我看著鏡子裡的自己。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.010",
+    "en": "comb",
+    "zh": "梳子",
+    "pos": "名詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I comb my hair every morning.",
+      "zh": "我每天早上梳頭髮。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.011",
+    "en": "wash hands",
+    "zh": "洗手",
+    "pos": "動詞片語",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Wash your hands before dinner.",
+      "zh": "吃飯前要洗手。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.012",
+    "en": "brush teeth",
+    "zh": "刷牙",
+    "pos": "動詞片語",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I brush my teeth twice a day.",
+      "zh": "我一天刷兩次牙。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.013",
+    "en": "toilet paper",
+    "zh": "衛生紙",
+    "pos": "名詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We need more toilet paper.",
+      "zh": "我們需要更多衛生紙。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.014",
+    "en": "mouthwash",
+    "zh": "漱口水",
+    "pos": "名詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I use mouthwash after I brush my teeth.",
+      "zh": "我刷牙後會用漱口水。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.015",
+    "en": "slippers",
+    "zh": "拖鞋",
+    "pos": "名詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Put on your slippers before you go in.",
+      "zh": "進去之前先穿上拖鞋。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.016",
+    "en": "bath mat",
+    "zh": "浴室踏墊",
+    "pos": "名詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Stand on the bath mat to dry your feet.",
+      "zh": "站在浴室踏墊上把腳擦乾。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.017",
+    "en": "hairbrush",
+    "zh": "髮梳",
+    "pos": "名詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "She keeps a hairbrush by the mirror.",
+      "zh": "她把髮梳放在鏡子旁邊。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.018",
+    "en": "wash face",
+    "zh": "洗臉",
+    "pos": "動詞片語",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I wash my face every morning.",
+      "zh": "我每天早上洗臉。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  },
+  {
+    "id": "voc.bathroom.019",
+    "en": "brush",
+    "zh": "刷（動詞）",
+    "pos": "動詞",
+    "topic": "bathroom",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I brush my teeth every morning.",
+      "zh": "我每天早上刷牙。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Bathroom",
+    "status": "published"
+  }
+]

@@ -1,0 +1,422 @@
+[
+  {
+    "id": "voc.sentence_connectors.001",
+    "en": "am",
+    "zh": "是（我）",
+    "pos": "be動詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I am a student.",
+      "zh": "我是學生。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.002",
+    "en": "are",
+    "zh": "是（你/我們/他們）",
+    "pos": "be動詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We are best friends.",
+      "zh": "我們是最好的朋友。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.003",
+    "en": "can",
+    "zh": "能、可以",
+    "pos": "助動詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I can swim very well.",
+      "zh": "我很會游泳。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.004",
+    "en": "do",
+    "zh": "（助動詞，用於疑問句/否定句）",
+    "pos": "助動詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Do you like pizza?",
+      "zh": "你喜歡披薩嗎？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.005",
+    "en": "have",
+    "zh": "有、（助動詞）已經",
+    "pos": "助動詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I have finished my homework.",
+      "zh": "我已經寫完功課了。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.006",
+    "en": "is",
+    "zh": "是（他/她/它）",
+    "pos": "be動詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "This is my dog.",
+      "zh": "這是我的狗。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.007",
+    "en": "may",
+    "zh": "可能、可以",
+    "pos": "助動詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "May I come in?",
+      "zh": "我可以進來嗎？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.008",
+    "en": "must",
+    "zh": "必須",
+    "pos": "助動詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "You must wear a helmet.",
+      "zh": "你必須戴安全帽。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.009",
+    "en": "should",
+    "zh": "應該",
+    "pos": "助動詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "You should go to bed early.",
+      "zh": "你應該早點睡覺。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.010",
+    "en": "will",
+    "zh": "將會",
+    "pos": "助動詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I will call you tonight.",
+      "zh": "我今晚會打給你。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.011",
+    "en": "although",
+    "zh": "雖然",
+    "pos": "連接詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Although it was raining, we played outside.",
+      "zh": "雖然下雨，我們還是在外面玩。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.012",
+    "en": "and",
+    "zh": "和、然後",
+    "pos": "連接詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I like apples and bananas.",
+      "zh": "我喜歡蘋果和香蕉。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.013",
+    "en": "because",
+    "zh": "因為",
+    "pos": "連接詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I am happy because today is my birthday.",
+      "zh": "我很開心，因為今天是我的生日。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.014",
+    "en": "but",
+    "zh": "但是",
+    "pos": "連接詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I like tea, but I love coffee.",
+      "zh": "我喜歡茶，但我更愛咖啡。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.015",
+    "en": "so",
+    "zh": "所以",
+    "pos": "連接詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "It was late, so I went to bed.",
+      "zh": "已經很晚了，所以我去睡覺了。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.016",
+    "en": "enough",
+    "zh": "足夠的",
+    "pos": "感嘆詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "That's enough, thank you.",
+      "zh": "這樣就夠了，謝謝。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.017",
+    "en": "excuse me",
+    "zh": "不好意思",
+    "pos": "感嘆詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Excuse me, where is the library?",
+      "zh": "不好意思，圖書館在哪裡？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.018",
+    "en": "goodbye",
+    "zh": "再見",
+    "pos": "感嘆詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Goodbye! See you next week.",
+      "zh": "再見！下週見。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.019",
+    "en": "hello",
+    "zh": "哈囉",
+    "pos": "感嘆詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Hello! How are you?",
+      "zh": "哈囉！你好嗎？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  },
+  {
+    "id": "voc.sentence_connectors.020",
+    "en": "please",
+    "zh": "請",
+    "pos": "感嘆詞",
+    "topic": "sentence_connectors",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Please close the door.",
+      "zh": "請把門關上。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sentence Connectors",
+    "status": "published"
+  }
+]

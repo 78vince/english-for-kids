@@ -1,0 +1,57 @@
+{
+  "id": "pass.tableware.p01",
+  "title": "Setting the Table",
+  "topic": "tableware",
+  "text": "Hi! My name is Amy. Every night, I help my mother set the table. I put a plate and a bowl for each person. Next to the plate, I put a fork and a knife. My grandma likes to use chopsticks instead of a fork. Everyone gets a cup for water or tea. Dinner is ready!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.tableware.001",
+    "voc.tableware.002",
+    "voc.tableware.005",
+    "voc.tableware.006",
+    "voc.tableware.007",
+    "voc.tableware.003"
+  ],
+  "questions": [
+    {
+      "id": "pass.tableware.p01.q1",
+      "question": "What does Amy put next to the plate?",
+      "options": [
+        "A fork and a knife",
+        "A bowl and a cup",
+        "Chopsticks and a spoon",
+        "A spoon and a plate"
+      ],
+      "answer": "A fork and a knife",
+      "type": "single_choice",
+      "source_sentence": "Next to the plate, I put a fork and a knife."
+    },
+    {
+      "id": "pass.tableware.p01.q2",
+      "question": "What does Amy's grandma like to use instead of a fork?",
+      "options": [
+        "Chopsticks",
+        "A spoon",
+        "A knife",
+        "A bowl"
+      ],
+      "answer": "Chopsticks",
+      "type": "single_choice",
+      "source_sentence": "My grandma likes to use chopsticks instead of a fork."
+    },
+    {
+      "id": "pass.tableware.p01.q3",
+      "question": "What does everyone get for water or tea?",
+      "options": [
+        "A cup",
+        "A bowl",
+        "A plate",
+        "A spoon"
+      ],
+      "answer": "A cup",
+      "type": "single_choice",
+      "source_sentence": "Everyone gets a cup for water or tea."
+    }
+  ],
+  "status": "published"
+}

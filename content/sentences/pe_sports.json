@@ -1,0 +1,134 @@
+[
+  {
+    "id": "sent.pe_sports.b1.001",
+    "en": "I like soccer, but my sister likes basketball.",
+    "zh": "我喜歡足球，但我妹妹喜歡籃球。",
+    "topic": "pe_sports",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.pe_sports.001", "voc.pe_sports.002"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.pe_sports.b1.002",
+    "en": "In baseball, you hit the ball with a bat.",
+    "zh": "在棒球比賽中，你用球棒打球。",
+    "topic": "pe_sports",
+    "stage": "B",
+    "grammar_point": "with 表示使用工具",
+    "vocab_ids": ["voc.pe_sports.003", "voc.pe_sports.014", "voc.pe_sports.015"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.pe_sports.b1.003",
+    "en": "We play badminton with a racket after school.",
+    "zh": "我們放學後用球拍打羽毛球。",
+    "topic": "pe_sports",
+    "stage": "B",
+    "grammar_point": "with 表示使用工具",
+    "vocab_ids": ["voc.pe_sports.004", "voc.pe_sports.016"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.pe_sports.b1.004",
+    "en": "Table tennis and volleyball are both fun to play indoors.",
+    "zh": "桌球和排球在室內玩都很好玩。",
+    "topic": "pe_sports",
+    "stage": "B",
+    "grammar_point": "and 連接兩個主詞",
+    "vocab_ids": ["voc.pe_sports.005", "voc.pe_sports.006"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.pe_sports.b1.005",
+    "en": "I play tennis in spring and go swimming in summer.",
+    "zh": "我春天打網球，夏天去游泳。",
+    "topic": "pe_sports",
+    "stage": "B",
+    "grammar_point": "and 連接兩個動作子句",
+    "vocab_ids": ["voc.pe_sports.007", "voc.pe_sports.008"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.pe_sports.b1.006",
+    "en": "We run and jump during PE class.",
+    "zh": "我們在體育課會跑步和跳躍。",
+    "topic": "pe_sports",
+    "stage": "B",
+    "grammar_point": "and 連接兩個動詞",
+    "vocab_ids": ["voc.pe_sports.009", "voc.pe_sports.010"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.pe_sports.b1.007",
+    "en": "He can throw the ball, and I can catch it.",
+    "zh": "他會丟球，我會接球。",
+    "topic": "pe_sports",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.pe_sports.011", "voc.pe_sports.012"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.pe_sports.b1.008",
+    "en": "The coach blew the whistle before I could kick the ball.",
+    "zh": "在我踢球之前，教練先吹了哨子。",
+    "topic": "pe_sports",
+    "stage": "B",
+    "grammar_point": "before 表示時間先後",
+    "vocab_ids": ["voc.pe_sports.017", "voc.pe_sports.013"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.pe_sports.b1.009",
+    "en": "Our team practices in the gym every Monday.",
+    "zh": "我們這隊每個星期一都在體育館練習。",
+    "topic": "pe_sports",
+    "stage": "B",
+    "grammar_point": "every + 時間名詞",
+    "vocab_ids": ["voc.pe_sports.019", "voc.pe_sports.018"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.pe_sports.b1.010",
+    "en": "The coach picked the best player for the game.",
+    "zh": "教練挑選了最厲害的球員上場比賽。",
+    "topic": "pe_sports",
+    "stage": "B",
+    "grammar_point": "the best + 名詞",
+    "vocab_ids": ["voc.pe_sports.020", "voc.pe_sports.021"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.pe_sports.b1.011",
+    "en": "It's okay to win or lose, just have fun.",
+    "zh": "輸贏沒關係，開心就好。",
+    "topic": "pe_sports",
+    "stage": "B",
+    "grammar_point": "or 連接兩個對比動詞",
+    "vocab_ids": ["voc.pe_sports.022", "voc.pe_sports.023"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.pe_sports.b1.012",
+    "en": "We had a running race at school today.",
+    "zh": "我們今天在學校辦了一場賽跑。",
+    "topic": "pe_sports",
+    "stage": "B",
+    "grammar_point": "had a + 名詞（過去式）",
+    "vocab_ids": ["voc.pe_sports.024"],
+    "audio": null,
+    "status": "published"
+  }
+]

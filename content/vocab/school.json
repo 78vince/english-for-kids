@@ -1,0 +1,380 @@
+[
+  {
+    "id": "voc.school.012",
+    "en": "blackboard",
+    "zh": "黑板",
+    "pos": "名詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "The teacher writes on the blackboard.",
+      "zh": "老師在黑板上寫字。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.014",
+    "en": "playground",
+    "zh": "遊樂場、操場",
+    "pos": "名詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "We play on the playground.",
+      "zh": "我們在操場上玩。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.007",
+    "en": "pen",
+    "zh": "原子筆",
+    "pos": "名詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "May I borrow your pen?",
+      "zh": "我可以借你的原子筆嗎？",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.015",
+    "en": "library",
+    "zh": "圖書館",
+    "pos": "名詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "I borrow books from the library.",
+      "zh": "我在圖書館借書。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.001",
+    "en": "school",
+    "zh": "學校",
+    "pos": "名詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "I go to school every day.",
+      "zh": "我每天去上學。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.004",
+    "en": "classroom",
+    "zh": "教室",
+    "pos": "名詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "Our classroom is very big.",
+      "zh": "我們的教室很大。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.005",
+    "en": "book",
+    "zh": "書",
+    "pos": "名詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "I read a book before bed.",
+      "zh": "我睡前讀一本書。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.018",
+    "en": "draw",
+    "zh": "畫畫",
+    "pos": "動詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "She likes to draw animals.",
+      "zh": "她喜歡畫動物。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.016",
+    "en": "read",
+    "zh": "讀、閱讀",
+    "pos": "動詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "I like to read comic books.",
+      "zh": "我喜歡看漫畫書。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.011",
+    "en": "desk",
+    "zh": "書桌",
+    "pos": "名詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "My desk is next to the window.",
+      "zh": "我的書桌在窗戶旁邊。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.017",
+    "en": "write",
+    "zh": "寫",
+    "pos": "動詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "Please write your name here.",
+      "zh": "請在這裡寫下你的名字。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.010",
+    "en": "backpack",
+    "zh": "背包",
+    "pos": "名詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "My backpack is full of books.",
+      "zh": "我的背包裝滿了書。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.002",
+    "en": "teacher",
+    "zh": "老師",
+    "pos": "名詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "My teacher is very kind.",
+      "zh": "我的老師很親切。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.006",
+    "en": "pencil",
+    "zh": "鉛筆",
+    "pos": "名詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "I write with a pencil.",
+      "zh": "我用鉛筆寫字。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.003",
+    "en": "student",
+    "zh": "學生",
+    "pos": "名詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "She is a good student.",
+      "zh": "她是個好學生。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.013",
+    "en": "homework",
+    "zh": "功課、作業",
+    "pos": "名詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "I do my homework after dinner.",
+      "zh": "我晚餐後做功課。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.008",
+    "en": "eraser",
+    "zh": "橡皮擦",
+    "pos": "名詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "I need an eraser.",
+      "zh": "我需要一個橡皮擦。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.school.009",
+    "en": "ruler",
+    "zh": "尺",
+    "pos": "名詞",
+    "topic": "school",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - School",
+    "status": "published",
+    "example_sentence": {
+      "en": "Use a ruler to draw a line.",
+      "zh": "用尺畫一條線。",
+      "status": "draft"
+    }
+  }
+]

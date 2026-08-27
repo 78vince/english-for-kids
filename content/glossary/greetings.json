@@ -1,0 +1,23 @@
+{
+  "name": "名字",
+  "every": "每一個",
+  "morning": "早上",
+  "say": "說",
+  "good": "很好的（用於 good morning／good afternoon／good evening／good night）",
+  "afternoon": "下午（用於 good afternoon）",
+  "evening": "傍晚、晚上（用於 good evening）",
+  "night": "晚上（用於 good night）",
+  "too": "也",
+  "thank": "謝謝（＝ thank you）",
+  "excuse": "不好意思（用於 excuse me）",
+  "can": "可以",
+  "me": "我（受格）",
+  "help": "幫忙",
+  "helps": "幫忙（helps = help 的第三人稱單數）",
+  "new": "新的",
+  "need": "需要",
+  "lunch": "午餐",
+  "day": "一天、白天",
+  "end": "結束",
+  "reading": "閱讀（reading = read 的動名詞）"
+}

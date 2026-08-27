@@ -1,0 +1,60 @@
+{
+  "id": "pass.holidays_festivals.p01",
+  "title": "My Favorite Festivals",
+  "topic": "holidays_festivals",
+  "text": "My family celebrates many festivals every year. At Lunar New Year, I get a red envelope and eat a big dinner with my family. In the summer, we cheer for boat races at the Dragon Boat Festival. In the fall, we eat mooncakes and look at the moon at the Mid-Autumn Festival. On Halloween, I wear a costume and visit houses for candy with my friends. At Christmas, we decorate a tree and give each other gifts. Every festival is a happy time to be with the people I love!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.holidays_festivals.005",
+    "voc.holidays_festivals.018",
+    "voc.holidays_festivals.007",
+    "voc.holidays_festivals.017",
+    "voc.holidays_festivals.006",
+    "voc.holidays_festivals.002",
+    "voc.holidays_festivals.014",
+    "voc.holidays_festivals.001",
+    "voc.holidays_festivals.009"
+  ],
+  "questions": [
+    {
+      "id": "pass.holidays_festivals.p01.q1",
+      "question": "What does the child get at Lunar New Year?",
+      "options": [
+        "A red envelope",
+        "A costume",
+        "Fireworks",
+        "A card"
+      ],
+      "answer": "A red envelope",
+      "type": "single_choice",
+      "source_sentence": "At Lunar New Year, I get a red envelope and eat a big dinner with my family."
+    },
+    {
+      "id": "pass.holidays_festivals.p01.q2",
+      "question": "What do they eat at the Mid-Autumn Festival?",
+      "options": [
+        "Mooncakes",
+        "Turkey",
+        "Eggs",
+        "Candy"
+      ],
+      "answer": "Mooncakes",
+      "type": "single_choice",
+      "source_sentence": "In the fall, we eat mooncakes and look at the moon at the Mid-Autumn Festival."
+    },
+    {
+      "id": "pass.holidays_festivals.p01.q3",
+      "question": "What do they do at Christmas?",
+      "options": [
+        "Decorate a tree and give gifts",
+        "Watch boat races",
+        "Wear a costume",
+        "Get a red envelope"
+      ],
+      "answer": "Decorate a tree and give gifts",
+      "type": "single_choice",
+      "source_sentence": "At Christmas, we decorate a tree and give each other gifts."
+    }
+  ],
+  "status": "published"
+}

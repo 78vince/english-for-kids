@@ -1,0 +1,58 @@
+[
+  {
+    "id": "sent.personality_traits.b1.001",
+    "en": "She is shy, but she is very kind.",
+    "zh": "她很害羞，但是她很親切。",
+    "topic": "personality_traits",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": [
+      "voc.personality_traits.002",
+      "voc.personality_traits.001"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.personality_traits.b1.002",
+    "en": "My brother is funny and brave.",
+    "zh": "我哥哥既有趣又勇敢。",
+    "topic": "personality_traits",
+    "stage": "B",
+    "grammar_point": "and 連接兩個形容詞",
+    "vocab_ids": [
+      "voc.personality_traits.006",
+      "voc.personality_traits.004"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.personality_traits.b1.003",
+    "en": "The naughty boy is not very patient.",
+    "zh": "這個調皮的男孩不太有耐心。",
+    "topic": "personality_traits",
+    "stage": "B",
+    "grammar_point": "not very + 形容詞 否定句",
+    "vocab_ids": [
+      "voc.personality_traits.011",
+      "voc.personality_traits.012"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.personality_traits.b1.004",
+    "en": "My friend is honest and polite.",
+    "zh": "我的朋友既誠實又有禮貌。",
+    "topic": "personality_traits",
+    "stage": "B",
+    "grammar_point": "and 連接兩個形容詞",
+    "vocab_ids": [
+      "voc.personality_traits.013",
+      "voc.personality_traits.010"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

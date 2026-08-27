@@ -1,0 +1,56 @@
+{
+  "id": "pass.numbers.p01",
+  "title": "My Math Class",
+  "topic": "numbers",
+  "text": "Every Tuesday, I have math class at school. Today, we learn to add and subtract numbers. My teacher draws a circle, a square, and a triangle on the board. She also draws a star and a heart. We count the shapes together and try to find the pattern. I use a calculator to check my answer. Three plus two is five, and five minus two is three. I have more stickers than my friend, but he wants less homework. Math is my favorite class of the week!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.numbers.031",
+    "voc.numbers.032",
+    "voc.numbers.033",
+    "voc.numbers.039",
+    "voc.numbers.040",
+    "voc.numbers.041",
+    "voc.numbers.042",
+    "voc.numbers.043",
+    "voc.numbers.037",
+    "voc.numbers.046",
+    "voc.numbers.047",
+    "voc.numbers.034",
+    "voc.numbers.035",
+    "voc.numbers.048",
+    "voc.numbers.049"
+  ],
+  "questions": [
+    {
+      "id": "pass.numbers.p01.q1",
+      "question": "What three shapes does the teacher draw first?",
+      "options": [
+        "A circle, a square, and a triangle",
+        "A star and a heart",
+        "A pattern and a calculator",
+        "Two circles"
+      ],
+      "answer": "A circle, a square, and a triangle",
+      "type": "single_choice",
+      "source_sentence": "My teacher draws a circle, a square, and a triangle on the board."
+    },
+    {
+      "id": "pass.numbers.p01.q2",
+      "question": "What is three plus two?",
+      "options": ["Five", "Three", "Two", "Six"],
+      "answer": "Five",
+      "type": "single_choice",
+      "source_sentence": "Three plus two is five, and five minus two is three."
+    },
+    {
+      "id": "pass.numbers.p01.q3",
+      "question": "Who wants less homework?",
+      "options": ["The friend", "The teacher", "The writer (I)", "Nobody"],
+      "answer": "The friend",
+      "type": "single_choice",
+      "source_sentence": "I have more stickers than my friend, but he wants less homework."
+    }
+  ],
+  "status": "published"
+}

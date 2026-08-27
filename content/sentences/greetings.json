@@ -1,0 +1,62 @@
+[
+  {
+    "id": "sent.greetings.b1.001",
+    "en": "Good morning! Good afternoon! Hi, everyone!",
+    "zh": "早安！午安！嗨，大家好！",
+    "topic": "greetings",
+    "stage": "B",
+    "grammar_point": "問候語疊加句",
+    "vocab_ids": [
+      "voc.greetings.004",
+      "voc.greetings.005",
+      "voc.greetings.001"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.greetings.b1.002",
+    "en": "Excuse me, can you help me, please?",
+    "zh": "不好意思，你可以幫我嗎？",
+    "topic": "greetings",
+    "stage": "B",
+    "grammar_point": "禮貌用語疊加句",
+    "vocab_ids": [
+      "voc.greetings.012",
+      "voc.greetings.013",
+      "voc.greetings.008"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.greetings.b1.003",
+    "en": "Sorry! Good night and bye, see you tomorrow.",
+    "zh": "對不起！晚安，掰掰，明天見。",
+    "topic": "greetings",
+    "stage": "B",
+    "grammar_point": "道歉 + 道別問候疊加句",
+    "vocab_ids": [
+      "voc.greetings.011",
+      "voc.greetings.007",
+      "voc.greetings.003"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.greetings.b1.004",
+    "en": "Thank you very much! You're welcome, hello!",
+    "zh": "非常謝謝你！不客氣，哈囉！",
+    "topic": "greetings",
+    "stage": "B",
+    "grammar_point": "感謝 + 回應疊加句",
+    "vocab_ids": [
+      "voc.greetings.009",
+      "voc.greetings.010",
+      "voc.greetings.002"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

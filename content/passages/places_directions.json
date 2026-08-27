@@ -1,0 +1,58 @@
+{
+  "id": "pass.places_directions.p01",
+  "title": "A Day in Town",
+  "topic": "places_directions",
+  "text": "This morning, my mom and I went to the supermarket to buy some food. Then we walked to the bookstore. I found a fun book there. After that, we had lunch at a restaurant near the park. On our way home, we passed the police station and the fire station. It was a busy day in town!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.places_directions.005",
+    "voc.places_directions.007",
+    "voc.places_directions.018",
+    "voc.places_directions.004",
+    "voc.places_directions.001",
+    "voc.places_directions.009",
+    "voc.places_directions.010"
+  ],
+  "questions": [
+    {
+      "id": "pass.places_directions.p01.q1",
+      "question": "Where did they go first?",
+      "options": [
+        "The bookstore",
+        "The supermarket",
+        "The restaurant",
+        "The park"
+      ],
+      "answer": "The supermarket",
+      "type": "single_choice",
+      "source_sentence": "This morning, my mom and I went to the supermarket to buy some food."
+    },
+    {
+      "id": "pass.places_directions.p01.q2",
+      "question": "Where did they have lunch?",
+      "options": [
+        "At home",
+        "At the bookstore",
+        "At a restaurant near the park",
+        "At the police station"
+      ],
+      "answer": "At a restaurant near the park",
+      "type": "single_choice",
+      "source_sentence": "After that, we had lunch at a restaurant near the park."
+    },
+    {
+      "id": "pass.places_directions.p01.q3",
+      "question": "What did they pass on their way home?",
+      "options": [
+        "The zoo and the museum",
+        "The police station and the fire station",
+        "The bank and the hospital",
+        "The post office"
+      ],
+      "answer": "The police station and the fire station",
+      "type": "single_choice",
+      "source_sentence": "On our way home, we passed the police station and the fire station."
+    }
+  ],
+  "status": "published"
+}

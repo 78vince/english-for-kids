@@ -1,0 +1,302 @@
+[
+  {
+    "id": "sent.other_adjectives_1.b1.001",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "Can I have another cookie?",
+    "zh": "我可以再吃一片餅乾嗎？",
+    "grammar_point": "形容詞 another",
+    "vocab_ids": [
+      "voc.other_adjectives_1.001"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.002",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "This movie is boring.",
+    "zh": "這部電影很無聊。",
+    "grammar_point": "形容詞 boring",
+    "vocab_ids": [
+      "voc.other_adjectives_1.002"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.003",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "We have different opinions.",
+    "zh": "我們的意見不同。",
+    "grammar_point": "形容詞 different",
+    "vocab_ids": [
+      "voc.other_adjectives_1.003"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.004",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "My shoes are dirty.",
+    "zh": "我的鞋子很髒。",
+    "grammar_point": "形容詞 dirty",
+    "vocab_ids": [
+      "voc.other_adjectives_1.004"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.005",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "This test is easy.",
+    "zh": "這次考試很簡單。",
+    "grammar_point": "形容詞 easy",
+    "vocab_ids": [
+      "voc.other_adjectives_1.005"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.006",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "The game was so exciting.",
+    "zh": "這場比賽好刺激。",
+    "grammar_point": "形容詞 exciting",
+    "vocab_ids": [
+      "voc.other_adjectives_1.006"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.007",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "That car is very fast.",
+    "zh": "那台車開得很快。",
+    "grammar_point": "形容詞 fast",
+    "vocab_ids": [
+      "voc.other_adjectives_1.007"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.008",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "Pizza is my favorite food.",
+    "zh": "披薩是我最喜歡的食物。",
+    "grammar_point": "形容詞 favorite",
+    "vocab_ids": [
+      "voc.other_adjectives_1.008"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.009",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "I am fine, thank you.",
+    "zh": "我很好，謝謝。",
+    "grammar_point": "形容詞 fine",
+    "vocab_ids": [
+      "voc.other_adjectives_1.009"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.010",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "Swimming is a fun activity.",
+    "zh": "游泳是一項有趣的活動。",
+    "grammar_point": "形容詞 fun",
+    "vocab_ids": [
+      "voc.other_adjectives_1.010"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.011",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "That was a great show.",
+    "zh": "那是一場很棒的表演。",
+    "grammar_point": "形容詞 great",
+    "vocab_ids": [
+      "voc.other_adjectives_1.011"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.012",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "This puzzle is very hard.",
+    "zh": "這個拼圖很難。",
+    "grammar_point": "形容詞 hard",
+    "vocab_ids": [
+      "voc.other_adjectives_1.012"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.013",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "This book is very interesting.",
+    "zh": "這本書非常有趣。",
+    "grammar_point": "形容詞 interesting",
+    "vocab_ids": [
+      "voc.other_adjectives_1.013"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.014",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "This is my last chance.",
+    "zh": "這是我最後的機會。",
+    "grammar_point": "形容詞 last",
+    "vocab_ids": [
+      "voc.other_adjectives_1.014"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.015",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "I got a new backpack.",
+    "zh": "我有了一個新書包。",
+    "grammar_point": "形容詞 new",
+    "vocab_ids": [
+      "voc.other_adjectives_1.015"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.016",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "She is the only girl in the class.",
+    "zh": "她是班上唯一的女生。",
+    "grammar_point": "形容詞 only",
+    "vocab_ids": [
+      "voc.other_adjectives_1.016"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.017",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "The other students are outside.",
+    "zh": "其他學生在外面。",
+    "grammar_point": "形容詞 other",
+    "vocab_ids": [
+      "voc.other_adjectives_1.017"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.018",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "The library is very quiet.",
+    "zh": "圖書館非常安靜。",
+    "grammar_point": "形容詞 quiet",
+    "vocab_ids": [
+      "voc.other_adjectives_1.018"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.019",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "Are you ready for the trip?",
+    "zh": "你準備好去旅行了嗎？",
+    "grammar_point": "形容詞 ready",
+    "vocab_ids": [
+      "voc.other_adjectives_1.019"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.020",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "That is the right answer.",
+    "zh": "那是正確答案。",
+    "grammar_point": "形容詞 right",
+    "vocab_ids": [
+      "voc.other_adjectives_1.020"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.021",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "The turtle is very slow.",
+    "zh": "烏龜的動作很慢。",
+    "grammar_point": "形容詞 slow",
+    "vocab_ids": [
+      "voc.other_adjectives_1.021"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.022",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "I am sorry for being late.",
+    "zh": "我很抱歉遲到了。",
+    "grammar_point": "形容詞 sorry",
+    "vocab_ids": [
+      "voc.other_adjectives_1.022"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.023",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "I am sure this is correct.",
+    "zh": "我確定這是對的。",
+    "grammar_point": "形容詞 sure",
+    "vocab_ids": [
+      "voc.other_adjectives_1.023"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.024",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "We had a wonderful trip.",
+    "zh": "我們有一趟美好的旅行。",
+    "grammar_point": "形容詞 wonderful",
+    "vocab_ids": [
+      "voc.other_adjectives_1.024"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_1.b1.025",
+    "topic": "other_adjectives_1",
+    "stage": "B",
+    "en": "That answer is wrong.",
+    "zh": "那個答案是錯的。",
+    "grammar_point": "形容詞 wrong",
+    "vocab_ids": [
+      "voc.other_adjectives_1.025"
+    ],
+    "status": "published"
+  }
+]

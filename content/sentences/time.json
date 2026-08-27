@@ -1,0 +1,145 @@
+[
+  {
+    "id": "sent.time.b1.001",
+    "en": "It is seven o'clock. Time for breakfast!",
+    "zh": "現在七點鐘，該吃早餐了！",
+    "topic": "time",
+    "stage": "B",
+    "grammar_point": "It is + 時間",
+    "vocab_ids": ["voc.time.001"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.time.b1.002",
+    "en": "The class starts at half past nine, not quarter past nine.",
+    "zh": "課程從九點半開始，不是九點過一刻。",
+    "topic": "time",
+    "stage": "B",
+    "grammar_point": "not 表示對比",
+    "vocab_ids": ["voc.time.002", "voc.time.003"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.time.b1.003",
+    "en": "We will meet at a quarter to three.",
+    "zh": "我們約在差一刻三點見面。",
+    "topic": "time",
+    "stage": "B",
+    "grammar_point": "at + 時間",
+    "vocab_ids": ["voc.time.004"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.time.b1.004",
+    "en": "Please wait one minute and thirty seconds.",
+    "zh": "請等一分鐘又三十秒。",
+    "topic": "time",
+    "stage": "B",
+    "grammar_point": "and 連接兩個時間單位",
+    "vocab_ids": ["voc.time.005", "voc.time.007"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.time.b1.005",
+    "en": "I studied for one hour and then looked at the clock.",
+    "zh": "我讀書讀了一小時，然後看了看時鐘。",
+    "topic": "time",
+    "stage": "B",
+    "grammar_point": "and then 表示先後順序",
+    "vocab_ids": ["voc.time.006", "voc.time.008"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.time.b1.006",
+    "en": "I have art class in the morning and music class in the afternoon.",
+    "zh": "我早上有美術課，下午有音樂課。",
+    "topic": "time",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.time.009", "voc.time.010"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.time.b1.007",
+    "en": "We watch TV in the evening and sleep at night.",
+    "zh": "我們傍晚看電視，晚上睡覺。",
+    "topic": "time",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.time.011", "voc.time.012"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.time.b1.008",
+    "en": "We eat lunch at noon, and the party ends at midnight.",
+    "zh": "我們中午吃午餐，派對在半夜結束。",
+    "topic": "time",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.time.013", "voc.time.014"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.time.b1.009",
+    "en": "I am happy today, and I will see my friend tomorrow.",
+    "zh": "我今天很開心，明天會見到我的朋友。",
+    "topic": "time",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.time.015", "voc.time.016"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.time.b1.010",
+    "en": "It was sunny yesterday.",
+    "zh": "昨天天氣很晴朗。",
+    "topic": "time",
+    "stage": "B",
+    "grammar_point": "過去式 be動詞",
+    "vocab_ids": ["voc.time.017"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.time.b1.011",
+    "en": "I am doing homework now, but I will play later.",
+    "zh": "我現在正在寫作業，但待會兒會去玩。",
+    "topic": "time",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.time.018", "voc.time.019"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.time.b1.012",
+    "en": "My brother is always early, but I am always late.",
+    "zh": "我哥哥總是早到，但我總是遲到。",
+    "topic": "time",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.time.020", "voc.time.021"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.time.b1.013",
+    "en": "Dinner will be ready soon.",
+    "zh": "晚餐很快就準備好了。",
+    "topic": "time",
+    "stage": "B",
+    "grammar_point": "未來式 will",
+    "vocab_ids": ["voc.time.022"],
+    "audio": null,
+    "status": "published"
+  }
+]

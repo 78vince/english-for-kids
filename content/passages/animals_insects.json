@@ -1,0 +1,56 @@
+{
+  "id": "pass.animals_insects.p01",
+  "title": "A Day at the Zoo",
+  "topic": "animals_insects",
+  "text": "Last Sunday, I went to the zoo with my family. We saw a big elephant and a strong tiger. A monkey climbed up a tree, and a turtle walked very slowly. My favorite animal was the panda. It was eating leaves and looked very cute. We had a great day at the zoo!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.animals_insects.011",
+    "voc.animals_insects.028",
+    "voc.animals_insects.019",
+    "voc.animals_insects.029",
+    "voc.animals_insects.021"
+  ],
+  "questions": [
+    {
+      "id": "pass.animals_insects.p01.q1",
+      "question": "What was the writer's favorite animal?",
+      "options": [
+        "Tiger",
+        "Elephant",
+        "Panda",
+        "Monkey"
+      ],
+      "answer": "Panda",
+      "type": "single_choice",
+      "source_sentence": "My favorite animal was the panda."
+    },
+    {
+      "id": "pass.animals_insects.p01.q2",
+      "question": "What was the panda doing?",
+      "options": [
+        "Sleeping",
+        "Eating leaves",
+        "Swimming",
+        "Climbing a tree"
+      ],
+      "answer": "Eating leaves",
+      "type": "single_choice",
+      "source_sentence": "It was eating leaves and looked very cute."
+    },
+    {
+      "id": "pass.animals_insects.p01.q3",
+      "question": "What did the turtle do?",
+      "options": [
+        "Ran fast",
+        "Walked very slowly",
+        "Climbed a tree",
+        "Swam in water"
+      ],
+      "answer": "Walked very slowly",
+      "type": "single_choice",
+      "source_sentence": "A monkey climbed up a tree, and a turtle walked very slowly."
+    }
+  ],
+  "status": "published"
+}

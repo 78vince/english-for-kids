@@ -1,0 +1,230 @@
+[
+  {
+    "id": "sent.other_adjectives_2.b1.001",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "We help poor families in our town.",
+    "zh": "我們幫助鎮上貧窮的家庭。",
+    "grammar_point": "形容詞 poor",
+    "vocab_ids": [
+      "voc.other_adjectives_2.001"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.002",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "The rich man gave money to the school.",
+    "zh": "那位富有的男士捐錢給學校。",
+    "grammar_point": "形容詞 rich",
+    "vocab_ids": [
+      "voc.other_adjectives_2.002"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.003",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "The brave firefighter saved the cat.",
+    "zh": "那位勇敢的消防員救了那隻貓。",
+    "grammar_point": "形容詞 brave",
+    "vocab_ids": [
+      "voc.other_adjectives_2.003"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.004",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "Wear your helmet to stay safe.",
+    "zh": "戴上安全帽保持安全。",
+    "grammar_point": "形容詞 safe",
+    "vocab_ids": [
+      "voc.other_adjectives_2.004"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.005",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "This recipe is simple to make.",
+    "zh": "這道食譜很簡單。",
+    "grammar_point": "形容詞 simple",
+    "vocab_ids": [
+      "voc.other_adjectives_2.005"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.006",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "The room was dim and quiet.",
+    "zh": "房間昏暗又安靜。",
+    "grammar_point": "形容詞 dim",
+    "vocab_ids": [
+      "voc.other_adjectives_2.006"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.007",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "Exercise keeps you fit.",
+    "zh": "運動讓你保持健康。",
+    "grammar_point": "形容詞 fit",
+    "vocab_ids": [
+      "voc.other_adjectives_2.007"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.008",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "The road here is flat.",
+    "zh": "這裡的路很平坦。",
+    "grammar_point": "形容詞 flat",
+    "vocab_ids": [
+      "voc.other_adjectives_2.008"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.009",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "I am glad to see you.",
+    "zh": "我很高興見到你。",
+    "grammar_point": "形容詞 glad",
+    "vocab_ids": [
+      "voc.other_adjectives_2.009"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.010",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "My aunt is tall and slim.",
+    "zh": "我阿姨又高又苗條。",
+    "grammar_point": "形容詞 slim",
+    "vocab_ids": [
+      "voc.other_adjectives_2.010"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.011",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "He told a very funny joke.",
+    "zh": "他說了一個很好笑的笑話。",
+    "grammar_point": "形容詞 funny",
+    "vocab_ids": [
+      "voc.other_adjectives_2.011"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.012",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "I feel lucky today.",
+    "zh": "我今天覺得很幸運。",
+    "grammar_point": "形容詞 lucky",
+    "vocab_ids": [
+      "voc.other_adjectives_2.012"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.013",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "The playground is noisy at recess.",
+    "zh": "下課時操場很吵鬧。",
+    "grammar_point": "形容詞 noisy",
+    "vocab_ids": [
+      "voc.other_adjectives_2.013"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.014",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "My dog does silly tricks.",
+    "zh": "我的狗會做一些傻氣的把戲。",
+    "grammar_point": "形容詞 silly",
+    "vocab_ids": [
+      "voc.other_adjectives_2.014"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.015",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "This soup is very tasty.",
+    "zh": "這道湯非常美味。",
+    "grammar_point": "形容詞 tasty",
+    "vocab_ids": [
+      "voc.other_adjectives_2.015"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.016",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "The weather was awful yesterday.",
+    "zh": "昨天的天氣很糟糕。",
+    "grammar_point": "形容詞 awful",
+    "vocab_ids": [
+      "voc.other_adjectives_2.016"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.017",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "Don't be careless with your homework.",
+    "zh": "寫功課不要粗心。",
+    "grammar_point": "形容詞 careless",
+    "vocab_ids": [
+      "voc.other_adjectives_2.017"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.018",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "That toy is too expensive.",
+    "zh": "那個玩具太貴了。",
+    "grammar_point": "形容詞 expensive",
+    "vocab_ids": [
+      "voc.other_adjectives_2.018"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adjectives_2.b1.019",
+    "topic": "other_adjectives_2",
+    "stage": "B",
+    "en": "The long hike was tiring.",
+    "zh": "那趟長途健行讓人很累。",
+    "grammar_point": "形容詞 tiring",
+    "vocab_ids": [
+      "voc.other_adjectives_2.019"
+    ],
+    "status": "published"
+  }
+]

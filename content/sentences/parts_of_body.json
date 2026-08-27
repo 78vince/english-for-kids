@@ -1,0 +1,59 @@
+[
+  {
+    "id": "sent.parts_of_body.b1.001",
+    "en": "Point to your nose and your mouth.",
+    "zh": "指向你的鼻子和嘴巴。",
+    "topic": "parts_of_body",
+    "stage": "B",
+    "grammar_point": "祈使句 Point to + 所有格 + 名詞",
+    "vocab_ids": [
+      "voc.parts_of_body.005",
+      "voc.parts_of_body.006"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.parts_of_body.b1.002",
+    "en": "My head hurts, and my neck hurts too.",
+    "zh": "我的頭很痛，脖子也很痛。",
+    "topic": "parts_of_body",
+    "stage": "B",
+    "grammar_point": "hurt 表達身體不舒服，too 附加語氣",
+    "vocab_ids": [
+      "voc.parts_of_body.001",
+      "voc.parts_of_body.014"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.parts_of_body.b1.003",
+    "en": "I touch my face, my ear, and my hand.",
+    "zh": "我摸摸我的臉、耳朵和手。",
+    "topic": "parts_of_body",
+    "stage": "B",
+    "grammar_point": "並列三個名詞（A, B, and C）",
+    "vocab_ids": [
+      "voc.parts_of_body.013",
+      "voc.parts_of_body.004",
+      "voc.parts_of_body.008"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.parts_of_body.b1.004",
+    "en": "Is your foot bigger than your hand?",
+    "zh": "你的腳比手大嗎？",
+    "topic": "parts_of_body",
+    "stage": "B",
+    "grammar_point": "比較級疑問句 Is A bigger than B?",
+    "vocab_ids": [
+      "voc.parts_of_body.011",
+      "voc.parts_of_body.008"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

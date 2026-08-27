@@ -1,0 +1,42 @@
+{
+  "id": "passage.articles_determiners.001",
+  "topic": "articles_determiners",
+  "title": "A Great Day at the Park",
+  "text": "Every weekend, my family goes to the park. Today, all of us are excited because it is a sunny day. My little sister brought a ball, and my brother brought an umbrella just in case. Both of them love to run and play. There are many children at the park today, and many of them are flying kites. My mom brought much food in her basket, so we have more sandwiches than we can eat. I ask my dad, \"Can I have more juice, please?\" He smiles and gives me a cup. We stay at the park until it gets dark, and every one of us is happy!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.articles_determiners.001",
+    "voc.articles_determiners.002",
+    "voc.articles_determiners.003",
+    "voc.articles_determiners.004",
+    "voc.articles_determiners.005",
+    "voc.articles_determiners.006",
+    "voc.articles_determiners.007"
+  ],
+  "questions": [
+    {
+      "question": "What did my little sister bring to the park?",
+      "source_sentence": "My little sister brought a ball, and my brother brought an umbrella just in case.",
+      "options": ["A ball", "A kite", "An umbrella", "A cup"],
+      "answer": "A ball"
+    },
+    {
+      "question": "How often does my family go to the park?",
+      "source_sentence": "Every weekend, my family goes to the park.",
+      "options": ["Every weekend", "Every morning", "Only today", "Every night"],
+      "answer": "Every weekend"
+    },
+    {
+      "question": "Why do they have more sandwiches than they can eat?",
+      "source_sentence": "My mom brought much food in her basket, so we have more sandwiches than we can eat.",
+      "options": [
+        "Because mom brought much food",
+        "Because dad forgot the juice",
+        "Because both sisters are hungry",
+        "Because it is a sunny day"
+      ],
+      "answer": "Because mom brought much food"
+    }
+  ],
+  "status": "published"
+}

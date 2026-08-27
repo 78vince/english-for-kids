@@ -1,0 +1,51 @@
+{
+  "id": "pass.wh_words_frequency.p01",
+  "title": "Amy's Questions",
+  "topic": "wh_words_frequency",
+  "text": "My friend Amy asked me many questions today. She asked, \"What is your favorite food?\" I said pizza. She asked, \"How often do you eat pizza?\" I usually eat it on weekends, but I seldom eat it on school days. Then she asked, \"When is your birthday, and where do you want to go?\" I told her my birthday is in May, and I want to go to the zoo. She asked why I like the zoo, and I said I always love animals. Finally, she asked whose idea it was to visit, and I said it was my idea. I never get tired of talking about animals!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.wh_words_frequency.001",
+    "voc.wh_words_frequency.008",
+    "voc.wh_words_frequency.012",
+    "voc.wh_words_frequency.014",
+    "voc.wh_words_frequency.004",
+    "voc.wh_words_frequency.005",
+    "voc.wh_words_frequency.006",
+    "voc.wh_words_frequency.011",
+    "voc.wh_words_frequency.003",
+    "voc.wh_words_frequency.015"
+  ],
+  "questions": [
+    {
+      "id": "pass.wh_words_frequency.p01.q1",
+      "question": "How often does the child usually eat pizza?",
+      "options": ["On weekends", "Every day", "On school days", "Never"],
+      "answer": "On weekends",
+      "type": "single_choice",
+      "source_sentence": "I usually eat it on weekends, but I seldom eat it on school days."
+    },
+    {
+      "id": "pass.wh_words_frequency.p01.q2",
+      "question": "Where does the child want to go?",
+      "options": ["The zoo", "The library", "The park", "The beach"],
+      "answer": "The zoo",
+      "type": "single_choice",
+      "source_sentence": "I told her my birthday is in May, and I want to go to the zoo."
+    },
+    {
+      "id": "pass.wh_words_frequency.p01.q3",
+      "question": "Why does the child like the zoo?",
+      "options": [
+        "Because the child always loves animals",
+        "Because it is close to home",
+        "Because it has pizza",
+        "Because it is a school day"
+      ],
+      "answer": "Because the child always loves animals",
+      "type": "single_choice",
+      "source_sentence": "She asked why I like the zoo, and I said I always love animals."
+    }
+  ],
+  "status": "published"
+}

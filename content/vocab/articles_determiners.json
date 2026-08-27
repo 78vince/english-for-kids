@@ -1,0 +1,149 @@
+[
+  {
+    "id": "voc.articles_determiners.001",
+    "en": "a/an",
+    "zh": "一個（不特定的）",
+    "pos": "冠詞",
+    "topic": "articles_determiners",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I have a dog and an apple.",
+      "zh": "我有一隻狗和一顆蘋果。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Articles & Determiners",
+    "status": "published"
+  },
+  {
+    "id": "voc.articles_determiners.002",
+    "en": "all",
+    "zh": "全部、所有的",
+    "pos": "限定詞",
+    "topic": "articles_determiners",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "All the students are here.",
+      "zh": "所有學生都在這裡。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Articles & Determiners",
+    "status": "published"
+  },
+  {
+    "id": "voc.articles_determiners.003",
+    "en": "both",
+    "zh": "兩者都",
+    "pos": "限定詞",
+    "topic": "articles_determiners",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Both of my brothers like soccer.",
+      "zh": "我的兩個哥哥都喜歡足球。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Articles & Determiners",
+    "status": "published"
+  },
+  {
+    "id": "voc.articles_determiners.004",
+    "en": "every",
+    "zh": "每一個",
+    "pos": "限定詞",
+    "topic": "articles_determiners",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I brush my teeth every morning.",
+      "zh": "我每天早上都刷牙。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Articles & Determiners",
+    "status": "published"
+  },
+  {
+    "id": "voc.articles_determiners.005",
+    "en": "many",
+    "zh": "許多（可數）",
+    "pos": "限定詞",
+    "topic": "articles_determiners",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "There are many books on the desk.",
+      "zh": "桌上有許多書。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Articles & Determiners",
+    "status": "published"
+  },
+  {
+    "id": "voc.articles_determiners.006",
+    "en": "more",
+    "zh": "更多",
+    "pos": "限定詞",
+    "topic": "articles_determiners",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Can I have more water, please?",
+      "zh": "可以再給我一些水嗎？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Articles & Determiners",
+    "status": "published"
+  },
+  {
+    "id": "voc.articles_determiners.007",
+    "en": "much",
+    "zh": "許多（不可數）",
+    "pos": "限定詞",
+    "topic": "articles_determiners",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I don't have much time.",
+      "zh": "我沒有太多時間。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Articles & Determiners",
+    "status": "published"
+  }
+]

@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Vocab",
+  "type": "object",
+  "required": [
+    "id",
+    "en",
+    "zh",
+    "pos",
+    "topic",
+    "scope",
+    "difficulty_tier",
+    "source",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^voc\\.[a-z_]+\\.[0-9]{3}$"
+    },
+    "en": {
+      "type": "string"
+    },
+    "zh": {
+      "type": "string"
+    },
+    "pos": {
+      "type": "string"
+    },
+    "topic": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "const": "elementary_core"
+    },
+    "difficulty_tier": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3
+    },
+    "ipa": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "audio": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "image": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sense_of": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "related_forms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "example_sentence": {
+      "description": "這個單字專屬的例句（跟 content/sentences/<topic>.json 的 Stage B 多字綜合例句不同，這裡只圍繞這一個單字本身），給「字卡記憶」學習單元用；沒有的話填 null。status 沿用 draft/reviewed/published 慣例，跟外層 vocab 自己的 status 分開追蹤（例句可能是後補的草稿，即使外層單字本身已經是 published）。",
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "en",
+        "zh",
+        "status"
+      ],
+      "properties": {
+        "en": {
+          "type": "string"
+        },
+        "zh": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "reviewed",
+            "published"
+          ]
+        }
+      }
+    },
+    "source": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "reviewed",
+        "published"
+      ]
+    }
+  }
+}

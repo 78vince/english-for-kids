@@ -1,0 +1,61 @@
+{
+  "id": "pass.bathroom.p01",
+  "title": "Getting Ready Every Morning",
+  "topic": "bathroom",
+  "text": "Every morning, I wash my face and comb my hair in front of the mirror. Then I brush my teeth with my toothbrush and toothpaste. My mom uses shampoo and soap when she takes a shower. After that, I put on my slippers and use a towel to wipe my hands. I always remember to wash my hands before breakfast!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.bathroom.010",
+    "voc.bathroom.009",
+    "voc.bathroom.001",
+    "voc.bathroom.002",
+    "voc.bathroom.004",
+    "voc.bathroom.003",
+    "voc.bathroom.007",
+    "voc.bathroom.015",
+    "voc.bathroom.005",
+    "voc.bathroom.019"
+  ],
+  "questions": [
+    {
+      "id": "pass.bathroom.p01.q1",
+      "question": "Where does the child comb their hair?",
+      "options": [
+        "In front of the mirror",
+        "In the bathtub",
+        "On the toilet",
+        "In the kitchen"
+      ],
+      "answer": "In front of the mirror",
+      "type": "single_choice",
+      "source_sentence": "Every morning, I wash my face and comb my hair in front of the mirror."
+    },
+    {
+      "id": "pass.bathroom.p01.q2",
+      "question": "What does mom use when she takes a shower?",
+      "options": [
+        "Shampoo and soap",
+        "A hairbrush",
+        "Toilet paper",
+        "Mouthwash"
+      ],
+      "answer": "Shampoo and soap",
+      "type": "single_choice",
+      "source_sentence": "My mom uses shampoo and soap when she takes a shower."
+    },
+    {
+      "id": "pass.bathroom.p01.q3",
+      "question": "What does the child use to wipe their hands?",
+      "options": [
+        "A towel",
+        "A comb",
+        "Toothpaste",
+        "Slippers"
+      ],
+      "answer": "A towel",
+      "type": "single_choice",
+      "source_sentence": "After that, I put on my slippers and use a towel to wipe my hands."
+    }
+  ],
+  "status": "published"
+}

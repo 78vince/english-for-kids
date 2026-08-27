@@ -1,0 +1,317 @@
+[
+  {
+    "id": "voc.wh_words_frequency.001",
+    "en": "what",
+    "zh": "什麼",
+    "pos": "疑問詞",
+    "topic": "wh_words_frequency",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "What is your name?",
+      "zh": "你叫什麼名字？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Wh-Words & Frequency",
+    "status": "published"
+  },
+  {
+    "id": "voc.wh_words_frequency.002",
+    "en": "who",
+    "zh": "誰",
+    "pos": "疑問詞",
+    "topic": "wh_words_frequency",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Who is that boy?",
+      "zh": "那個男孩是誰？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Wh-Words & Frequency",
+    "status": "published"
+  },
+  {
+    "id": "voc.wh_words_frequency.003",
+    "en": "whose",
+    "zh": "誰的",
+    "pos": "疑問詞",
+    "topic": "wh_words_frequency",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Whose bag is this?",
+      "zh": "這是誰的書包？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Wh-Words & Frequency",
+    "status": "published"
+  },
+  {
+    "id": "voc.wh_words_frequency.004",
+    "en": "when",
+    "zh": "什麼時候",
+    "pos": "疑問詞",
+    "topic": "wh_words_frequency",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "When is your birthday?",
+      "zh": "你的生日是什麼時候？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Wh-Words & Frequency",
+    "status": "published"
+  },
+  {
+    "id": "voc.wh_words_frequency.005",
+    "en": "where",
+    "zh": "哪裡",
+    "pos": "疑問詞",
+    "topic": "wh_words_frequency",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Where is the library?",
+      "zh": "圖書館在哪裡？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Wh-Words & Frequency",
+    "status": "published"
+  },
+  {
+    "id": "voc.wh_words_frequency.006",
+    "en": "why",
+    "zh": "為什麼",
+    "pos": "疑問詞",
+    "topic": "wh_words_frequency",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Why are you sad?",
+      "zh": "你為什麼難過？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Wh-Words & Frequency",
+    "status": "published"
+  },
+  {
+    "id": "voc.wh_words_frequency.007",
+    "en": "how",
+    "zh": "如何、怎麼樣",
+    "pos": "疑問詞",
+    "topic": "wh_words_frequency",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "How are you today?",
+      "zh": "你今天好嗎？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Wh-Words & Frequency",
+    "status": "published"
+  },
+  {
+    "id": "voc.wh_words_frequency.008",
+    "en": "how often",
+    "zh": "多常、多久一次",
+    "pos": "疑問詞片語",
+    "topic": "wh_words_frequency",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "How often do you play soccer?",
+      "zh": "你多久踢一次足球？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Wh-Words & Frequency",
+    "status": "published"
+  },
+  {
+    "id": "voc.wh_words_frequency.009",
+    "en": "which",
+    "zh": "哪一個",
+    "pos": "疑問詞",
+    "topic": "wh_words_frequency",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Which cup is yours?",
+      "zh": "哪一個杯子是你的？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Wh-Words & Frequency",
+    "status": "published"
+  },
+  {
+    "id": "voc.wh_words_frequency.010",
+    "en": "whether",
+    "zh": "是否",
+    "pos": "連接詞",
+    "topic": "wh_words_frequency",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I don't know whether it will rain.",
+      "zh": "我不知道是否會下雨。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Wh-Words & Frequency",
+    "status": "published"
+  },
+  {
+    "id": "voc.wh_words_frequency.011",
+    "en": "always",
+    "zh": "總是、永遠",
+    "pos": "副詞",
+    "topic": "wh_words_frequency",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I always wash my hands.",
+      "zh": "我總是洗手。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Wh-Words & Frequency",
+    "status": "published"
+  },
+  {
+    "id": "voc.wh_words_frequency.012",
+    "en": "usually",
+    "zh": "通常",
+    "pos": "副詞",
+    "topic": "wh_words_frequency",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I usually go to bed at nine.",
+      "zh": "我通常九點上床睡覺。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Wh-Words & Frequency",
+    "status": "published"
+  },
+  {
+    "id": "voc.wh_words_frequency.013",
+    "en": "sometimes",
+    "zh": "有時候",
+    "pos": "副詞",
+    "topic": "wh_words_frequency",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Sometimes I walk to school.",
+      "zh": "我有時候走路上學。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Wh-Words & Frequency",
+    "status": "published"
+  },
+  {
+    "id": "voc.wh_words_frequency.014",
+    "en": "seldom",
+    "zh": "很少",
+    "pos": "副詞",
+    "topic": "wh_words_frequency",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "He seldom watches TV.",
+      "zh": "他很少看電視。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Wh-Words & Frequency",
+    "status": "published"
+  },
+  {
+    "id": "voc.wh_words_frequency.015",
+    "en": "never",
+    "zh": "從不、絕不",
+    "pos": "副詞",
+    "topic": "wh_words_frequency",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I never eat breakfast in bed.",
+      "zh": "我從不在床上吃早餐。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Wh-Words & Frequency",
+    "status": "published"
+  }
+]

@@ -1,0 +1,101 @@
+[
+  {
+    "id": "sent.wh_words_frequency.b1.001",
+    "en": "What is your name, and who is your best friend?",
+    "zh": "你叫什麼名字？你最好的朋友是誰？",
+    "topic": "wh_words_frequency",
+    "stage": "B",
+    "grammar_point": "Wh-question: what / who",
+    "vocab_ids": ["voc.wh_words_frequency.001", "voc.wh_words_frequency.002"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.wh_words_frequency.b1.002",
+    "en": "Whose bag is this? Is it yours?",
+    "zh": "這是誰的書包？是你的嗎？",
+    "topic": "wh_words_frequency",
+    "stage": "B",
+    "grammar_point": "Wh-question: whose",
+    "vocab_ids": ["voc.wh_words_frequency.003"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.wh_words_frequency.b1.003",
+    "en": "When is your birthday, and where is the party?",
+    "zh": "你的生日是什麼時候？派對在哪裡？",
+    "topic": "wh_words_frequency",
+    "stage": "B",
+    "grammar_point": "Wh-question: when / where",
+    "vocab_ids": ["voc.wh_words_frequency.004", "voc.wh_words_frequency.005"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.wh_words_frequency.b1.004",
+    "en": "Why are you sad, and how can I help?",
+    "zh": "你為什麼難過？我要怎麼幫你？",
+    "topic": "wh_words_frequency",
+    "stage": "B",
+    "grammar_point": "Wh-question: why / how",
+    "vocab_ids": ["voc.wh_words_frequency.006", "voc.wh_words_frequency.007"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.wh_words_frequency.b1.005",
+    "en": "How often do you play soccer, and which day do you like best?",
+    "zh": "你多久踢一次足球？你最喜歡哪一天？",
+    "topic": "wh_words_frequency",
+    "stage": "B",
+    "grammar_point": "Wh-question: how often / which",
+    "vocab_ids": ["voc.wh_words_frequency.008", "voc.wh_words_frequency.009"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.wh_words_frequency.b1.006",
+    "en": "I don't know whether it will rain today.",
+    "zh": "我不知道今天是否會下雨。",
+    "topic": "wh_words_frequency",
+    "stage": "B",
+    "grammar_point": "know + whether 子句",
+    "vocab_ids": ["voc.wh_words_frequency.010"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.wh_words_frequency.b1.007",
+    "en": "I always wash my hands, and I usually brush my teeth twice a day.",
+    "zh": "我總是洗手，通常一天刷兩次牙。",
+    "topic": "wh_words_frequency",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.wh_words_frequency.011", "voc.wh_words_frequency.012"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.wh_words_frequency.b1.008",
+    "en": "Sometimes I walk to school, but I seldom ride my bike.",
+    "zh": "我有時候走路上學，但很少騎腳踏車。",
+    "topic": "wh_words_frequency",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.wh_words_frequency.013", "voc.wh_words_frequency.014"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.wh_words_frequency.b1.009",
+    "en": "I never eat breakfast in bed.",
+    "zh": "我從不在床上吃早餐。",
+    "topic": "wh_words_frequency",
+    "stage": "B",
+    "grammar_point": "never + 動詞",
+    "vocab_ids": ["voc.wh_words_frequency.015"],
+    "audio": null,
+    "status": "published"
+  }
+]

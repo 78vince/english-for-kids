@@ -1,0 +1,149 @@
+[
+  {
+    "id": "voc.pronouns.001",
+    "en": "I",
+    "zh": "我",
+    "pos": "代名詞",
+    "topic": "pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Pronouns",
+    "status": "published",
+    "example_sentence": {
+      "en": "I am happy today.",
+      "zh": "我今天很開心。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.pronouns.002",
+    "en": "you",
+    "zh": "你、你們",
+    "pos": "代名詞",
+    "topic": "pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Pronouns",
+    "status": "published",
+    "example_sentence": {
+      "en": "How are you today?",
+      "zh": "你今天好嗎？",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.pronouns.003",
+    "en": "he",
+    "zh": "他",
+    "pos": "代名詞",
+    "topic": "pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Pronouns",
+    "status": "published",
+    "example_sentence": {
+      "en": "He is my friend.",
+      "zh": "他是我的朋友。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.pronouns.004",
+    "en": "she",
+    "zh": "她",
+    "pos": "代名詞",
+    "topic": "pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Pronouns",
+    "status": "published",
+    "example_sentence": {
+      "en": "She is happy today.",
+      "zh": "她今天很開心。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.pronouns.005",
+    "en": "we",
+    "zh": "我們",
+    "pos": "代名詞",
+    "topic": "pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Pronouns",
+    "status": "published",
+    "example_sentence": {
+      "en": "We are friends.",
+      "zh": "我們是朋友。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.pronouns.006",
+    "en": "they",
+    "zh": "他們、她們、它們",
+    "pos": "代名詞",
+    "topic": "pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Pronouns",
+    "status": "published",
+    "example_sentence": {
+      "en": "They are in my class.",
+      "zh": "他們在我班上。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.pronouns.007",
+    "en": "it",
+    "zh": "牠、它",
+    "pos": "代名詞",
+    "topic": "pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Pronouns",
+    "status": "published",
+    "example_sentence": {
+      "en": "This is my book. It is new.",
+      "zh": "這是我的書，它是新的。",
+      "status": "draft"
+    }
+  }
+]

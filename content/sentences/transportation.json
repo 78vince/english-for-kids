@@ -1,0 +1,58 @@
+[
+  {
+    "id": "sent.transportation.b1.001",
+    "en": "I go to school by bus, but my sister takes a bike.",
+    "zh": "我搭公車上學，但我姊姊騎腳踏車。",
+    "topic": "transportation",
+    "stage": "B",
+    "grammar_point": "by + 交通工具 + 對比句",
+    "vocab_ids": [
+      "voc.transportation.002",
+      "voc.transportation.004"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.transportation.b1.002",
+    "en": "We take a train and a taxi to the airport.",
+    "zh": "我們搭火車和計程車去機場。",
+    "topic": "transportation",
+    "stage": "B",
+    "grammar_point": "take + 交通工具",
+    "vocab_ids": [
+      "voc.transportation.003",
+      "voc.transportation.005"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.transportation.b1.003",
+    "en": "The car is faster than the truck.",
+    "zh": "汽車比卡車快。",
+    "topic": "transportation",
+    "stage": "B",
+    "grammar_point": "比較句型 faster than",
+    "vocab_ids": [
+      "voc.transportation.001",
+      "voc.transportation.006"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.transportation.b1.004",
+    "en": "I want to ride in an airplane and a boat.",
+    "zh": "我想搭飛機和船。",
+    "topic": "transportation",
+    "stage": "B",
+    "grammar_point": "want to + 動詞",
+    "vocab_ids": [
+      "voc.transportation.007",
+      "voc.transportation.008"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

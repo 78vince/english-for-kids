@@ -1,0 +1,338 @@
+[
+  {
+    "id": "voc.clubs_hobbies.001",
+    "en": "drawing",
+    "zh": "畫畫（線稿）",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Drawing is my favorite hobby.",
+      "zh": "畫畫是我最喜歡的嗜好。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  },
+  {
+    "id": "voc.clubs_hobbies.002",
+    "en": "painting",
+    "zh": "繪畫、上色作畫",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We tried painting with watercolors.",
+      "zh": "我們試著用水彩畫畫。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  },
+  {
+    "id": "voc.clubs_hobbies.003",
+    "en": "singing",
+    "zh": "唱歌",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "She is good at singing.",
+      "zh": "她很會唱歌。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  },
+  {
+    "id": "voc.clubs_hobbies.004",
+    "en": "dancing",
+    "zh": "跳舞",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Dancing makes me happy.",
+      "zh": "跳舞讓我很開心。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  },
+  {
+    "id": "voc.clubs_hobbies.005",
+    "en": "music",
+    "zh": "音樂",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I listen to music every day.",
+      "zh": "我每天都聽音樂。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  },
+  {
+    "id": "voc.clubs_hobbies.006",
+    "en": "guitar",
+    "zh": "吉他",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "He plays the guitar very well.",
+      "zh": "他吉他彈得很好。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  },
+  {
+    "id": "voc.clubs_hobbies.007",
+    "en": "piano",
+    "zh": "鋼琴",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "She practices the piano every evening.",
+      "zh": "她每天晚上都練習彈鋼琴。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  },
+  {
+    "id": "voc.clubs_hobbies.008",
+    "en": "chess club",
+    "zh": "棋藝社",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My brother joined the chess club.",
+      "zh": "我哥哥加入了棋藝社。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  },
+  {
+    "id": "voc.clubs_hobbies.009",
+    "en": "book club",
+    "zh": "讀書會",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We talk about stories in book club.",
+      "zh": "我們在讀書會裡討論故事。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  },
+  {
+    "id": "voc.clubs_hobbies.010",
+    "en": "art club",
+    "zh": "美術社",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I join the art club every Tuesday.",
+      "zh": "我每個星期二都會去美術社。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  },
+  {
+    "id": "voc.clubs_hobbies.011",
+    "en": "photography",
+    "zh": "攝影",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Photography is my hobby.",
+      "zh": "攝影是我的嗜好。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  },
+  {
+    "id": "voc.clubs_hobbies.012",
+    "en": "cooking",
+    "zh": "烹飪",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My mom likes cooking new dishes.",
+      "zh": "我媽媽喜歡烹飪新料理。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  },
+  {
+    "id": "voc.clubs_hobbies.013",
+    "en": "choir",
+    "zh": "合唱團",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I sing in the school choir.",
+      "zh": "我在學校合唱團唱歌。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  },
+  {
+    "id": "voc.clubs_hobbies.014",
+    "en": "gardening",
+    "zh": "園藝",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My grandma enjoys gardening.",
+      "zh": "我奶奶喜歡做園藝。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  },
+  {
+    "id": "voc.clubs_hobbies.015",
+    "en": "collecting",
+    "zh": "收集",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Collecting stamps is fun.",
+      "zh": "收集郵票很有趣。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  },
+  {
+    "id": "voc.clubs_hobbies.016",
+    "en": "origami",
+    "zh": "摺紙",
+    "pos": "名詞",
+    "topic": "clubs_hobbies",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We made origami cranes in class.",
+      "zh": "我們在課堂上摺了紙鶴。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Clubs & Hobbies",
+    "status": "published"
+  }
+]

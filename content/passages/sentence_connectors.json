@@ -1,0 +1,50 @@
+{
+  "id": "passage.sentence_connectors.001",
+  "topic": "sentence_connectors",
+  "title": "My Busy Saturday",
+  "text": "Hello! Today is Saturday, and I am very excited because I don't have to go to school. My little brother is still asleep, but I am already awake. My parents are proud that I want to help. I can make pancakes, so I decide to surprise my family. Although the kitchen is messy, I clean it up before mom wakes up. Mom says, \"Excuse me, do you need help?\" I say, \"No, thank you. I have enough eggs and milk.\" My little sister and I set the table together. We should finish before everyone gets hungry. Dad says we must wash our hands first. Finally, breakfast is ready, and it looks amazing! After we eat, we will go to the park. It may rain later, so we bring an umbrella just in case. Before we leave, I wave and say, \"Goodbye, house! Please lock the door!\"",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.sentence_connectors.001",
+    "voc.sentence_connectors.002",
+    "voc.sentence_connectors.003",
+    "voc.sentence_connectors.004",
+    "voc.sentence_connectors.005",
+    "voc.sentence_connectors.006",
+    "voc.sentence_connectors.007",
+    "voc.sentence_connectors.008",
+    "voc.sentence_connectors.009",
+    "voc.sentence_connectors.010",
+    "voc.sentence_connectors.011",
+    "voc.sentence_connectors.012",
+    "voc.sentence_connectors.013",
+    "voc.sentence_connectors.014",
+    "voc.sentence_connectors.015",
+    "voc.sentence_connectors.016",
+    "voc.sentence_connectors.017",
+    "voc.sentence_connectors.018",
+    "voc.sentence_connectors.019",
+    "voc.sentence_connectors.020"
+  ],
+  "questions": [
+    {
+      "question": "What does the narrator want to make for breakfast?",
+      "source_sentence": "I can make pancakes, so I decide to surprise my family.",
+      "options": ["Pancakes", "Eggs", "Toast", "Rice"],
+      "answer": "Pancakes"
+    },
+    {
+      "question": "What does Dad say everyone must do first?",
+      "source_sentence": "Dad says we must wash our hands first.",
+      "options": ["Wash their hands", "Set the table", "Clean the kitchen", "Lock the door"],
+      "answer": "Wash their hands"
+    },
+    {
+      "question": "What does the narrator say before leaving the house?",
+      "source_sentence": "Before we leave, I wave and say, \"Goodbye, house! Please lock the door!\"",
+      "options": ["Goodbye, house!", "Hello, house!", "Excuse me, house!", "Thank you, house!"],
+      "answer": "Goodbye, house!"
+    }
+  ],
+  "status": "published"
+}

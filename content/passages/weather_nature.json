@@ -1,0 +1,58 @@
+{
+  "id": "pass.weather_nature.p01",
+  "title": "A Rainy Day",
+  "topic": "weather_nature",
+  "text": "Today is a rainy day. The sky is gray and cloudy. I hear the wind outside my window. I like rainy days because I can stay home and read books. My mom says the weather will be sunny and warm tomorrow. I hope we can see a rainbow!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.weather_nature.007",
+    "voc.weather_nature.005",
+    "voc.weather_nature.008",
+    "voc.weather_nature.010",
+    "voc.weather_nature.002",
+    "voc.weather_nature.014",
+    "voc.weather_nature.015"
+  ],
+  "questions": [
+    {
+      "id": "pass.weather_nature.p01.q1",
+      "question": "What is the weather like today?",
+      "options": [
+        "Sunny",
+        "Rainy",
+        "Snowy",
+        "Windy"
+      ],
+      "answer": "Rainy",
+      "type": "single_choice",
+      "source_sentence": "Today is a rainy day."
+    },
+    {
+      "id": "pass.weather_nature.p01.q2",
+      "question": "Why does the child like rainy days?",
+      "options": [
+        "She can play outside",
+        "She can stay home and read books",
+        "She can go swimming",
+        "She can ride her bike"
+      ],
+      "answer": "She can stay home and read books",
+      "type": "single_choice",
+      "source_sentence": "I like rainy days because I can stay home and read books."
+    },
+    {
+      "id": "pass.weather_nature.p01.q3",
+      "question": "What will the weather be like tomorrow?",
+      "options": [
+        "Cold and windy",
+        "Sunny and warm",
+        "Rainy and cloudy",
+        "Snowy and cold"
+      ],
+      "answer": "Sunny and warm",
+      "type": "single_choice",
+      "source_sentence": "My mom says the weather will be sunny and warm tomorrow."
+    }
+  ],
+  "status": "published"
+}

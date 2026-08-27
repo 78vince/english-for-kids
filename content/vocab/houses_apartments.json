@@ -1,0 +1,422 @@
+[
+  {
+    "id": "voc.houses_apartments.019",
+    "en": "stairs",
+    "zh": "樓梯",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "Be careful on the stairs.",
+      "zh": "在樓梯上要小心。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.020",
+    "en": "balcony",
+    "zh": "陽台",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "We hang clothes on the balcony.",
+      "zh": "我們在陽台曬衣服。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.007",
+    "en": "living room",
+    "zh": "客廳",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "We watch TV in the living room.",
+      "zh": "我們在客廳看電視。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.002",
+    "en": "apartment",
+    "zh": "公寓",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "They live in an apartment.",
+      "zh": "他們住在一間公寓裡。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.009",
+    "en": "window",
+    "zh": "窗戶",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "Open the window, please.",
+      "zh": "請打開窗戶。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.001",
+    "en": "house",
+    "zh": "房子",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "We live in a small house.",
+      "zh": "我們住在一間小房子裡。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.004",
+    "en": "bedroom",
+    "zh": "臥室",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "My bedroom is upstairs.",
+      "zh": "我的臥室在樓上。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.012",
+    "en": "roof",
+    "zh": "屋頂",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "A bird sits on the roof.",
+      "zh": "一隻鳥停在屋頂上。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.015",
+    "en": "chair",
+    "zh": "椅子",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "Please sit on the chair.",
+      "zh": "請坐在椅子上。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.006",
+    "en": "kitchen",
+    "zh": "廚房",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "Mom is cooking in the kitchen.",
+      "zh": "媽媽正在廚房煮飯。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.016",
+    "en": "bed",
+    "zh": "床",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "I sleep in my bed.",
+      "zh": "我在我的床上睡覺。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.008",
+    "en": "door",
+    "zh": "門",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "Please close the door.",
+      "zh": "請把門關上。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.018",
+    "en": "key",
+    "zh": "鑰匙",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "I lost my key.",
+      "zh": "我把鑰匙弄丟了。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.005",
+    "en": "bathroom",
+    "zh": "浴室",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "The bathroom is next to my room.",
+      "zh": "浴室在我的房間旁邊。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.013",
+    "en": "garden",
+    "zh": "花園",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "We grow flowers in the garden.",
+      "zh": "我們在花園種花。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.003",
+    "en": "room",
+    "zh": "房間",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "This room is very clean.",
+      "zh": "這個房間很乾淨。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.010",
+    "en": "wall",
+    "zh": "牆壁",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "There is a picture on the wall.",
+      "zh": "牆上有一幅畫。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.017",
+    "en": "sofa",
+    "zh": "沙發",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "We sit on the sofa together.",
+      "zh": "我們一起坐在沙發上。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.014",
+    "en": "table",
+    "zh": "桌子",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "Put the plate on the table.",
+      "zh": "把盤子放在桌上。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.houses_apartments.011",
+    "en": "floor",
+    "zh": "地板",
+    "pos": "名詞",
+    "topic": "houses_apartments",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Houses & apartments",
+    "status": "published",
+    "example_sentence": {
+      "en": "The floor is very clean.",
+      "zh": "地板很乾淨。",
+      "status": "draft"
+    }
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "id": "sent.family.b1.001",
+    "en": "This is my father. He is a doctor.",
+    "zh": "這是我爸爸。他是一位醫生。",
+    "topic": "family",
+    "stage": "B",
+    "grammar_point": "This is + 人稱代名詞 he/she",
+    "vocab_ids": [
+      "voc.family.008"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.family.b1.002",
+    "en": "I have one brother and one sister.",
+    "zh": "我有一個哥哥（弟弟）和一個姐姐（妹妹）。",
+    "topic": "family",
+    "stage": "B",
+    "grammar_point": "have + 數量詞",
+    "vocab_ids": [
+      "voc.family.002",
+      "voc.family.019"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.family.b1.003",
+    "en": "My grandmother and grandfather live with us.",
+    "zh": "我的奶奶和爺爺跟我們住在一起。",
+    "topic": "family",
+    "stage": "B",
+    "grammar_point": "live with + 受格代名詞",
+    "vocab_ids": [
+      "voc.family.011",
+      "voc.family.009",
+      "voc.family.014"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.family.b1.004",
+    "en": "Who is your favorite family member?",
+    "zh": "你最喜歡的家人是誰？",
+    "topic": "family",
+    "stage": "B",
+    "grammar_point": "Wh-question: who",
+    "vocab_ids": [
+      "voc.family.007"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

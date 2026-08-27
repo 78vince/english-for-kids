@@ -1,0 +1,32 @@
+{
+  "id": "unit.unit_zero",
+  "name_en": "Classroom Basics",
+  "name_zh": "教室常用語（單元 0）",
+  "description_zh": "所有主題單元之前的新手起手式。原始規劃（docs/content-plan.md 3.5 節）涵蓋感嘆詞、基本代名詞、數字 1-10、顏色四類，實作時跟使用者確認過：Colors、Numbers 已經是獨立主題，單元 0 不重複收錄。2026-08-22 再次調整：數字改由獨立的 Numbers 主題負責，單元 0 限縮聚焦在「基本問候」共 20 個單字。2026-08-23 再拆成兩個主題：**Greetings 問候與禮貌用語**（13 字：招呼語／感嘆詞 hi／hello／bye／sorry、禮貌用語 please／thank you／you're welcome／excuse me、時段問候 good morning／good afternoon／good evening／good night、課堂求助句 can you help me，見 content/vocab/greetings.json）跟 **Pronouns 代名詞**（7 字：I／you／he／she／we／they／it，見 content/vocab/pronouns.json），拆分前後 20 個字的英文字集合完全一樣，只是重新分組。兩個主題都跟其他主題一樣走完整 Stage A→B→C→D，首頁「單元 0」區塊底下同時顯示兩張主題卡，不強制要求先完成才能玩其他單元（維持跟其他已上架主題一樣自由選）；「暖身起步」徽章（OB-02）改成要求兩個主題都完成 Stage A 單字配對才算達成。",
+  "vocab_ids": [
+    "voc.greetings.001",
+    "voc.greetings.002",
+    "voc.greetings.003",
+    "voc.greetings.004",
+    "voc.greetings.005",
+    "voc.greetings.006",
+    "voc.greetings.007",
+    "voc.greetings.008",
+    "voc.greetings.009",
+    "voc.greetings.010",
+    "voc.greetings.011",
+    "voc.greetings.012",
+    "voc.greetings.013",
+    "voc.pronouns.001",
+    "voc.pronouns.002",
+    "voc.pronouns.003",
+    "voc.pronouns.004",
+    "voc.pronouns.005",
+    "voc.pronouns.006",
+    "voc.pronouns.007"
+  ],
+  "required_before": [],
+  "unlocks": "none",
+  "status": "published",
+  "note": "非正式擴充結構，尚無對應 JSON Schema，且目前 app/src/main.ts 沒有實際讀取這個檔案（只是內容規劃的文件性記錄）；單元 0 底下的 greetings／pronouns 兩個主題本身是透過跟其他主題一樣的 TOPICS 陣列＋ content/{vocab,sentences,passages,glossary}/{greetings,pronouns}.json 接進遊戲的，UNITS 陣列裡 unit0 的 topicFileKeys 是 [\"greetings\", \"pronouns\"]。日後可依 content/schema/ 慣例補上 unit.schema.json 並讓程式碼真的讀取這份清單。"
+}

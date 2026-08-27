@@ -1,0 +1,422 @@
+[
+  {
+    "id": "voc.emotions.001",
+    "en": "happy",
+    "zh": "開心的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.emotions.012"],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "I feel happy today.",
+      "zh": "我今天覺得很開心。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.002",
+    "en": "sad",
+    "zh": "難過的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "She looks sad.",
+      "zh": "她看起來很難過。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.003",
+    "en": "angry",
+    "zh": "生氣的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.emotions.018"],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "Don't be angry with me.",
+      "zh": "不要對我生氣。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.004",
+    "en": "tired",
+    "zh": "疲累的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "I am tired after school.",
+      "zh": "放學後我覺得很累。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.005",
+    "en": "hungry",
+    "zh": "飢餓的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "I am hungry now.",
+      "zh": "我現在很餓。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.006",
+    "en": "excited",
+    "zh": "興奮的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "I am excited about the trip.",
+      "zh": "我對這趟旅行很興奮。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.007",
+    "en": "scared",
+    "zh": "害怕的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.emotions.017"],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "The little boy is scared of the dark.",
+      "zh": "這個小男孩怕黑。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.008",
+    "en": "bored",
+    "zh": "無聊的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "I feel bored at home.",
+      "zh": "我在家覺得很無聊。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.009",
+    "en": "surprised",
+    "zh": "驚訝的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "She was surprised by the gift.",
+      "zh": "她收到禮物時很驚訝。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.010",
+    "en": "worried",
+    "zh": "擔心的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "Mom is worried about me.",
+      "zh": "媽媽很擔心我。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.011",
+    "en": "nervous",
+    "zh": "緊張的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "I feel nervous before the test.",
+      "zh": "考試前我覺得很緊張。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.012",
+    "en": "glad",
+    "zh": "高興的、樂意的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.emotions.001"],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "I'm glad to see you.",
+      "zh": "很高興見到你。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.013",
+    "en": "calm",
+    "zh": "平靜的、冷靜的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "Please stay calm.",
+      "zh": "請保持冷靜。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.014",
+    "en": "proud",
+    "zh": "感到驕傲的、榮幸的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "My parents are proud of me.",
+      "zh": "我的爸媽以我為榮。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.015",
+    "en": "fine",
+    "zh": "很好的、沒事的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.emotions.016"],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "Don't worry, I'm fine.",
+      "zh": "別擔心，我很好。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.016",
+    "en": "okay",
+    "zh": "沒事的、還好（口語說法，＝ fine）",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.emotions.015"],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "Are you okay?",
+      "zh": "你還好嗎？",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.017",
+    "en": "afraid",
+    "zh": "害怕的、擔心的（跟 scared 同義，常用 afraid of...）",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.emotions.007"],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "I'm afraid of spiders.",
+      "zh": "我怕蜘蛛。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.018",
+    "en": "mad",
+    "zh": "生氣的、發狂的（口語說法，＝ angry）",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.emotions.003"],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "My mom is mad at me.",
+      "zh": "我媽媽在生我的氣。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.019",
+    "en": "upset",
+    "zh": "心煩意亂的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "She is upset about the test.",
+      "zh": "她因為考試心煩意亂。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.emotions.020",
+    "en": "lonely",
+    "zh": "孤單的、寂寞的",
+    "pos": "形容詞",
+    "topic": "emotions",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Emotions",
+    "status": "published",
+    "example_sentence": {
+      "en": "He feels lonely at home.",
+      "zh": "他在家覺得很孤單。",
+      "status": "draft"
+    }
+  }
+]

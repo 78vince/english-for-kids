@@ -1,0 +1,57 @@
+[
+  {
+    "id": "sent.pronouns.b1.001",
+    "en": "I am happy. You are my friend.",
+    "zh": "我很開心。你是我的朋友。",
+    "topic": "pronouns",
+    "stage": "B",
+    "grammar_point": "主詞代名詞（第一、第二人稱）",
+    "vocab_ids": [
+      "voc.pronouns.001",
+      "voc.pronouns.002"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.pronouns.b1.002",
+    "en": "He is tall. She is short.",
+    "zh": "他很高。她很矮。",
+    "topic": "pronouns",
+    "stage": "B",
+    "grammar_point": "主詞代名詞（第三人稱單數）",
+    "vocab_ids": [
+      "voc.pronouns.003",
+      "voc.pronouns.004"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.pronouns.b1.003",
+    "en": "We are classmates. They are teachers.",
+    "zh": "我們是同班同學。他們是老師。",
+    "topic": "pronouns",
+    "stage": "B",
+    "grammar_point": "主詞代名詞（複數）",
+    "vocab_ids": [
+      "voc.pronouns.005",
+      "voc.pronouns.006"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.pronouns.b1.004",
+    "en": "It is a cat. It is cute.",
+    "zh": "牠是一隻貓。牠很可愛。",
+    "topic": "pronouns",
+    "stage": "B",
+    "grammar_point": "主詞代名詞（事物／動物）",
+    "vocab_ids": [
+      "voc.pronouns.007"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

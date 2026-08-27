@@ -1,0 +1,380 @@
+[
+  {
+    "id": "voc.appearance.001",
+    "en": "tall",
+    "zh": "高的",
+    "pos": "形容詞",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "My dad is very tall.",
+      "zh": "我爸爸很高。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.002",
+    "en": "short",
+    "zh": "矮的",
+    "pos": "形容詞",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "My little sister is short.",
+      "zh": "我妹妹個子矮矮的。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.003",
+    "en": "thin",
+    "zh": "瘦的",
+    "pos": "形容詞",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.appearance.010"],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "The cat is very thin.",
+      "zh": "這隻貓很瘦。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.004",
+    "en": "strong",
+    "zh": "強壯的",
+    "pos": "形容詞",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "The strong man lifts the box.",
+      "zh": "這個強壯的男人搬起箱子。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.005",
+    "en": "cute",
+    "zh": "可愛的",
+    "pos": "形容詞",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "The puppy is so cute.",
+      "zh": "這隻小狗好可愛。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.006",
+    "en": "pretty",
+    "zh": "漂亮的",
+    "pos": "形容詞",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.appearance.011"],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "The flower is very pretty.",
+      "zh": "這朵花很漂亮。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.007",
+    "en": "handsome",
+    "zh": "帥的",
+    "pos": "形容詞",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "The actor is handsome.",
+      "zh": "這個演員很帥。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.008",
+    "en": "fat",
+    "zh": "胖的",
+    "pos": "形容詞",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.appearance.009"],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "My cat is fat and lazy.",
+      "zh": "我的貓又胖又懶。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.009",
+    "en": "heavy",
+    "zh": "重的（形容體重較重，語氣比 fat 委婉）",
+    "pos": "形容詞",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.appearance.008"],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "This box is very heavy.",
+      "zh": "這個箱子很重。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.010",
+    "en": "slim",
+    "zh": "苗條的",
+    "pos": "形容詞",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.appearance.003"],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "My aunt is tall and slim.",
+      "zh": "我阿姨又高又苗條。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.011",
+    "en": "beautiful",
+    "zh": "美麗的",
+    "pos": "形容詞",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.appearance.006"],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "She has a beautiful smile.",
+      "zh": "她有美麗的笑容。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.012",
+    "en": "young",
+    "zh": "年輕的",
+    "pos": "形容詞",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "My teacher looks very young.",
+      "zh": "我的老師看起來很年輕。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.013",
+    "en": "old",
+    "zh": "老的",
+    "pos": "形容詞",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "The old man walks slowly.",
+      "zh": "這位老先生走得很慢。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.014",
+    "en": "long hair",
+    "zh": "長髮",
+    "pos": "名詞片語",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "My sister has long hair.",
+      "zh": "我姊姊留長髮。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.015",
+    "en": "short hair",
+    "zh": "短髮",
+    "pos": "名詞片語",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "My brother has short hair.",
+      "zh": "我弟弟留短髮。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.016",
+    "en": "curly hair",
+    "zh": "捲髮",
+    "pos": "名詞片語",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "The girl with curly hair is my friend.",
+      "zh": "那個捲髮的女孩是我朋友。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.017",
+    "en": "straight hair",
+    "zh": "直髮",
+    "pos": "名詞片語",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "I have straight hair.",
+      "zh": "我是直髮。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.appearance.018",
+    "en": "cool",
+    "zh": "酷的",
+    "pos": "形容詞",
+    "topic": "appearance",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Appearance",
+    "status": "published",
+    "example_sentence": {
+      "en": "Your new shoes look so cool.",
+      "zh": "你的新鞋看起來好酷。",
+      "status": "draft"
+    }
+  }
+]

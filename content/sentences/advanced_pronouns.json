@@ -1,0 +1,112 @@
+[
+  {
+    "id": "sent.advanced_pronouns.b1.001",
+    "en": "I am happy, and you are happy too.",
+    "zh": "我很開心，你也很開心。",
+    "topic": "advanced_pronouns",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.advanced_pronouns.001", "voc.advanced_pronouns.002"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.advanced_pronouns.b1.002",
+    "en": "He is my brother, and she is my sister.",
+    "zh": "他是我哥哥，她是我姊姊。",
+    "topic": "advanced_pronouns",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.advanced_pronouns.003", "voc.advanced_pronouns.004"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.advanced_pronouns.b1.003",
+    "en": "We like the dog, and it likes us too.",
+    "zh": "我們喜歡這隻狗，牠也喜歡我們。",
+    "topic": "advanced_pronouns",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.advanced_pronouns.006", "voc.advanced_pronouns.005", "voc.advanced_pronouns.011"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.advanced_pronouns.b1.004",
+    "en": "They are my friends, and I play with them every day.",
+    "zh": "他們是我的朋友，我每天都跟他們一起玩。",
+    "topic": "advanced_pronouns",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.advanced_pronouns.007", "voc.advanced_pronouns.012"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.advanced_pronouns.b1.005",
+    "en": "Please give the book to me, not to him.",
+    "zh": "請把書給我，不要給他。",
+    "topic": "advanced_pronouns",
+    "stage": "B",
+    "grammar_point": "not to + 受格代名詞",
+    "vocab_ids": ["voc.advanced_pronouns.008", "voc.advanced_pronouns.009"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.advanced_pronouns.b1.006",
+    "en": "This is her bag, and that is his backpack.",
+    "zh": "這是她的書包，那是他的背包。",
+    "topic": "advanced_pronouns",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.advanced_pronouns.010", "voc.advanced_pronouns.013"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.advanced_pronouns.b1.007",
+    "en": "The cat is small, but its ears are big.",
+    "zh": "這隻貓很小，但牠的耳朵很大。",
+    "topic": "advanced_pronouns",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.advanced_pronouns.014"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.advanced_pronouns.b1.008",
+    "en": "Do you want anything to eat?",
+    "zh": "你想要吃任何東西嗎？",
+    "topic": "advanced_pronouns",
+    "stage": "B",
+    "grammar_point": "want + anything + to 不定詞",
+    "vocab_ids": ["voc.advanced_pronouns.015"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.advanced_pronouns.b1.009",
+    "en": "Everything on the table is for the party.",
+    "zh": "桌上的一切都是為了派對準備的。",
+    "topic": "advanced_pronouns",
+    "stage": "B",
+    "grammar_point": "everything + 介系詞片語",
+    "vocab_ids": ["voc.advanced_pronouns.016"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.advanced_pronouns.b1.010",
+    "en": "I looked in the box, but there was nothing inside.",
+    "zh": "我看了箱子裡面，但裡面什麼都沒有。",
+    "topic": "advanced_pronouns",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.advanced_pronouns.017"],
+    "audio": null,
+    "status": "published"
+  }
+]

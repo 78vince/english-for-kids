@@ -1,0 +1,422 @@
+[
+  {
+    "id": "voc.science.001",
+    "en": "science",
+    "zh": "科學",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I have science class on Wednesday.",
+      "zh": "我星期三有科學課。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.002",
+    "en": "experiment",
+    "zh": "實驗",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We do an experiment in class today.",
+      "zh": "我們今天在課堂上做實驗。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.003",
+    "en": "observe",
+    "zh": "觀察",
+    "pos": "動詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We observe the plant every day.",
+      "zh": "我們每天觀察這株植物。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.004",
+    "en": "plant",
+    "zh": "植物",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The plant needs water and sunlight.",
+      "zh": "植物需要水和陽光。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.005",
+    "en": "seed",
+    "zh": "種子",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I plant a seed in the soil.",
+      "zh": "我把種子種在土裡。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.006",
+    "en": "leaf",
+    "zh": "葉子",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "A green leaf grows on the stem.",
+      "zh": "莖上長出一片綠色的葉子。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.007",
+    "en": "grow",
+    "zh": "生長",
+    "pos": "動詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The seed will grow into a plant.",
+      "zh": "種子會長成一株植物。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.008",
+    "en": "magnet",
+    "zh": "磁鐵",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "A magnet can pull metal things.",
+      "zh": "磁鐵可以吸住金屬物品。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.009",
+    "en": "energy",
+    "zh": "能量",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The sun gives us energy.",
+      "zh": "太陽給我們能量。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.010",
+    "en": "air",
+    "zh": "空氣",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We need air to breathe.",
+      "zh": "我們需要空氣來呼吸。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.011",
+    "en": "sound",
+    "zh": "聲音",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The bell makes a loud sound.",
+      "zh": "鈴鐺發出很大的聲音。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.012",
+    "en": "planet",
+    "zh": "行星",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Earth is our planet.",
+      "zh": "地球是我們的行星。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.013",
+    "en": "gravity",
+    "zh": "重力",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Gravity pulls things down to the ground.",
+      "zh": "重力會把東西往地面拉下去。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.014",
+    "en": "force",
+    "zh": "力",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "You need force to push the box.",
+      "zh": "你需要用力才能推動箱子。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.015",
+    "en": "solid",
+    "zh": "固體",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Ice is a solid.",
+      "zh": "冰是固體。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.016",
+    "en": "liquid",
+    "zh": "液體",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Water is a liquid.",
+      "zh": "水是液體。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.017",
+    "en": "gas",
+    "zh": "氣體",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Air is made of gas.",
+      "zh": "空氣是由氣體組成的。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.018",
+    "en": "matter",
+    "zh": "物質",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Solid, liquid, and gas are three kinds of matter.",
+      "zh": "固體、液體和氣體是三種物質。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.019",
+    "en": "battery",
+    "zh": "電池",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "This toy needs a battery.",
+      "zh": "這個玩具需要電池。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  },
+  {
+    "id": "voc.science.020",
+    "en": "electricity",
+    "zh": "電",
+    "pos": "名詞",
+    "topic": "science",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Electricity makes the lights turn on.",
+      "zh": "電讓燈亮起來。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Science",
+    "status": "published"
+  }
+]

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>每天玩一點，英語變好玩 — 範例頁面</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ---- 沿用品牌色（不更動）---- */
+  --color-primary-700:#0052A3;
+  --color-primary-500:#2E7BD6;
+  --color-primary-100:#C4E2EF;
+  --color-secondary-500:#5B7CCB;
+  --color-accent-orange:#FF8A61;
+  --color-accent-pink:#FFBDEF;
+  --color-accent-yellow:#FFD166;
+  --color-success:#6FCF97;
+  --color-success-text:#2f8f5e;
+  --color-success-bg:#e6f7ee;
+  --color-error:#FF6B6B;
+  --color-error-text:#c2453f;
+
+  /* ---- 中性色（v2 調整：淡紫 -> 中性灰藍）---- */
+  --color-bg:#F4F6F9;
+  --color-surface:#FFFFFF;
+  --color-ink:#2B2A4A;
+  --color-ink-muted:#6B6789;
+  --color-border:#DCE2EA;
+
+  /* ---- 字體 ---- */
+  --font-display:'Huninn','Noto Sans TC',sans-serif;
+  --font-body:'Huninn','Noto Sans TC',sans-serif;
+
+  /* ---- 字級（v2：全面放大）---- */
+  --text-display:48px;
+  --text-h1:36px;
+  --text-h2:28px;
+  --text-h3:24px;
+  --text-body-lg:20px;
+  --text-body:18px;
+  --text-caption:15px;
+
+  /* ---- 圓角 / 間距 / 陰影（沿用原稿）---- */
+  --radius-sm:8px; --radius-md:16px; --radius-lg:24px; --radius-xl:32px; --radius-pill:999px; --radius-circle:50%;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px;
+  --shadow-sm:0 2px 8px rgba(0,82,163,.08);
+  --shadow-md:0 6px 16px rgba(0,82,163,.12);
+  --shadow-lg:0 12px 28px rgba(0,82,163,.16);
+
+  /* ---- 新增：功能列 ---- */
+  --nav-height:64px;
+  --nav-item-active-bg:var(--color-primary-700);
+  --nav-item-active-color:#FFFFFF;
+
+  /* ---- 新增：徽章分級色 ---- */
+  --color-tier-bronze:#B9835A; --color-tier-bronze-bg:#F6E9DF;
+  --color-tier-silver:#A6AEBD; --color-tier-silver-bg:#EEF0F3;
+  --color-tier-gold:#E8B84B;   --color-tier-gold-bg:#FBF1DA;
+  --color-tier-locked:#C9CDD4; --color-tier-locked-bg:#F1F2F4;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--color-bg);color:var(--color-ink);font-family:var(--font-body);}
+
+/* ---------- 品牌區 ---------- */
+.brand-banner{
+  background:linear-gradient(135deg,var(--color-primary-700),var(--color-secondary-500));
+  color:#fff; padding:var(--space-7) var(--space-5) var(--space-6); text-align:center;
+}
+.brand-banner h1{
+  font-family:var(--font-display); font-size:var(--text-h1); font-weight:700; margin:0 0 var(--space-2);
+  line-height:1.3;
+}
+.brand-banner p{margin:0; opacity:.9; font-size:var(--text-body);}
+
+/* ---------- 功能列 ---------- */
+.function-nav{
+  position:sticky; top:0; z-index:10;
+  display:flex; justify-content:center; gap:var(--space-2);
+  background:var(--color-surface); border-bottom:1px solid var(--color-border);
+  padding:var(--space-3) var(--space-4);
+}
+.nav-item{
+  display:flex; align-items:center; gap:6px;
+  font-family:var(--font-display); font-size:var(--text-body); font-weight:700;
+  padding:10px 20px; border-radius:var(--radius-md); border:none; background:none;
+  color:var(--color-ink-muted); cursor:pointer; transition:background .15s ease,color .15s ease;
+}
+.nav-item .ic{font-size:1.15em;}
+.nav-item:hover{background:var(--color-primary-100);}
+.nav-item.active{background:var(--nav-item-active-bg); color:var(--nav-item-active-color);}
+
+/* ---------- 內容容器 ---------- */
+#app{max-width:960px;margin:0 auto;padding:var(--space-6) var(--space-5) var(--space-8);}
+.screen{display:none;}
+.screen.active{display:block;}
+.screen-title{font-family:var(--font-display);font-size:var(--text-h2);font-weight:700;color:var(--color-primary-700);margin:0 0 var(--space-1);}
+.screen-sub{color:var(--color-ink-muted);font-size:var(--text-body);margin:0 0 var(--space-6);}
+
+/* ---------- 首頁：主題卡片 ---------- */
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--space-5);}
+.topic-card{
+  background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-sm); padding:var(--space-5); cursor:pointer;
+  transition:transform .1s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.topic-card:hover{transform:translateY(-2px); box-shadow:var(--shadow-md); border-color:var(--color-primary-500);}
+.topic-thumb{
+  width:56px;height:56px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;
+  font-size:28px; margin-bottom:var(--space-3);
+}
+.thumb-family{background:var(--color-accent-pink);}
+.thumb-colors{background:var(--color-primary-100);}
+.thumb-animals{background:var(--color-accent-orange);}
+.topic-card h3{font-family:var(--font-display);font-size:var(--text-body-lg);margin:0 0 4px;}
+.topic-card p{margin:0 0 var(--space-3);font-size:var(--text-caption);color:var(--color-ink-muted);}
+.topic-progress-track{height:8px;border-radius:var(--radius-pill);background:var(--color-primary-100);overflow:hidden;}
+.topic-progress-fill{height:100%;background:var(--color-success);border-radius:var(--radius-pill);}
+.topic-progress-label{margin-top:6px;font-size:var(--text-caption);color:var(--color-ink-muted);}
+
+/* ---------- 挑戰紀錄 ---------- */
+.stats-summary{display:flex;gap:var(--space-4);margin-bottom:var(--space-6);flex-wrap:wrap;}
+.stats-summary-item{
+  flex:1; min-width:140px; background:var(--color-surface); border:1px solid var(--color-border);
+  border-radius:var(--radius-lg); box-shadow:var(--shadow-sm); padding:var(--space-5) var(--space-3);
+  text-align:center;
+}
+.stats-summary-value{display:block;font-family:var(--font-display);font-size:var(--text-h2);font-weight:700;color:var(--color-accent-orange);}
+.stats-summary-label{font-size:var(--text-caption);color:var(--color-ink-muted);}
+.stats-list{display:flex;flex-direction:column;gap:var(--space-3);}
+.stats-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:var(--space-5);}
+.stats-card-title{font-family:var(--font-display);font-size:var(--text-body-lg);font-weight:700;margin-bottom:var(--space-2);}
+.stats-bar-track{height:10px;border-radius:var(--radius-pill);background:var(--color-primary-100);overflow:hidden;}
+.stats-bar-fill{height:100%;background:var(--color-success);border-radius:var(--radius-pill);}
+.stats-card-detail{margin:var(--space-2) 0 0;font-size:var(--text-body);}
+.stats-card-detail--muted{color:var(--color-ink-muted);font-size:var(--text-caption);}
+
+/* ---------- 成就徽章 ---------- */
+.badge-category{margin-bottom:var(--space-6);}
+.badge-category-title{
+  font-family:var(--font-display); font-size:var(--text-body-lg); font-weight:700; color:var(--color-ink);
+  margin:0 0 var(--space-3); display:flex; align-items:center; gap:8px;
+}
+.badge-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--space-4);}
+.badge-card{
+  border-radius:var(--radius-lg); border:2px solid var(--color-border); padding:var(--space-4);
+  display:flex; gap:var(--space-3); align-items:flex-start; box-shadow:var(--shadow-sm);
+}
+.badge-card .icon{
+  width:52px;height:52px;border-radius:var(--radius-circle);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:24px;
+}
+.badge-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:var(--text-body);font-weight:700;}
+.badge-card p{margin:0;font-size:var(--text-caption);color:var(--color-ink-muted);}
+.badge-card .tier-tag{
+  display:inline-block; margin-top:6px; font-size:12px; font-weight:700; padding:2px 10px; border-radius:var(--radius-pill);
+}
+.badge-card--bronze{border-color:var(--color-tier-bronze);background:var(--color-tier-bronze-bg);}
+.badge-card--bronze .icon{background:var(--color-tier-bronze);color:#fff;}
+.badge-card--bronze .tier-tag{background:var(--color-tier-bronze);color:#fff;}
+.badge-card--silver{border-color:var(--color-tier-silver);background:var(--color-tier-silver-bg);}
+.badge-card--silver .icon{background:var(--color-tier-silver);color:#fff;}
+.badge-card--silver .tier-tag{background:var(--color-tier-silver);color:#fff;}
+.badge-card--gold{border-color:var(--color-tier-gold);background:var(--color-tier-gold-bg);}
+.badge-card--gold .icon{background:var(--color-tier-gold);color:#fff;}
+.badge-card--gold .tier-tag{background:var(--color-tier-gold);color:#fff;}
+.badge-card--locked{border-color:var(--color-tier-locked);background:var(--color-tier-locked-bg);opacity:.85;}
+.badge-card--locked .icon{background:var(--color-tier-locked);color:#fff;}
+.badge-card--locked .tier-tag{background:var(--color-tier-locked);color:#fff;}
+.badge-mini-progress{margin-top:8px;height:6px;border-radius:var(--radius-pill);background:#fff;overflow:hidden;}
+.badge-mini-progress i{display:block;height:100%;background:var(--color-primary-500);}
+
+/* ---------- 我的 ---------- */
+.profile-card{
+  background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-sm); padding:var(--space-6); text-align:center; max-width:360px; margin:0 auto;
+}
+.profile-avatar{
+  width:88px;height:88px;border-radius:var(--radius-circle);background:var(--color-primary-100);
+  display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto var(--space-4);
+}
+.profile-card h3{font-family:var(--font-display);font-size:var(--text-h3);margin:0 0 4px;}
+.profile-card p{color:var(--color-ink-muted);font-size:var(--text-body);margin:0 0 var(--space-5);}
+.profile-btn{
+  font-family:var(--font-display); font-size:var(--text-body); padding:12px 28px; border-radius:var(--radius-pill);
+  border:2px solid var(--color-border); background:#fff; color:var(--color-ink-muted); cursor:pointer;
+}
+
+/* ---------- Note 條 ---------- */
+.dev-note{
+  max-width:960px;margin:0 auto var(--space-5);padding:var(--space-3) var(--space-4);
+  background:#FFF9E8;border:1px solid var(--color-accent-yellow);border-radius:var(--radius-md);
+  font-size:var(--text-caption);color:var(--color-ink-muted);
+}
+</style>
+</head>
+<body>
+
+<div class="brand-banner">
+  <h1>每天玩一點，英語變好玩</h1>
+  <p>English for Kids · 兒童英語學習平台</p>
+</div>
+
+<nav class="function-nav">
+  <button class="nav-item active" data-target="home"><span class="ic">🏠</span>首頁</button>
+  <button class="nav-item" data-target="stats"><span class="ic">📊</span>挑戰紀錄</button>
+  <button class="nav-item" data-target="badges"><span class="ic">🏅</span>成就徽章</button>
+  <button class="nav-item" data-target="profile"><span class="ic">👤</span>我的</button>
+</nav>
+
+<p class="dev-note">此為靜態範例頁面，功能列可點擊切換分頁；內容取自現有 Family／Colors／Animals &amp; Insects 三個主題的實際資料，套用「每天玩一點」風格提案的 v2 design tokens（字級放大、中性灰藍背景、新增功能列與徽章分級色）。</p>
+
+<div id="app">
+
+  <!-- 首頁 -->
+  <section class="screen active" id="home">
+    <h2 class="screen-title">選一個主題開始</h2>
+    <p class="screen-sub">今天也玩一點英語吧！</p>
+    <div class="topic-grid">
+      <div class="topic-card">
+        <div class="topic-thumb thumb-family">👨‍👩‍👧</div>
+        <h3>Family 家庭</h3>
+        <p>21 個單字・4 句短句・短文「My Family」</p>
+        <div class="topic-progress-track"><div class="topic-progress-fill" style="width:75%"></div></div>
+        <div class="topic-progress-label">3 / 4 種題型已挑戰過</div>
+      </div>
+      <div class="topic-card">
+        <div class="topic-thumb thumb-colors">🎨</div>
+        <h3>Colors 顏色</h3>
+        <p>12 個單字・4 句短句・短文「My Favorite Colors」</p>
+        <div class="topic-progress-track"><div class="topic-progress-fill" style="width:25%"></div></div>
+        <div class="topic-progress-label">1 / 4 種題型已挑戰過</div>
+      </div>
+      <div class="topic-card">
+        <div class="topic-thumb thumb-animals">🐾</div>
+        <h3>Animals &amp; Insects 動物與昆蟲</h3>
+        <p>31 個單字・4 句短句・短文「A Day at the Zoo」</p>
+        <div class="topic-progress-track"><div class="topic-progress-fill" style="width:0%"></div></div>
+        <div class="topic-progress-label">0 / 4 種題型已挑戰過</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 挑戰紀錄 -->
+  <section class="screen" id="stats">
+    <h2 class="screen-title">挑戰紀錄</h2>
+    <p class="screen-sub">看看目前累積了多少進度</p>
+    <div class="stats-summary">
+      <div class="stats-summary-item"><span class="stats-summary-value">4 / 12</span><span class="stats-summary-label">已挑戰過的題型</span></div>
+      <div class="stats-summary-item"><span class="stats-summary-value">9</span><span class="stats-summary-label">累計完成次數</span></div>
+      <div class="stats-summary-item"><span class="stats-summary-value">86%</span><span class="stats-summary-label">平均最佳正確率</span></div>
+    </div>
+    <div class="stats-list">
+      <div class="stats-card">
+        <div class="stats-card-title">Family 家庭 · Stage A 單字配對</div>
+        <div class="stats-bar-track"><div class="stats-bar-fill" style="width:92%"></div></div>
+        <p class="stats-card-detail">最佳正確率 92%</p>
+        <p class="stats-card-detail stats-card-detail--muted">共挑戰 3 次</p>
+      </div>
+      <div class="stats-card">
+        <div class="stats-card-title">Colors 顏色 · Stage B-1 句子排序</div>
+        <div class="stats-bar-track"><div class="stats-bar-fill" style="width:80%"></div></div>
+        <p class="stats-card-detail">最佳正確率 80%</p>
+        <p class="stats-card-detail stats-card-detail--muted">共挑戰 1 次</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 成就徽章 -->
+  <section class="screen" id="badges">
+    <h2 class="screen-title">成就徽章</h2>
+    <p class="screen-sub">分成 4 種類別，各有銅／銀／金 3 個等級</p>
+
+    <div class="badge-category">
+      <div class="badge-category-title">📚 學習里程碑</div>
+      <div class="badge-row">
+        <div class="badge-card badge-card--bronze">
+          <div class="icon">🥉</div>
+          <div><h4>跨出第一步</h4><p>完成第一次配對</p><span class="tier-tag">已解鎖</span></div>
+        </div>
+        <div class="badge-card badge-card--bronze">
+          <div class="icon">🥈</div>
+          <div>
+            <h4>單字小達人</h4><p>累計學會 50 個單字</p><span class="tier-tag">已解鎖</span>
+            <div class="badge-mini-progress"><i style="width:100%"></i></div>
+          </div>
+        </div>
+        <div class="badge-card badge-card--locked">
+          <div class="icon">🥇</div>
+          <div>
+            <h4>單字大師</h4><p>累計學會 150 個單字</p><span class="tier-tag">還差 86 個</span>
+            <div class="badge-mini-progress"><i style="width:43%"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="badge-category">
+      <div class="badge-category-title">🎯 精準度</div>
+      <div class="badge-row">
+        <div class="badge-card badge-card--bronze"><div class="icon">🥉</div><div><h4>小神射手</h4><p>單一關卡正確率 80%+</p><span class="tier-tag">已解鎖</span></div></div>
+        <div class="badge-card badge-card--silver"><div class="icon">🥈</div><div><h4>神射手</h4><p>單一關卡正確率 90%+</p><span class="tier-tag">已解鎖</span></div></div>
+        <div class="badge-card badge-card--locked"><div class="icon">🥇</div><div><h4>完美射手</h4><p>單一關卡正確率 100%</p><span class="tier-tag">尚未解鎖</span></div></div>
+      </div>
+    </div>
+
+    <div class="badge-category">
+      <div class="badge-category-title">🗺️ 主題征服</div>
+      <div class="badge-row">
+        <div class="badge-card badge-card--bronze"><div class="icon">🥉</div><div><h4>主題全通關</h4><p>完成 1 個主題全部題型</p><span class="tier-tag">已解鎖</span></div></div>
+        <div class="badge-card badge-card--locked"><div class="icon">🥈</div><div><h4>三主題達人</h4><p>完成 3 個主題全通關</p><span class="tier-tag">還差 2 個主題</span><div class="badge-mini-progress"><i style="width:33%"></i></div></div></div>
+        <div class="badge-card badge-card--locked"><div class="icon">🥇</div><div><h4>全主題制霸</h4><p>完成所有已上架主題</p><span class="tier-tag">尚未解鎖</span></div></div>
+      </div>
+    </div>
+
+    <div class="badge-category">
+      <div class="badge-category-title">🔥 每日習慣</div>
+      <div class="badge-row">
+        <div class="badge-card badge-card--bronze"><div class="icon">🥉</div><div><h4>三日不間斷</h4><p>連續遊玩 3 天</p><span class="tier-tag">已解鎖</span></div></div>
+        <div class="badge-card badge-card--locked"><div class="icon">🥈</div><div><h4>一週好習慣</h4><p>連續遊玩 7 天</p><span class="tier-tag">還差 4 天</span><div class="badge-mini-progress"><i style="width:43%"></i></div></div></div>
+        <div class="badge-card badge-card--locked"><div class="icon">🥇</div><div><h4>月度習慣王</h4><p>連續遊玩 30 天</p><span class="tier-tag">尚未解鎖</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 我的 -->
+  <section class="screen" id="profile">
+    <h2 class="screen-title">我的</h2>
+    <p class="screen-sub">目前登入的小朋友</p>
+    <div class="profile-card">
+      <div class="profile-avatar">🦊</div>
+      <h3>妞妞</h3>
+      <p>上次遊玩：今天</p>
+      <button class="profile-btn">登出 / 切換玩家</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+document.querySelectorAll('.nav-item').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.nav-item').forEach(function(b){ b.classList.remove('active'); });
+    document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.target).classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>

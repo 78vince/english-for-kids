@@ -1,0 +1,331 @@
+[
+  {
+    "id": "voc.people.001",
+    "en": "baby",
+    "zh": "嬰兒",
+    "pos": "名詞",
+    "topic": "people",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - People",
+    "status": "published",
+    "example_sentence": {
+      "en": "The baby sleeps in the crib.",
+      "zh": "這個嬰兒在嬰兒床裡睡覺。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.people.002",
+    "en": "boy",
+    "zh": "男孩",
+    "pos": "名詞",
+    "topic": "people",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - People",
+    "status": "published",
+    "example_sentence": {
+      "en": "The boy is playing with a ball.",
+      "zh": "這個男孩正在玩球。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.people.003",
+    "en": "girl",
+    "zh": "女孩",
+    "pos": "名詞",
+    "topic": "people",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - People",
+    "status": "published",
+    "example_sentence": {
+      "en": "The girl is drawing a picture.",
+      "zh": "這個女孩正在畫畫。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.people.004",
+    "en": "man",
+    "zh": "男人",
+    "pos": "名詞",
+    "topic": "people",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [
+      "men"
+    ],
+    "source": "國小常用英語主題字彙 - People",
+    "status": "published",
+    "example_sentence": {
+      "en": "The man is reading a newspaper.",
+      "zh": "這個男人正在看報紙。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.people.005",
+    "en": "woman",
+    "zh": "女人",
+    "pos": "名詞",
+    "topic": "people",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [
+      "women"
+    ],
+    "source": "國小常用英語主題字彙 - People",
+    "status": "published",
+    "example_sentence": {
+      "en": "The woman is walking her dog.",
+      "zh": "這個女人正在遛狗。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.people.006",
+    "en": "child",
+    "zh": "小孩",
+    "pos": "名詞",
+    "topic": "people",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [
+      "children"
+    ],
+    "source": "國小常用英語主題字彙 - People",
+    "status": "published",
+    "example_sentence": {
+      "en": "Every child likes to play.",
+      "zh": "每個小孩都喜歡玩耍。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.people.007",
+    "en": "friend",
+    "zh": "朋友",
+    "pos": "名詞",
+    "topic": "people",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - People",
+    "status": "published",
+    "example_sentence": {
+      "en": "She is my best friend.",
+      "zh": "她是我最好的朋友。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.people.010",
+    "en": "people",
+    "zh": "人們",
+    "pos": "名詞",
+    "topic": "people",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - People",
+    "status": "published",
+    "example_sentence": {
+      "en": "Many people are in the park.",
+      "zh": "公園裡有很多人。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.people.011",
+    "en": "men",
+    "zh": "男人（複數）",
+    "pos": "名詞",
+    "topic": "people",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [
+      "man"
+    ],
+    "source": "國小常用英語主題字彙 - People",
+    "status": "published",
+    "example_sentence": {
+      "en": "There are many men and women here.",
+      "zh": "這裡有很多男人和女人。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.people.012",
+    "en": "women",
+    "zh": "女人（複數）",
+    "pos": "名詞",
+    "topic": "people",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [
+      "woman"
+    ],
+    "source": "國小常用英語主題字彙 - People",
+    "status": "published",
+    "example_sentence": {
+      "en": "Two women are talking near the flowers.",
+      "zh": "有兩個女人在花旁邊聊天。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.people.013",
+    "en": "person",
+    "zh": "人（單數）",
+    "pos": "名詞",
+    "topic": "people",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [
+      "people"
+    ],
+    "source": "國小常用英語主題字彙 - People",
+    "status": "published",
+    "example_sentence": {
+      "en": "This person is an adult, and that person is a child.",
+      "zh": "這個人是成人，那個人是小孩。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.people.014",
+    "en": "children",
+    "zh": "小孩（複數）",
+    "pos": "名詞",
+    "topic": "people",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [
+      "child"
+    ],
+    "source": "國小常用英語主題字彙 - People",
+    "status": "published",
+    "example_sentence": {
+      "en": "This woman has two children.",
+      "zh": "這個女人有兩個小孩。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.people.015",
+    "en": "adult",
+    "zh": "成人",
+    "pos": "名詞",
+    "topic": "people",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - People",
+    "status": "published",
+    "example_sentence": {
+      "en": "Some people are children, and some people are adults.",
+      "zh": "有些人是小孩，有些人是成人。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.people.016",
+    "en": "young person",
+    "zh": "年輕人",
+    "pos": "名詞",
+    "topic": "people",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - People",
+    "status": "published",
+    "example_sentence": {
+      "en": "A young person is riding a bike.",
+      "zh": "一個年輕人正在騎腳踏車。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.people.017",
+    "en": "old person",
+    "zh": "老人",
+    "pos": "名詞",
+    "topic": "people",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - People",
+    "status": "published",
+    "example_sentence": {
+      "en": "An old person is reading a book on a bench.",
+      "zh": "一個老人正坐在長椅上看書。",
+      "status": "draft"
+    }
+  }
+]

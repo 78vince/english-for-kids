@@ -1,0 +1,46 @@
+[
+  {
+    "id": "sent.school.b1.001",
+    "en": "I go to school every day.",
+    "zh": "我每天去上學。",
+    "topic": "school",
+    "stage": "B",
+    "grammar_point": "頻率副詞 every day",
+    "vocab_ids": ["voc.school.001"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.school.b1.002",
+    "en": "My teacher is very kind.",
+    "zh": "我的老師很親切。",
+    "topic": "school",
+    "stage": "B",
+    "grammar_point": "be動詞 + 形容詞",
+    "vocab_ids": ["voc.school.002"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.school.b1.003",
+    "en": "Can I borrow your pencil?",
+    "zh": "我可以跟你借鉛筆嗎？",
+    "topic": "school",
+    "stage": "B",
+    "grammar_point": "Can I + 原形動詞 請求句",
+    "vocab_ids": ["voc.school.006"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.school.b1.004",
+    "en": "I read a book in the library every afternoon.",
+    "zh": "我每天下午都在圖書館看書。",
+    "topic": "school",
+    "stage": "B",
+    "grammar_point": "介系詞 in + 地點",
+    "vocab_ids": ["voc.school.016", "voc.school.005", "voc.school.015"],
+    "audio": null,
+    "status": "published"
+  }
+]

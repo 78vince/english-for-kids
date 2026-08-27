@@ -1,0 +1,79 @@
+[
+  {
+    "id": "sent.sizes_measurements.b1.001",
+    "en": "This pizza is large, but that one is huge!",
+    "zh": "這個披薩很大，但那個更巨大！",
+    "topic": "sizes_measurements",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.sizes_measurements.001", "voc.sizes_measurements.002"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.sizes_measurements.b1.002",
+    "en": "The ant is tiny, but the bag is a medium size.",
+    "zh": "螞蟻很微小，但這個袋子是中等尺寸。",
+    "topic": "sizes_measurements",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.sizes_measurements.003", "voc.sizes_measurements.004"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.sizes_measurements.b1.003",
+    "en": "The road is wide, but this street is narrow.",
+    "zh": "這條馬路很寬，但這條街很窄。",
+    "topic": "sizes_measurements",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.sizes_measurements.005", "voc.sizes_measurements.006"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.sizes_measurements.b1.004",
+    "en": "This book is thick, so it comes in a large size.",
+    "zh": "這本書很厚，所以是大尺寸的。",
+    "topic": "sizes_measurements",
+    "stage": "B",
+    "grammar_point": "so 表示結果",
+    "vocab_ids": ["voc.sizes_measurements.007", "voc.sizes_measurements.010"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.sizes_measurements.b1.005",
+    "en": "The lake is deep, but the pond is shallow.",
+    "zh": "這個湖很深，但這個池塘很淺。",
+    "topic": "sizes_measurements",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.sizes_measurements.008", "voc.sizes_measurements.009"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.sizes_measurements.b1.006",
+    "en": "I ate half of the cake, and now my plate is full.",
+    "zh": "我吃了一半的蛋糕，現在我的盤子裝滿了。",
+    "topic": "sizes_measurements",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.sizes_measurements.011", "voc.sizes_measurements.012"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.sizes_measurements.b1.007",
+    "en": "The box is empty now.",
+    "zh": "這個箱子現在是空的。",
+    "topic": "sizes_measurements",
+    "stage": "B",
+    "grammar_point": "be動詞 + 形容詞",
+    "vocab_ids": ["voc.sizes_measurements.013"],
+    "audio": null,
+    "status": "published"
+  }
+]

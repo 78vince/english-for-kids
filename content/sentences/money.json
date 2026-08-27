@@ -1,0 +1,142 @@
+[
+  {
+    "id": "sent.money.b1.001",
+    "en": "I have five dollars in my pocket.",
+    "zh": "我口袋裡有五元。",
+    "topic": "money",
+    "stage": "B",
+    "grammar_point": "have + 數量 + 名詞",
+    "vocab_ids": [
+      "voc.money.003"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.money.b1.002",
+    "en": "I want to buy a new bag.",
+    "zh": "我想買一個新包包。",
+    "topic": "money",
+    "stage": "B",
+    "grammar_point": "want to + 動詞原形",
+    "vocab_ids": [
+      "voc.money.002"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.money.b1.003",
+    "en": "This toy is free today!",
+    "zh": "這個玩具今天是免費的！",
+    "topic": "money",
+    "stage": "B",
+    "grammar_point": "be動詞 + 形容詞",
+    "vocab_ids": [
+      "voc.money.004"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.money.b1.004",
+    "en": "How much money do you have?",
+    "zh": "你有多少錢？",
+    "topic": "money",
+    "stage": "B",
+    "grammar_point": "how much + 不可數名詞",
+    "vocab_ids": [
+      "voc.money.001"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.money.b1.005",
+    "en": "The clerk sold me a pencil and gave me some change.",
+    "zh": "店員賣了一支鉛筆給我，還找了一些零錢。",
+    "topic": "money",
+    "stage": "B",
+    "grammar_point": "and 連接兩個動作子句",
+    "vocab_ids": ["voc.money.005", "voc.money.006"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.money.b1.006",
+    "en": "I have three coins and one bill in my wallet.",
+    "zh": "我的錢包裡有三枚硬幣和一張紙鈔。",
+    "topic": "money",
+    "stage": "B",
+    "grammar_point": "have + 數量 + 名詞並列",
+    "vocab_ids": ["voc.money.007", "voc.money.008", "voc.money.016"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.money.b1.007",
+    "en": "What is the price, and how much does it cost?",
+    "zh": "價格是多少？要花多少錢？",
+    "topic": "money",
+    "stage": "B",
+    "grammar_point": "疑問句並列",
+    "vocab_ids": ["voc.money.009", "voc.money.012"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.money.b1.008",
+    "en": "The pencil is cheap, but the bike is expensive.",
+    "zh": "鉛筆很便宜，但腳踏車很貴。",
+    "topic": "money",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.money.010", "voc.money.011"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.money.b1.009",
+    "en": "I pay for snacks, but I save more than I spend.",
+    "zh": "我會付零食的錢，但我存的錢比花的錢多。",
+    "topic": "money",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.money.013", "voc.money.014", "voc.money.015"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.money.b1.010",
+    "en": "I put my allowance in my piggy bank every week.",
+    "zh": "我每個星期都把零用錢放進撲滿。",
+    "topic": "money",
+    "stage": "B",
+    "grammar_point": "put + 受詞 + in + 地點",
+    "vocab_ids": ["voc.money.018", "voc.money.017"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.money.b1.011",
+    "en": "We got a discount with a coupon.",
+    "zh": "我們用優惠券打了折。",
+    "topic": "money",
+    "stage": "B",
+    "grammar_point": "with 表示使用工具",
+    "vocab_ids": ["voc.money.019", "voc.money.020"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.money.b1.012",
+    "en": "My mom paid with a credit card and got a receipt.",
+    "zh": "我媽媽用信用卡付錢，拿到了一張收據。",
+    "topic": "money",
+    "stage": "B",
+    "grammar_point": "and 連接兩個動作子句",
+    "vocab_ids": ["voc.money.022", "voc.money.021"],
+    "audio": null,
+    "status": "published"
+  }
+]

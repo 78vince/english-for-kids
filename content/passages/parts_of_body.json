@@ -1,0 +1,60 @@
+{
+  "id": "pass.parts_of_body.p01",
+  "title": "My Body",
+  "topic": "parts_of_body",
+  "text": "Look at my body! I have one head with two eyes, one nose, and one mouth. I have two ears too. My arms and hands help me hold things. My legs and feet help me run and jump. Every part of my body is important.",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.parts_of_body.001",
+    "voc.parts_of_body.003",
+    "voc.parts_of_body.005",
+    "voc.parts_of_body.006",
+    "voc.parts_of_body.004",
+    "voc.parts_of_body.009",
+    "voc.parts_of_body.008",
+    "voc.parts_of_body.010",
+    "voc.parts_of_body.011"
+  ],
+  "questions": [
+    {
+      "id": "pass.parts_of_body.p01.q1",
+      "question": "How many eyes does the writer have?",
+      "options": [
+        "One",
+        "Two",
+        "Three",
+        "Four"
+      ],
+      "answer": "Two",
+      "type": "single_choice",
+      "source_sentence": "I have one head with two eyes, one nose, and one mouth."
+    },
+    {
+      "id": "pass.parts_of_body.p01.q2",
+      "question": "What helps the writer run and jump?",
+      "options": [
+        "Arms and hands",
+        "Legs and feet",
+        "Eyes and ears",
+        "Head and face"
+      ],
+      "answer": "Legs and feet",
+      "type": "single_choice",
+      "source_sentence": "My legs and feet help me run and jump."
+    },
+    {
+      "id": "pass.parts_of_body.p01.q3",
+      "question": "What helps the writer hold things?",
+      "options": [
+        "Legs and feet",
+        "Head and neck",
+        "Arms and hands",
+        "Eyes and nose"
+      ],
+      "answer": "Arms and hands",
+      "type": "single_choice",
+      "source_sentence": "My arms and hands help me hold things."
+    }
+  ],
+  "status": "published"
+}

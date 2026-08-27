@@ -1,0 +1,58 @@
+{
+  "id": "pass.family.p01",
+  "title": "My Family",
+  "topic": "family",
+  "text": "Hi! My name is Amy. I have a big family. My father is a teacher, and my mother is a nurse. I have one brother and one sister. My grandmother and grandfather live with us too. We eat dinner together every day. I love my family very much.",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.family.007",
+    "voc.family.008",
+    "voc.family.017",
+    "voc.family.002",
+    "voc.family.019",
+    "voc.family.011",
+    "voc.family.009"
+  ],
+  "questions": [
+    {
+      "id": "pass.family.p01.q1",
+      "question": "What is Amy's father's job?",
+      "options": [
+        "Doctor",
+        "Teacher",
+        "Nurse",
+        "Farmer"
+      ],
+      "answer": "Teacher",
+      "type": "single_choice",
+      "source_sentence": "My father is a teacher, and my mother is a nurse."
+    },
+    {
+      "id": "pass.family.p01.q2",
+      "question": "Who lives with Amy's family?",
+      "options": [
+        "Her cousin",
+        "Her uncle",
+        "Her grandmother and grandfather",
+        "Her aunt"
+      ],
+      "answer": "Her grandmother and grandfather",
+      "type": "single_choice",
+      "source_sentence": "My grandmother and grandfather live with us too."
+    },
+    {
+      "id": "pass.family.p01.q3",
+      "question": "How many siblings does Amy have?",
+      "options": [
+        "One",
+        "Two",
+        "Three",
+        "None"
+      ],
+      "answer": "Two",
+      "type": "single_choice",
+      "source_sentence": "I have one brother and one sister."
+    }
+  ],
+  "status": "published"
+}

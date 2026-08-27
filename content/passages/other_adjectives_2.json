@@ -1,0 +1,54 @@
+{
+  "id": "passage.other_adjectives_2.001",
+  "topic": "other_adjectives_2",
+  "title": "The Kindness Fair",
+  "text": "Our school held a Kindness Fair last week. The gym was noisy and full of people. My class made a poster about brave firefighters and safe habits. Everyone tried to stay fit by joining the relay race. My friend Amy is slim and lucky — she won first prize for the best poster! Some students told silly and funny jokes on stage, and everyone laughed. We also sold tasty cookies to raise money for poor families in our city. \"I feel glad to help others,\" my teacher said. A rich businessman came and donated a lot of money. He said the simple act of giving makes people happy. My little brother was careless and spilled juice on the flat table, but nobody got mad. The tickets were not expensive at all, just one dollar each. The weather outside was somewhat dim and awful with rain, but it was a tiring, wonderful day full of fun!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.other_adjectives_2.001",
+    "voc.other_adjectives_2.002",
+    "voc.other_adjectives_2.003",
+    "voc.other_adjectives_2.004",
+    "voc.other_adjectives_2.005",
+    "voc.other_adjectives_2.006",
+    "voc.other_adjectives_2.007",
+    "voc.other_adjectives_2.008",
+    "voc.other_adjectives_2.009",
+    "voc.other_adjectives_2.010",
+    "voc.other_adjectives_2.011",
+    "voc.other_adjectives_2.012",
+    "voc.other_adjectives_2.013",
+    "voc.other_adjectives_2.014",
+    "voc.other_adjectives_2.015",
+    "voc.other_adjectives_2.016",
+    "voc.other_adjectives_2.017",
+    "voc.other_adjectives_2.018",
+    "voc.other_adjectives_2.019"
+  ],
+  "questions": [
+    {
+      "question": "What did the class sell to raise money for poor families?",
+      "source_sentence": "We also sold tasty cookies to raise money for poor families in our city.",
+      "options": ["Tasty cookies", "Fresh flowers", "Handmade cards", "Cold drinks"],
+      "answer": "Tasty cookies"
+    },
+    {
+      "question": "What happened when the little brother was careless?",
+      "source_sentence": "My little brother was careless and spilled juice on the flat table, but nobody got mad.",
+      "options": [
+        "He spilled juice on the table",
+        "He broke a poster",
+        "He dropped his ticket",
+        "He tripped over a chair"
+      ],
+      "answer": "He spilled juice on the table"
+    },
+    {
+      "question": "How much did the tickets cost?",
+      "source_sentence": "The tickets were not expensive at all, just one dollar each.",
+      "options": ["One dollar each", "Five dollars each", "They were free", "Ten dollars each"],
+      "answer": "One dollar each"
+    }
+  ],
+  "status": "published"
+}

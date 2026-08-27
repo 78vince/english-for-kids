@@ -1,0 +1,84 @@
+[
+  {
+    "id": "sent.occupations.b1.001",
+    "en": "My mom is a nurse, and my dad is a doctor.",
+    "zh": "我媽媽是護士，我爸爸是醫生。",
+    "topic": "occupations",
+    "stage": "B",
+    "grammar_point": "be動詞 + 職業名詞",
+    "vocab_ids": [
+      "voc.occupations.002",
+      "voc.occupations.001"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.occupations.b1.002",
+    "en": "The waiter and the waitress work at the restaurant.",
+    "zh": "這位服務生（男、女）都在餐廳工作。",
+    "topic": "occupations",
+    "stage": "B",
+    "grammar_point": "主詞複數 + work at",
+    "vocab_ids": [
+      "voc.occupations.011",
+      "voc.occupations.012"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.occupations.b1.003",
+    "en": "I want to be a singer when I grow up.",
+    "zh": "我長大後想成為一位歌手。",
+    "topic": "occupations",
+    "stage": "B",
+    "grammar_point": "want to be + 職業",
+    "vocab_ids": [
+      "voc.occupations.006"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.occupations.b1.004",
+    "en": "The police officer and the soldier are brave.",
+    "zh": "這位警察和軍人都很勇敢。",
+    "topic": "occupations",
+    "stage": "B",
+    "grammar_point": "be動詞 + 形容詞",
+    "vocab_ids": [
+      "voc.occupations.009",
+      "voc.occupations.010"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.occupations.b1.005",
+    "en": "My uncle is an engineer, but my aunt is a homemaker.",
+    "zh": "我叔叔是工程師，我阿姨是家庭主婦。",
+    "topic": "occupations",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": [
+      "voc.occupations.014",
+      "voc.occupations.015"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.occupations.b1.006",
+    "en": "She is a content creator who makes videos every week.",
+    "zh": "她是一位每個星期都會拍影片的內容創作者。",
+    "topic": "occupations",
+    "stage": "B",
+    "grammar_point": "who 引導的關係子句",
+    "vocab_ids": [
+      "voc.occupations.016"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

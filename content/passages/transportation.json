@@ -1,0 +1,58 @@
+{
+  "id": "pass.transportation.p01",
+  "title": "On My Way to School",
+  "topic": "transportation",
+  "text": "Hi! My name is Leo. Every morning, I go to school by bus. On the way, I see many cars and a big truck. Sometimes I see the subway go under the street. One day, an ambulance and a fire truck passed by very fast. After school, my father picks me up on his motorcycle. I like to see all the different vehicles!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.transportation.002",
+    "voc.transportation.001",
+    "voc.transportation.006",
+    "voc.transportation.010",
+    "voc.transportation.013",
+    "voc.transportation.014",
+    "voc.transportation.011"
+  ],
+  "questions": [
+    {
+      "id": "pass.transportation.p01.q1",
+      "question": "How does Leo go to school?",
+      "options": [
+        "By bus",
+        "By train",
+        "By taxi",
+        "By bike"
+      ],
+      "answer": "By bus",
+      "type": "single_choice",
+      "source_sentence": "Every morning, I go to school by bus."
+    },
+    {
+      "id": "pass.transportation.p01.q2",
+      "question": "What did Leo see pass by very fast one day?",
+      "options": [
+        "An ambulance and a fire truck",
+        "A car and a truck",
+        "A bus and a taxi",
+        "A train and a subway"
+      ],
+      "answer": "An ambulance and a fire truck",
+      "type": "single_choice",
+      "source_sentence": "One day, an ambulance and a fire truck passed by very fast."
+    },
+    {
+      "id": "pass.transportation.p01.q3",
+      "question": "How does Leo's father pick him up after school?",
+      "options": [
+        "On his motorcycle",
+        "In his car",
+        "On the subway",
+        "By taxi"
+      ],
+      "answer": "On his motorcycle",
+      "type": "single_choice",
+      "source_sentence": "After school, my father picks me up on his motorcycle."
+    }
+  ],
+  "status": "published"
+}

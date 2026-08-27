@@ -1,0 +1,62 @@
+{
+  "id": "pass.personality_traits.p01",
+  "title": "Three Special Friends",
+  "topic": "personality_traits",
+  "text": "I have three special friends. Lily is very smart and curious. She asks many questions in class. Ben is active and funny. He loves to play games and make jokes. Mia is quiet and shy at first, but she is honest and patient with everyone. Sometimes Ben is a little naughty and lazy about homework, but he is still kind. I am happy to have friends like them!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.personality_traits.005",
+    "voc.personality_traits.014",
+    "voc.personality_traits.008",
+    "voc.personality_traits.006",
+    "voc.personality_traits.009",
+    "voc.personality_traits.002",
+    "voc.personality_traits.013",
+    "voc.personality_traits.012",
+    "voc.personality_traits.011",
+    "voc.personality_traits.007",
+    "voc.personality_traits.001"
+  ],
+  "questions": [
+    {
+      "id": "pass.personality_traits.p01.q1",
+      "question": "What is Lily like?",
+      "options": [
+        "Smart and curious",
+        "Active and funny",
+        "Quiet and shy",
+        "Naughty and lazy"
+      ],
+      "answer": "Smart and curious",
+      "type": "single_choice",
+      "source_sentence": "Lily is very smart and curious."
+    },
+    {
+      "id": "pass.personality_traits.p01.q2",
+      "question": "What is Mia like?",
+      "options": [
+        "Active and funny",
+        "Naughty and lazy",
+        "Quiet and shy, but honest and patient",
+        "Smart and curious"
+      ],
+      "answer": "Quiet and shy, but honest and patient",
+      "type": "single_choice",
+      "source_sentence": "Mia is quiet and shy at first, but she is honest and patient with everyone."
+    },
+    {
+      "id": "pass.personality_traits.p01.q3",
+      "question": "What does Ben sometimes struggle with?",
+      "options": [
+        "Homework",
+        "Sports",
+        "Reading",
+        "Games"
+      ],
+      "answer": "Homework",
+      "type": "single_choice",
+      "source_sentence": "Sometimes Ben is a little naughty and lazy about homework, but he is still kind."
+    }
+  ],
+  "status": "published"
+}

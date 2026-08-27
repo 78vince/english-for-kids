@@ -1,0 +1,181 @@
+[
+  {
+    "id": "sent.tableware.b1.001",
+    "en": "Please give me a spoon and a fork.",
+    "zh": "請給我一支湯匙和一支叉子。",
+    "topic": "tableware",
+    "stage": "B",
+    "grammar_point": "please 的請求句 + 兩件餐具",
+    "vocab_ids": [
+      "voc.tableware.004",
+      "voc.tableware.005"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.tableware.b1.002",
+    "en": "I put the rice in a bowl and the soup in a cup.",
+    "zh": "我把飯放進碗裡，把湯放進杯子裡。",
+    "topic": "tableware",
+    "stage": "B",
+    "grammar_point": "put...in... 表示裝在哪個容器",
+    "vocab_ids": [
+      "voc.tableware.002",
+      "voc.tableware.003"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.tableware.b1.003",
+    "en": "My grandma eats with chopsticks, but I use a fork.",
+    "zh": "我奶奶用筷子吃飯，但我用叉子。",
+    "topic": "tableware",
+    "stage": "B",
+    "grammar_point": "對比句 but",
+    "vocab_ids": [
+      "voc.tableware.007",
+      "voc.tableware.005"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.tableware.b1.004",
+    "en": "Put the knife next to the plate.",
+    "zh": "把刀子放在盤子旁邊。",
+    "topic": "tableware",
+    "stage": "B",
+    "grammar_point": "祈使句 + 位置介系詞",
+    "vocab_ids": [
+      "voc.tableware.006",
+      "voc.tableware.001"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.tableware.b1.005",
+    "en": "I drink water from a glass, and I drink juice from a bottle.",
+    "zh": "我用玻璃杯喝水，用瓶子喝果汁。",
+    "topic": "tableware",
+    "stage": "B",
+    "grammar_point": "and 連接兩個對比子句",
+    "vocab_ids": [
+      "voc.tableware.014",
+      "voc.tableware.016"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.tableware.b1.006",
+    "en": "Dad cooks eggs in the pan, and the kettle boils water.",
+    "zh": "爸爸用平底鍋煎蛋，水壺在燒水。",
+    "topic": "tableware",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": [
+      "voc.tableware.015",
+      "voc.tableware.017"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.tableware.b1.007",
+    "en": "I use a straw, and the waiter puts the food on a tray.",
+    "zh": "我用吸管，服務生把食物放在托盤上。",
+    "topic": "tableware",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": [
+      "voc.tableware.018",
+      "voc.tableware.019"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.tableware.b1.008",
+    "en": "Please put a napkin on the tablecloth.",
+    "zh": "請把餐巾紙放在桌布上。",
+    "topic": "tableware",
+    "stage": "B",
+    "grammar_point": "祈使句 + 位置介系詞",
+    "vocab_ids": [
+      "voc.tableware.020",
+      "voc.tableware.021"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.tableware.b1.009",
+    "en": "Throw the napkin in the trash can.",
+    "zh": "把餐巾紙丟進垃圾桶。",
+    "topic": "tableware",
+    "stage": "B",
+    "grammar_point": "祈使句 + 位置介系詞",
+    "vocab_ids": [
+      "voc.tableware.022"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.tableware.b1.010",
+    "en": "Mom wears an apron, and I clean with a sponge.",
+    "zh": "媽媽穿著圍裙，我用海綿清洗。",
+    "topic": "tableware",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": [
+      "voc.tableware.023",
+      "voc.tableware.024"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.tableware.b1.011",
+    "en": "We make juice with a blender every morning.",
+    "zh": "我們每天早上用果汁機打果汁。",
+    "topic": "tableware",
+    "stage": "B",
+    "grammar_point": "with 表示使用工具",
+    "vocab_ids": [
+      "voc.tableware.025"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.tableware.b1.012",
+    "en": "The bread is in the toaster, and the rice is in the rice cooker.",
+    "zh": "麵包在烤麵包機裡，飯在電鍋裡。",
+    "topic": "tableware",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": [
+      "voc.tableware.026",
+      "voc.tableware.027"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.tableware.b1.013",
+    "en": "The ice cream in the freezer is my favorite.",
+    "zh": "冷凍庫裡的冰淇淋是我的最愛。",
+    "topic": "tableware",
+    "stage": "B",
+    "grammar_point": "介系詞片語當形容詞用",
+    "vocab_ids": [
+      "voc.tableware.028"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

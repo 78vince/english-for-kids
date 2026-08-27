@@ -1,0 +1,55 @@
+{
+  "id": "pass.occupations.p01",
+  "title": "What Do They Do?",
+  "topic": "occupations",
+  "text": "My family has many different jobs. My father is a doctor. He helps sick people at the hospital. My mother is a cook. She makes yummy food every day. My uncle is a farmer. He grows rice and vegetables. My aunt wants to be a singer one day. I think everyone's job is important!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.occupations.001",
+    "voc.occupations.004",
+    "voc.occupations.003",
+    "voc.occupations.006"
+  ],
+  "questions": [
+    {
+      "id": "pass.occupations.p01.q1",
+      "question": "What is the father's job?",
+      "options": [
+        "Farmer",
+        "Doctor",
+        "Cook",
+        "Singer"
+      ],
+      "answer": "Doctor",
+      "type": "single_choice",
+      "source_sentence": "My father is a doctor."
+    },
+    {
+      "id": "pass.occupations.p01.q2",
+      "question": "What does the mother do?",
+      "options": [
+        "She grows rice",
+        "She helps sick people",
+        "She makes yummy food",
+        "She sings songs"
+      ],
+      "answer": "She makes yummy food",
+      "type": "single_choice",
+      "source_sentence": "My mother is a cook. She makes yummy food every day."
+    },
+    {
+      "id": "pass.occupations.p01.q3",
+      "question": "What does the uncle grow?",
+      "options": [
+        "Flowers",
+        "Rice and vegetables",
+        "Fruit",
+        "Nothing"
+      ],
+      "answer": "Rice and vegetables",
+      "type": "single_choice",
+      "source_sentence": "He grows rice and vegetables."
+    }
+  ],
+  "status": "published"
+}

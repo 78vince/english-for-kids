@@ -1,0 +1,54 @@
+{
+  "id": "pass.money.p01",
+  "title": "Saving Money",
+  "topic": "money",
+  "text": "Tom wants to buy a new bike. The bike costs one hundred dollars. Tom saves his money every week. He puts coins in a piggy bank. After many weeks, Tom has enough money. He is very happy to buy his new bike!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.money.002",
+    "voc.money.003",
+    "voc.money.001"
+  ],
+  "questions": [
+    {
+      "id": "pass.money.p01.q1",
+      "question": "What does Tom want to buy?",
+      "options": [
+        "A book",
+        "A new bike",
+        "A toy",
+        "A hat"
+      ],
+      "answer": "A new bike",
+      "type": "single_choice",
+      "source_sentence": "Tom wants to buy a new bike."
+    },
+    {
+      "id": "pass.money.p01.q2",
+      "question": "How much does the bike cost?",
+      "options": [
+        "Ten dollars",
+        "Fifty dollars",
+        "One hundred dollars",
+        "Five dollars"
+      ],
+      "answer": "One hundred dollars",
+      "type": "single_choice",
+      "source_sentence": "The bike costs one hundred dollars."
+    },
+    {
+      "id": "pass.money.p01.q3",
+      "question": "Where does Tom put his coins?",
+      "options": [
+        "In his pocket",
+        "In a piggy bank",
+        "In a box",
+        "In his bag"
+      ],
+      "answer": "In a piggy bank",
+      "type": "single_choice",
+      "source_sentence": "He puts coins in a piggy bank."
+    }
+  ],
+  "status": "published"
+}

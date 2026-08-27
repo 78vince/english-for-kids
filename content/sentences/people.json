@@ -1,0 +1,60 @@
+[
+  {
+    "id": "sent.people.b1.001",
+    "en": "The girl and the boy are friends.",
+    "zh": "這個女孩和這個男孩是朋友。",
+    "topic": "people",
+    "stage": "B",
+    "grammar_point": "and 連接兩個主詞＋be動詞複數 are",
+    "vocab_ids": [
+      "voc.people.003",
+      "voc.people.002",
+      "voc.people.007"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.people.b1.002",
+    "en": "This person is an adult, and that person is a child.",
+    "zh": "這個人是成人，那個人是小孩。",
+    "topic": "people",
+    "stage": "B",
+    "grammar_point": "this/that 指示代名詞對比句",
+    "vocab_ids": [
+      "voc.people.013",
+      "voc.people.015",
+      "voc.people.006"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.people.b1.003",
+    "en": "There are many men and women here.",
+    "zh": "這裡有很多男人和女人。",
+    "topic": "people",
+    "stage": "B",
+    "grammar_point": "there are + 複數名詞",
+    "vocab_ids": [
+      "voc.people.011",
+      "voc.people.012"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.people.b1.004",
+    "en": "A young person and an old person are talking.",
+    "zh": "一個年輕人和一個老人正在聊天。",
+    "topic": "people",
+    "stage": "B",
+    "grammar_point": "and 連接兩個主詞＋現在進行式",
+    "vocab_ids": [
+      "voc.people.016",
+      "voc.people.017"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

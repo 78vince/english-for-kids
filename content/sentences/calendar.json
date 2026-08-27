@@ -1,0 +1,156 @@
+[
+  {
+    "id": "sent.calendar.b1.001",
+    "en": "I have art class on Monday and music class on Tuesday.",
+    "zh": "我星期一有美術課，星期二有音樂課。",
+    "topic": "calendar",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.calendar.001", "voc.calendar.002"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.calendar.b1.002",
+    "en": "We have PE class on Wednesday and science class on Thursday.",
+    "zh": "我們星期三有體育課，星期四有自然課。",
+    "topic": "calendar",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.calendar.003", "voc.calendar.004"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.calendar.b1.003",
+    "en": "I love Friday, but I love Saturday even more.",
+    "zh": "我喜歡星期五，但我更喜歡星期六。",
+    "topic": "calendar",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.calendar.005", "voc.calendar.006"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.calendar.b1.004",
+    "en": "We visit my grandparents on Sunday.",
+    "zh": "我們星期日會去看阿公阿嬤。",
+    "topic": "calendar",
+    "stage": "B",
+    "grammar_point": "on + 星期",
+    "vocab_ids": ["voc.calendar.007"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.calendar.b1.005",
+    "en": "It is cold in January, but my birthday is in February.",
+    "zh": "一月天氣很冷，但我的生日在二月。",
+    "topic": "calendar",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.calendar.008", "voc.calendar.009"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.calendar.b1.006",
+    "en": "Flowers bloom in March, and it often rains in April.",
+    "zh": "花在三月盛開，四月常常下雨。",
+    "topic": "calendar",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.calendar.010", "voc.calendar.011"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.calendar.b1.007",
+    "en": "School ends in May, and summer vacation starts in June.",
+    "zh": "五月放學期末假，暑假從六月開始。",
+    "topic": "calendar",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.calendar.012", "voc.calendar.013"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.calendar.b1.008",
+    "en": "It is very hot in July and August.",
+    "zh": "七月和八月天氣都很熱。",
+    "topic": "calendar",
+    "stage": "B",
+    "grammar_point": "and 連接兩個名詞",
+    "vocab_ids": ["voc.calendar.014", "voc.calendar.015"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.calendar.b1.009",
+    "en": "The new school year starts in September, and the weather gets cooler in October.",
+    "zh": "新學年從九月開始，十月天氣變涼了。",
+    "topic": "calendar",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.calendar.016", "voc.calendar.017"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.calendar.b1.010",
+    "en": "We wear warm coats in November, and the year ends in December.",
+    "zh": "我們十一月會穿暖和的外套，一年在十二月結束。",
+    "topic": "calendar",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.calendar.018", "voc.calendar.019"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.calendar.b1.011",
+    "en": "There are seven days in a week.",
+    "zh": "一星期有七天。",
+    "topic": "calendar",
+    "stage": "B",
+    "grammar_point": "There are + 數量",
+    "vocab_ids": ["voc.calendar.020", "voc.calendar.021"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.calendar.b1.012",
+    "en": "There are twelve months in a year.",
+    "zh": "一年有十二個月。",
+    "topic": "calendar",
+    "stage": "B",
+    "grammar_point": "There are + 數量",
+    "vocab_ids": ["voc.calendar.022", "voc.calendar.023"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.calendar.b1.013",
+    "en": "I check the date on the calendar every morning.",
+    "zh": "我每天早上都會看日曆上的日期。",
+    "topic": "calendar",
+    "stage": "B",
+    "grammar_point": "check + 受詞",
+    "vocab_ids": ["voc.calendar.024", "voc.calendar.025"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.calendar.b1.014",
+    "en": "I go to school on weekdays, but I stay home on the weekend.",
+    "zh": "我平日要上學，但週末待在家。",
+    "topic": "calendar",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.calendar.027", "voc.calendar.026"],
+    "audio": null,
+    "status": "published"
+  }
+]

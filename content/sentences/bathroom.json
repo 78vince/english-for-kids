@@ -1,0 +1,145 @@
+[
+  {
+    "id": "sent.bathroom.b1.001",
+    "en": "My toothbrush and toothpaste are on the shelf.",
+    "zh": "我的牙刷和牙膏放在架子上。",
+    "topic": "bathroom",
+    "stage": "B",
+    "grammar_point": "and 連接兩個名詞",
+    "vocab_ids": ["voc.bathroom.001", "voc.bathroom.002"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.bathroom.b1.002",
+    "en": "Use soap when you wash your hands.",
+    "zh": "洗手的時候要用肥皂。",
+    "topic": "bathroom",
+    "stage": "B",
+    "grammar_point": "when 表示時間",
+    "vocab_ids": ["voc.bathroom.003", "voc.bathroom.011"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.bathroom.b1.003",
+    "en": "This shampoo smells like strawberries.",
+    "zh": "這罐洗髮精聞起來像草莓。",
+    "topic": "bathroom",
+    "stage": "B",
+    "grammar_point": "smell like + 名詞",
+    "vocab_ids": ["voc.bathroom.004"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.bathroom.b1.004",
+    "en": "Please hand me a clean towel.",
+    "zh": "請遞給我一條乾淨的毛巾。",
+    "topic": "bathroom",
+    "stage": "B",
+    "grammar_point": "hand + 人 + 物",
+    "vocab_ids": ["voc.bathroom.005"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.bathroom.b1.005",
+    "en": "I like the bathtub, but my brother likes the shower.",
+    "zh": "我喜歡泡浴缸，但我弟弟喜歡淋浴。",
+    "topic": "bathroom",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.bathroom.006", "voc.bathroom.007"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.bathroom.b1.006",
+    "en": "Someone is using the toilet.",
+    "zh": "有人正在用馬桶。",
+    "topic": "bathroom",
+    "stage": "B",
+    "grammar_point": "現在進行式",
+    "vocab_ids": ["voc.bathroom.008"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.bathroom.b1.007",
+    "en": "I look in the mirror and comb my hair.",
+    "zh": "我看著鏡子梳頭髮。",
+    "topic": "bathroom",
+    "stage": "B",
+    "grammar_point": "and 連接兩個動作",
+    "vocab_ids": ["voc.bathroom.009", "voc.bathroom.010"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.bathroom.b1.008",
+    "en": "Remember to brush your teeth before bed.",
+    "zh": "記得睡前要刷牙。",
+    "topic": "bathroom",
+    "stage": "B",
+    "grammar_point": "remember to + 動詞原形",
+    "vocab_ids": ["voc.bathroom.012"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.bathroom.b1.009",
+    "en": "We are out of toilet paper.",
+    "zh": "我們的衛生紙用完了。",
+    "topic": "bathroom",
+    "stage": "B",
+    "grammar_point": "be out of + 名詞",
+    "vocab_ids": ["voc.bathroom.013"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.bathroom.b1.010",
+    "en": "I use mouthwash so my breath smells fresh.",
+    "zh": "我用漱口水讓口氣清新。",
+    "topic": "bathroom",
+    "stage": "B",
+    "grammar_point": "so 表示結果",
+    "vocab_ids": ["voc.bathroom.014"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.bathroom.b1.011",
+    "en": "My slippers are on the bath mat.",
+    "zh": "我的拖鞋放在浴室踏墊上。",
+    "topic": "bathroom",
+    "stage": "B",
+    "grammar_point": "be動詞 + 介系詞片語",
+    "vocab_ids": ["voc.bathroom.015", "voc.bathroom.016"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.bathroom.b1.012",
+    "en": "I wash my face and use a hairbrush every morning.",
+    "zh": "我每天早上洗臉並用髮梳梳頭。",
+    "topic": "bathroom",
+    "stage": "B",
+    "grammar_point": "and 連接兩個動作",
+    "vocab_ids": ["voc.bathroom.018", "voc.bathroom.017"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.bathroom.b1.013",
+    "en": "I brush my teeth after breakfast and before bed.",
+    "zh": "我在早餐後和睡前都會刷牙。",
+    "topic": "bathroom",
+    "stage": "B",
+    "grammar_point": "after / before + 名詞",
+    "vocab_ids": ["voc.bathroom.019"],
+    "audio": null,
+    "status": "published"
+  }
+]

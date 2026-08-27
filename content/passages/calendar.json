@@ -1,0 +1,60 @@
+{
+  "id": "pass.calendar.p01",
+  "title": "My Week and My Favorite Month",
+  "topic": "calendar",
+  "text": "My favorite day is Saturday because I do not have school. My family has a big calendar in the kitchen, and we write our plans on it every week. Our school year starts in September and ends in June. My birthday is in December, so winter is my favorite time of year. There are twelve months in a year, but December is always the most exciting one for me!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.calendar.020",
+    "voc.calendar.006",
+    "voc.calendar.025",
+    "voc.calendar.021",
+    "voc.calendar.016",
+    "voc.calendar.013",
+    "voc.calendar.019",
+    "voc.calendar.022",
+    "voc.calendar.023"
+  ],
+  "questions": [
+    {
+      "id": "pass.calendar.p01.q1",
+      "question": "Why is Saturday the child's favorite day?",
+      "options": [
+        "Because there is no school",
+        "Because it is their birthday",
+        "Because it snows",
+        "Because school starts"
+      ],
+      "answer": "Because there is no school",
+      "type": "single_choice",
+      "source_sentence": "My favorite day is Saturday because I do not have school."
+    },
+    {
+      "id": "pass.calendar.p01.q2",
+      "question": "When does the school year start and end?",
+      "options": [
+        "September to June",
+        "January to December",
+        "June to September",
+        "March to April"
+      ],
+      "answer": "September to June",
+      "type": "single_choice",
+      "source_sentence": "Our school year starts in September and ends in June."
+    },
+    {
+      "id": "pass.calendar.p01.q3",
+      "question": "How many months are there in a year?",
+      "options": [
+        "Twelve",
+        "Seven",
+        "Ten",
+        "Four"
+      ],
+      "answer": "Twelve",
+      "type": "single_choice",
+      "source_sentence": "There are twelve months in a year, but December is always the most exciting one for me!"
+    }
+  ],
+  "status": "published"
+}

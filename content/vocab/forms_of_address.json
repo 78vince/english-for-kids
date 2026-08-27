@@ -1,0 +1,275 @@
+[
+  {
+    "id": "voc.forms_of_address.001",
+    "en": "name",
+    "zh": "名字",
+    "pos": "名詞",
+    "topic": "forms_of_address",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "What is your name?",
+      "zh": "你的名字是什麼？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Forms of address",
+    "status": "published"
+  },
+  {
+    "id": "voc.forms_of_address.002",
+    "en": "Mr.",
+    "zh": "先生",
+    "pos": "名詞",
+    "topic": "forms_of_address",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "This is Mr. Wang.",
+      "zh": "這是王先生。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Forms of address",
+    "status": "published"
+  },
+  {
+    "id": "voc.forms_of_address.004",
+    "en": "Miss",
+    "zh": "小姐",
+    "pos": "名詞",
+    "topic": "forms_of_address",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Miss Lin is my teacher.",
+      "zh": "林小姐是我的老師。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Forms of address",
+    "status": "published"
+  },
+  {
+    "id": "voc.forms_of_address.003",
+    "en": "Mrs.",
+    "zh": "太太",
+    "pos": "名詞",
+    "topic": "forms_of_address",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Mrs. Chen is my neighbor.",
+      "zh": "陳太太是我的鄰居。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Forms of address",
+    "status": "published"
+  },
+  {
+    "id": "voc.forms_of_address.005",
+    "en": "Ms.",
+    "zh": "女士（不分已婚未婚的中性稱謂）",
+    "pos": "名詞",
+    "topic": "forms_of_address",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Ms. Huang teaches math.",
+      "zh": "黃女士教數學。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Forms of address",
+    "status": "published"
+  },
+  {
+    "id": "voc.forms_of_address.006",
+    "en": "Dr.",
+    "zh": "...博士",
+    "pos": "名詞",
+    "topic": "forms_of_address",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Dr. Lee works at the hospital.",
+      "zh": "李博士在醫院工作。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Forms of address",
+    "status": "published"
+  },
+  {
+    "id": "voc.forms_of_address.007",
+    "en": "Sir",
+    "zh": "先生（禮貌尊稱，不加姓名單獨使用）",
+    "pos": "名詞",
+    "topic": "forms_of_address",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Excuse me, sir, can you help me?",
+      "zh": "先生不好意思，你可以幫我嗎？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Forms of address",
+    "status": "published"
+  },
+  {
+    "id": "voc.forms_of_address.008",
+    "en": "Madam",
+    "zh": "女士、夫人（禮貌尊稱，不加姓名單獨使用）",
+    "pos": "名詞",
+    "topic": "forms_of_address",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Excuse me, madam, is this seat free?",
+      "zh": "女士不好意思，這個位子有人坐嗎？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Forms of address",
+    "status": "published"
+  },
+  {
+    "id": "voc.forms_of_address.009",
+    "en": "nickname",
+    "zh": "綽號",
+    "pos": "名詞",
+    "topic": "forms_of_address",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My nickname is Sunny.",
+      "zh": "我的綽號是 Sunny。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Forms of address",
+    "status": "published"
+  },
+  {
+    "id": "voc.forms_of_address.010",
+    "en": "full name",
+    "zh": "全名",
+    "pos": "名詞",
+    "topic": "forms_of_address",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Please write your full name here.",
+      "zh": "請在這裡寫下你的全名。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Forms of address",
+    "status": "published"
+  },
+  {
+    "id": "voc.forms_of_address.011",
+    "en": "first name",
+    "zh": "名",
+    "pos": "名詞",
+    "topic": "forms_of_address",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My first name is Amy.",
+      "zh": "我的名字（名）是 Amy。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Forms of address",
+    "status": "published"
+  },
+  {
+    "id": "voc.forms_of_address.012",
+    "en": "last name",
+    "zh": "姓",
+    "pos": "名詞",
+    "topic": "forms_of_address",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My last name is Lin.",
+      "zh": "我的姓是林。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Forms of address",
+    "status": "published"
+  },
+  {
+    "id": "voc.forms_of_address.013",
+    "en": "Professor",
+    "zh": "教授",
+    "pos": "名詞",
+    "topic": "forms_of_address",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Professor Wu gave a great speech.",
+      "zh": "吳教授做了一場很棒的演講。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Forms of address",
+    "status": "published"
+  }
+]

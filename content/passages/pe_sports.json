@@ -1,0 +1,54 @@
+{
+  "id": "pass.pe_sports.p01",
+  "title": "My PE Class",
+  "topic": "pe_sports",
+  "text": "Every Friday, we have a PE class at school. My favorite sport is soccer, but today we played baseball instead. I held the bat and hit the ball hard. My whole team cheered loudly for me. After the game, we had a fun race around the gym, but I did not win. I still had a great time with my classmates.",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.pe_sports.001",
+    "voc.pe_sports.003",
+    "voc.pe_sports.014",
+    "voc.pe_sports.015",
+    "voc.pe_sports.019",
+    "voc.pe_sports.024",
+    "voc.pe_sports.018",
+    "voc.pe_sports.022"
+  ],
+  "questions": [
+    {
+      "id": "pass.pe_sports.p01.q1",
+      "question": "What sport did they play today?",
+      "options": ["Soccer", "Baseball", "Basketball", "Volleyball"],
+      "answer": "Baseball",
+      "type": "single_choice",
+      "source_sentence": "My favorite sport is soccer, but today we played baseball instead."
+    },
+    {
+      "id": "pass.pe_sports.p01.q2",
+      "question": "What happened after I hit the ball hard?",
+      "options": [
+        "My whole team cheered loudly for me.",
+        "I fell down and cried.",
+        "The coach blew the whistle.",
+        "We went home early."
+      ],
+      "answer": "My whole team cheered loudly for me.",
+      "type": "single_choice",
+      "source_sentence": "My whole team cheered loudly for me."
+    },
+    {
+      "id": "pass.pe_sports.p01.q3",
+      "question": "Did the character win the race?",
+      "options": [
+        "Yes, they won easily",
+        "No, they did not win",
+        "They did not race",
+        "They won last year"
+      ],
+      "answer": "No, they did not win",
+      "type": "single_choice",
+      "source_sentence": "After the game, we had a fun race around the gym, but I did not win."
+    }
+  ],
+  "status": "published"
+}

@@ -1,0 +1,146 @@
+[
+  {
+    "id": "sent.places_directions.b1.001",
+    "en": "The bookstore is next to the supermarket.",
+    "zh": "書店在超市旁邊。",
+    "topic": "places_directions",
+    "stage": "B",
+    "grammar_point": "next to + 地點",
+    "vocab_ids": [
+      "voc.places_directions.007",
+      "voc.places_directions.005"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.places_directions.b1.002",
+    "en": "Turn left, and the park is on the right.",
+    "zh": "左轉之後，公園就在右邊。",
+    "topic": "places_directions",
+    "stage": "B",
+    "grammar_point": "祈使句 + and 子句",
+    "vocab_ids": [
+      "voc.places_directions.015",
+      "voc.places_directions.016",
+      "voc.places_directions.001"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.places_directions.b1.003",
+    "en": "We went to the zoo and the museum today.",
+    "zh": "我們今天去了動物園和博物館。",
+    "topic": "places_directions",
+    "stage": "B",
+    "grammar_point": "went to + 兩個地點並列",
+    "vocab_ids": [
+      "voc.places_directions.002",
+      "voc.places_directions.012"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.places_directions.b1.004",
+    "en": "Is the hospital near here or over there?",
+    "zh": "醫院是在這附近還是在那邊？",
+    "topic": "places_directions",
+    "stage": "B",
+    "grammar_point": "or 選擇問句",
+    "vocab_ids": [
+      "voc.places_directions.003",
+      "voc.places_directions.017",
+      "voc.places_directions.018"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.places_directions.b1.005",
+    "en": "The traffic light is at the corner of the street.",
+    "zh": "紅綠燈在街角的地方。",
+    "topic": "places_directions",
+    "stage": "B",
+    "grammar_point": "at the + 地點",
+    "vocab_ids": [
+      "voc.places_directions.021",
+      "voc.places_directions.019",
+      "voc.places_directions.020"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.places_directions.b1.006",
+    "en": "Walk straight, then turn right at the crosswalk.",
+    "zh": "直走，然後在斑馬線右轉。",
+    "topic": "places_directions",
+    "stage": "B",
+    "grammar_point": "祈使句 + then 子句",
+    "vocab_ids": [
+      "voc.places_directions.026",
+      "voc.places_directions.027",
+      "voc.places_directions.022"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.places_directions.b1.007",
+    "en": "The store is near the school, but the hospital is far.",
+    "zh": "商店離學校很近，但醫院很遠。",
+    "topic": "places_directions",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": [
+      "voc.places_directions.024",
+      "voc.places_directions.025"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.places_directions.b1.008",
+    "en": "Can you find the park on this map?",
+    "zh": "你可以在這張地圖上找到公園嗎？",
+    "topic": "places_directions",
+    "stage": "B",
+    "grammar_point": "Can you + 動詞原形（問句）",
+    "vocab_ids": [
+      "voc.places_directions.023"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.places_directions.b1.009",
+    "en": "The bank is in front of the post office, and the museum is behind it.",
+    "zh": "銀行在郵局前面，博物館在它後面。",
+    "topic": "places_directions",
+    "stage": "B",
+    "grammar_point": "in front of／behind 表示相對位置",
+    "vocab_ids": [
+      "voc.places_directions.013",
+      "voc.places_directions.011",
+      "voc.places_directions.012"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.places_directions.b1.010",
+    "en": "The restaurant is across from the movie theater.",
+    "zh": "餐廳在電影院的對面。",
+    "topic": "places_directions",
+    "stage": "B",
+    "grammar_point": "across from 表示對面位置",
+    "vocab_ids": [
+      "voc.places_directions.004",
+      "voc.places_directions.008"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

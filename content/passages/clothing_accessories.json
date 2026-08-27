@@ -1,0 +1,59 @@
+{
+  "id": "pass.clothing_accessories.p01",
+  "title": "Getting Dressed for School",
+  "topic": "clothing_accessories",
+  "text": "Hi! My name is Leo. Every morning, I wear a shirt and pants to school. Today it is cold, so I put on a jacket and gloves too. My sister likes to wear a dress and a hat. She also has a red bag for her books. After school, we take off our shoes at home.",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.clothing_accessories.001",
+    "voc.clothing_accessories.002",
+    "voc.clothing_accessories.009",
+    "voc.clothing_accessories.013",
+    "voc.clothing_accessories.003",
+    "voc.clothing_accessories.007",
+    "voc.clothing_accessories.012",
+    "voc.clothing_accessories.005"
+  ],
+  "questions": [
+    {
+      "id": "pass.clothing_accessories.p01.q1",
+      "question": "What does Leo wear to school every morning?",
+      "options": [
+        "A shirt and pants",
+        "A dress and a hat",
+        "A jacket and gloves",
+        "Shoes and socks"
+      ],
+      "answer": "A shirt and pants",
+      "type": "single_choice",
+      "source_sentence": "Every morning, I wear a shirt and pants to school."
+    },
+    {
+      "id": "pass.clothing_accessories.p01.q2",
+      "question": "What does Leo put on because it is cold?",
+      "options": [
+        "A jacket and gloves",
+        "A shirt and pants",
+        "A dress and a hat",
+        "A scarf and a coat"
+      ],
+      "answer": "A jacket and gloves",
+      "type": "single_choice",
+      "source_sentence": "Today it is cold, so I put on a jacket and gloves too."
+    },
+    {
+      "id": "pass.clothing_accessories.p01.q3",
+      "question": "What color is Leo's sister's bag?",
+      "options": [
+        "Red",
+        "Blue",
+        "Pink",
+        "Yellow"
+      ],
+      "answer": "Red",
+      "type": "single_choice",
+      "source_sentence": "She also has a red bag for her books."
+    }
+  ],
+  "status": "published"
+}

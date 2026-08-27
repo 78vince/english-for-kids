@@ -1,0 +1,56 @@
+[
+  {
+    "id": "sent.animals_insects.b1.001",
+    "en": "I have a pet dog. His name is Max.",
+    "zh": "我有一隻寵物狗。牠的名字叫麥克斯。",
+    "topic": "animals_insects",
+    "stage": "B",
+    "grammar_point": "have + 名詞 / 所有格 his",
+    "vocab_ids": [
+      "voc.animals_insects.022",
+      "voc.animals_insects.009"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.animals_insects.b1.002",
+    "en": "There is a monkey in the tree.",
+    "zh": "樹上有一隻猴子。",
+    "topic": "animals_insects",
+    "stage": "B",
+    "grammar_point": "There is/are",
+    "vocab_ids": [
+      "voc.animals_insects.019"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.animals_insects.b1.003",
+    "en": "The elephant is big, but the mouse is small.",
+    "zh": "大象很大，但老鼠很小。",
+    "topic": "animals_insects",
+    "stage": "B",
+    "grammar_point": "but 連接對比句",
+    "vocab_ids": [
+      "voc.animals_insects.011",
+      "voc.animals_insects.020"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.animals_insects.b1.004",
+    "en": "Can you see the bird? It can fly.",
+    "zh": "你看得到那隻鳥嗎？牠會飛。",
+    "topic": "animals_insects",
+    "stage": "B",
+    "grammar_point": "can + 原形動詞",
+    "vocab_ids": [
+      "voc.animals_insects.004"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

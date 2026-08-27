@@ -1,0 +1,68 @@
+{
+  "id": "passage.other_verbs_1.001",
+  "topic": "other_verbs_1",
+  "title": "A Busy Day at the Playground",
+  "text": "On Saturday, my friends come to my house, and we go to the playground together. First, we jump and hop on the big trampoline. The ball bounces so high that everyone claps. My brother hits the ball too hard, and it flies over the fence! Then he falls down and starts to cry, but I help him stand up and hold his hand. \"Does it hurt?\" I ask. He says no, so we keep playing. Our dog tries to bite my shoe, but I get it away just in time. Next, we feed the ducks by the pond and count how many there are. I find a shiny rock and give it to my brother as a gift. \"Hurry, it's starting to rain!\" my mom calls. We close our umbrellas quickly and run home. Before dinner, I comb my hair and brush my teeth. I have a big bowl of soup, and I feel happy. I hope tomorrow we can go to the playground again, because we always enjoy our time together. Every year, my little brother grows taller and taller!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.other_verbs_1.001",
+    "voc.other_verbs_1.002",
+    "voc.other_verbs_1.003",
+    "voc.other_verbs_1.004",
+    "voc.other_verbs_1.005",
+    "voc.other_verbs_1.006",
+    "voc.other_verbs_1.007",
+    "voc.other_verbs_1.008",
+    "voc.other_verbs_1.009",
+    "voc.other_verbs_1.010",
+    "voc.other_verbs_1.011",
+    "voc.other_verbs_1.012",
+    "voc.other_verbs_1.013",
+    "voc.other_verbs_1.014",
+    "voc.other_verbs_1.015",
+    "voc.other_verbs_1.016",
+    "voc.other_verbs_1.017",
+    "voc.other_verbs_1.018",
+    "voc.other_verbs_1.019",
+    "voc.other_verbs_1.020",
+    "voc.other_verbs_1.021",
+    "voc.other_verbs_1.022",
+    "voc.other_verbs_1.023",
+    "voc.other_verbs_1.024",
+    "voc.other_verbs_1.025",
+    "voc.other_verbs_1.026",
+    "voc.other_verbs_1.027",
+    "voc.other_verbs_1.028"
+  ],
+  "questions": [
+    {
+      "question": "What happened after the brother's hard hit?",
+      "source_sentence": "My brother hits the ball too hard, and it flies over the fence!",
+      "options": [
+        "The ball flew over the fence",
+        "The ball popped",
+        "The trampoline broke",
+        "The dog caught the ball"
+      ],
+      "answer": "The ball flew over the fence"
+    },
+    {
+      "question": "What did the narrator find near the pond?",
+      "source_sentence": "I find a shiny rock and give it to my brother as a gift.",
+      "options": ["A shiny rock", "A lost toy", "A baby duck", "A gold coin"],
+      "answer": "A shiny rock"
+    },
+    {
+      "question": "Why does the narrator hope to go to the playground again tomorrow?",
+      "source_sentence": "I hope tomorrow we can go to the playground again, because we always enjoy our time together.",
+      "options": [
+        "Because they always enjoy their time together",
+        "Because the trampoline needs fixing",
+        "Because the dog wants a walk",
+        "Because it will be sunny"
+      ],
+      "answer": "Because they always enjoy their time together"
+    }
+  ],
+  "status": "published"
+}

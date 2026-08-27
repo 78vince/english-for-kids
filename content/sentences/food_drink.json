@@ -1,0 +1,58 @@
+[
+  {
+    "id": "sent.food_drink.b1.001",
+    "en": "I like an apple and a banana.",
+    "zh": "我喜歡蘋果跟香蕉。",
+    "topic": "food_drink",
+    "stage": "B",
+    "grammar_point": "喜好句型 + 單數名詞",
+    "vocab_ids": [
+      "voc.food_drink.001",
+      "voc.food_drink.002"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.food_drink.b1.002",
+    "en": "I drink milk, and you drink juice.",
+    "zh": "我喝牛奶，你喝果汁。",
+    "topic": "food_drink",
+    "stage": "B",
+    "grammar_point": "飲食動詞 drink + 對比句",
+    "vocab_ids": [
+      "voc.food_drink.007",
+      "voc.food_drink.009"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.food_drink.b1.003",
+    "en": "My mother makes rice and soup for dinner.",
+    "zh": "我媽媽煮飯跟湯當晚餐。",
+    "topic": "food_drink",
+    "stage": "B",
+    "grammar_point": "食物名詞 + 動詞 make",
+    "vocab_ids": [
+      "voc.food_drink.004",
+      "voc.food_drink.012"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.food_drink.b1.004",
+    "en": "I want a cake and an egg, please.",
+    "zh": "請給我一個蛋糕跟一顆蛋。",
+    "topic": "food_drink",
+    "stage": "B",
+    "grammar_point": "want 的請求句",
+    "vocab_ids": [
+      "voc.food_drink.013",
+      "voc.food_drink.006"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

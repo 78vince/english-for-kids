@@ -1,0 +1,90 @@
+[
+  {
+    "id": "sent.clubs_hobbies.b1.001",
+    "en": "I enjoy drawing and painting after school.",
+    "zh": "我放學後喜歡畫畫和上色。",
+    "topic": "clubs_hobbies",
+    "stage": "B",
+    "grammar_point": "enjoy + 動名詞",
+    "vocab_ids": ["voc.clubs_hobbies.001", "voc.clubs_hobbies.002"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.clubs_hobbies.b1.002",
+    "en": "She loves singing and dancing in the school show.",
+    "zh": "她喜歡在學校表演裡唱歌和跳舞。",
+    "topic": "clubs_hobbies",
+    "stage": "B",
+    "grammar_point": "love + 動名詞",
+    "vocab_ids": ["voc.clubs_hobbies.003", "voc.clubs_hobbies.004"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.clubs_hobbies.b1.003",
+    "en": "He listens to music and plays the guitar.",
+    "zh": "他聽音樂也彈吉他。",
+    "topic": "clubs_hobbies",
+    "stage": "B",
+    "grammar_point": "and 連接兩個動詞子句",
+    "vocab_ids": ["voc.clubs_hobbies.005", "voc.clubs_hobbies.006"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.clubs_hobbies.b1.004",
+    "en": "My brother plays the piano and joins the chess club.",
+    "zh": "我哥哥彈鋼琴，也參加棋藝社。",
+    "topic": "clubs_hobbies",
+    "stage": "B",
+    "grammar_point": "and 連接兩個動詞子句",
+    "vocab_ids": ["voc.clubs_hobbies.007", "voc.clubs_hobbies.008"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.clubs_hobbies.b1.005",
+    "en": "My sister is in the book club, and I am in the art club.",
+    "zh": "我姊姊參加讀書會，我參加美術社。",
+    "topic": "clubs_hobbies",
+    "stage": "B",
+    "grammar_point": "be in + 社團名稱",
+    "vocab_ids": ["voc.clubs_hobbies.009", "voc.clubs_hobbies.010"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.clubs_hobbies.b1.006",
+    "en": "My hobby is photography, but my mom's hobby is cooking.",
+    "zh": "我的嗜好是攝影，但我媽媽的嗜好是烹飪。",
+    "topic": "clubs_hobbies",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.clubs_hobbies.011", "voc.clubs_hobbies.012"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.clubs_hobbies.b1.007",
+    "en": "I sing in the choir, and my grandma enjoys gardening.",
+    "zh": "我在合唱團唱歌，我奶奶喜歡做園藝。",
+    "topic": "clubs_hobbies",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.clubs_hobbies.013", "voc.clubs_hobbies.014"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.clubs_hobbies.b1.008",
+    "en": "I like collecting stamps and making origami.",
+    "zh": "我喜歡收集郵票和摺紙。",
+    "topic": "clubs_hobbies",
+    "stage": "B",
+    "grammar_point": "like + 動名詞並列",
+    "vocab_ids": ["voc.clubs_hobbies.015", "voc.clubs_hobbies.016"],
+    "audio": null,
+    "status": "published"
+  }
+]

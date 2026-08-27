@@ -1,0 +1,113 @@
+{
+  "$description": "Indigo Purls 品牌指南萃取後，調整為兒童英語學習平台使用的 Design Tokens",
+  "$meta": {
+    "source": "Indigo Purls Brand Style Guide",
+    "adaptedFor": "兒童英語學習平台 (Kids English Learning Platform)",
+    "fontNote": "全站字體採用開源字體 Huninn（開源粉圓體），圓潤飽滿的無襯線字體，親和力高，適合兒童閱讀情境"
+  },
+
+  "color": {
+    "brand": {
+      "primary": {
+        "700": { "value": "#0052A3", "usage": "主色／導覽列／標題文字，取自原稿深靛藍" },
+        "500": { "value": "#2E7BD6", "usage": "互動主按鈕、連結（由原稿加亮調製，提升親和活力感）" },
+        "100": { "value": "#C4E2EF", "usage": "淺底色／卡片底色，取自原稿" }
+      },
+      "secondary": {
+        "500": { "value": "#5B7CCB", "usage": "次要按鈕、圖示，取自原稿" }
+      }
+    },
+    "accent": {
+      "orange": { "value": "#FF8A61", "usage": "重點 CTA／獎勵徽章，取自原稿" },
+      "pink":   { "value": "#FFBDEF", "usage": "遊戲化元素／可愛強調色，取自原稿" },
+      "yellow": { "value": "#FFD166", "usage": "星星／獎勵／進度亮點（新增，兒童平台常見的鼓勵色）" }
+    },
+    "feedback": {
+      "success": { "value": "#6FCF97", "usage": "答對／完成回饋（新增）" },
+      "error":   { "value": "#FF6B6B", "usage": "答錯／再試一次提示，選用柔和珊瑚色而非刺眼紅（新增）" }
+    },
+    "neutral": {
+      "background": { "value": "#F7F2F8", "usage": "頁面底色，由原稿 #F1E9F2 提亮，讓長時間閱讀更輕盈" },
+      "surface":    { "value": "#FFFFFF", "usage": "卡片／容器底色" },
+      "ink":        { "value": "#2B2A4A", "usage": "主要文字色，選用柔和深藍紫取代純黑，降低壓迫感" },
+      "inkMuted":   { "value": "#6B6789", "usage": "次要文字／說明文字" },
+      "border":     { "value": "#E4D9EA", "usage": "分隔線／卡片邊框" }
+    }
+  },
+
+  "typography": {
+    "fontFamily": {
+      "display": "'Huninn', 'Noto Sans TC', sans-serif",
+      "body": "'Huninn', 'Noto Sans TC', sans-serif",
+      "$note": "Huninn（開源粉圓體，justfont 出品，基於 Kosugi Maru 改作，歐文採用 Varela Round）為開源圓體，中英文皆適用，圓潤飽滿的字形用於全站標題與內文，維持一致的童趣手感"
+    },
+    "scale": {
+      "display": { "size": "40px", "lineHeight": "1.2", "weight": 700 },
+      "h1":      { "size": "32px", "lineHeight": "1.25", "weight": 700 },
+      "h2":      { "size": "24px", "lineHeight": "1.3",  "weight": 700 },
+      "h3":      { "size": "20px", "lineHeight": "1.35", "weight": 600 },
+      "bodyLg":  { "size": "18px", "lineHeight": "1.6",  "weight": 400 },
+      "body":    { "size": "16px", "lineHeight": "1.6",  "weight": 400 },
+      "caption": { "size": "14px", "lineHeight": "1.5",  "weight": 400 }
+    }
+  },
+
+  "radius": {
+    "$note": "原稿未定義圓角，此為新增項目：加大圓角以呼應兒童平台柔軟、安全、可親近的觸感",
+    "sm":    { "value": "8px",   "usage": "輸入框、標籤、小徽章" },
+    "md":    { "value": "16px",  "usage": "一般卡片、按鈕" },
+    "lg":    { "value": "24px",  "usage": "大型卡片、彈出視窗" },
+    "xl":    { "value": "32px",  "usage": "主視覺區塊、插畫框" },
+    "pill":  { "value": "999px", "usage": "膠囊按鈕、進度條" },
+    "circle":{ "value": "50%",   "usage": "頭像、圓形圖示按鈕" }
+  },
+
+  "spacing": {
+    "1": "4px",
+    "2": "8px",
+    "3": "12px",
+    "4": "16px",
+    "5": "24px",
+    "6": "32px",
+    "7": "48px",
+    "8": "64px",
+    "$note": "兒童使用情境建議可點擊區域至少 44px，間距刻意放大以利觸控"
+  },
+
+  "shadow": {
+    "sm": { "value": "0 2px 8px rgba(0, 82, 163, 0.08)", "usage": "按鈕、小卡片" },
+    "md": { "value": "0 6px 16px rgba(0, 82, 163, 0.12)", "usage": "卡片懸浮" },
+    "lg": { "value": "0 12px 28px rgba(0, 82, 163, 0.16)", "usage": "彈出視窗、主視覺" }
+  },
+
+  "component": {
+    "buttonPrimary": {
+      "background": "{color.brand.primary.500}",
+      "text": "#FFFFFF",
+      "radius": "{radius.pill}",
+      "shadow": "{shadow.sm}"
+    },
+    "buttonReward": {
+      "background": "{color.accent.orange}",
+      "text": "#FFFFFF",
+      "radius": "{radius.pill}",
+      "shadow": "{shadow.sm}"
+    },
+    "buttonSecondary": {
+      "background": "#FFFFFF",
+      "text": "{color.brand.primary.700}",
+      "border": "2px solid {color.brand.primary.100}",
+      "radius": "{radius.pill}"
+    },
+    "card": {
+      "background": "{color.neutral.surface}",
+      "radius": "{radius.lg}",
+      "shadow": "{shadow.md}",
+      "padding": "{spacing.5}"
+    },
+    "badgeStar": {
+      "background": "{color.accent.yellow}",
+      "radius": "{radius.circle}"
+    }
+  }
+}

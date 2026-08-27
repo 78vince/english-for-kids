@@ -1,0 +1,182 @@
+[
+  {
+    "id": "sent.other_adverbs_responses.b1.001",
+    "topic": "other_adverbs_responses",
+    "stage": "B",
+    "en": "Can you say that again?",
+    "zh": "你可以再說一次嗎？",
+    "grammar_point": "副詞 again",
+    "vocab_ids": [
+      "voc.other_adverbs_responses.001"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adverbs_responses.b1.002",
+    "topic": "other_adverbs_responses",
+    "stage": "B",
+    "en": "The cat ran away quickly.",
+    "zh": "貓咪很快跑走了。",
+    "grammar_point": "副詞 away",
+    "vocab_ids": [
+      "voc.other_adverbs_responses.002"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adverbs_responses.b1.003",
+    "topic": "other_adverbs_responses",
+    "stage": "B",
+    "en": "Maybe we can go tomorrow.",
+    "zh": "也許我們明天可以去。",
+    "grammar_point": "副詞 maybe",
+    "vocab_ids": [
+      "voc.other_adverbs_responses.003"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adverbs_responses.b1.004",
+    "topic": "other_adverbs_responses",
+    "stage": "B",
+    "en": "No, thank you.",
+    "zh": "不用了，謝謝。",
+    "grammar_point": "副詞 no",
+    "vocab_ids": [
+      "voc.other_adverbs_responses.004"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adverbs_responses.b1.005",
+    "topic": "other_adverbs_responses",
+    "stage": "B",
+    "en": "This is not my bag.",
+    "zh": "這不是我的包包。",
+    "grammar_point": "副詞 not",
+    "vocab_ids": [
+      "voc.other_adverbs_responses.005"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adverbs_responses.b1.006",
+    "topic": "other_adverbs_responses",
+    "stage": "B",
+    "en": "School officially starts in September.",
+    "zh": "學校正式在九月開學。",
+    "grammar_point": "副詞 officially",
+    "vocab_ids": [
+      "voc.other_adverbs_responses.006"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adverbs_responses.b1.007",
+    "topic": "other_adverbs_responses",
+    "stage": "B",
+    "en": "She finished her homework quickly.",
+    "zh": "她很快就寫完功課了。",
+    "grammar_point": "副詞 quickly",
+    "vocab_ids": [
+      "voc.other_adverbs_responses.007"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adverbs_responses.b1.008",
+    "topic": "other_adverbs_responses",
+    "stage": "B",
+    "en": "I am really excited about the trip.",
+    "zh": "我對這趟旅行真的很期待。",
+    "grammar_point": "副詞 really",
+    "vocab_ids": [
+      "voc.other_adverbs_responses.008"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adverbs_responses.b1.009",
+    "topic": "other_adverbs_responses",
+    "stage": "B",
+    "en": "I am still hungry.",
+    "zh": "我還是很餓。",
+    "grammar_point": "副詞 still",
+    "vocab_ids": [
+      "voc.other_adverbs_responses.009"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adverbs_responses.b1.010",
+    "topic": "other_adverbs_responses",
+    "stage": "B",
+    "en": "\"Can you help me?\" \"Sure!\"",
+    "zh": "「你可以幫我嗎？」「當然！」",
+    "grammar_point": "副詞 sure",
+    "vocab_ids": [
+      "voc.other_adverbs_responses.010"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adverbs_responses.b1.011",
+    "topic": "other_adverbs_responses",
+    "stage": "B",
+    "en": "I ate lunch, then I did my homework.",
+    "zh": "我吃了午餐，然後寫了功課。",
+    "grammar_point": "副詞 then",
+    "vocab_ids": [
+      "voc.other_adverbs_responses.011"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adverbs_responses.b1.012",
+    "topic": "other_adverbs_responses",
+    "stage": "B",
+    "en": "We eat dinner together every night.",
+    "zh": "我們每晚一起吃晚餐。",
+    "grammar_point": "副詞 together",
+    "vocab_ids": [
+      "voc.other_adverbs_responses.012"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adverbs_responses.b1.013",
+    "topic": "other_adverbs_responses",
+    "stage": "B",
+    "en": "I like ice cream too.",
+    "zh": "我也喜歡冰淇淋。",
+    "grammar_point": "副詞 too",
+    "vocab_ids": [
+      "voc.other_adverbs_responses.013"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adverbs_responses.b1.014",
+    "topic": "other_adverbs_responses",
+    "stage": "B",
+    "en": "This cake is very sweet.",
+    "zh": "這個蛋糕非常甜。",
+    "grammar_point": "副詞 very",
+    "vocab_ids": [
+      "voc.other_adverbs_responses.014"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_adverbs_responses.b1.015",
+    "topic": "other_adverbs_responses",
+    "stage": "B",
+    "en": "Yes, I would love to come.",
+    "zh": "好啊，我很想來。",
+    "grammar_point": "副詞 yes",
+    "vocab_ids": [
+      "voc.other_adverbs_responses.015"
+    ],
+    "status": "published"
+  }
+]

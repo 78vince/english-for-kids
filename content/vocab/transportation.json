@@ -1,0 +1,338 @@
+[
+  {
+    "id": "voc.transportation.007",
+    "en": "airplane",
+    "zh": "飛機",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "The airplane flies in the sky.",
+      "zh": "飛機在天空中飛。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.transportation.015",
+    "en": "ferry",
+    "zh": "渡輪",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "We take the ferry to the island.",
+      "zh": "我們搭渡輪去島上。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.transportation.006",
+    "en": "truck",
+    "zh": "卡車",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "The truck carries big boxes.",
+      "zh": "卡車載著大箱子。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.transportation.002",
+    "en": "bus",
+    "zh": "公車",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "I take the bus to school.",
+      "zh": "我搭公車去上學。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.transportation.016",
+    "en": "ticket",
+    "zh": "車票",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "Buy a ticket before you get on.",
+      "zh": "上車前要先買票。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.transportation.004",
+    "en": "bike",
+    "zh": "腳踏車",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "I ride my bike every day.",
+      "zh": "我每天騎腳踏車。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.transportation.009",
+    "en": "ship",
+    "zh": "大船",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "The big ship sails on the sea.",
+      "zh": "那艘大船在海上航行。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.transportation.008",
+    "en": "boat",
+    "zh": "船",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "We rode a boat on the lake.",
+      "zh": "我們在湖上搭船。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.transportation.011",
+    "en": "motorcycle",
+    "zh": "摩托車",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "My uncle rides a motorcycle.",
+      "zh": "我叔叔騎摩托車。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.transportation.012",
+    "en": "helicopter",
+    "zh": "直升機",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "The helicopter flies over the city.",
+      "zh": "直升機飛過城市上空。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.transportation.010",
+    "en": "subway",
+    "zh": "捷運、地鐵",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "We take the subway downtown.",
+      "zh": "我們搭捷運到市區。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.transportation.014",
+    "en": "fire truck",
+    "zh": "消防車",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "The fire truck is red.",
+      "zh": "消防車是紅色的。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.transportation.001",
+    "en": "car",
+    "zh": "汽車",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "We go to school by car.",
+      "zh": "我們開車去學校。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.transportation.003",
+    "en": "train",
+    "zh": "火車",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "The train is very fast.",
+      "zh": "火車開得很快。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.transportation.005",
+    "en": "taxi",
+    "zh": "計程車",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "We took a taxi home.",
+      "zh": "我們搭計程車回家。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.transportation.013",
+    "en": "ambulance",
+    "zh": "救護車",
+    "pos": "名詞",
+    "topic": "transportation",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Transportation",
+    "status": "published",
+    "example_sentence": {
+      "en": "The ambulance is very loud.",
+      "zh": "救護車的聲音很大。",
+      "status": "draft"
+    }
+  }
+]

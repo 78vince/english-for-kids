@@ -1,0 +1,64 @@
+{
+  "id": "pass.colors.p01",
+  "title": "My Art Class",
+  "topic": "colors",
+  "text": "Every Monday, I have art class at school. I take out my crayons, markers, and paint. Today, we use a brush and paint to make a picture on canvas. My friend likes to use clay to make a small cup. After that, we use scissors and glue to make a craft. I put a colorful sticker on my paper at the end. Art is my favorite class of the week!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.colors.029",
+    "voc.colors.024",
+    "voc.colors.025",
+    "voc.colors.020",
+    "voc.colors.021",
+    "voc.colors.030",
+    "voc.colors.033",
+    "voc.colors.022",
+    "voc.colors.023",
+    "voc.colors.028",
+    "voc.colors.026",
+    "voc.colors.019",
+    "voc.colors.027"
+  ],
+  "questions": [
+    {
+      "id": "pass.colors.p01.q1",
+      "question": "What does the child use to make a picture on canvas?",
+      "options": [
+        "A brush and paint",
+        "Scissors and glue",
+        "A sticker",
+        "Clay"
+      ],
+      "answer": "A brush and paint",
+      "type": "single_choice",
+      "source_sentence": "Today, we use a brush and paint to make a picture on canvas."
+    },
+    {
+      "id": "pass.colors.p01.q2",
+      "question": "What does the child's friend make with clay?",
+      "options": [
+        "A small cup",
+        "A craft with paper",
+        "A sticker",
+        "A picture on canvas"
+      ],
+      "answer": "A small cup",
+      "type": "single_choice",
+      "source_sentence": "My friend likes to use clay to make a small cup."
+    },
+    {
+      "id": "pass.colors.p01.q3",
+      "question": "What does the child put on the paper at the end?",
+      "options": [
+        "A colorful sticker",
+        "Crayons",
+        "Clay",
+        "A canvas"
+      ],
+      "answer": "A colorful sticker",
+      "type": "single_choice",
+      "source_sentence": "I put a colorful sticker on my paper at the end."
+    }
+  ],
+  "status": "published"
+}

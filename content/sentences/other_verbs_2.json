@@ -1,0 +1,434 @@
+[
+  {
+    "id": "sent.other_verbs_2.b1.001",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "I know the answer.",
+    "zh": "我知道答案。",
+    "grammar_point": "動詞 know",
+    "vocab_ids": [
+      "voc.other_verbs_2.001"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.002",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "We laugh at his funny jokes.",
+    "zh": "我們對他好笑的笑話大笑。",
+    "grammar_point": "動詞 laugh",
+    "vocab_ids": [
+      "voc.other_verbs_2.002"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.003",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "Let's play a game.",
+    "zh": "我們來玩遊戲吧。",
+    "grammar_point": "動詞 let's",
+    "vocab_ids": [
+      "voc.other_verbs_2.003"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.004",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "I live near the school.",
+    "zh": "我住在學校附近。",
+    "grammar_point": "動詞 live",
+    "vocab_ids": [
+      "voc.other_verbs_2.004"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.005",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "Look at the beautiful sunset.",
+    "zh": "看那美麗的夕陽。",
+    "grammar_point": "動詞 look",
+    "vocab_ids": [
+      "voc.other_verbs_2.005"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.006",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "I love my family very much.",
+    "zh": "我非常愛我的家人。",
+    "grammar_point": "動詞 love",
+    "vocab_ids": [
+      "voc.other_verbs_2.006"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.007",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "I make a card for my mom.",
+    "zh": "我為媽媽做了一張卡片。",
+    "grammar_point": "動詞 make",
+    "vocab_ids": [
+      "voc.other_verbs_2.007"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.008",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "Nice to meet you.",
+    "zh": "很高興認識你。",
+    "grammar_point": "動詞 meet",
+    "vocab_ids": [
+      "voc.other_verbs_2.008"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.009",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "I miss my grandma a lot.",
+    "zh": "我很想念我的奶奶。",
+    "grammar_point": "動詞 miss",
+    "vocab_ids": [
+      "voc.other_verbs_2.009"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.010",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "I need a new pencil.",
+    "zh": "我需要一枝新鉛筆。",
+    "grammar_point": "動詞 need",
+    "vocab_ids": [
+      "voc.other_verbs_2.010"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.011",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "Please open the door.",
+    "zh": "請打開門。",
+    "grammar_point": "動詞 open",
+    "vocab_ids": [
+      "voc.other_verbs_2.011"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.012",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "My dad picks me up after school.",
+    "zh": "我爸爸放學後來接我。",
+    "grammar_point": "動詞 pick up",
+    "vocab_ids": [
+      "voc.other_verbs_2.012"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.013",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "Put your books on the desk.",
+    "zh": "把你的書放在桌上。",
+    "grammar_point": "動詞 put",
+    "vocab_ids": [
+      "voc.other_verbs_2.013"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.014",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "I see a rainbow in the sky.",
+    "zh": "我看見天空中的彩虹。",
+    "grammar_point": "動詞 see",
+    "vocab_ids": [
+      "voc.other_verbs_2.014"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.015",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "Let me show you my drawing.",
+    "zh": "讓我給你看我的畫。",
+    "grammar_point": "動詞 show",
+    "vocab_ids": [
+      "voc.other_verbs_2.015"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.016",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "Please sit on the chair.",
+    "zh": "請坐在椅子上。",
+    "grammar_point": "動詞 sit",
+    "vocab_ids": [
+      "voc.other_verbs_2.016"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.017",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "I sleep eight hours every night.",
+    "zh": "我每晚睡八個小時。",
+    "grammar_point": "動詞 sleep",
+    "vocab_ids": [
+      "voc.other_verbs_2.017"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.018",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "The flowers smell so sweet.",
+    "zh": "這些花聞起來好香。",
+    "grammar_point": "動詞 smell",
+    "vocab_ids": [
+      "voc.other_verbs_2.018"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.019",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "Please stand up straight.",
+    "zh": "請站直。",
+    "grammar_point": "動詞 stand",
+    "vocab_ids": [
+      "voc.other_verbs_2.019"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.020",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "The movie will start soon.",
+    "zh": "電影快要開始了。",
+    "grammar_point": "動詞 start",
+    "vocab_ids": [
+      "voc.other_verbs_2.020"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.021",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "Please stop making noise.",
+    "zh": "請不要再吵鬧了。",
+    "grammar_point": "動詞 stop",
+    "vocab_ids": [
+      "voc.other_verbs_2.021"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.022",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "I take my umbrella when it rains.",
+    "zh": "下雨時我會帶雨傘。",
+    "grammar_point": "動詞 take",
+    "vocab_ids": [
+      "voc.other_verbs_2.022"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.023",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "Tell me a story.",
+    "zh": "告訴我一個故事。",
+    "grammar_point": "動詞 tell",
+    "vocab_ids": [
+      "voc.other_verbs_2.023"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.024",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "I thank my teacher for her help.",
+    "zh": "我感謝老師的幫忙。",
+    "grammar_point": "動詞 thank",
+    "vocab_ids": [
+      "voc.other_verbs_2.024"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.025",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "Please don't touch the paintings.",
+    "zh": "請不要觸摸這些畫作。",
+    "grammar_point": "動詞 touch",
+    "vocab_ids": [
+      "voc.other_verbs_2.025"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.026",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "I try my best every day.",
+    "zh": "我每天都盡力而為。",
+    "grammar_point": "動詞 try",
+    "vocab_ids": [
+      "voc.other_verbs_2.026"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.027",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "Please wait for me.",
+    "zh": "請等我一下。",
+    "grammar_point": "動詞 wait",
+    "vocab_ids": [
+      "voc.other_verbs_2.027"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.028",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "I wake up at seven every day.",
+    "zh": "我每天七點醒來。",
+    "grammar_point": "動詞 wake",
+    "vocab_ids": [
+      "voc.other_verbs_2.028"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.029",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "We walk to school together.",
+    "zh": "我們一起走路上學。",
+    "grammar_point": "動詞 walk",
+    "vocab_ids": [
+      "voc.other_verbs_2.029"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.030",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "I want a new bike.",
+    "zh": "我想要一台新腳踏車。",
+    "grammar_point": "動詞 want",
+    "vocab_ids": [
+      "voc.other_verbs_2.030"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.031",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "We watch a movie on Fridays.",
+    "zh": "我們星期五看電影。",
+    "grammar_point": "動詞 watch",
+    "vocab_ids": [
+      "voc.other_verbs_2.031"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.032",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "I wear a coat in winter.",
+    "zh": "我冬天穿外套。",
+    "grammar_point": "動詞 wear",
+    "vocab_ids": [
+      "voc.other_verbs_2.032"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.033",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "We welcome new students every year.",
+    "zh": "我們每年都歡迎新生。",
+    "grammar_point": "動詞 welcome",
+    "vocab_ids": [
+      "voc.other_verbs_2.033"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.034",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "Our team wants to win the game.",
+    "zh": "我們隊想贏得比賽。",
+    "grammar_point": "動詞 win",
+    "vocab_ids": [
+      "voc.other_verbs_2.034"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.035",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "Don't worry, everything will be fine.",
+    "zh": "別擔心，一切都會沒事的。",
+    "grammar_point": "動詞 worry",
+    "vocab_ids": [
+      "voc.other_verbs_2.035"
+    ],
+    "status": "published"
+  },
+  {
+    "id": "sent.other_verbs_2.b1.036",
+    "topic": "other_verbs_2",
+    "stage": "B",
+    "en": "I like reading books.",
+    "zh": "我喜歡看書。",
+    "grammar_point": "動詞 like",
+    "vocab_ids": [
+      "voc.other_verbs_2.036"
+    ],
+    "status": "published"
+  }
+]

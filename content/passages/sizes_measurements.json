@@ -1,0 +1,59 @@
+{
+  "id": "pass.sizes_measurements.p01",
+  "title": "A Trip to the Market",
+  "topic": "sizes_measurements",
+  "text": "At the market, I saw a huge watermelon and a tiny apple. My mom picked a medium basket, but it was too small for everything. The road to the market is wide, but the little path behind our house is narrow. When we got home, half of the fruit filled one bowl, so we needed another bowl too. Now our fridge is full, but the basket at the market looked empty!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.sizes_measurements.002",
+    "voc.sizes_measurements.003",
+    "voc.sizes_measurements.004",
+    "voc.sizes_measurements.005",
+    "voc.sizes_measurements.006",
+    "voc.sizes_measurements.011",
+    "voc.sizes_measurements.012",
+    "voc.sizes_measurements.013"
+  ],
+  "questions": [
+    {
+      "id": "pass.sizes_measurements.p01.q1",
+      "question": "What did the child see at the market?",
+      "options": [
+        "A huge watermelon and a tiny apple",
+        "A medium basket only",
+        "A narrow road",
+        "A full fridge"
+      ],
+      "answer": "A huge watermelon and a tiny apple",
+      "type": "single_choice",
+      "source_sentence": "At the market, I saw a huge watermelon and a tiny apple."
+    },
+    {
+      "id": "pass.sizes_measurements.p01.q2",
+      "question": "What is the road to the market like?",
+      "options": [
+        "Wide, but the little path is narrow",
+        "Narrow, but the path is wide",
+        "Both are narrow",
+        "Both are wide"
+      ],
+      "answer": "Wide, but the little path is narrow",
+      "type": "single_choice",
+      "source_sentence": "The road to the market is wide, but the little path behind our house is narrow."
+    },
+    {
+      "id": "pass.sizes_measurements.p01.q3",
+      "question": "How does the fridge look at the end of the story?",
+      "options": [
+        "Full",
+        "Empty",
+        "Tiny",
+        "Medium"
+      ],
+      "answer": "Full",
+      "type": "single_choice",
+      "source_sentence": "Now our fridge is full, but the basket at the market looked empty!"
+    }
+  ],
+  "status": "published"
+}

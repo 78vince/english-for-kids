@@ -1,0 +1,275 @@
+[
+  {
+    "id": "voc.sizes_measurements.001",
+    "en": "large",
+    "zh": "大的",
+    "pos": "形容詞",
+    "topic": "sizes_measurements",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I want a large pizza.",
+      "zh": "我想要一個大披薩。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sizes & Measurements",
+    "status": "published"
+  },
+  {
+    "id": "voc.sizes_measurements.002",
+    "en": "huge",
+    "zh": "巨大的",
+    "pos": "形容詞",
+    "topic": "sizes_measurements",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "That is a huge elephant!",
+      "zh": "那是一頭巨大的大象！",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sizes & Measurements",
+    "status": "published"
+  },
+  {
+    "id": "voc.sizes_measurements.003",
+    "en": "tiny",
+    "zh": "微小的",
+    "pos": "形容詞",
+    "topic": "sizes_measurements",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The ant is tiny.",
+      "zh": "螞蟻很微小。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sizes & Measurements",
+    "status": "published"
+  },
+  {
+    "id": "voc.sizes_measurements.004",
+    "en": "medium",
+    "zh": "中等的",
+    "pos": "形容詞",
+    "topic": "sizes_measurements",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I need a medium size, not a small one.",
+      "zh": "我需要中等尺寸，不是小尺寸。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sizes & Measurements",
+    "status": "published"
+  },
+  {
+    "id": "voc.sizes_measurements.005",
+    "en": "wide",
+    "zh": "寬的",
+    "pos": "形容詞",
+    "topic": "sizes_measurements",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The river is very wide.",
+      "zh": "這條河很寬。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sizes & Measurements",
+    "status": "published"
+  },
+  {
+    "id": "voc.sizes_measurements.006",
+    "en": "narrow",
+    "zh": "窄的",
+    "pos": "形容詞",
+    "topic": "sizes_measurements",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "This street is narrow.",
+      "zh": "這條街很窄。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sizes & Measurements",
+    "status": "published"
+  },
+  {
+    "id": "voc.sizes_measurements.007",
+    "en": "thick",
+    "zh": "厚的",
+    "pos": "形容詞",
+    "topic": "sizes_measurements",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "This book is very thick.",
+      "zh": "這本書很厚。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sizes & Measurements",
+    "status": "published"
+  },
+  {
+    "id": "voc.sizes_measurements.008",
+    "en": "deep",
+    "zh": "深的",
+    "pos": "形容詞",
+    "topic": "sizes_measurements",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The lake is very deep.",
+      "zh": "這個湖很深。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sizes & Measurements",
+    "status": "published"
+  },
+  {
+    "id": "voc.sizes_measurements.009",
+    "en": "shallow",
+    "zh": "淺的",
+    "pos": "形容詞",
+    "topic": "sizes_measurements",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "This pond is shallow.",
+      "zh": "這個池塘很淺。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sizes & Measurements",
+    "status": "published"
+  },
+  {
+    "id": "voc.sizes_measurements.010",
+    "en": "size",
+    "zh": "尺寸",
+    "pos": "名詞",
+    "topic": "sizes_measurements",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "What size do you need?",
+      "zh": "你需要什麼尺寸？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sizes & Measurements",
+    "status": "published"
+  },
+  {
+    "id": "voc.sizes_measurements.011",
+    "en": "half",
+    "zh": "一半",
+    "pos": "名詞、形容詞",
+    "topic": "sizes_measurements",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I ate half of the cake.",
+      "zh": "我吃了一半的蛋糕。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sizes & Measurements",
+    "status": "published"
+  },
+  {
+    "id": "voc.sizes_measurements.012",
+    "en": "full",
+    "zh": "滿的",
+    "pos": "形容詞",
+    "topic": "sizes_measurements",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The cup is full of water.",
+      "zh": "杯子裡裝滿了水。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sizes & Measurements",
+    "status": "published"
+  },
+  {
+    "id": "voc.sizes_measurements.013",
+    "en": "empty",
+    "zh": "空的",
+    "pos": "形容詞",
+    "topic": "sizes_measurements",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The box is empty.",
+      "zh": "這個箱子是空的。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Sizes & Measurements",
+    "status": "published"
+  }
+]

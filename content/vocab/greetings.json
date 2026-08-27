@@ -1,0 +1,275 @@
+[
+  {
+    "id": "voc.greetings.001",
+    "en": "hi",
+    "zh": "嗨",
+    "pos": "感嘆詞",
+    "topic": "greetings",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Interjections",
+    "status": "published",
+    "example_sentence": {
+      "en": "Hi! My name is Amy.",
+      "zh": "嗨！我的名字是艾咪。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.greetings.002",
+    "en": "hello",
+    "zh": "哈囉",
+    "pos": "感嘆詞",
+    "topic": "greetings",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Interjections",
+    "status": "published",
+    "example_sentence": {
+      "en": "Hello! Nice to meet you.",
+      "zh": "哈囉！很高興認識你。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.greetings.003",
+    "en": "bye",
+    "zh": "掰掰、再見",
+    "pos": "感嘆詞",
+    "topic": "greetings",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Interjections",
+    "status": "published",
+    "example_sentence": {
+      "en": "Bye! See you tomorrow.",
+      "zh": "再見！明天見。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.greetings.004",
+    "en": "good morning",
+    "zh": "早安",
+    "pos": "問候語",
+    "topic": "greetings",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Greetings",
+    "status": "published",
+    "example_sentence": {
+      "en": "Good morning, everyone!",
+      "zh": "大家早安！",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.greetings.005",
+    "en": "good afternoon",
+    "zh": "午安",
+    "pos": "問候語",
+    "topic": "greetings",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Greetings",
+    "status": "published",
+    "example_sentence": {
+      "en": "Good afternoon, teacher!",
+      "zh": "老師午安！",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.greetings.006",
+    "en": "good evening",
+    "zh": "晚安（見面問候，較正式，用於晚上剛見面時）",
+    "pos": "問候語",
+    "topic": "greetings",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Greetings",
+    "status": "published",
+    "example_sentence": {
+      "en": "Good evening! Welcome to our school.",
+      "zh": "晚安！歡迎來到我們學校。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.greetings.007",
+    "en": "good night",
+    "zh": "晚安（道別用語，用於睡前或晚上分開時）",
+    "pos": "問候語",
+    "topic": "greetings",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Greetings",
+    "status": "published",
+    "example_sentence": {
+      "en": "Good night! Sleep well.",
+      "zh": "晚安！好好睡一覺。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.greetings.008",
+    "en": "please",
+    "zh": "請",
+    "pos": "感嘆詞",
+    "topic": "greetings",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Interjections",
+    "status": "published",
+    "example_sentence": {
+      "en": "Can I have some water, please?",
+      "zh": "請問我可以喝點水嗎？",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.greetings.009",
+    "en": "thank you",
+    "zh": "謝謝",
+    "pos": "感嘆詞",
+    "topic": "greetings",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Interjections",
+    "status": "published",
+    "example_sentence": {
+      "en": "Thank you for the gift.",
+      "zh": "謝謝你的禮物。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.greetings.010",
+    "en": "you're welcome",
+    "zh": "不客氣",
+    "pos": "客套語",
+    "topic": "greetings",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Polite Expressions",
+    "status": "published",
+    "example_sentence": {
+      "en": "Thank you! You're welcome.",
+      "zh": "謝謝你！不客氣。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.greetings.011",
+    "en": "sorry",
+    "zh": "對不起",
+    "pos": "感嘆詞",
+    "topic": "greetings",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Interjections",
+    "status": "published",
+    "example_sentence": {
+      "en": "Sorry, I am late.",
+      "zh": "對不起，我遲到了。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.greetings.012",
+    "en": "excuse me",
+    "zh": "不好意思",
+    "pos": "客套語",
+    "topic": "greetings",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Polite Expressions",
+    "status": "published",
+    "example_sentence": {
+      "en": "Excuse me, where is the bathroom?",
+      "zh": "不好意思，請問廁所在哪裡？",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.greetings.013",
+    "en": "can you help me",
+    "zh": "你可以幫我嗎",
+    "pos": "疑問句",
+    "topic": "greetings",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Classroom Phrases",
+    "status": "published",
+    "example_sentence": {
+      "en": "Excuse me, can you help me?",
+      "zh": "不好意思，你可以幫我嗎？",
+      "status": "draft"
+    }
+  }
+]

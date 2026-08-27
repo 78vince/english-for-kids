@@ -1,0 +1,18 @@
+# 相依套件與建置產物
+node_modules/
+dist/
+*.log
+*.timestamp-*.mjs
+
+# 編輯器與作業系統雜項
+.DS_Store
+.vscode/
+.idea/
+
+# 環境變數（若之後需要）
+.env
+.env.local
+
+# 本機備份壓縮檔（不進版本控制，體積太大且是專案檔案本身的重複快照，
+# 見 English-for-Kids-backup-*.zip，備份另外用 zip 存放，不透過 git 追蹤）
+English-for-Kids-backup-*.zip

@@ -1,0 +1,44 @@
+{
+  "id": "pass.school.p01",
+  "title": "My School Day",
+  "topic": "school",
+  "text": "Hi! My name is Ben. I go to school every day. My classroom is big and clean. My teacher's name is Ms. Lee. She is very kind. Every morning, I read a book before class starts. After lunch, I play with my friends on the playground. At night, I do my homework at my desk. I love my school!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.school.001",
+    "voc.school.002",
+    "voc.school.004",
+    "voc.school.005",
+    "voc.school.011",
+    "voc.school.013",
+    "voc.school.014",
+    "voc.school.016"
+  ],
+  "questions": [
+    {
+      "id": "pass.school.p01.q1",
+      "question": "What is Ben's teacher's name?",
+      "options": ["Ms. Lee", "Ms. Wang", "Mr. Chen", "Ms. Amy"],
+      "answer": "Ms. Lee",
+      "type": "single_choice",
+      "source_sentence": "My teacher's name is Ms. Lee."
+    },
+    {
+      "id": "pass.school.p01.q2",
+      "question": "Where does Ben play with his friends?",
+      "options": ["In the classroom", "On the playground", "In the library", "At his desk"],
+      "answer": "On the playground",
+      "type": "single_choice",
+      "source_sentence": "After lunch, I play with my friends on the playground."
+    },
+    {
+      "id": "pass.school.p01.q3",
+      "question": "When does Ben do his homework?",
+      "options": ["In the morning", "After lunch", "At night", "Before school"],
+      "answer": "At night",
+      "type": "single_choice",
+      "source_sentence": "At night, I do my homework at my desk."
+    }
+  ],
+  "status": "published"
+}

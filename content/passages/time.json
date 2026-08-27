@@ -1,0 +1,60 @@
+{
+  "id": "pass.time.p01",
+  "title": "A Busy Saturday",
+  "topic": "time",
+  "text": "On Saturday, I wake up early in the morning. At seven o'clock, I eat breakfast. In the afternoon, I do my homework for one hour. Then I play with my friends until evening. At night, I read a book with my family. I always go to bed before midnight, but sometimes I stay up a little later!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.time.020",
+    "voc.time.009",
+    "voc.time.001",
+    "voc.time.010",
+    "voc.time.006",
+    "voc.time.011",
+    "voc.time.012",
+    "voc.time.014",
+    "voc.time.019"
+  ],
+  "questions": [
+    {
+      "id": "pass.time.p01.q1",
+      "question": "What time does the child eat breakfast?",
+      "options": [
+        "Seven o'clock",
+        "Half past nine",
+        "Noon",
+        "Midnight"
+      ],
+      "answer": "Seven o'clock",
+      "type": "single_choice",
+      "source_sentence": "At seven o'clock, I eat breakfast."
+    },
+    {
+      "id": "pass.time.p01.q2",
+      "question": "When does the child play with friends?",
+      "options": [
+        "In the afternoon, until evening",
+        "At midnight",
+        "In the morning only",
+        "Never"
+      ],
+      "answer": "In the afternoon, until evening",
+      "type": "single_choice",
+      "source_sentence": "Then I play with my friends until evening."
+    },
+    {
+      "id": "pass.time.p01.q3",
+      "question": "When does the child always go to bed?",
+      "options": [
+        "Before midnight",
+        "At noon",
+        "Right after breakfast",
+        "At seven o'clock"
+      ],
+      "answer": "Before midnight",
+      "type": "single_choice",
+      "source_sentence": "I always go to bed before midnight, but sometimes I stay up a little later!"
+    }
+  ],
+  "status": "published"
+}

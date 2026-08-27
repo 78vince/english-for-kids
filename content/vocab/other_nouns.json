@@ -1,0 +1,401 @@
+[
+  {
+    "id": "voc.other_nouns.001",
+    "en": "birthday",
+    "zh": "生日",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Today is my birthday.",
+      "zh": "今天是我的生日。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.002",
+    "en": "bottle",
+    "zh": "瓶子",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I fill my water bottle every morning.",
+      "zh": "我每天早上裝滿水瓶。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.003",
+    "en": "box",
+    "zh": "箱子",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I keep my toys in a box.",
+      "zh": "我把玩具放在箱子裡。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.004",
+    "en": "cell phone",
+    "zh": "手機",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My mom calls me on her cell phone.",
+      "zh": "我媽媽用手機打給我。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.005",
+    "en": "dream",
+    "zh": "夢、夢想",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I had a funny dream last night.",
+      "zh": "我昨晚做了一個有趣的夢。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.006",
+    "en": "flower",
+    "zh": "花",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "She picked a yellow flower.",
+      "zh": "她摘了一朵黃花。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.007",
+    "en": "fun",
+    "zh": "樂趣",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The party was so much fun.",
+      "zh": "這場派對非常有趣。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.008",
+    "en": "gift",
+    "zh": "禮物",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I bought a gift for my friend.",
+      "zh": "我買了一份禮物給我的朋友。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.009",
+    "en": "mail",
+    "zh": "郵件",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I got a mail from my grandma.",
+      "zh": "我收到奶奶寄來的信。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.010",
+    "en": "party",
+    "zh": "派對",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We had a fun party yesterday.",
+      "zh": "我們昨天辦了一場有趣的派對。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.011",
+    "en": "photo",
+    "zh": "照片",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Let's take a photo together.",
+      "zh": "我們一起拍張照片吧。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.012",
+    "en": "robot",
+    "zh": "機器人",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My little brother has a toy robot.",
+      "zh": "我弟弟有一個玩具機器人。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.013",
+    "en": "sale",
+    "zh": "特賣、拍賣",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The shoes are on sale this week.",
+      "zh": "這雙鞋子這週特賣。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.014",
+    "en": "thing",
+    "zh": "東西",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I have one more thing to say.",
+      "zh": "我還有一件事要說。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.015",
+    "en": "ticket",
+    "zh": "票",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I bought two tickets for the movie.",
+      "zh": "我買了兩張電影票。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.016",
+    "en": "trash",
+    "zh": "垃圾",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Please take out the trash.",
+      "zh": "請把垃圾拿出去。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.017",
+    "en": "tree",
+    "zh": "樹",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We planted a tree in the yard.",
+      "zh": "我們在院子種了一棵樹。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.018",
+    "en": "way",
+    "zh": "方式、路",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I know a fast way to school.",
+      "zh": "我知道一條快到學校的路。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.other_nouns.019",
+    "en": "word",
+    "zh": "字、單詞",
+    "pos": "名詞",
+    "topic": "other_nouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I learned a new word today.",
+      "zh": "我今天學了一個新單字。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Other Nouns",
+    "status": "published"
+  }
+]

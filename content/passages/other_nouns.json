@@ -1,0 +1,55 @@
+{
+  "id": "passage.other_nouns.001",
+  "topic": "other_nouns",
+  "title": "My Robot Birthday",
+  "text": "Today is my birthday, and my family planned a surprise party for me! When I woke up, I found a big gift box next to my bed. Inside was a toy robot! I was so happy that I took a photo with it right away. At the party, my friends brought flowers and a card in the mail. We drank juice from a bottle and had so much fun. My uncle even gave me a ticket to the robot museum for next weekend. After the party, I helped clean up and took out the trash. My mom said learning a new word every day is a good habit, so I wrote \"robot\" as my word of the day. That night, I had a wonderful dream about riding my new robot down the way to school!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.other_nouns.001",
+    "voc.other_nouns.002",
+    "voc.other_nouns.003",
+    "voc.other_nouns.005",
+    "voc.other_nouns.006",
+    "voc.other_nouns.007",
+    "voc.other_nouns.008",
+    "voc.other_nouns.009",
+    "voc.other_nouns.010",
+    "voc.other_nouns.011",
+    "voc.other_nouns.012",
+    "voc.other_nouns.015",
+    "voc.other_nouns.016",
+    "voc.other_nouns.018",
+    "voc.other_nouns.019"
+  ],
+  "questions": [
+    {
+      "question": "What was inside the gift box?",
+      "source_sentence": "Inside was a toy robot!",
+      "options": ["A toy robot", "A new bottle", "A birthday card", "A movie ticket"],
+      "answer": "A toy robot"
+    },
+    {
+      "question": "What did the uncle give as a gift?",
+      "source_sentence": "My uncle even gave me a ticket to the robot museum for next weekend.",
+      "options": [
+        "A ticket to the robot museum",
+        "A new cell phone",
+        "A box of flowers",
+        "A bottle of juice"
+      ],
+      "answer": "A ticket to the robot museum"
+    },
+    {
+      "question": "What did the narrator dream about that night?",
+      "source_sentence": "That night, I had a wonderful dream about riding my new robot down the way to school!",
+      "options": [
+        "Riding the new robot to school",
+        "Going to another party",
+        "Buying a new bottle",
+        "Reading the mail"
+      ],
+      "answer": "Riding the new robot to school"
+    }
+  ],
+  "status": "published"
+}

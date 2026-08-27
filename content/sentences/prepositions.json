@@ -1,0 +1,232 @@
+[
+  {
+    "id": "sent.prepositions.b1.001",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "This book is about animals.",
+    "zh": "這本書是關於動物的。",
+    "grammar_point": "介系詞 about",
+    "vocab_ids": ["voc.prepositions.001"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.002",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "We play after school.",
+    "zh": "我們放學後玩。",
+    "grammar_point": "介系詞 after",
+    "vocab_ids": ["voc.prepositions.002"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.003",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "I get up at seven.",
+    "zh": "我七點起床。",
+    "grammar_point": "介系詞 at",
+    "vocab_ids": ["voc.prepositions.003", "voc.prepositions.022"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.004",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "Wash your hands before dinner.",
+    "zh": "吃晚餐前要洗手。",
+    "grammar_point": "介系詞 before",
+    "vocab_ids": ["voc.prepositions.004"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.005",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "The cat is hiding behind the sofa.",
+    "zh": "貓咪躲在沙發後面。",
+    "grammar_point": "介系詞 behind",
+    "vocab_ids": ["voc.prepositions.005"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.006",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "I go to school by bus.",
+    "zh": "我搭公車上學。",
+    "grammar_point": "介系詞 by / to",
+    "vocab_ids": ["voc.prepositions.006", "voc.prepositions.020"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.007",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "This gift is for you.",
+    "zh": "這個禮物是給你的。",
+    "grammar_point": "介系詞 for",
+    "vocab_ids": ["voc.prepositions.007"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.008",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "I am from Taiwan.",
+    "zh": "我來自台灣。",
+    "grammar_point": "介系詞 from",
+    "vocab_ids": ["voc.prepositions.008"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.009",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "The pencil is in my bag.",
+    "zh": "鉛筆在我的書包裡。",
+    "grammar_point": "介系詞 in",
+    "vocab_ids": ["voc.prepositions.009"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.010",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "The bus stops in front of my house.",
+    "zh": "公車停在我家前面。",
+    "grammar_point": "介系詞片語 in front of",
+    "vocab_ids": ["voc.prepositions.010"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.011",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "The toys are inside the box.",
+    "zh": "玩具在箱子裡面。",
+    "grammar_point": "介系詞 inside",
+    "vocab_ids": ["voc.prepositions.011"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.012",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "My school is near the park.",
+    "zh": "我的學校在公園附近。",
+    "grammar_point": "介系詞 near",
+    "vocab_ids": ["voc.prepositions.012"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.013",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "This is a picture of my family.",
+    "zh": "這是我家人的照片。",
+    "grammar_point": "介系詞 of",
+    "vocab_ids": ["voc.prepositions.013"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.014",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "Please turn off the light.",
+    "zh": "請把燈關掉。",
+    "grammar_point": "介系詞 off",
+    "vocab_ids": ["voc.prepositions.014"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.015",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "The cup is on the table.",
+    "zh": "杯子在桌上。",
+    "grammar_point": "介系詞 on",
+    "vocab_ids": ["voc.prepositions.015"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.016",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "The dog ran out of the yard.",
+    "zh": "狗跑出院子了。",
+    "grammar_point": "介系詞 out",
+    "vocab_ids": ["voc.prepositions.016"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.017",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "The children are playing outside the house.",
+    "zh": "孩子們在房子外面玩。",
+    "grammar_point": "介系詞 outside",
+    "vocab_ids": ["voc.prepositions.017"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.018",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "The bird flew over the lake.",
+    "zh": "鳥飛過湖面。",
+    "grammar_point": "介系詞 over",
+    "vocab_ids": ["voc.prepositions.018"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.019",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "My brother is taller than me.",
+    "zh": "我哥哥比我高。",
+    "grammar_point": "介系詞 than（比較句）",
+    "vocab_ids": ["voc.prepositions.019"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.020",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "The ball is under the chair.",
+    "zh": "球在椅子下面。",
+    "grammar_point": "介系詞 under",
+    "vocab_ids": ["voc.prepositions.021"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.021",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "The monkey climbed up the tree.",
+    "zh": "猴子爬上樹。",
+    "grammar_point": "介系詞 up",
+    "vocab_ids": ["voc.prepositions.022"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.022",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "I live with my family.",
+    "zh": "我跟我的家人住在一起。",
+    "grammar_point": "介系詞 with",
+    "vocab_ids": ["voc.prepositions.023"],
+    "status": "published"
+  },
+  {
+    "id": "sent.prepositions.b1.023",
+    "topic": "prepositions",
+    "stage": "B",
+    "en": "I can't sleep without my pillow.",
+    "zh": "沒有枕頭我睡不著。",
+    "grammar_point": "介系詞 without",
+    "vocab_ids": ["voc.prepositions.024"],
+    "status": "published"
+  }
+]

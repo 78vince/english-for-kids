@@ -1,0 +1,59 @@
+{
+  "id": "pass.food_drink.p01",
+  "title": "My Favorite Meal",
+  "topic": "food_drink",
+  "text": "Hi! My name is Mia. Today I want rice and a hot dog for lunch. My brother likes noodles and pizza better. For dessert, we share a cake and some cookies. I drink juice, and my brother drinks milk. After lunch, we both want watermelon. It is a happy meal!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.food_drink.004",
+    "voc.food_drink.019",
+    "voc.food_drink.005",
+    "voc.food_drink.017",
+    "voc.food_drink.013",
+    "voc.food_drink.009",
+    "voc.food_drink.007",
+    "voc.food_drink.018"
+  ],
+  "questions": [
+    {
+      "id": "pass.food_drink.p01.q1",
+      "question": "What does Mia want for lunch?",
+      "options": [
+        "Rice and a hot dog",
+        "Noodles and pizza",
+        "Cake and cookies",
+        "Juice and milk"
+      ],
+      "answer": "Rice and a hot dog",
+      "type": "single_choice",
+      "source_sentence": "Today I want rice and a hot dog for lunch."
+    },
+    {
+      "id": "pass.food_drink.p01.q2",
+      "question": "What does Mia's brother like better?",
+      "options": [
+        "Noodles and pizza",
+        "Rice and a hot dog",
+        "Cake and cookies",
+        "Watermelon and juice"
+      ],
+      "answer": "Noodles and pizza",
+      "type": "single_choice",
+      "source_sentence": "My brother likes noodles and pizza better."
+    },
+    {
+      "id": "pass.food_drink.p01.q3",
+      "question": "What do they both want after lunch?",
+      "options": [
+        "Watermelon",
+        "Coffee",
+        "Vegetable",
+        "Soup"
+      ],
+      "answer": "Watermelon",
+      "type": "single_choice",
+      "source_sentence": "After lunch, we both want watermelon."
+    }
+  ],
+  "status": "published"
+}

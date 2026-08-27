@@ -1,0 +1,17 @@
+{
+  "name": "english-for-kids-app",
+  "private": true,
+  "version": "0.1.0",
+  "description": "兒童英語學習平台 - Phase 1 前端 App（讀取 ../content 的 JSON 內容作為單一真相來源）",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11"
+  }
+}

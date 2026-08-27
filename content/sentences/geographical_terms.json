@@ -1,0 +1,171 @@
+[
+  {
+    "id": "sent.geographical_terms.b1.001",
+    "en": "We swim in the sea every summer.",
+    "zh": "我們每年夏天都在海裡游泳。",
+    "topic": "geographical_terms",
+    "stage": "B",
+    "grammar_point": "in the + 地點名詞",
+    "vocab_ids": [
+      "voc.geographical_terms.005"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.geographical_terms.b1.002",
+    "en": "There is a big mountain near my house.",
+    "zh": "我家附近有一座大山。",
+    "topic": "geographical_terms",
+    "stage": "B",
+    "grammar_point": "There is + 單數名詞",
+    "vocab_ids": [
+      "voc.geographical_terms.003"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.geographical_terms.b1.003",
+    "en": "The river is next to the park.",
+    "zh": "這條河在公園旁邊。",
+    "topic": "geographical_terms",
+    "stage": "B",
+    "grammar_point": "next to + 地點",
+    "vocab_ids": [
+      "voc.geographical_terms.004"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.geographical_terms.b1.004",
+    "en": "We saw fish in the lake.",
+    "zh": "我們在湖裡看到魚。",
+    "topic": "geographical_terms",
+    "stage": "B",
+    "grammar_point": "see 過去式 saw + 受詞",
+    "vocab_ids": [
+      "voc.geographical_terms.002"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.geographical_terms.b1.005",
+    "en": "I love nature, so I visit the forest and the island every year.",
+    "zh": "我很喜歡大自然，所以我每年都會去森林和島嶼玩。",
+    "topic": "geographical_terms",
+    "stage": "B",
+    "grammar_point": "so 表示結果",
+    "vocab_ids": [
+      "voc.geographical_terms.006",
+      "voc.geographical_terms.009",
+      "voc.geographical_terms.008"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.geographical_terms.b1.006",
+    "en": "We walked up the hill and sat on the grass under a tree.",
+    "zh": "我們走上小山丘，坐在一棵樹下的草地上。",
+    "topic": "geographical_terms",
+    "stage": "B",
+    "grammar_point": "and 連接兩個動作子句",
+    "vocab_ids": [
+      "voc.geographical_terms.007",
+      "voc.geographical_terms.012",
+      "voc.geographical_terms.010"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.geographical_terms.b1.007",
+    "en": "There is a flower next to the plant, and a rock on the ground.",
+    "zh": "花的旁邊有一株植物，地上有一顆石頭。",
+    "topic": "geographical_terms",
+    "stage": "B",
+    "grammar_point": "There is + 單數名詞",
+    "vocab_ids": [
+      "voc.geographical_terms.011",
+      "voc.geographical_terms.013",
+      "voc.geographical_terms.014",
+      "voc.geographical_terms.016"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.geographical_terms.b1.008",
+    "en": "The earth is our home, so we should take care of it.",
+    "zh": "地球是我們的家，所以我們應該好好照顧它。",
+    "topic": "geographical_terms",
+    "stage": "B",
+    "grammar_point": "so 表示結果",
+    "vocab_ids": [
+      "voc.geographical_terms.015"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.geographical_terms.b1.009",
+    "en": "The ocean is much bigger than the pond in our park.",
+    "zh": "海洋比我們公園裡的池塘大得多。",
+    "topic": "geographical_terms",
+    "stage": "B",
+    "grammar_point": "比較級 bigger than",
+    "vocab_ids": [
+      "voc.geographical_terms.017",
+      "voc.geographical_terms.018"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.geographical_terms.b1.010",
+    "en": "We saw a tall waterfall and a dark cave near the mountain.",
+    "zh": "我們在山附近看到一座高高的瀑布和一個黑黑的洞穴。",
+    "topic": "geographical_terms",
+    "stage": "B",
+    "grammar_point": "and 連接兩個受詞",
+    "vocab_ids": [
+      "voc.geographical_terms.019",
+      "voc.geographical_terms.021",
+      "voc.geographical_terms.003"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.geographical_terms.b1.011",
+    "en": "It is hot and dry in the desert, but it is wet in the jungle.",
+    "zh": "沙漠又熱又乾，但叢林裡很潮濕。",
+    "topic": "geographical_terms",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": [
+      "voc.geographical_terms.020",
+      "voc.geographical_terms.022"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.geographical_terms.b1.012",
+    "en": "We played with sand and mud, and then we sat on a piece of wood.",
+    "zh": "我們玩沙子和泥巴，然後坐在一塊木頭上。",
+    "topic": "geographical_terms",
+    "stage": "B",
+    "grammar_point": "and then 表示接續動作",
+    "vocab_ids": [
+      "voc.geographical_terms.023",
+      "voc.geographical_terms.024",
+      "voc.geographical_terms.025"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

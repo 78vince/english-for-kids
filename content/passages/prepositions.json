@@ -1,0 +1,58 @@
+{
+  "id": "passage.prepositions.001",
+  "topic": "prepositions",
+  "title": "Hide and Seek",
+  "text": "On Saturday, my cousins came to my house to play hide and seek. I hid inside a big box in the living room. My sister looked under the sofa and behind the curtains, but she could not find me. My little brother climbed up the stairs and looked outside near the garden. \"Are you in front of the door?\" he asked. \"Or are you out in the yard?\" After ten minutes, my sister walked by the box and heard me laughing. She found me! We are all tired from running, so we sit down for a rest. My cousin said, \"This game is more fun than watching TV. I can't imagine a Saturday without hide and seek!\" We talked about our favorite games until the sun went down over the hills.",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.prepositions.001",
+    "voc.prepositions.002",
+    "voc.prepositions.005",
+    "voc.prepositions.006",
+    "voc.prepositions.007",
+    "voc.prepositions.008",
+    "voc.prepositions.009",
+    "voc.prepositions.010",
+    "voc.prepositions.011",
+    "voc.prepositions.012",
+    "voc.prepositions.016",
+    "voc.prepositions.017",
+    "voc.prepositions.018",
+    "voc.prepositions.019",
+    "voc.prepositions.020",
+    "voc.prepositions.021",
+    "voc.prepositions.022",
+    "voc.prepositions.024"
+  ],
+  "questions": [
+    {
+      "question": "Where did the narrator hide?",
+      "source_sentence": "I hid inside a big box in the living room.",
+      "options": ["Inside a box", "Behind the curtains", "Under the sofa", "Outside near the garden"],
+      "answer": "Inside a box"
+    },
+    {
+      "question": "How did the sister finally find the narrator?",
+      "source_sentence": "After ten minutes, my sister walked by the box and heard me laughing.",
+      "options": [
+        "She heard laughing near the box",
+        "She looked under the stairs",
+        "She asked the brother for help",
+        "She saw the box move"
+      ],
+      "answer": "She heard laughing near the box"
+    },
+    {
+      "question": "What did the cousin say about the game?",
+      "source_sentence": "This game is more fun than watching TV.",
+      "options": [
+        "It is more fun than watching TV",
+        "It is boring compared to TV",
+        "It is the same as watching TV",
+        "It is too hard to play"
+      ],
+      "answer": "It is more fun than watching TV"
+    }
+  ],
+  "status": "published"
+}

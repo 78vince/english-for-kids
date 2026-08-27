@@ -1,0 +1,61 @@
+{
+  "id": "pass.greetings.p01",
+  "title": "Hello, Friend!",
+  "topic": "greetings",
+  "text": "Hello! My name is Amy. I have a new friend. Her name is Lily. Every morning, we say good morning to our teacher. Before lunch, we say good afternoon. In the evening, we say good evening too. If I need help, I say excuse me, can you help me, please. Lily always helps me. At the end of the day, we say good night and bye. Thank you for reading my story!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.greetings.002",
+    "voc.greetings.004",
+    "voc.greetings.005",
+    "voc.greetings.006",
+    "voc.greetings.007",
+    "voc.greetings.003",
+    "voc.greetings.008",
+    "voc.greetings.009",
+    "voc.greetings.012",
+    "voc.greetings.013"
+  ],
+  "questions": [
+    {
+      "id": "pass.greetings.p01.q1",
+      "question": "What does Amy say to greet everyone?",
+      "options": [
+        "Hello",
+        "Bye",
+        "Please",
+        "Thank you"
+      ],
+      "answer": "Hello",
+      "type": "single_choice",
+      "source_sentence": "Hello! My name is Amy."
+    },
+    {
+      "id": "pass.greetings.p01.q2",
+      "question": "What does Amy say in the evening?",
+      "options": [
+        "Good evening",
+        "Good morning",
+        "Please",
+        "Excuse me"
+      ],
+      "answer": "Good evening",
+      "type": "single_choice",
+      "source_sentence": "In the evening, we say good evening too."
+    },
+    {
+      "id": "pass.greetings.p01.q3",
+      "question": "What does Amy say at the end of the day?",
+      "options": [
+        "Good night and bye",
+        "Good morning",
+        "Please",
+        "Excuse me"
+      ],
+      "answer": "Good night and bye",
+      "type": "single_choice",
+      "source_sentence": "At the end of the day, we say good night and bye."
+    }
+  ],
+  "status": "published"
+}

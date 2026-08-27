@@ -1,0 +1,58 @@
+[
+  {
+    "id": "sent.clothing_accessories.b1.001",
+    "en": "I wear a shirt and pants to school.",
+    "zh": "我穿襯衫和褲子去上學。",
+    "topic": "clothing_accessories",
+    "stage": "B",
+    "grammar_point": "穿著動詞 wear + 兩件衣物",
+    "vocab_ids": [
+      "voc.clothing_accessories.001",
+      "voc.clothing_accessories.002"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.clothing_accessories.b1.002",
+    "en": "She wears a hat and gloves in winter.",
+    "zh": "她冬天戴帽子和手套。",
+    "topic": "clothing_accessories",
+    "stage": "B",
+    "grammar_point": "穿戴動詞 wear + 配件",
+    "vocab_ids": [
+      "voc.clothing_accessories.007",
+      "voc.clothing_accessories.013"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.clothing_accessories.b1.003",
+    "en": "My shoes are new, but my socks are old.",
+    "zh": "我的鞋子是新的，但襪子是舊的。",
+    "topic": "clothing_accessories",
+    "stage": "B",
+    "grammar_point": "對比句 but",
+    "vocab_ids": [
+      "voc.clothing_accessories.005",
+      "voc.clothing_accessories.006"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.clothing_accessories.b1.004",
+    "en": "I need a coat and a scarf for the cold day.",
+    "zh": "我需要一件外套和一條圍巾來應付寒冷的天氣。",
+    "topic": "clothing_accessories",
+    "stage": "B",
+    "grammar_point": "need + 兩件衣物",
+    "vocab_ids": [
+      "voc.clothing_accessories.008",
+      "voc.clothing_accessories.014"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

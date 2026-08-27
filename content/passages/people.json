@@ -1,0 +1,62 @@
+{
+  "id": "pass.people.p01",
+  "title": "People in the Park",
+  "topic": "people",
+  "text": "Today, I go to the park with my mom. I see many people here. Some people are children, and some people are adults. A young person is riding a bike. An old person is reading a book on a bench. I see a man and a woman walking together. Two women are talking near the flowers. A girl and a boy are playing with a ball. A mom is holding her baby. Everyone is happy in the park!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.people.010",
+    "voc.people.006",
+    "voc.people.015",
+    "voc.people.016",
+    "voc.people.017",
+    "voc.people.004",
+    "voc.people.005",
+    "voc.people.012",
+    "voc.people.003",
+    "voc.people.002",
+    "voc.people.001"
+  ],
+  "questions": [
+    {
+      "id": "pass.people.p01.q1",
+      "question": "Who does the writer go to the park with?",
+      "options": [
+        "Mom",
+        "Dad",
+        "A friend",
+        "A teacher"
+      ],
+      "answer": "Mom",
+      "type": "single_choice",
+      "source_sentence": "Today, I go to the park with my mom."
+    },
+    {
+      "id": "pass.people.p01.q2",
+      "question": "What is the old person doing?",
+      "options": [
+        "Riding a bike",
+        "Reading a book",
+        "Playing with a ball",
+        "Walking a dog"
+      ],
+      "answer": "Reading a book",
+      "type": "single_choice",
+      "source_sentence": "An old person is reading a book on a bench."
+    },
+    {
+      "id": "pass.people.p01.q3",
+      "question": "What are the girl and the boy doing?",
+      "options": [
+        "Playing with a ball",
+        "Riding a bike",
+        "Reading a book",
+        "Talking near the flowers"
+      ],
+      "answer": "Playing with a ball",
+      "type": "single_choice",
+      "source_sentence": "A girl and a boy are playing with a ball."
+    }
+  ],
+  "status": "published"
+}

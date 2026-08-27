@@ -1,0 +1,152 @@
+[
+  {
+    "id": "sent.appearance.b1.001",
+    "en": "My dad is tall, and my mom is short.",
+    "zh": "我爸爸很高，我媽媽很矮。",
+    "topic": "appearance",
+    "stage": "B",
+    "grammar_point": "and 連接兩個對比的形容詞子句",
+    "vocab_ids": [
+      "voc.appearance.001",
+      "voc.appearance.002"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.appearance.b1.002",
+    "en": "The man is strong, but he is thin.",
+    "zh": "這個男人很強壯，但他很瘦。",
+    "topic": "appearance",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": [
+      "voc.appearance.004",
+      "voc.appearance.003"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.appearance.b1.003",
+    "en": "The puppy is very cute.",
+    "zh": "這隻小狗好可愛。",
+    "topic": "appearance",
+    "stage": "B",
+    "grammar_point": "very + 形容詞",
+    "vocab_ids": [
+      "voc.appearance.005"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.appearance.b1.004",
+    "en": "She is pretty, and he is handsome.",
+    "zh": "她很漂亮，他很帥。",
+    "topic": "appearance",
+    "stage": "B",
+    "grammar_point": "and 連接兩個主詞＋be動詞子句",
+    "vocab_ids": [
+      "voc.appearance.006",
+      "voc.appearance.007"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.appearance.b1.005",
+    "en": "My uncle is fat, but my aunt is slim.",
+    "zh": "我叔叔很胖，但我阿姨很苗條。",
+    "topic": "appearance",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": [
+      "voc.appearance.008",
+      "voc.appearance.010"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.appearance.b1.006",
+    "en": "This bag is heavy, so I need help.",
+    "zh": "這個袋子很重，所以我需要幫忙。",
+    "topic": "appearance",
+    "stage": "B",
+    "grammar_point": "so 表示結果",
+    "vocab_ids": [
+      "voc.appearance.009"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.appearance.b1.007",
+    "en": "The princess in the story is very beautiful.",
+    "zh": "故事裡的公主非常美麗。",
+    "topic": "appearance",
+    "stage": "B",
+    "grammar_point": "very + 形容詞",
+    "vocab_ids": [
+      "voc.appearance.011"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.appearance.b1.008",
+    "en": "My grandpa is old, but my cousin is young.",
+    "zh": "我爺爺年紀大了，但我表哥還很年輕。",
+    "topic": "appearance",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": [
+      "voc.appearance.013",
+      "voc.appearance.012"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.appearance.b1.009",
+    "en": "My sister has long hair, but I have short hair.",
+    "zh": "我姊姊留長髮，但我留短髮。",
+    "topic": "appearance",
+    "stage": "B",
+    "grammar_point": "have 表示外貌特徵＋but 轉折連接詞",
+    "vocab_ids": [
+      "voc.appearance.014",
+      "voc.appearance.015"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.appearance.b1.010",
+    "en": "She has curly hair, and I have straight hair.",
+    "zh": "她是捲髮，我是直髮。",
+    "topic": "appearance",
+    "stage": "B",
+    "grammar_point": "have 表示外貌特徵＋and 連接對比子句",
+    "vocab_ids": [
+      "voc.appearance.016",
+      "voc.appearance.017"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.appearance.b1.011",
+    "en": "Your new jacket looks so cool.",
+    "zh": "你的新外套看起來好酷。",
+    "topic": "appearance",
+    "stage": "B",
+    "grammar_point": "look + 形容詞",
+    "vocab_ids": [
+      "voc.appearance.018"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

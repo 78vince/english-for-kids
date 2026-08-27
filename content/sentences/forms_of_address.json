@@ -1,0 +1,131 @@
+[
+  {
+    "id": "sent.forms_of_address.b1.001",
+    "en": "My name is Amy.",
+    "zh": "我的名字是艾咪。",
+    "topic": "forms_of_address",
+    "stage": "B",
+    "grammar_point": "My name is...",
+    "vocab_ids": [
+      "voc.forms_of_address.001"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.forms_of_address.b1.002",
+    "en": "Mr. Wang is my father's friend.",
+    "zh": "王先生是我爸爸的朋友。",
+    "topic": "forms_of_address",
+    "stage": "B",
+    "grammar_point": "Mr. + 姓氏",
+    "vocab_ids": [
+      "voc.forms_of_address.002"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.forms_of_address.b1.003",
+    "en": "Mrs. Chen lives next to us.",
+    "zh": "陳太太住在我們家隔壁。",
+    "topic": "forms_of_address",
+    "stage": "B",
+    "grammar_point": "Mrs. + 姓氏",
+    "vocab_ids": [
+      "voc.forms_of_address.003"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.forms_of_address.b1.004",
+    "en": "Miss Lin teaches us English.",
+    "zh": "林小姐教我們英文。",
+    "topic": "forms_of_address",
+    "stage": "B",
+    "grammar_point": "Miss + 姓氏",
+    "vocab_ids": [
+      "voc.forms_of_address.004"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.forms_of_address.b1.005",
+    "en": "Ms. Huang is our new music teacher.",
+    "zh": "黃女士是我們新的音樂老師。",
+    "topic": "forms_of_address",
+    "stage": "B",
+    "grammar_point": "Ms. + 姓氏",
+    "vocab_ids": ["voc.forms_of_address.005"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.forms_of_address.b1.006",
+    "en": "Dr. Lee helps sick children at the hospital.",
+    "zh": "李博士在醫院幫助生病的孩子。",
+    "topic": "forms_of_address",
+    "stage": "B",
+    "grammar_point": "Dr. + 姓氏",
+    "vocab_ids": ["voc.forms_of_address.006"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.forms_of_address.b1.007",
+    "en": "Excuse me, sir, and excuse me, madam, may I ask a question?",
+    "zh": "先生不好意思，還有女士不好意思，我可以問一個問題嗎？",
+    "topic": "forms_of_address",
+    "stage": "B",
+    "grammar_point": "and 連接兩個禮貌稱呼",
+    "vocab_ids": ["voc.forms_of_address.007", "voc.forms_of_address.008"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.forms_of_address.b1.008",
+    "en": "My nickname is Sunny, but that is not my real name.",
+    "zh": "我的綽號是 Sunny，但那不是我的本名。",
+    "topic": "forms_of_address",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.forms_of_address.009"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.forms_of_address.b1.009",
+    "en": "Please write your full name on the form.",
+    "zh": "請在表格上寫下你的全名。",
+    "topic": "forms_of_address",
+    "stage": "B",
+    "grammar_point": "please + 祈使句",
+    "vocab_ids": ["voc.forms_of_address.010"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.forms_of_address.b1.010",
+    "en": "My first name is Amy, and my last name is Lin.",
+    "zh": "我的名是 Amy，我的姓是林。",
+    "topic": "forms_of_address",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.forms_of_address.011", "voc.forms_of_address.012"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.forms_of_address.b1.011",
+    "en": "Professor Wu teaches at a university.",
+    "zh": "吳教授在大學教書。",
+    "topic": "forms_of_address",
+    "stage": "B",
+    "grammar_point": "Professor + 姓氏",
+    "vocab_ids": ["voc.forms_of_address.013"],
+    "audio": null,
+    "status": "published"
+  }
+]

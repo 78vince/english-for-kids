@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Sentence",
+  "type": "object",
+  "required": [
+    "id",
+    "en",
+    "zh",
+    "topic",
+    "stage",
+    "grammar_point",
+    "vocab_ids",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^sent\\.[a-z_]+\\.[a-dA-D][0-9]?\\.[0-9]{3}$"
+    },
+    "en": {
+      "type": "string"
+    },
+    "zh": {
+      "type": "string"
+    },
+    "topic": {
+      "type": "string"
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    "grammar_point": {
+      "type": "string"
+    },
+    "vocab_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "audio": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "reviewed",
+        "published"
+      ]
+    }
+  }
+}

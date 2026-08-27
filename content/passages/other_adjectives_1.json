@@ -1,0 +1,70 @@
+{
+  "id": "passage.other_adjectives_1.001",
+  "topic": "other_adjectives_1",
+  "title": "The Best Field Trip Ever",
+  "text": "Last Friday, our class went on a field trip to the science museum. It was an exciting trip! At first, I thought it might be boring, but I was wrong. The museum had many interesting exhibits, and each one was different from the last. My favorite exhibit was the robot show — it was truly wonderful! I also saw a new dinosaur skeleton. Some parts were easy to understand, but other parts were a little hard. My teacher said, \"Are you ready to see another exhibit?\" and we said yes right away. The fast train exhibit was great, but the slow water clock was fun too. On the way home, my shoes got dirty from the mud outside, and I felt a bit sorry about that. My friend was quiet the whole bus ride because he was tired. I am sure this was the best trip of the year — I have only one favorite memory, and this is it. \"That's fine,\" my mom said when I told her everything. \"I'm glad you had a great time!\"",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.other_adjectives_1.001",
+    "voc.other_adjectives_1.002",
+    "voc.other_adjectives_1.003",
+    "voc.other_adjectives_1.004",
+    "voc.other_adjectives_1.005",
+    "voc.other_adjectives_1.006",
+    "voc.other_adjectives_1.007",
+    "voc.other_adjectives_1.008",
+    "voc.other_adjectives_1.009",
+    "voc.other_adjectives_1.010",
+    "voc.other_adjectives_1.011",
+    "voc.other_adjectives_1.012",
+    "voc.other_adjectives_1.013",
+    "voc.other_adjectives_1.014",
+    "voc.other_adjectives_1.015",
+    "voc.other_adjectives_1.016",
+    "voc.other_adjectives_1.017",
+    "voc.other_adjectives_1.018",
+    "voc.other_adjectives_1.019",
+    "voc.other_adjectives_1.020",
+    "voc.other_adjectives_1.021",
+    "voc.other_adjectives_1.022",
+    "voc.other_adjectives_1.023",
+    "voc.other_adjectives_1.024",
+    "voc.other_adjectives_1.025"
+  ],
+  "questions": [
+    {
+      "question": "What did the narrator expect before the trip, and how did it turn out?",
+      "source_sentence": "At first, I thought it might be boring, but I was wrong.",
+      "options": [
+        "Thought it would be boring, but was wrong",
+        "Thought it would be fun, and it was",
+        "Thought it would be canceled",
+        "Thought it would rain"
+      ],
+      "answer": "Thought it would be boring, but was wrong"
+    },
+    {
+      "question": "Why were the narrator's shoes dirty?",
+      "source_sentence": "On the way home, my shoes got dirty from the mud outside, and I felt a bit sorry about that.",
+      "options": [
+        "From the mud outside",
+        "From the museum floor",
+        "From spilled juice",
+        "From the bus seat"
+      ],
+      "answer": "From the mud outside"
+    },
+    {
+      "question": "How does the narrator describe the whole trip at the end?",
+      "source_sentence": "I am sure this was the best trip of the year — I have only one favorite memory, and this is it.",
+      "options": [
+        "The best trip of the year",
+        "A boring afternoon",
+        "A trip they want to forget",
+        "Too tiring to enjoy"
+      ],
+      "answer": "The best trip of the year"
+    }
+  ],
+  "status": "published"
+}

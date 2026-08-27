@@ -1,0 +1,50 @@
+{
+  "id": "pass.clubs_hobbies.p01",
+  "title": "After-School Clubs",
+  "topic": "clubs_hobbies",
+  "text": "After school, I join the art club every Tuesday. We do drawing and painting together. My best friend loves singing and dancing in the choir. On weekends, my dad enjoys gardening in our small garden, and my mom likes cooking new dishes. My hobby is photography, so I take pictures of flowers and birds.",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.clubs_hobbies.010",
+    "voc.clubs_hobbies.001",
+    "voc.clubs_hobbies.002",
+    "voc.clubs_hobbies.003",
+    "voc.clubs_hobbies.004",
+    "voc.clubs_hobbies.013",
+    "voc.clubs_hobbies.014",
+    "voc.clubs_hobbies.012",
+    "voc.clubs_hobbies.011"
+  ],
+  "questions": [
+    {
+      "id": "pass.clubs_hobbies.p01.q1",
+      "question": "Which club does the character join after school?",
+      "options": ["Book club", "Art club", "Chess club", "Choir"],
+      "answer": "Art club",
+      "type": "single_choice",
+      "source_sentence": "After school, I join the art club every Tuesday."
+    },
+    {
+      "id": "pass.clubs_hobbies.p01.q2",
+      "question": "What does the character's best friend love doing?",
+      "options": [
+        "Singing and dancing",
+        "Cooking and gardening",
+        "Drawing and painting",
+        "Playing chess"
+      ],
+      "answer": "Singing and dancing",
+      "type": "single_choice",
+      "source_sentence": "My best friend loves singing and dancing in the choir."
+    },
+    {
+      "id": "pass.clubs_hobbies.p01.q3",
+      "question": "What is the character's hobby?",
+      "options": ["Gardening", "Cooking", "Photography", "Origami"],
+      "answer": "Photography",
+      "type": "single_choice",
+      "source_sentence": "My hobby is photography, so I take pictures of flowers and birds."
+    }
+  ],
+  "status": "published"
+}

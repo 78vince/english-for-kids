@@ -1,0 +1,58 @@
+{
+  "id": "pass.appearance.p01",
+  "title": "My Family's Looks",
+  "topic": "appearance",
+  "text": "I want to tell you about my family. My dad is tall and strong. My mom is short and pretty. My big brother is thin, and people say he is handsome. My baby sister is very cute. We all look different, but we are a happy family!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.appearance.001",
+    "voc.appearance.004",
+    "voc.appearance.002",
+    "voc.appearance.006",
+    "voc.appearance.003",
+    "voc.appearance.007",
+    "voc.appearance.005"
+  ],
+  "questions": [
+    {
+      "id": "pass.appearance.p01.q1",
+      "question": "What is the dad like?",
+      "options": [
+        "Tall and strong",
+        "Short and thin",
+        "Cute and pretty",
+        "Handsome but short"
+      ],
+      "answer": "Tall and strong",
+      "type": "single_choice",
+      "source_sentence": "My dad is tall and strong."
+    },
+    {
+      "id": "pass.appearance.p01.q2",
+      "question": "What is the mom like?",
+      "options": [
+        "Tall and strong",
+        "Short and pretty",
+        "Thin and handsome",
+        "Cute and tall"
+      ],
+      "answer": "Short and pretty",
+      "type": "single_choice",
+      "source_sentence": "My mom is short and pretty."
+    },
+    {
+      "id": "pass.appearance.p01.q3",
+      "question": "What is the baby sister like?",
+      "options": [
+        "Tall",
+        "Strong",
+        "Very cute",
+        "Thin"
+      ],
+      "answer": "Very cute",
+      "type": "single_choice",
+      "source_sentence": "My baby sister is very cute."
+    }
+  ],
+  "status": "published"
+}

@@ -1,0 +1,202 @@
+[
+  {
+    "id": "sent.sentence_connectors.b1.001",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "I am a student.",
+    "zh": "我是學生。",
+    "grammar_point": "be動詞 am",
+    "vocab_ids": ["voc.sentence_connectors.001"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.002",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "We are best friends.",
+    "zh": "我們是最好的朋友。",
+    "grammar_point": "be動詞 are",
+    "vocab_ids": ["voc.sentence_connectors.002"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.003",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "I can swim very well.",
+    "zh": "我很會游泳。",
+    "grammar_point": "助動詞 can",
+    "vocab_ids": ["voc.sentence_connectors.003"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.004",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "Do you like pizza?",
+    "zh": "你喜歡披薩嗎？",
+    "grammar_point": "助動詞 do（疑問句）",
+    "vocab_ids": ["voc.sentence_connectors.004"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.005",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "I have finished my homework.",
+    "zh": "我已經寫完功課了。",
+    "grammar_point": "助動詞 have（現在完成式）",
+    "vocab_ids": ["voc.sentence_connectors.005"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.006",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "This is my dog.",
+    "zh": "這是我的狗。",
+    "grammar_point": "be動詞 is",
+    "vocab_ids": ["voc.sentence_connectors.006"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.007",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "May I come in?",
+    "zh": "我可以進來嗎？",
+    "grammar_point": "助動詞 may（請求許可）",
+    "vocab_ids": ["voc.sentence_connectors.007"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.008",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "You must wear a helmet.",
+    "zh": "你必須戴安全帽。",
+    "grammar_point": "助動詞 must",
+    "vocab_ids": ["voc.sentence_connectors.008"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.009",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "You should go to bed early.",
+    "zh": "你應該早點睡覺。",
+    "grammar_point": "助動詞 should",
+    "vocab_ids": ["voc.sentence_connectors.009"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.010",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "I will call you tonight.",
+    "zh": "我今晚會打給你。",
+    "grammar_point": "助動詞 will（未來式）",
+    "vocab_ids": ["voc.sentence_connectors.010"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.011",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "Although it was raining, we played outside.",
+    "zh": "雖然下雨，我們還是在外面玩。",
+    "grammar_point": "連接詞 although",
+    "vocab_ids": ["voc.sentence_connectors.011"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.012",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "I like apples and bananas.",
+    "zh": "我喜歡蘋果和香蕉。",
+    "grammar_point": "連接詞 and",
+    "vocab_ids": ["voc.sentence_connectors.012"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.013",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "I am happy because today is my birthday.",
+    "zh": "我很開心，因為今天是我的生日。",
+    "grammar_point": "連接詞 because",
+    "vocab_ids": ["voc.sentence_connectors.013"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.014",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "I like tea, but I love coffee.",
+    "zh": "我喜歡茶，但我更愛咖啡。",
+    "grammar_point": "連接詞 but",
+    "vocab_ids": ["voc.sentence_connectors.014"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.015",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "It was late, so I went to bed.",
+    "zh": "已經很晚了，所以我去睡覺了。",
+    "grammar_point": "連接詞 so",
+    "vocab_ids": ["voc.sentence_connectors.015"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.016",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "That's enough, thank you.",
+    "zh": "這樣就夠了，謝謝。",
+    "grammar_point": "感嘆詞 enough",
+    "vocab_ids": ["voc.sentence_connectors.016"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.017",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "Excuse me, where is the library?",
+    "zh": "不好意思，圖書館在哪裡？",
+    "grammar_point": "感嘆詞 excuse me",
+    "vocab_ids": ["voc.sentence_connectors.017"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.018",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "Goodbye! See you next week.",
+    "zh": "再見！下週見。",
+    "grammar_point": "感嘆詞 goodbye",
+    "vocab_ids": ["voc.sentence_connectors.018"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.019",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "Hello! How are you?",
+    "zh": "哈囉！你好嗎？",
+    "grammar_point": "感嘆詞 hello",
+    "vocab_ids": ["voc.sentence_connectors.019"],
+    "status": "published"
+  },
+  {
+    "id": "sent.sentence_connectors.b1.020",
+    "topic": "sentence_connectors",
+    "stage": "B",
+    "en": "Please close the door.",
+    "zh": "請把門關上。",
+    "grammar_point": "感嘆詞 please",
+    "vocab_ids": ["voc.sentence_connectors.020"],
+    "status": "published"
+  }
+]

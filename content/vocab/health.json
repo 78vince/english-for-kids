@@ -1,0 +1,443 @@
+[
+  {
+    "id": "voc.health.004",
+    "en": "well",
+    "zh": "健康地、很好地",
+    "pos": "形容詞、副詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.health.015"],
+    "example_sentence": {
+      "en": "Get well soon!",
+      "zh": "祝你早日康復！",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.003",
+    "en": "toothache",
+    "zh": "牙痛",
+    "pos": "名詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "He has a toothache.",
+      "zh": "他牙痛。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.002",
+    "en": "headache",
+    "zh": "頭痛",
+    "pos": "名詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I have a headache.",
+      "zh": "我頭痛。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.001",
+    "en": "sick",
+    "zh": "生病的",
+    "pos": "形容詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I feel sick today.",
+      "zh": "我今天覺得不舒服。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.005",
+    "en": "cold",
+    "zh": "感冒",
+    "pos": "名詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I have a cold.",
+      "zh": "我感冒了。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.006",
+    "en": "fever",
+    "zh": "發燒",
+    "pos": "名詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "He has a fever today.",
+      "zh": "他今天發燒了。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.007",
+    "en": "cough",
+    "zh": "咳嗽",
+    "pos": "名詞、動詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "She has a bad cough.",
+      "zh": "她咳嗽得很嚴重。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.008",
+    "en": "stomachache",
+    "zh": "肚子痛",
+    "pos": "名詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I have a stomachache.",
+      "zh": "我肚子痛。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.009",
+    "en": "sore throat",
+    "zh": "喉嚨痛",
+    "pos": "名詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I have a sore throat.",
+      "zh": "我喉嚨痛。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.010",
+    "en": "runny nose",
+    "zh": "流鼻涕",
+    "pos": "名詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I have a runny nose.",
+      "zh": "我流鼻涕。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.011",
+    "en": "rest",
+    "zh": "休息",
+    "pos": "動詞、名詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "You need to rest at home.",
+      "zh": "你需要在家休息。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.012",
+    "en": "medicine",
+    "zh": "藥",
+    "pos": "名詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Take this medicine after lunch.",
+      "zh": "午餐後吃這個藥。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.013",
+    "en": "exercise",
+    "zh": "運動",
+    "pos": "名詞、動詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Exercise keeps you healthy.",
+      "zh": "運動讓你保持健康。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.014",
+    "en": "sleep",
+    "zh": "睡覺",
+    "pos": "動詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I sleep eight hours every night.",
+      "zh": "我每天晚上睡八個小時。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.015",
+    "en": "healthy",
+    "zh": "健康的",
+    "pos": "形容詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": ["voc.health.004"],
+    "example_sentence": {
+      "en": "Eating fruit makes you healthy.",
+      "zh": "吃水果讓你更健康。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.016",
+    "en": "hurt",
+    "zh": "受傷、疼痛",
+    "pos": "動詞、形容詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My leg hurts.",
+      "zh": "我的腳很痛。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.017",
+    "en": "mask",
+    "zh": "口罩",
+    "pos": "名詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Please wear a mask when you are sick.",
+      "zh": "生病的時候請戴口罩。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.018",
+    "en": "thermometer",
+    "zh": "體溫計",
+    "pos": "名詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Mom used a thermometer to check my temperature.",
+      "zh": "媽媽用體溫計量我的體溫。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.019",
+    "en": "vitamin",
+    "zh": "維他命",
+    "pos": "名詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I take a vitamin every morning.",
+      "zh": "我每天早上都吃一顆維他命。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.020",
+    "en": "allergy",
+    "zh": "過敏",
+    "pos": "名詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I have an allergy to peanuts.",
+      "zh": "我對花生過敏。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  },
+  {
+    "id": "voc.health.021",
+    "en": "bandage",
+    "zh": "繃帶",
+    "pos": "名詞",
+    "topic": "health",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The nurse put a bandage on my arm.",
+      "zh": "護士在我的手臂上貼了繃帶。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Health",
+    "status": "published"
+  }
+]

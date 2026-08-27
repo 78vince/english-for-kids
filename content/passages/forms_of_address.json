@@ -1,0 +1,55 @@
+{
+  "id": "pass.forms_of_address.p01",
+  "title": "My Teachers",
+  "topic": "forms_of_address",
+  "text": "I have three teachers this year. Mr. Wang teaches math. Mrs. Chen teaches art. Miss Lin teaches English. They all know my name and my classmates' names. I like all of my teachers very much!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.forms_of_address.002",
+    "voc.forms_of_address.003",
+    "voc.forms_of_address.004",
+    "voc.forms_of_address.001"
+  ],
+  "questions": [
+    {
+      "id": "pass.forms_of_address.p01.q1",
+      "question": "Who teaches math?",
+      "options": [
+        "Mrs. Chen",
+        "Miss Lin",
+        "Mr. Wang",
+        "The student"
+      ],
+      "answer": "Mr. Wang",
+      "type": "single_choice",
+      "source_sentence": "Mr. Wang teaches math."
+    },
+    {
+      "id": "pass.forms_of_address.p01.q2",
+      "question": "Who teaches art?",
+      "options": [
+        "Mr. Wang",
+        "Mrs. Chen",
+        "Miss Lin",
+        "Nobody"
+      ],
+      "answer": "Mrs. Chen",
+      "type": "single_choice",
+      "source_sentence": "Mrs. Chen teaches art."
+    },
+    {
+      "id": "pass.forms_of_address.p01.q3",
+      "question": "How many teachers does the child have this year?",
+      "options": [
+        "Two",
+        "Three",
+        "Four",
+        "One"
+      ],
+      "answer": "Three",
+      "type": "single_choice",
+      "source_sentence": "I have three teachers this year."
+    }
+  ],
+  "status": "published"
+}

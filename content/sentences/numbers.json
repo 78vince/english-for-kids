@@ -1,0 +1,167 @@
+[
+  {
+    "id": "sent.numbers.b1.001",
+    "en": "I have zero brothers, but I have one sister.",
+    "zh": "我沒有兄弟，但我有一個姊妹。",
+    "topic": "numbers",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.numbers.019", "voc.numbers.021"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.numbers.b1.002",
+    "en": "I have two hands, but I have ten fingers.",
+    "zh": "我有兩隻手，但我有十根手指。",
+    "topic": "numbers",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.numbers.022", "voc.numbers.030"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.numbers.b1.003",
+    "en": "I want twenty apples, but my mom only buys fifteen.",
+    "zh": "我想要二十顆蘋果，但我媽媽只買十五顆。",
+    "topic": "numbers",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.numbers.010", "voc.numbers.005"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.numbers.b1.004",
+    "en": "There are thirty students in my classroom.",
+    "zh": "我的教室裡有三十個學生。",
+    "topic": "numbers",
+    "stage": "B",
+    "grammar_point": "There are + 數詞 + 複數名詞",
+    "vocab_ids": ["voc.numbers.011"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.numbers.b1.005",
+    "en": "Math is my favorite subject, but I don't like to count fast.",
+    "zh": "數學是我最喜歡的科目，但我不喜歡數得很快。",
+    "topic": "numbers",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.numbers.031", "voc.numbers.037"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.numbers.b1.006",
+    "en": "Add two and three, and you get five.",
+    "zh": "把二和三加起來，就會得到五。",
+    "topic": "numbers",
+    "stage": "B",
+    "grammar_point": "祈使句 + and 子句",
+    "vocab_ids": ["voc.numbers.032"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.numbers.b1.007",
+    "en": "Subtract two from five, and you get three.",
+    "zh": "從五減去二，就會得到三。",
+    "topic": "numbers",
+    "stage": "B",
+    "grammar_point": "祈使句 + and 子句",
+    "vocab_ids": ["voc.numbers.033"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.numbers.b1.008",
+    "en": "Two plus three equals five.",
+    "zh": "二加上三等於五。",
+    "topic": "numbers",
+    "stage": "B",
+    "grammar_point": "數字 + plus/equals + 數字",
+    "vocab_ids": ["voc.numbers.034", "voc.numbers.036"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.numbers.b1.009",
+    "en": "Five minus two equals three.",
+    "zh": "五減去二等於三。",
+    "topic": "numbers",
+    "stage": "B",
+    "grammar_point": "數字 + minus/equals + 數字",
+    "vocab_ids": ["voc.numbers.035", "voc.numbers.036"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.numbers.b1.010",
+    "en": "What shape is this? It is a circle.",
+    "zh": "這是什麼形狀？是圓形。",
+    "topic": "numbers",
+    "stage": "B",
+    "grammar_point": "Wh-question: what shape",
+    "vocab_ids": ["voc.numbers.038", "voc.numbers.039"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.numbers.b1.011",
+    "en": "I see a square and a triangle on the paper.",
+    "zh": "我在紙上看到一個正方形和一個三角形。",
+    "topic": "numbers",
+    "stage": "B",
+    "grammar_point": "and 連接兩個名詞",
+    "vocab_ids": ["voc.numbers.040", "voc.numbers.041"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.numbers.b1.012",
+    "en": "I drew a star and a heart on my homework.",
+    "zh": "我在作業上畫了一個星形和一個愛心形。",
+    "topic": "numbers",
+    "stage": "B",
+    "grammar_point": "and 連接兩個名詞",
+    "vocab_ids": ["voc.numbers.042", "voc.numbers.043"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.numbers.b1.013",
+    "en": "Multiply three by four, and divide the answer by two.",
+    "zh": "把三乘以四，再把答案除以二。",
+    "topic": "numbers",
+    "stage": "B",
+    "grammar_point": "祈使句 + and 子句",
+    "vocab_ids": ["voc.numbers.044", "voc.numbers.045"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.numbers.b1.014",
+    "en": "Can you find the pattern with a calculator?",
+    "zh": "你能用計算機找出這個規律嗎？",
+    "topic": "numbers",
+    "stage": "B",
+    "grammar_point": "Can you + 動詞原形...?",
+    "vocab_ids": ["voc.numbers.046", "voc.numbers.047"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.numbers.b1.015",
+    "en": "I have more candy, but my brother has less.",
+    "zh": "我的糖果比較多，但我弟弟的比較少。",
+    "topic": "numbers",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.numbers.048", "voc.numbers.049"],
+    "audio": null,
+    "status": "published"
+  }
+]

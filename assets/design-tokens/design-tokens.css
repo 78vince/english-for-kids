@@ -1,0 +1,66 @@
+/* =========================================================
+   Design Tokens — 兒童英語學習平台
+   萃取自 Indigo Purls 品牌指南，調整風格並新增圓角系統
+   字體：Huninn（開源粉圓體）— 開源圓潤感字體
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Huninn&display=swap');
+
+:root {
+  /* ---------- Color / Brand ---------- */
+  --color-primary-700: #0052A3;   /* 原稿深靛藍：標題、導覽 */
+  --color-primary-500: #2E7BD6;   /* 加亮調製：互動主按鈕 */
+  --color-primary-100: #C4E2EF;   /* 原稿淺藍：卡片底 */
+  --color-secondary-500: #5B7CCB; /* 原稿紫藍：次要元件 */
+
+  /* ---------- Color / Accent ---------- */
+  --color-accent-orange: #FF8A61; /* 原稿：重點 CTA / 獎勵 */
+  --color-accent-pink:   #FFBDEF; /* 原稿：遊戲化強調色 */
+  --color-accent-yellow: #FFD166; /* 新增：星星 / 獎勵亮點 */
+
+  /* ---------- Color / Feedback ---------- */
+  --color-success: #6FCF97;       /* 新增：答對回饋 */
+  --color-error:   #FF6B6B;       /* 新增：答錯回饋（柔和珊瑚色） */
+
+  /* ---------- Color / Neutral ---------- */
+  --color-bg:        #F7F2F8;     /* 由原稿 #F1E9F2 提亮 */
+  --color-surface:   #FFFFFF;
+  --color-ink:       #2B2A4A;     /* 柔和深藍紫，取代純黑 */
+  --color-ink-muted: #6B6789;
+  --color-border:    #E4D9EA;
+
+  /* ---------- Typography ---------- */
+  --font-display: 'Huninn', 'Noto Sans TC', sans-serif;
+  --font-body:    'Huninn', 'Noto Sans TC', sans-serif;
+
+  --text-display: 40px;
+  --text-h1: 32px;
+  --text-h2: 24px;
+  --text-h3: 20px;
+  --text-body-lg: 18px;
+  --text-body: 16px;
+  --text-caption: 14px;
+
+  /* ---------- Radius（新增項目）---------- */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+  --radius-circle: 50%;
+
+  /* ---------- Spacing ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* ---------- Shadow ---------- */
+  --shadow-sm: 0 2px 8px rgba(0, 82, 163, 0.08);
+  --shadow-md: 0 6px 16px rgba(0, 82, 163, 0.12);
+  --shadow-lg: 0 12px 28px rgba(0, 82, 163, 0.16);
+}

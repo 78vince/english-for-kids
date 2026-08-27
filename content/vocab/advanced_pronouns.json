@@ -1,0 +1,359 @@
+[
+  {
+    "id": "voc.advanced_pronouns.001",
+    "en": "I",
+    "zh": "我（主格）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I like ice cream.",
+      "zh": "我喜歡冰淇淋。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.002",
+    "en": "you",
+    "zh": "你、你們（主格/受格）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "You are my best friend.",
+      "zh": "你是我最好的朋友。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.003",
+    "en": "he",
+    "zh": "他（主格）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "He is my brother.",
+      "zh": "他是我的哥哥。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.004",
+    "en": "she",
+    "zh": "她（主格）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "She is my teacher.",
+      "zh": "她是我的老師。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.005",
+    "en": "it",
+    "zh": "它、牠（主格/受格）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The dog is hungry. Feed it now.",
+      "zh": "這隻狗餓了，現在餵牠吧。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.006",
+    "en": "we",
+    "zh": "我們（主格）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We are classmates.",
+      "zh": "我們是同班同學。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.007",
+    "en": "they",
+    "zh": "他們、她們、它們（主格）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "They are playing in the park.",
+      "zh": "他們正在公園裡玩。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.008",
+    "en": "me",
+    "zh": "我（受格）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Please give the book to me.",
+      "zh": "請把那本書給我。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.009",
+    "en": "him",
+    "zh": "他（受格）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I gave him a gift.",
+      "zh": "我給了他一個禮物。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.010",
+    "en": "her",
+    "zh": "她（受格/所有格）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "This is her bag.",
+      "zh": "這是她的書包。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.011",
+    "en": "us",
+    "zh": "我們（受格）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Our teacher tells us a story.",
+      "zh": "我們的老師講故事給我們聽。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.012",
+    "en": "them",
+    "zh": "他們、她們、它們（受格）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I saw them at the park.",
+      "zh": "我在公園看到他們。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.013",
+    "en": "his",
+    "zh": "他的（所有格）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "This is his pencil.",
+      "zh": "這是他的鉛筆。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.014",
+    "en": "its",
+    "zh": "它的、牠的（所有格）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The cat licks its paw.",
+      "zh": "貓舔牠的爪子。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.015",
+    "en": "anything",
+    "zh": "任何東西（不定代名詞）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Do you want anything else?",
+      "zh": "你還想要任何東西嗎？",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.016",
+    "en": "everything",
+    "zh": "每件事、一切（不定代名詞）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Everything is ready for the party.",
+      "zh": "派對的一切都準備好了。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  },
+  {
+    "id": "voc.advanced_pronouns.017",
+    "en": "nothing",
+    "zh": "什麼都沒有（不定代名詞）",
+    "pos": "代名詞",
+    "topic": "advanced_pronouns",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "There is nothing in the box.",
+      "zh": "箱子裡什麼都沒有。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Advanced Pronouns",
+    "status": "published"
+  }
+]

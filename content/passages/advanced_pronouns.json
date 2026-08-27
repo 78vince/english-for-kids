@@ -1,0 +1,58 @@
+{
+  "id": "pass.advanced_pronouns.p01",
+  "title": "A Day With My Family",
+  "topic": "advanced_pronouns",
+  "text": "I have a big family. My brother and my sister live with me. He likes soccer, and she likes to sing. We often play together after school. Our dog is friendly, and its tail wags when it sees us. Sometimes my friends visit me. I give them cookies, and they say thank you. On my birthday, everyone gives me gifts. My mother says everything is ready, and I feel there is nothing better than a day with my family!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.advanced_pronouns.001",
+    "voc.advanced_pronouns.003",
+    "voc.advanced_pronouns.004",
+    "voc.advanced_pronouns.005",
+    "voc.advanced_pronouns.006",
+    "voc.advanced_pronouns.007",
+    "voc.advanced_pronouns.008",
+    "voc.advanced_pronouns.011",
+    "voc.advanced_pronouns.012",
+    "voc.advanced_pronouns.014",
+    "voc.advanced_pronouns.016",
+    "voc.advanced_pronouns.017"
+  ],
+  "questions": [
+    {
+      "id": "pass.advanced_pronouns.p01.q1",
+      "question": "What does the dog do when it sees the family?",
+      "options": [
+        "Its tail wags",
+        "It runs away",
+        "It sleeps",
+        "It eats cookies"
+      ],
+      "answer": "Its tail wags",
+      "type": "single_choice",
+      "source_sentence": "Our dog is friendly, and its tail wags when it sees us."
+    },
+    {
+      "id": "pass.advanced_pronouns.p01.q2",
+      "question": "What does the child give to friends who visit?",
+      "options": ["Cookies", "Gifts", "Books", "Soccer balls"],
+      "answer": "Cookies",
+      "type": "single_choice",
+      "source_sentence": "I give them cookies, and they say thank you."
+    },
+    {
+      "id": "pass.advanced_pronouns.p01.q3",
+      "question": "What does the mother say about the birthday party?",
+      "options": [
+        "Everything is ready",
+        "Nothing is ready",
+        "Something is missing",
+        "Everyone is late"
+      ],
+      "answer": "Everything is ready",
+      "type": "single_choice",
+      "source_sentence": "My mother says everything is ready, and I feel there is nothing better than a day with my family!"
+    }
+  ],
+  "status": "published"
+}

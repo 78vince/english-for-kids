@@ -1,0 +1,139 @@
+[
+  {
+    "id": "sent.emotions.b1.001",
+    "en": "I am happy today, but my brother is sad.",
+    "zh": "我今天很開心，但我哥哥很難過。",
+    "topic": "emotions",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": [
+      "voc.emotions.001",
+      "voc.emotions.002"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.emotions.b1.002",
+    "en": "Are you hungry or tired?",
+    "zh": "你餓了還是累了？",
+    "topic": "emotions",
+    "stage": "B",
+    "grammar_point": "or 選擇疑問句 Are you A or B?",
+    "vocab_ids": [
+      "voc.emotions.005",
+      "voc.emotions.004"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.emotions.b1.003",
+    "en": "I am excited about the trip, but a little nervous too.",
+    "zh": "我對這趟旅行很興奮，但也有一點緊張。",
+    "topic": "emotions",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞 + a little 程度副詞",
+    "vocab_ids": [
+      "voc.emotions.006",
+      "voc.emotions.011"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.emotions.b1.004",
+    "en": "She was surprised and scared when she saw the spider.",
+    "zh": "她看到蜘蛛時又驚訝又害怕。",
+    "topic": "emotions",
+    "stage": "B",
+    "grammar_point": "and 連接兩個形容詞 + when 時間子句",
+    "vocab_ids": [
+      "voc.emotions.009",
+      "voc.emotions.007"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.emotions.b1.005",
+    "en": "I'm glad you are okay.",
+    "zh": "我很高興你沒事。",
+    "topic": "emotions",
+    "stage": "B",
+    "grammar_point": "glad + 子句",
+    "vocab_ids": [
+      "voc.emotions.012",
+      "voc.emotions.016"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.emotions.b1.006",
+    "en": "My teacher is proud of me, and I feel calm.",
+    "zh": "我的老師以我為榮，我覺得很平靜。",
+    "topic": "emotions",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": [
+      "voc.emotions.014",
+      "voc.emotions.013"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.emotions.b1.007",
+    "en": "Don't worry, I'm fine now.",
+    "zh": "別擔心，我現在很好。",
+    "topic": "emotions",
+    "stage": "B",
+    "grammar_point": "祈使句 Don't + 動詞",
+    "vocab_ids": [
+      "voc.emotions.015"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.emotions.b1.008",
+    "en": "I am afraid of the dark, but my sister is not.",
+    "zh": "我怕黑，但我妹妹不怕。",
+    "topic": "emotions",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": [
+      "voc.emotions.017"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.emotions.b1.009",
+    "en": "My dad is mad because I am upset too.",
+    "zh": "我爸爸在生氣，因為我也很心煩。",
+    "topic": "emotions",
+    "stage": "B",
+    "grammar_point": "because 因果連接詞",
+    "vocab_ids": [
+      "voc.emotions.018",
+      "voc.emotions.019"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.emotions.b1.010",
+    "en": "He feels lonely when his friends are busy.",
+    "zh": "朋友都很忙的時候，他覺得很孤單。",
+    "topic": "emotions",
+    "stage": "B",
+    "grammar_point": "when 時間子句",
+    "vocab_ids": [
+      "voc.emotions.020"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

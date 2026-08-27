@@ -1,0 +1,54 @@
+{
+  "id": "pass.health.p01",
+  "title": "A Sick Day",
+  "topic": "health",
+  "text": "Lily woke up feeling sick this morning. She had a headache and a fever. Her mom took her to see the doctor. The doctor said Lily needed to rest and drink more water. After two days, Lily felt well again. She was happy to go back to school!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.health.001",
+    "voc.health.002",
+    "voc.health.004"
+  ],
+  "questions": [
+    {
+      "id": "pass.health.p01.q1",
+      "question": "How did Lily feel this morning?",
+      "options": [
+        "Happy",
+        "Sick",
+        "Hungry",
+        "Tired"
+      ],
+      "answer": "Sick",
+      "type": "single_choice",
+      "source_sentence": "Lily woke up feeling sick this morning."
+    },
+    {
+      "id": "pass.health.p01.q2",
+      "question": "What did the doctor say Lily needed to do?",
+      "options": [
+        "Play outside",
+        "Rest and drink more water",
+        "Go to school",
+        "Eat candy"
+      ],
+      "answer": "Rest and drink more water",
+      "type": "single_choice",
+      "source_sentence": "The doctor said Lily needed to rest and drink more water."
+    },
+    {
+      "id": "pass.health.p01.q3",
+      "question": "How did Lily feel after two days?",
+      "options": [
+        "Still sick",
+        "Well again",
+        "Hungry",
+        "Sad"
+      ],
+      "answer": "Well again",
+      "type": "single_choice",
+      "source_sentence": "After two days, Lily felt well again."
+    }
+  ],
+  "status": "published"
+}

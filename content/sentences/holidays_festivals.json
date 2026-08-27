@@ -1,0 +1,112 @@
+[
+  {
+    "id": "sent.holidays_festivals.b1.001",
+    "en": "I love Christmas, but I love Halloween too.",
+    "zh": "我喜歡聖誕節，但我也喜歡萬聖節。",
+    "topic": "holidays_festivals",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.holidays_festivals.001", "voc.holidays_festivals.002"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.holidays_festivals.b1.002",
+    "en": "We paint eggs at Easter and eat a big dinner at Thanksgiving.",
+    "zh": "我們復活節會畫彩蛋，感恩節會吃一頓豐盛的晚餐。",
+    "topic": "holidays_festivals",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.holidays_festivals.003", "voc.holidays_festivals.004"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.holidays_festivals.b1.003",
+    "en": "We visit family at Lunar New Year and eat mooncakes at the Mid-Autumn Festival.",
+    "zh": "我們農曆新年會去看親戚，中秋節會吃月餅。",
+    "topic": "holidays_festivals",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.holidays_festivals.005", "voc.holidays_festivals.006"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.holidays_festivals.b1.004",
+    "en": "We watch boat races at the Dragon Boat Festival.",
+    "zh": "我們端午節會看划龍舟比賽。",
+    "topic": "holidays_festivals",
+    "stage": "B",
+    "grammar_point": "at + 節日",
+    "vocab_ids": ["voc.holidays_festivals.007"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.holidays_festivals.b1.005",
+    "en": "On my birthday, I get a gift from my parents.",
+    "zh": "在我生日的時候，我會收到爸媽送的禮物。",
+    "topic": "holidays_festivals",
+    "stage": "B",
+    "grammar_point": "On + 節日／時間",
+    "vocab_ids": ["voc.holidays_festivals.008", "voc.holidays_festivals.009"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.holidays_festivals.b1.006",
+    "en": "We are having a party to celebrate my sister's birthday.",
+    "zh": "我們要辦派對慶祝姐姐的生日。",
+    "topic": "holidays_festivals",
+    "stage": "B",
+    "grammar_point": "to + 動詞原形表示目的",
+    "vocab_ids": ["voc.holidays_festivals.010", "voc.holidays_festivals.011"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.holidays_festivals.b1.007",
+    "en": "We decorate the classroom and make a card for our teacher.",
+    "zh": "我們佈置教室，並且為老師做一張卡片。",
+    "topic": "holidays_festivals",
+    "stage": "B",
+    "grammar_point": "and 連接兩個動作",
+    "vocab_ids": ["voc.holidays_festivals.012", "voc.holidays_festivals.013"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.holidays_festivals.b1.008",
+    "en": "My costume is a dragon this year.",
+    "zh": "我今年的變裝服是一隻龍。",
+    "topic": "holidays_festivals",
+    "stage": "B",
+    "grammar_point": "be動詞 + 名詞補語",
+    "vocab_ids": ["voc.holidays_festivals.014"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.holidays_festivals.b1.009",
+    "en": "We watch fireworks and carry a lantern at night.",
+    "zh": "我們晚上看煙火，並提著燈籠。",
+    "topic": "holidays_festivals",
+    "stage": "B",
+    "grammar_point": "and 連接兩個動作",
+    "vocab_ids": ["voc.holidays_festivals.015", "voc.holidays_festivals.016"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.holidays_festivals.b1.010",
+    "en": "I eat a mooncake and get a red envelope from my grandpa.",
+    "zh": "我吃了一個月餅，還從爺爺那裡收到紅包。",
+    "topic": "holidays_festivals",
+    "stage": "B",
+    "grammar_point": "and 連接兩個動作",
+    "vocab_ids": ["voc.holidays_festivals.017", "voc.holidays_festivals.018"],
+    "audio": null,
+    "status": "published"
+  }
+]

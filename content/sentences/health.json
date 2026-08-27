@@ -1,0 +1,154 @@
+[
+  {
+    "id": "sent.health.b1.001",
+    "en": "I am sick and I have a headache.",
+    "zh": "我生病了而且頭痛。",
+    "topic": "health",
+    "stage": "B",
+    "grammar_point": "and 連接兩個症狀",
+    "vocab_ids": [
+      "voc.health.001",
+      "voc.health.002"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.health.b1.002",
+    "en": "He has a toothache, so he cannot eat.",
+    "zh": "他牙痛，所以不能吃東西。",
+    "topic": "health",
+    "stage": "B",
+    "grammar_point": "so 表示結果",
+    "vocab_ids": [
+      "voc.health.003"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.health.b1.003",
+    "en": "I hope you feel well soon.",
+    "zh": "希望你早日康復。",
+    "topic": "health",
+    "stage": "B",
+    "grammar_point": "hope + 子句",
+    "vocab_ids": [
+      "voc.health.004"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.health.b1.004",
+    "en": "Are you sick today?",
+    "zh": "你今天生病了嗎？",
+    "topic": "health",
+    "stage": "B",
+    "grammar_point": "be動詞疑問句",
+    "vocab_ids": [
+      "voc.health.001"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.health.b1.005",
+    "en": "I have a cold and a fever.",
+    "zh": "我感冒又發燒了。",
+    "topic": "health",
+    "stage": "B",
+    "grammar_point": "and 連接兩個症狀",
+    "vocab_ids": ["voc.health.005", "voc.health.006"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.health.b1.006",
+    "en": "I have a cough and a sore throat.",
+    "zh": "我咳嗽又喉嚨痛。",
+    "topic": "health",
+    "stage": "B",
+    "grammar_point": "and 連接兩個症狀",
+    "vocab_ids": ["voc.health.007", "voc.health.009"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.health.b1.007",
+    "en": "She has a stomachache and a runny nose.",
+    "zh": "她肚子痛又流鼻涕。",
+    "topic": "health",
+    "stage": "B",
+    "grammar_point": "and 連接兩個症狀",
+    "vocab_ids": ["voc.health.008", "voc.health.010"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.health.b1.008",
+    "en": "You should rest and take your medicine.",
+    "zh": "你應該休息並吃藥。",
+    "topic": "health",
+    "stage": "B",
+    "grammar_point": "should + 動詞原形並列",
+    "vocab_ids": ["voc.health.011", "voc.health.012"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.health.b1.009",
+    "en": "Exercise and sleep keep you strong.",
+    "zh": "運動和睡覺讓你保持強壯。",
+    "topic": "health",
+    "stage": "B",
+    "grammar_point": "複數主詞 + keep + 受詞補語",
+    "vocab_ids": ["voc.health.013", "voc.health.014"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.health.b1.010",
+    "en": "I want to be healthy, but my leg hurts.",
+    "zh": "我想要健康，但我的腳很痛。",
+    "topic": "health",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.health.015", "voc.health.016"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.health.b1.011",
+    "en": "Wear a mask, and let me check your temperature with this thermometer.",
+    "zh": "戴上口罩，讓我用這個體溫計量你的體溫。",
+    "topic": "health",
+    "stage": "B",
+    "grammar_point": "祈使句 + and 子句",
+    "vocab_ids": ["voc.health.017", "voc.health.018"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.health.b1.012",
+    "en": "I take a vitamin every day, but I have an allergy to nuts.",
+    "zh": "我每天吃一顆維他命，但我對堅果過敏。",
+    "topic": "health",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.health.019", "voc.health.020"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.health.b1.013",
+    "en": "The doctor put a bandage on my knee.",
+    "zh": "醫生在我的膝蓋上貼了繃帶。",
+    "topic": "health",
+    "stage": "B",
+    "grammar_point": "put + 受詞 + on + 地點",
+    "vocab_ids": ["voc.health.021"],
+    "audio": null,
+    "status": "published"
+  }
+]

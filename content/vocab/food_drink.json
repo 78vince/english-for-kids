@@ -1,0 +1,422 @@
+[
+  {
+    "id": "voc.food_drink.001",
+    "en": "apple",
+    "zh": "蘋果",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "I eat an apple every day.",
+      "zh": "我每天吃一顆蘋果。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.016",
+    "en": "hamburger",
+    "zh": "漢堡",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "He eats a hamburger for lunch.",
+      "zh": "他午餐吃漢堡。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.018",
+    "en": "watermelon",
+    "zh": "西瓜",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "Watermelon is sweet and cold.",
+      "zh": "西瓜又甜又冰涼。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.020",
+    "en": "vegetable",
+    "zh": "蔬菜",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "Eat your vegetables, please.",
+      "zh": "請把你的蔬菜吃掉。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.005",
+    "en": "noodles",
+    "zh": "麵條",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "I like noodles very much.",
+      "zh": "我很喜歡吃麵條。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.012",
+    "en": "soup",
+    "zh": "湯",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "The soup is very hot.",
+      "zh": "這碗湯很燙。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.008",
+    "en": "water",
+    "zh": "水",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "Please drink more water.",
+      "zh": "請多喝水。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.017",
+    "en": "pizza",
+    "zh": "披薩",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "We ordered pizza for dinner.",
+      "zh": "我們晚餐點了披薩。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.003",
+    "en": "bread",
+    "zh": "麵包",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "I eat bread for breakfast.",
+      "zh": "我早餐吃麵包。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.015",
+    "en": "ice cream",
+    "zh": "冰淇淋",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "I love ice cream in summer.",
+      "zh": "我夏天很愛吃冰淇淋。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.019",
+    "en": "hot dog",
+    "zh": "熱狗",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "I want a hot dog, please.",
+      "zh": "我想要一個熱狗，謝謝。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.004",
+    "en": "rice",
+    "zh": "飯、米",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "We eat rice every day.",
+      "zh": "我們每天吃飯。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.010",
+    "en": "tea",
+    "zh": "茶",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "My grandma likes hot tea.",
+      "zh": "我奶奶喜歡喝熱茶。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.014",
+    "en": "cookie",
+    "zh": "餅乾",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "I baked cookies with my mom.",
+      "zh": "我跟媽媽一起烤了餅乾。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.006",
+    "en": "egg",
+    "zh": "蛋",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "I eat an egg every morning.",
+      "zh": "我每天早上吃一顆蛋。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.002",
+    "en": "banana",
+    "zh": "香蕉",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "Monkeys like to eat bananas.",
+      "zh": "猴子喜歡吃香蕉。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.007",
+    "en": "milk",
+    "zh": "牛奶",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "I drink milk before bed.",
+      "zh": "我睡前喝牛奶。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.011",
+    "en": "coffee",
+    "zh": "咖啡",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "My dad drinks coffee every morning.",
+      "zh": "我爸爸每天早上喝咖啡。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.013",
+    "en": "cake",
+    "zh": "蛋糕",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "We have cake on my birthday.",
+      "zh": "我生日時我們吃蛋糕。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.food_drink.009",
+    "en": "juice",
+    "zh": "果汁",
+    "pos": "名詞",
+    "topic": "food_drink",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Food & drink",
+    "status": "published",
+    "example_sentence": {
+      "en": "She drinks orange juice.",
+      "zh": "她喝柳橙汁。",
+      "status": "draft"
+    }
+  }
+]

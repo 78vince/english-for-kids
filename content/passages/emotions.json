@@ -1,0 +1,59 @@
+{
+  "id": "pass.emotions.p01",
+  "title": "A Big Day at School",
+  "topic": "emotions",
+  "text": "Today is a big day. I feel excited about the school trip. But I am also a little nervous. My friend is scared of bugs. At lunch, I am very hungry, and I eat a big sandwich. In art class, I feel bored, so I draw a funny picture. My teacher is surprised and happy to see it. At the end of the day, I am tired but very happy!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.emotions.006",
+    "voc.emotions.011",
+    "voc.emotions.007",
+    "voc.emotions.005",
+    "voc.emotions.008",
+    "voc.emotions.009",
+    "voc.emotions.001",
+    "voc.emotions.004"
+  ],
+  "questions": [
+    {
+      "id": "pass.emotions.p01.q1",
+      "question": "How does the writer feel about the school trip?",
+      "options": [
+        "Excited but a little nervous",
+        "Bored and tired",
+        "Angry and sad",
+        "Scared and worried"
+      ],
+      "answer": "Excited but a little nervous",
+      "type": "single_choice",
+      "source_sentence": "I feel excited about the school trip."
+    },
+    {
+      "id": "pass.emotions.p01.q2",
+      "question": "What is the friend scared of?",
+      "options": [
+        "Bugs",
+        "Spiders",
+        "Dogs",
+        "The dark"
+      ],
+      "answer": "Bugs",
+      "type": "single_choice",
+      "source_sentence": "My friend is scared of bugs."
+    },
+    {
+      "id": "pass.emotions.p01.q3",
+      "question": "How does the writer feel at the end of the day?",
+      "options": [
+        "Tired but very happy",
+        "Bored and hungry",
+        "Sad and nervous",
+        "Angry and tired"
+      ],
+      "answer": "Tired but very happy",
+      "type": "single_choice",
+      "source_sentence": "At the end of the day, I am tired but very happy!"
+    }
+  ],
+  "status": "published"
+}

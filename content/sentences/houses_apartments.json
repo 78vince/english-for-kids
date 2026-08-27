@@ -1,0 +1,60 @@
+[
+  {
+    "id": "sent.houses_apartments.b1.001",
+    "en": "My house has a big kitchen and a small bathroom.",
+    "zh": "我的房子有一個大廚房和一個小浴室。",
+    "topic": "houses_apartments",
+    "stage": "B",
+    "grammar_point": "have/has 描述房子格局",
+    "vocab_ids": [
+      "voc.houses_apartments.001",
+      "voc.houses_apartments.006",
+      "voc.houses_apartments.005"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.houses_apartments.b1.002",
+    "en": "I put the table and the chair in the living room.",
+    "zh": "我把桌子和椅子放進客廳。",
+    "topic": "houses_apartments",
+    "stage": "B",
+    "grammar_point": "put...in... 表示放置位置",
+    "vocab_ids": [
+      "voc.houses_apartments.014",
+      "voc.houses_apartments.015",
+      "voc.houses_apartments.007"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.houses_apartments.b1.003",
+    "en": "There is a big window and a small door in my bedroom.",
+    "zh": "我的臥室裡有一扇大窗戶和一扇小門。",
+    "topic": "houses_apartments",
+    "stage": "B",
+    "grammar_point": "There is 句型",
+    "vocab_ids": [
+      "voc.houses_apartments.009",
+      "voc.houses_apartments.008",
+      "voc.houses_apartments.004"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.houses_apartments.b1.004",
+    "en": "I sleep on a soft bed every night.",
+    "zh": "我每晚睡在軟軟的床上。",
+    "topic": "houses_apartments",
+    "stage": "B",
+    "grammar_point": "sleep on + 名詞",
+    "vocab_ids": [
+      "voc.houses_apartments.016"
+    ],
+    "audio": null,
+    "status": "published"
+  }
+]

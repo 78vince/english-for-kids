@@ -1,0 +1,123 @@
+[
+  {
+    "id": "sent.science.b1.001",
+    "en": "I like science, and my favorite part is doing an experiment.",
+    "zh": "我喜歡科學，我最喜歡的部分是做實驗。",
+    "topic": "science",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.science.001", "voc.science.002"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.science.b1.002",
+    "en": "We observe the plant and write down what we see.",
+    "zh": "我們觀察植物，並寫下我們看到的東西。",
+    "topic": "science",
+    "stage": "B",
+    "grammar_point": "and 連接兩個動作",
+    "vocab_ids": ["voc.science.003", "voc.science.004"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.science.b1.003",
+    "en": "I plant a seed, and soon a leaf grows.",
+    "zh": "我種下一顆種子，不久就長出一片葉子。",
+    "topic": "science",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.science.005", "voc.science.006", "voc.science.007"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.science.b1.004",
+    "en": "A magnet can pull metal things toward it.",
+    "zh": "磁鐵可以把金屬物品吸過去。",
+    "topic": "science",
+    "stage": "B",
+    "grammar_point": "can + 動詞原形",
+    "vocab_ids": ["voc.science.008"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.science.b1.005",
+    "en": "The sun gives us energy, and plants need air too.",
+    "zh": "太陽給我們能量，植物也需要空氣。",
+    "topic": "science",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.science.009", "voc.science.010"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.science.b1.006",
+    "en": "The bell makes a loud sound in the classroom.",
+    "zh": "鈴鐺在教室裡發出很大的聲音。",
+    "topic": "science",
+    "stage": "B",
+    "grammar_point": "make + 受詞",
+    "vocab_ids": ["voc.science.011"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.science.b1.007",
+    "en": "Earth is a planet, but the moon is not a planet.",
+    "zh": "地球是一顆行星，但月亮不是行星。",
+    "topic": "science",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.science.012"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.science.b1.008",
+    "en": "Gravity is a force that pulls things down.",
+    "zh": "重力是一種把東西往下拉的力。",
+    "topic": "science",
+    "stage": "B",
+    "grammar_point": "關係代名詞 that",
+    "vocab_ids": ["voc.science.013", "voc.science.014"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.science.b1.009",
+    "en": "Ice is a solid, but water is a liquid.",
+    "zh": "冰是固體，但水是液體。",
+    "topic": "science",
+    "stage": "B",
+    "grammar_point": "but 轉折連接詞",
+    "vocab_ids": ["voc.science.015", "voc.science.016"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.science.b1.010",
+    "en": "Air is a gas, and it is a kind of matter too.",
+    "zh": "空氣是氣體，它也是一種物質。",
+    "topic": "science",
+    "stage": "B",
+    "grammar_point": "and 連接兩個子句",
+    "vocab_ids": ["voc.science.017", "voc.science.018"],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.science.b1.011",
+    "en": "This toy needs a battery to use electricity.",
+    "zh": "這個玩具需要電池才能用電。",
+    "topic": "science",
+    "stage": "B",
+    "grammar_point": "need + 名詞 + to 不定詞",
+    "vocab_ids": ["voc.science.019", "voc.science.020"],
+    "audio": null,
+    "status": "published"
+  }
+]

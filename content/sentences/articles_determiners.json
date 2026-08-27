@@ -1,0 +1,82 @@
+[
+  {
+    "id": "sent.articles_determiners.b1.001",
+    "topic": "articles_determiners",
+    "stage": "B",
+    "en": "I have a dog and a cat.",
+    "zh": "我有一隻狗和一隻貓。",
+    "grammar_point": "不定冠詞 a",
+    "vocab_ids": ["voc.articles_determiners.001"],
+    "status": "published"
+  },
+  {
+    "id": "sent.articles_determiners.b1.002",
+    "topic": "articles_determiners",
+    "stage": "B",
+    "en": "She has an apple for lunch.",
+    "zh": "她的午餐有一顆蘋果。",
+    "grammar_point": "不定冠詞 an",
+    "vocab_ids": ["voc.articles_determiners.001"],
+    "status": "published"
+  },
+  {
+    "id": "sent.articles_determiners.b1.003",
+    "topic": "articles_determiners",
+    "stage": "B",
+    "en": "All the students like the teacher.",
+    "zh": "所有學生都喜歡這位老師。",
+    "grammar_point": "限定詞 all",
+    "vocab_ids": ["voc.articles_determiners.002"],
+    "status": "published"
+  },
+  {
+    "id": "sent.articles_determiners.b1.004",
+    "topic": "articles_determiners",
+    "stage": "B",
+    "en": "Both of my sisters are tall.",
+    "zh": "我的兩個姐妹都很高。",
+    "grammar_point": "限定詞 both",
+    "vocab_ids": ["voc.articles_determiners.003"],
+    "status": "published"
+  },
+  {
+    "id": "sent.articles_determiners.b1.005",
+    "topic": "articles_determiners",
+    "stage": "B",
+    "en": "I clean my room every day.",
+    "zh": "我每天打掃我的房間。",
+    "grammar_point": "限定詞 every",
+    "vocab_ids": ["voc.articles_determiners.004"],
+    "status": "published"
+  },
+  {
+    "id": "sent.articles_determiners.b1.006",
+    "topic": "articles_determiners",
+    "stage": "B",
+    "en": "There are many pencils in the box.",
+    "zh": "盒子裡有許多鉛筆。",
+    "grammar_point": "限定詞 many（可數名詞）",
+    "vocab_ids": ["voc.articles_determiners.005"],
+    "status": "published"
+  },
+  {
+    "id": "sent.articles_determiners.b1.007",
+    "topic": "articles_determiners",
+    "stage": "B",
+    "en": "Can I have more juice, please?",
+    "zh": "可以再給我一些果汁嗎？",
+    "grammar_point": "限定詞 more",
+    "vocab_ids": ["voc.articles_determiners.006"],
+    "status": "published"
+  },
+  {
+    "id": "sent.articles_determiners.b1.008",
+    "topic": "articles_determiners",
+    "stage": "B",
+    "en": "We don't have much rice left.",
+    "zh": "我們剩下的米不多了。",
+    "grammar_point": "限定詞 much（不可數名詞）",
+    "vocab_ids": ["voc.articles_determiners.007"],
+    "status": "published"
+  }
+]

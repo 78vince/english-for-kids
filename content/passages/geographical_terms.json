@@ -1,0 +1,55 @@
+{
+  "id": "pass.geographical_terms.p01",
+  "title": "A Trip to the Beach",
+  "topic": "geographical_terms",
+  "text": "Last weekend, my family went to the beach. The sea was blue and beautiful. We saw a big mountain far away. My brother and I played in the water. After lunch, we walked by a small river near the beach. It was a fun day!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.geographical_terms.001",
+    "voc.geographical_terms.005",
+    "voc.geographical_terms.003",
+    "voc.geographical_terms.004"
+  ],
+  "questions": [
+    {
+      "id": "pass.geographical_terms.p01.q1",
+      "question": "Where did the family go last weekend?",
+      "options": [
+        "The mountain",
+        "The beach",
+        "The lake",
+        "The park"
+      ],
+      "answer": "The beach",
+      "type": "single_choice",
+      "source_sentence": "Last weekend, my family went to the beach."
+    },
+    {
+      "id": "pass.geographical_terms.p01.q2",
+      "question": "What did they see far away?",
+      "options": [
+        "A big mountain",
+        "A tall building",
+        "A big river",
+        "A small lake"
+      ],
+      "answer": "A big mountain",
+      "type": "single_choice",
+      "source_sentence": "We saw a big mountain far away."
+    },
+    {
+      "id": "pass.geographical_terms.p01.q3",
+      "question": "What did they walk by after lunch?",
+      "options": [
+        "A lake",
+        "The sea",
+        "A small river",
+        "A mountain"
+      ],
+      "answer": "A small river",
+      "type": "single_choice",
+      "source_sentence": "After lunch, we walked by a small river near the beach."
+    }
+  ],
+  "status": "published"
+}

@@ -1,0 +1,422 @@
+[
+  {
+    "id": "voc.clothing_accessories.007",
+    "en": "hat",
+    "zh": "帽子",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "He wears a hat in the sun.",
+      "zh": "他在太陽下戴帽子。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.012",
+    "en": "bag",
+    "zh": "包包",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "My bag is very heavy.",
+      "zh": "我的包包很重。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.015",
+    "en": "shorts",
+    "zh": "短褲",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "He wears shorts in summer.",
+      "zh": "他夏天穿短褲。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.014",
+    "en": "scarf",
+    "zh": "圍巾",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "She wraps a scarf around her neck.",
+      "zh": "她把圍巾圍在脖子上。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.008",
+    "en": "coat",
+    "zh": "外套",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "Put on your coat, it's cold.",
+      "zh": "天氣冷，穿上你的外套。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.013",
+    "en": "gloves",
+    "zh": "手套",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "Wear your gloves, it's cold outside.",
+      "zh": "外面很冷，戴上你的手套。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.002",
+    "en": "pants",
+    "zh": "褲子",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "These pants are too long.",
+      "zh": "這條褲子太長了。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.005",
+    "en": "shoes",
+    "zh": "鞋子",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "Put on your shoes, please.",
+      "zh": "請穿上你的鞋子。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.009",
+    "en": "jacket",
+    "zh": "夾克",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "I like my new jacket.",
+      "zh": "我喜歡我的新夾克。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.006",
+    "en": "socks",
+    "zh": "襪子",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "My socks are dirty.",
+      "zh": "我的襪子髒了。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.004",
+    "en": "skirt",
+    "zh": "裙子",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "My sister has a new skirt.",
+      "zh": "我姐姐有一件新裙子。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.017",
+    "en": "wear",
+    "zh": "穿、戴（狀態）",
+    "pos": "動詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "I wear a red coat in winter.",
+      "zh": "我冬天穿紅色外套。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.018",
+    "en": "put on",
+    "zh": "穿上、戴上（動作）",
+    "pos": "動詞片語",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "Please put on your shoes.",
+      "zh": "請穿上你的鞋子。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.019",
+    "en": "take off",
+    "zh": "脫下、摘下",
+    "pos": "動詞片語",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "Take off your hat, please.",
+      "zh": "請把你的帽子摘下來。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.020",
+    "en": "cap",
+    "zh": "鴨舌帽、棒球帽",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "He wears a blue cap.",
+      "zh": "他戴著一頂藍色的棒球帽。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.016",
+    "en": "sweater",
+    "zh": "毛衣",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "I wear a warm sweater in winter.",
+      "zh": "我冬天穿保暖的毛衣。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.003",
+    "en": "dress",
+    "zh": "洋裝",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "She wears a pink dress.",
+      "zh": "她穿著一件粉紅色洋裝。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.001",
+    "en": "shirt",
+    "zh": "襯衫",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "He is wearing a blue shirt.",
+      "zh": "他穿著一件藍色襯衫。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.010",
+    "en": "glasses",
+    "zh": "眼鏡",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "My grandpa wears glasses.",
+      "zh": "我爺爺戴眼鏡。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.clothing_accessories.011",
+    "en": "watch",
+    "zh": "手錶",
+    "pos": "名詞",
+    "topic": "clothing_accessories",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Clothing & accessories",
+    "status": "published",
+    "example_sentence": {
+      "en": "He got a watch for his birthday.",
+      "zh": "他生日收到了一支手錶。",
+      "status": "draft"
+    }
+  }
+]

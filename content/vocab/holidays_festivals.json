@@ -1,0 +1,380 @@
+[
+  {
+    "id": "voc.holidays_festivals.001",
+    "en": "Christmas",
+    "zh": "聖誕節",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We put up a tree at Christmas.",
+      "zh": "我們在聖誕節會佈置聖誕樹。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.002",
+    "en": "Halloween",
+    "zh": "萬聖節",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I wear a costume on Halloween.",
+      "zh": "我萬聖節會穿變裝服。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.003",
+    "en": "Easter",
+    "zh": "復活節",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We paint eggs at Easter.",
+      "zh": "我們在復活節會畫彩蛋。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.004",
+    "en": "Thanksgiving",
+    "zh": "感恩節",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My family has a big dinner on Thanksgiving.",
+      "zh": "我們家在感恩節會吃一頓豐盛的晚餐。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.005",
+    "en": "Lunar New Year",
+    "zh": "農曆新年",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We visit our grandparents at Lunar New Year.",
+      "zh": "我們農曆新年會去看阿公阿嬤。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.006",
+    "en": "Mid-Autumn Festival",
+    "zh": "中秋節",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We eat mooncakes at the Mid-Autumn Festival.",
+      "zh": "我們中秋節會吃月餅。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.007",
+    "en": "Dragon Boat Festival",
+    "zh": "端午節",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We watch boat races at the Dragon Boat Festival.",
+      "zh": "我們端午節會看划龍舟比賽。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.008",
+    "en": "birthday",
+    "zh": "生日",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "Happy birthday to you!",
+      "zh": "祝你生日快樂！",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.009",
+    "en": "gift",
+    "zh": "禮物",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I got a gift from my aunt.",
+      "zh": "我收到阿姨送的禮物。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.010",
+    "en": "party",
+    "zh": "派對",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We are having a party this weekend.",
+      "zh": "我們這個週末要辦派對。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.011",
+    "en": "celebrate",
+    "zh": "慶祝",
+    "pos": "動詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We celebrate my grandma's birthday every year.",
+      "zh": "我們每年都會慶祝奶奶的生日。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.012",
+    "en": "decorate",
+    "zh": "裝飾",
+    "pos": "動詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We decorate the house together.",
+      "zh": "我們一起佈置房子。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.013",
+    "en": "card",
+    "zh": "卡片",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I made a card for my teacher.",
+      "zh": "我為老師做了一張卡片。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.014",
+    "en": "costume",
+    "zh": "服裝、變裝服",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My costume is a dragon this year.",
+      "zh": "我今年的變裝服是一隻龍。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.015",
+    "en": "fireworks",
+    "zh": "煙火",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "We watch fireworks at night.",
+      "zh": "我們晚上看煙火。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.016",
+    "en": "lantern",
+    "zh": "燈籠",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I made a red lantern.",
+      "zh": "我做了一個紅色燈籠。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.017",
+    "en": "mooncake",
+    "zh": "月餅",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "This mooncake tastes sweet.",
+      "zh": "這個月餅吃起來很甜。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  },
+  {
+    "id": "voc.holidays_festivals.018",
+    "en": "red envelope",
+    "zh": "紅包",
+    "pos": "名詞",
+    "topic": "holidays_festivals",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I got a red envelope from my grandpa.",
+      "zh": "我收到爺爺給的紅包。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Holidays & Festivals",
+    "status": "published"
+  }
+]

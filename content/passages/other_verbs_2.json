@@ -1,0 +1,55 @@
+{
+  "id": "passage.other_verbs_2.001",
+  "topic": "other_verbs_2",
+  "title": "A Trip to Grandma's House",
+  "text": "Every summer, I visit my grandma. I live far away, so I miss her a lot. This year, my mom said, \"Let's go see grandma this weekend!\" I know it will be fun, and I like to wear my favorite yellow shirt when we travel. On Saturday, I wake up early and get ready. We take the bus, and I look out the window the whole way. When we arrive, grandma opens the door and gives me a big hug. \"Welcome home!\" she says. I can smell her delicious soup from the kitchen. We sit down at the table, and I try a new dish. \"I want more, please,\" I say, and everyone starts to laugh. After lunch, grandma shows me her garden. She tells me the names of all her flowers, and I touch the soft petals gently. Then we walk around the pond and watch the ducks swim. My cousin comes to meet us too, and we play a game. He wants to win, but I win instead! Grandma says, \"Don't worry, we can play again.\" Before we leave, I thank grandma for everything and put my shoes on. I need to wait a whole year to visit again, but I can't wait!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.other_verbs_2.001",
+    "voc.other_verbs_2.002",
+    "voc.other_verbs_2.003",
+    "voc.other_verbs_2.004",
+    "voc.other_verbs_2.005",
+    "voc.other_verbs_2.008",
+    "voc.other_verbs_2.009",
+    "voc.other_verbs_2.010",
+    "voc.other_verbs_2.013",
+    "voc.other_verbs_2.014",
+    "voc.other_verbs_2.016",
+    "voc.other_verbs_2.020",
+    "voc.other_verbs_2.022",
+    "voc.other_verbs_2.024",
+    "voc.other_verbs_2.025",
+    "voc.other_verbs_2.026",
+    "voc.other_verbs_2.027",
+    "voc.other_verbs_2.028",
+    "voc.other_verbs_2.029",
+    "voc.other_verbs_2.030",
+    "voc.other_verbs_2.031",
+    "voc.other_verbs_2.033",
+    "voc.other_verbs_2.034",
+    "voc.other_verbs_2.035",
+    "voc.other_verbs_2.036"
+  ],
+  "questions": [
+    {
+      "question": "What did the narrator smell when grandma opened the door?",
+      "source_sentence": "I can smell her delicious soup from the kitchen.",
+      "options": ["Delicious soup", "Fresh bread", "Sweet cookies", "Hot tea"],
+      "answer": "Delicious soup"
+    },
+    {
+      "question": "What happened at the table when the narrator asked for more food?",
+      "source_sentence": "\"I want more, please,\" I say, and everyone starts to laugh.",
+      "options": ["Everyone laughed", "Grandma got upset", "The dog barked", "Mom left the table"],
+      "answer": "Everyone laughed"
+    },
+    {
+      "question": "Who won the game with the cousin?",
+      "source_sentence": "He wants to win, but I win instead!",
+      "options": ["The narrator won", "The cousin won", "Nobody won", "Grandma won"],
+      "answer": "The narrator won"
+    }
+  ],
+  "status": "published"
+}

@@ -1,0 +1,63 @@
+{
+  "id": "pass.houses_apartments.p01",
+  "title": "My New Apartment",
+  "topic": "houses_apartments",
+  "text": "Hi! My name is Ben. My family has a new apartment. It has three rooms: a bedroom, a kitchen, and a living room. In the living room, there is a soft sofa and a small table. My bedroom has a big window and a comfortable bed. We do not have a garden, but we have a nice roof with a view. I keep my key in my bag.",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.houses_apartments.002",
+    "voc.houses_apartments.003",
+    "voc.houses_apartments.004",
+    "voc.houses_apartments.006",
+    "voc.houses_apartments.007",
+    "voc.houses_apartments.017",
+    "voc.houses_apartments.014",
+    "voc.houses_apartments.009",
+    "voc.houses_apartments.016",
+    "voc.houses_apartments.013",
+    "voc.houses_apartments.012",
+    "voc.houses_apartments.018"
+  ],
+  "questions": [
+    {
+      "id": "pass.houses_apartments.p01.q1",
+      "question": "What is in the living room?",
+      "options": [
+        "A sofa and a table",
+        "A bed and a window",
+        "A garden and a roof",
+        "A door and a key"
+      ],
+      "answer": "A sofa and a table",
+      "type": "single_choice",
+      "source_sentence": "In the living room, there is a soft sofa and a small table."
+    },
+    {
+      "id": "pass.houses_apartments.p01.q2",
+      "question": "What does Ben's bedroom have?",
+      "options": [
+        "A window and a bed",
+        "A sofa and a table",
+        "A garden and a roof",
+        "A kitchen and a door"
+      ],
+      "answer": "A window and a bed",
+      "type": "single_choice",
+      "source_sentence": "My bedroom has a big window and a comfortable bed."
+    },
+    {
+      "id": "pass.houses_apartments.p01.q3",
+      "question": "Where does Ben keep his key?",
+      "options": [
+        "In his bag",
+        "In the kitchen",
+        "In the garden",
+        "On the roof"
+      ],
+      "answer": "In his bag",
+      "type": "single_choice",
+      "source_sentence": "I keep my key in my bag."
+    }
+  ],
+  "status": "published"
+}

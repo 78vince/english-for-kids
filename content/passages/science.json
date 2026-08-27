@@ -1,0 +1,57 @@
+{
+  "id": "pass.science.p01",
+  "title": "My Science Class",
+  "topic": "science",
+  "text": "Every Friday, I have science class. Today, we do an experiment with a magnet, and we observe how it pulls a metal spoon. Then I plant a seed in a cup. It needs air and energy from the sun to grow. My teacher says the seed will grow into a plant with a green leaf. After that, we talk about solid, liquid, and gas. Ice is a solid, water is a liquid, and steam is a gas, and they are all matter. Then we build a toy car with a battery, and the wheels turn with electricity. Science is my favorite class of the week!",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.science.001",
+    "voc.science.002",
+    "voc.science.008",
+    "voc.science.003",
+    "voc.science.004",
+    "voc.science.005",
+    "voc.science.010",
+    "voc.science.009",
+    "voc.science.007",
+    "voc.science.006",
+    "voc.science.015",
+    "voc.science.016",
+    "voc.science.017",
+    "voc.science.018",
+    "voc.science.019",
+    "voc.science.020"
+  ],
+  "questions": [
+    {
+      "id": "pass.science.p01.q1",
+      "question": "What do they use to observe how it pulls a metal spoon?",
+      "options": ["A magnet", "A battery", "A seed", "A leaf"],
+      "answer": "A magnet",
+      "type": "single_choice",
+      "source_sentence": "Today, we do an experiment with a magnet, and we observe how it pulls a metal spoon."
+    },
+    {
+      "id": "pass.science.p01.q2",
+      "question": "What does the seed need to grow?",
+      "options": [
+        "Air and energy from the sun",
+        "A battery",
+        "A magnet",
+        "A toy car"
+      ],
+      "answer": "Air and energy from the sun",
+      "type": "single_choice",
+      "source_sentence": "It needs air and energy from the sun to grow."
+    },
+    {
+      "id": "pass.science.p01.q3",
+      "question": "What are solid, liquid, and gas all examples of?",
+      "options": ["Matter", "Energy", "Force", "Sound"],
+      "answer": "Matter",
+      "type": "single_choice",
+      "source_sentence": "Ice is a solid, water is a liquid, and steam is a gas, and they are all matter."
+    }
+  ],
+  "status": "published"
+}

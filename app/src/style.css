@@ -1,0 +1,2388 @@
+/* ============================================================
+   視覺風格 v2「每天玩一點」改版：改用
+   assets/design-tokens/design-tokens.v2-daily-play.css 提供的 Design Tokens
+   （在 v1 品牌色基礎上，字級全面加大、中性色改成灰藍調、新增功能列與
+   徽章分級色，參考 assets/design-tokens/screen-preview-daily-play.html 的風格）。
+   直接 @import 專案根目錄的 tokens 檔，不複製一份到 app/ 裡——
+   跟 content/ 資料夾的作法一樣，維持單一真相來源，之後設計端更新
+   色票／字級／圓角，這裡不用手動同步。
+   ============================================================ */
+@import "../../assets/design-tokens/design-tokens.v2-daily-play.css";
+
+/* ---- 由 tokens 衍生出來的輔助色（tokens 本身只給單一色階，
+   但「答對／答錯」這類狀態需要「淺底色＋深字色」兩階搭配才能維持
+   白底上的可讀性，所以在這裡另外定義，並清楚標示是衍生值） ---- */
+:root {
+  --color-success-text: #2f8f5e; /* 由 --color-success 加深，確保白底文字對比足夠 */
+  --color-success-bg: #e6f7ee; /* 由 --color-success 加亮，當作淺底色 */
+  --color-error-text: #c2453f; /* 由 --color-error 加深 */
+  --color-error-bg: #ffe9e7; /* 由 --color-error 加亮 */
+  --color-primary-700-hover: #003b78; /* primary-700 再加深一階，當作主按鈕 hover 用 */
+  --color-reward-hover: #e8703f; /* accent-orange 加深一階，當作獎勵按鈕 hover 用 */
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  display: flex;
+  justify-content: center;
+}
+
+#app {
+  width: 100%;
+  max-width: 1000px;
+  padding: var(--space-6) var(--space-4) var(--space-8);
+}
+
+.game-header {
+  position: relative;
+}
+
+.game-header h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  font-weight: 700;
+  color: var(--color-primary-700);
+  margin: 0 0 4px;
+  padding-right: 90px;
+}
+
+.progress {
+  color: var(--color-ink-muted);
+  font-size: var(--text-caption);
+  margin-top: 0;
+}
+
+.back-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 6px 14px;
+  font-size: var(--text-caption);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-ink-muted);
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  border-color: var(--color-primary-500);
+}
+
+/* 題型選單頁（main.ts 的 renderMenu()）的標題列：跟 .stage-banner 一樣改用 flex
+   把「標題文字」跟「返回按鈕」左右排開，不用 .game-header 預設的絕對定位——
+   按鈕文字比其他畫面的「返回選單」長（「返回選擇主題」多兩個字），絕對定位
+   要手動抓 padding-right 的寬度容易對不齊或被蓋到，flex 排版比較不會出這種問題。 */
+.game-header--with-back {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.game-header--with-back h1 {
+  padding-right: 0;
+}
+
+.game-header--with-back .back-btn {
+  position: static;
+  flex-shrink: 0;
+}
+
+/* 四種題型畫面共用的題型橫幅：跟 .brand-banner 一樣是「有底色的圓角橫幅」，
+   但故意做矮一點、字也小一點，跟首頁/目錄頁的橫幅明顯區分開來（不用漸層、
+   不放頭像/招呼語，只放題型範圍當標題＋進度文字）。 */
+.stage-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin: 0 0 var(--space-5);
+  padding: var(--space-6); /* 上下左右一致，2026-08-07 加大高度 */
+  background: var(--color-primary-700);
+  border-radius: var(--radius-lg);
+}
+
+.stage-banner-text {
+  min-width: 0;
+}
+
+.stage-banner h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.stage-banner .progress {
+  color: rgba(255, 255, 255, 0.85);
+  margin: 2px 0 0;
+}
+
+/* .back-btn 預設是絕對定位（配合 .game-header 那種純文字標題），
+   在題型橫幅裡改成一般 flex 排列（跟標題同一列，靠右），顏色也換成
+   跟橫幅底色（實心深藍）對比夠的淺色版本，不然深底配深字會看不清楚。 */
+.stage-banner .back-btn {
+  position: static;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+
+.stage-banner .back-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: #fff;
+}
+
+/* 慢速發音切換鈕跟返回鍵包在同一個右側動作區，維持題型橫幅原本「標題／動作」
+   兩欄排版不變。 */
+.stage-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.stage-banner .slow-speech-toggle-btn {
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+}
+
+.stage-banner .slow-speech-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: #fff;
+}
+
+.stage-banner .slow-speech-toggle-btn.active {
+  background: var(--color-accent-yellow);
+  border-color: var(--color-accent-yellow);
+  color: var(--color-ink);
+}
+
+/* ============================================================
+   v2 全站外殼：品牌橫幅＋功能列（appendShell()，取代原本每個畫面
+   右上角的「頭像＋登出」小標籤）。因為整個 App 只操作單一 #app
+   容器，這裡直接鋪在 #app 內容最上面，不是真的滿版鋪到瀏覽器邊緣。
+   ============================================================ */
+
+.brand-banner {
+  /* 跟畫面其他內容一樣，維持 #app 本身的留白，不再用負 margin 頂到邊緣。 */
+  margin: 0 0 var(--space-5);
+  padding: calc(var(--space-6) + var(--space-2)) var(--space-5); /* 比原本略高一點 */
+  background: linear-gradient(135deg, var(--color-primary-700), var(--color-secondary-500));
+  color: #fff;
+  text-align: left; /* 登入／未登入都齊左 */
+  border-radius: var(--radius-lg); /* 四個角都是圓角 */
+}
+
+/* 副標題（Slogan）放在標題上方，登入／未登入都一樣。 */
+.brand-subtitle {
+  margin: 0 0 var(--space-1);
+  opacity: 0.9;
+  font-size: var(--text-body);
+}
+
+.brand-banner h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-h1);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* 已登入之後：兩欄排列，左邊文字（Slogan＋兩行招呼語）齊左，右邊放使用者頭像。
+   align-items 用 stretch，讓頭像的高度可以直接對齊文字欄的高度（見 .brand-banner-avatar
+   的 height:100%／width:auto，頭像會自動跟著文字欄一樣高，寬度依圖片比例自動撐開）。 */
+.brand-banner.brand-banner--user {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.brand-banner--user .brand-banner-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.brand-banner-avatar {
+  height: 100%;
+  width: auto;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* 6 個常駐項目（含「關於本站」）＋登出，加總寬度比原本 5 個項目時更容易超出 #app
+   （max-width 1000px）的寬度：改成 flex-wrap: nowrap 強制維持一列，
+   overflow-x: auto 當保險——真的裝不下的極窄螢幕會變成可以左右滑動，
+   而不是自動換成兩列（換行會讓登出按鈕獨立跑到第二列，版面明顯不平衡）。 */
+.function-nav {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-1);
+  margin: 0 calc(var(--space-4) * -1) var(--space-6);
+  padding: var(--space-3) var(--space-4);
+  background: none;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: var(--nav-item-radius);
+  border: none;
+  background: none;
+  color: var(--nav-item-color);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-item-icon {
+  display: inline-flex;
+  line-height: 0; /* 避免 <svg> 底部多出一截行高造成的空隙，圖示才能跟文字精準對齊 */
+}
+
+/* 圖示縮小一點（20px → 18px），字級本身維持不變（專案先前特別把全站字級加大過，
+   這裡不動文字大小，只透過縮小圖示、縮小按鈕內距／間距來讓一整排塞得下）。 */
+.nav-item-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.nav-item:hover {
+  background: var(--color-primary-100);
+}
+
+.nav-item.active {
+  background: var(--nav-item-active-bg);
+  color: var(--nav-item-active-color);
+}
+
+/* 登出／切換玩家：功能列最右邊，跟前面四個「畫面」用不同顏色區隔開來，
+   提醒這是一個離開目前使用者的動作，不是導覽到某個頁面。 */
+.nav-item--logout {
+  margin-left: auto;
+  color: var(--color-error-text);
+}
+
+/* 功能列「塞不塞得下」改用 main.ts 的 ResizeObserver 動態偵測（見
+   updateNavCompactState()），不再用固定的 @media 螢幕寬度斷點猜測。原本用
+   640px 當斷點，但使用者截圖回報過：寬度介於 640px 斷點跟桌面版版面之間時
+   （例如瀏覽器視窗沒有開到全螢幕、或內嵌在比較窄的容器裡），文字標籤還是
+   會被擠到看不全，卻沒有被隱藏——因為那個寬度大於 640px，斷點沒有觸發。
+   改成量測功能列自己的實際內容寬度（scrollWidth）夠不夠放進可視寬度
+   （clientWidth），塞不下才加上這個 class 切成 icon-only，不管寬度變窄的
+   原因是什麼都能正確反應，不用再為各種情境各自猜一個像素數字。 */
+.function-nav--compact .nav-item-label {
+  display: none;
+}
+
+.function-nav--compact .nav-item {
+  padding: 8px 10px;
+  gap: 0;
+}
+
+/* ---- 窄螢幕（手機寬度）響應式：品牌橫幅（.brand-banner--user）名字很長時會出問題——
+   頭像 `height: 100%` 是跟著文字欄的高度撐開，手機寬度下標題字級（42px）很容易把長
+   名字撐成好幾行、文字欄變很高，頭像就跟著被拉成一個巨大的圓形，反過來蓋住旁邊的
+   文字（使用者截圖回報的「頭像疊住招呼語」就是這個原因）。跟使用者確認過的做法：
+   640px 以下改成上下堆疊，不再讓頭像的尺寸跟文字欄高度綁在一起；標題字級也調小
+   一階，讓招呼語本身在窄螢幕也不需要換那麼多行。頭像順序／尺寸使用者看過一版後
+   又回饋調整過一次：改成頭像在上（用 order: -1，不用動 main.ts 的 DOM 順序）、
+   文字在下，且頭像尺寸放大 4 倍（72px → 288px）。 ---- */
+@media (max-width: 640px) {
+  .brand-banner.brand-banner--user {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .brand-banner-avatar {
+    /* 使用者看過 72px 的版本後回饋「太小了」，改成放大 4 倍（72px → 288px），
+       並用 order: -1 讓頭像排到文字欄前面（視覺上頭像在上、文字在下）——
+       DOM 順序不用改（main.ts 的 appendBrandBanner() 還是文字 div 在前、
+       頭像 img 在後），純粹用 flex 的 order 屬性調整視覺順序即可。 */
+    order: -1;
+    height: 288px;
+    width: 288px;
+    align-self: center;
+  }
+
+  .brand-banner h1 {
+    font-size: var(--text-h2);
+  }
+}
+
+.nav-item--logout:hover {
+  background: var(--color-error-bg);
+}
+
+/* 選使用者畫面（本機端「誰在玩」）—— 原本每個畫面右上角的頭像＋登出小標籤
+   （.user-badge／.user-badge-link／.logout-btn）已經被 appendShell() 的全站
+   功能列取代（登出／切換玩家現在是功能列最右邊的 .nav-item--logout），
+   這裡只留選使用者清單還會用到的樣式。刪除使用者的按鈕移到「個人檔案」頁面了
+   （見 .danger-btn），這裡的清單項目只是單純的登入按鈕，不用
+   再包一層 <div> 兄弟元素，避免疊出兩層外框。 */
+
+.profile-login-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-body-lg);
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.1s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.profile-login-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--color-primary-500);
+  box-shadow: var(--shadow-md);
+}
+
+.profile-avatar-img {
+  width: 200px;
+  height: 200px;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.profile-login-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.profile-login-name {
+  font-size: var(--text-h2);
+  font-weight: 700;
+}
+
+.profile-login-lastseen {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  font-weight: 400;
+  color: var(--color-ink-muted);
+}
+
+.add-profile-form {
+  margin-top: var(--space-5);
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.add-profile-form input {
+  flex: 1;
+  min-width: 180px;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.add-profile-form input:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+}
+
+.avatar-picker {
+  margin-top: var(--space-3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* 新增使用者流程的大張預覽頭像：放在原本頭像選單的位置，預設顯示第一張，
+   選單點哪張就換成哪張，尺寸比選單裡的小頭像明顯大一號，方便小朋友確認選對了。 */
+.add-profile-avatar-preview {
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: var(--space-4) 0;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  border: 3px solid var(--color-primary-100);
+  box-shadow: var(--shadow-sm);
+}
+
+.avatar-option {
+  padding: 4px;
+  border-radius: var(--radius-circle);
+  border: 3px solid transparent;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+
+.avatar-option img {
+  width: 200px;
+  height: 200px;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  display: block;
+}
+
+.avatar-option:hover {
+  transform: translateY(-1px);
+}
+
+.avatar-option--selected {
+  border-color: var(--color-primary-500);
+  box-shadow: var(--shadow-sm);
+}
+
+.add-profile-trigger-btn {
+  margin-top: var(--space-5);
+  display: block;
+}
+
+/* 新增使用者最後一步：選好頭像＋名字後的確認卡片 */
+
+.profile-confirm-card {
+  margin-top: var(--space-5);
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.profile-confirm-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  border: 3px solid var(--color-primary-100);
+}
+
+.profile-confirm-name {
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+/* 選單 */
+
+.menu-list {
+  margin-top: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.1s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.menu-item:hover {
+  transform: translateY(-1px);
+  border-color: var(--color-primary-500);
+  box-shadow: var(--shadow-md);
+}
+
+.menu-item-label {
+  font-family: var(--font-display);
+  font-size: var(--text-body-lg);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.menu-item-desc {
+  color: var(--color-ink-muted);
+  font-size: var(--text-caption);
+}
+
+.menu-item-progress {
+  /* 顏色不再寫死（原本固定橘色，連「尚未挑戰過」都顯示成橘色，容易誤導使用者
+     以為已經有進度），改由下面 4 個 .menu-item--* 分級 modifier class 決定。 */
+  font-size: var(--text-caption);
+  font-weight: 700;
+}
+
+/* ---- 題型選單卡片的熟悉度分級（.menu-item--not-started／practicing／good／mastered）：
+   只改兩個地方——(1) 卡片左側一條色條 (2) 卡片底色一層極淡的同色調 tint。
+   標題／說明文字故意不跟著變色，只有 .menu-item-progress 那一行呼應色條顏色，
+   這樣 4 種狀態同時出現在畫面上時，每張卡片只有「一種強調色」，不會互相打架。
+   刻意不用橘色／紅色代表任何一級——橘色留給 CTA/獎勵，紅色是答錯的瞬間回饋，
+   長期掛在卡片上會讓小朋友覺得「被扣分」；改用「灰→藍→綠→金」漸進色階，
+   感覺是越來越熟練，不是被打分數。 ---- */
+.menu-item--not-started {
+  border-left: 5px solid var(--color-border);
+}
+
+.menu-item--not-started .menu-item-progress {
+  color: var(--color-ink-muted);
+}
+
+.menu-item--practicing {
+  border-left: 5px solid var(--color-primary-500);
+  background: var(--color-primary-tint);
+}
+
+.menu-item--practicing .menu-item-progress {
+  color: var(--color-primary-500);
+}
+
+.menu-item--good {
+  border-left: 5px solid var(--color-success);
+  background: var(--color-success-tint);
+}
+
+.menu-item--good .menu-item-progress {
+  color: var(--color-success);
+}
+
+.menu-item--mastered {
+  border-left: 5px solid var(--color-accent-yellow);
+  background: var(--color-accent-yellow-tint);
+}
+
+.menu-item--mastered .menu-item-progress {
+  color: #C8981A; /* --color-accent-yellow (#FFD166) 本身太淺，直接當文字色在白/淡金底上對比不夠，
+                      這裡用同色相加深的版本，維持「金色＝完美」的語意但確保可讀性。 */
+}
+
+/* .menu-item:hover 會把四邊 border-color 都改成主色藍（見上面既有規則），
+   specificity 比單一 modifier class 高，滑鼠移過去時色條會被蓋成藍色——
+   這裡個別把左側色條顏色搶回來，滑鼠移過去色條也維持原本分級顏色，不會跳色。 */
+.menu-item--practicing:hover {
+  border-left-color: var(--color-primary-500);
+}
+
+.menu-item--good:hover {
+  border-left-color: var(--color-success);
+}
+
+.menu-item--mastered:hover {
+  border-left-color: var(--color-accent-yellow);
+}
+
+/* ---- 首頁主題卡片（取代原本的 .menu-list 直向清單），
+   對應 assets/design-tokens/screen-preview-daily-play.html 的 .topic-grid／.topic-card ---- */
+
+/* 首頁依單元分組（main.ts 的 UNITS），每個單元一個區塊，單元標題＋底下的主題卡片。 */
+.unit-section {
+  margin-top: var(--space-6);
+}
+
+.unit-section:first-of-type {
+  margin-top: var(--space-5);
+}
+
+.unit-title {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  color: var(--color-primary-700);
+  margin: 0 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 2px solid var(--color-border);
+}
+
+/* 規劃裡有這個單元、但主題內容還沒做出來時顯示的佔位文字，不用空白區塊。 */
+.unit-coming-soon {
+  color: var(--color-ink-muted);
+  font-size: var(--text-body);
+  padding: var(--space-4) 0;
+}
+
+/* 單元 0 是新手起手式，獨立放在單元一～六最前面，用一行提示說明它是「推薦但非強制」，
+   避免使用者誤以為一定要先破關才能玩其他主題。 */
+.unit-zero-hint {
+  color: var(--color-ink-muted);
+  font-size: var(--text-body);
+  margin: 0 0 var(--space-3);
+}
+
+.topic-grid {
+  display: grid;
+  /* 最小寬度拉高到 260px：在 #app 的 1000px 版面寬度下最多只會排出 3 欄
+     （4 欄需要 4*260px + 3 個 gap，超過可用寬度），螢幕變窄時仍會照 auto-fit
+     的行為自動收成 2 欄、1 欄，不用另外寫斷點媒體查詢。 */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-5);
+}
+
+.topic-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.1s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.topic-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary-500);
+  box-shadow: var(--shadow-md);
+}
+
+.topic-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: var(--space-3);
+}
+
+.thumb-greetings {
+  background: var(--color-accent-orange);
+}
+
+.thumb-pronouns {
+  background: var(--color-primary-100);
+}
+
+.thumb-family {
+  background: var(--color-accent-pink);
+}
+
+.thumb-colors {
+  background: var(--color-primary-100);
+}
+
+.thumb-animals {
+  background: var(--color-accent-orange);
+}
+
+.thumb-people {
+  background: var(--color-accent-yellow);
+}
+
+/* Personal Characteristics 已拆成三個獨立主題（appearance／emotions／personality_traits），
+   原本的 .thumb-personal-characteristics 顏色（--color-success-bg）分給 emotions 沿用，
+   另外兩個新主題各自配一個色票，不用發明新顏色。 */
+.thumb-appearance {
+  background: var(--color-tier-silver-bg);
+}
+
+.thumb-emotions {
+  background: var(--color-success-bg);
+}
+
+.thumb-personality-traits {
+  background: var(--color-accent-yellow-tint);
+}
+
+.thumb-parts-of-body {
+  background: var(--color-tier-silver-bg);
+}
+
+.thumb-food-drink {
+  background: var(--color-tier-gold-bg);
+}
+
+.thumb-clothing {
+  background: var(--color-accent-pink);
+}
+
+.thumb-houses {
+  background: var(--color-tier-bronze-bg);
+}
+
+.thumb-bathroom {
+  background: var(--color-primary-tint);
+}
+
+.thumb-tableware {
+  background: var(--color-primary-100);
+}
+
+.thumb-transportation {
+  background: var(--color-tier-locked-bg);
+}
+
+.thumb-default {
+  background: var(--color-primary-100);
+}
+
+/* 單元三既有兩個主題（School／Numbers）先前一直沒補專屬縮圖、退回預設值，
+   這次趁擴充單元四／五順手一起補齊。 */
+.thumb-school {
+  background: var(--color-accent-yellow-tint);
+}
+
+.thumb-numbers {
+  background: var(--color-tier-silver-bg);
+}
+
+.thumb-science {
+  background: var(--color-success-tint);
+}
+
+.thumb-advanced-pronouns {
+  background: var(--color-primary-100);
+}
+
+.thumb-wh-words-frequency {
+  background: var(--color-accent-yellow-tint);
+}
+
+.thumb-articles-determiners {
+  background: var(--color-tier-silver-bg);
+}
+
+.thumb-sentence-connectors {
+  background: var(--color-tier-bronze-bg);
+}
+
+.thumb-prepositions {
+  background: var(--color-tier-gold-bg);
+}
+
+.thumb-other-nouns {
+  background: var(--color-accent-pink);
+}
+
+.thumb-other-verbs-1 {
+  background: var(--color-primary-tint);
+}
+
+.thumb-other-verbs-2 {
+  background: var(--color-success-tint);
+}
+
+.thumb-other-adjectives-1 {
+  background: var(--color-accent-yellow);
+}
+
+.thumb-other-adjectives-2 {
+  background: var(--color-tier-locked-bg);
+}
+
+.thumb-other-adverbs-responses {
+  background: var(--color-accent-orange);
+}
+
+.thumb-pe-sports {
+  background: var(--color-success-tint);
+}
+
+.thumb-clubs-hobbies {
+  background: var(--color-accent-pink);
+}
+
+/* 單元四：大自然與動物（animals_insects 沿用既有 .thumb-animals，這裡只補新增的兩個）。 */
+.thumb-weather-nature {
+  background: var(--color-primary-100);
+}
+
+.thumb-geographical-terms {
+  background: var(--color-tier-bronze-bg);
+}
+
+/* 單元五：生活情境 */
+.thumb-places-directions {
+  background: var(--color-accent-orange);
+}
+
+.thumb-occupations {
+  background: var(--color-success-bg);
+}
+
+.thumb-money {
+  background: var(--color-tier-gold-bg);
+}
+
+.thumb-health {
+  background: var(--color-error-bg);
+}
+
+.thumb-forms-of-address {
+  background: var(--color-accent-yellow);
+}
+
+.thumb-time {
+  background: var(--color-tier-gold-bg);
+}
+
+.thumb-calendar {
+  background: var(--color-tier-silver-bg);
+}
+
+.thumb-holidays-festivals {
+  background: var(--color-accent-pink);
+}
+
+.thumb-sizes-measurements {
+  background: var(--color-primary-100);
+}
+
+.topic-card h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-body-lg);
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: var(--color-ink);
+}
+
+.topic-card p {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-caption);
+  color: var(--color-ink-muted);
+}
+
+.topic-progress-track {
+  width: 100%;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-100);
+  overflow: hidden;
+}
+
+.topic-progress-fill {
+  height: 100%;
+  background: var(--color-success);
+  border-radius: var(--radius-pill);
+}
+
+.topic-progress-label {
+  margin-top: 6px;
+  font-size: var(--text-caption);
+  color: var(--color-ink-muted);
+}
+
+/* 危險操作（重置進度紀錄／刪除這個使用者）：用 #FF6B6B（--color-error）當警示色，
+   跟一般的帳號設定按鈕（.secondary-btn 預設樣式）區隔開來。 */
+/* 用 .secondary-btn.danger-btn 複合選擇器（而不是單獨的 .danger-btn），是因為
+   .secondary-btn／.secondary-btn:hover 在這份檔案裡宣告在後面，選擇器優先度一樣的話
+   後面宣告的會贏，單獨用 .danger-btn 會被 .secondary-btn 的藍色邊框／文字蓋掉，
+   複合選擇器優先度比較高，才能確保警示色一定生效。 */
+.secondary-btn.danger-btn {
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+.secondary-btn.danger-btn:hover {
+  background: var(--color-error-bg);
+  border-color: var(--color-error);
+}
+
+/* ---- 「個人檔案」頁面的個人小卡：左欄頭像（不加外框）、右欄名字＋時間資訊，兩欄排列
+   （原本是上下堆疊、置中對齊的單欄卡片，改成左右兩欄，資訊更多的時候比較好排版）。 ---- */
+
+.profile-card {
+  margin-top: var(--space-5);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-6);
+}
+
+.profile-card-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+}
+
+.profile-card-info {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+.profile-card-info h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  margin: 0 0 var(--space-3);
+  color: var(--color-ink);
+}
+
+.profile-card-meta {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--space-3);
+  row-gap: 6px;
+}
+
+.profile-card-meta dt {
+  color: var(--color-ink-muted);
+  font-size: var(--text-caption);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.profile-card-meta dd {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: var(--text-caption);
+}
+
+.profile-settings-actions {
+  margin-top: var(--space-3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* ---- 學習積分：放在六格數字卡片「上方」的獨立大數字區塊，跟卡片視覺語言
+   刻意區隔開（實心品牌色底、比卡片數字更大），像是六格細項加總出來的「總分」，
+   不是塞成第七張一樣大小的卡片。積分本身是既有統計資料的加權算式（見 points.ts），
+   純粹呈現用，不影響任何徽章判斷或成效追蹤邏輯。 ---- */
+.learning-points-hero {
+  margin-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-6);
+  background: var(--color-primary-700);
+  border-radius: var(--radius-lg);
+}
+
+.learning-points-value {
+  font-family: var(--font-display);
+  font-size: calc(var(--text-display) * 1.3);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.learning-points-label {
+  font-size: var(--text-body-lg);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ---- 「個人檔案」頁的學習成就宮格：六張數字卡片，圖示＋大數字＋小標籤，
+   沿用 .stats-summary-item 既有的卡片外觀（白底、圓角、細邊框、陰影）。
+   桌機固定排成 3 欄 × 2 列（跟使用者確認過「至少三欄兩列」），不用 auto-fit，
+   避免在寬螢幕上被拉成一整排 6 欄反而讓每張卡片變小；窄螢幕則往下收成 2 欄
+   （見下面 640px／420px 兩個 @media 斷點），不然 3 欄硬擠在窄容器裡，每欄只剩
+   不到 100px，會讓「累計答對題數」這種 5 個字的標籤被斷成「累計答對題/數」
+   這種難以閱讀的殘缺片段。 ---- */
+.profile-stats-grid {
+  margin-top: var(--space-4);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+@media (max-width: 640px) {
+  .profile-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .profile-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.profile-stat-card {
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-7) var(--space-4);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.profile-stat-icon {
+  color: var(--color-primary-500);
+  line-height: 0;
+  margin-bottom: var(--space-2);
+}
+
+.profile-stat-icon svg {
+  width: 56px;
+  height: 56px;
+}
+
+.profile-stat-value {
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-accent-orange);
+}
+
+.profile-stat-sub {
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  font-weight: 400;
+  color: var(--color-ink-muted);
+  margin-left: var(--space-1);
+}
+
+.profile-stat-label {
+  font-size: var(--text-body-lg);
+  color: var(--color-ink-muted);
+}
+
+/* ---- 「變更頭像」「修改名稱」小視窗（pop）：半透明遮罩＋置中卡片 ---- */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(43, 42, 74, 0.45); /* 用 --color-ink 加透明度當遮罩色，跟整體色調一致 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+  z-index: 100;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-6);
+}
+
+/* 「變更頭像」用：內容是 200px 的頭像照片，卡片要夠寬才能排成兩欄，
+   不然每張都會自己單獨佔一整行（跟一般文字表單用的窄卡片分開設定）。 */
+.modal-card--wide {
+  max-width: 640px;
+}
+
+.modal-card--wide .avatar-picker {
+  justify-content: center;
+}
+
+.modal-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.modal-card-header h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  margin: 0;
+  color: var(--color-primary-700);
+}
+
+.modal-close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-circle);
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-ink-muted);
+  font-size: var(--text-body);
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.modal-close-btn:hover {
+  border-color: var(--color-error);
+  color: var(--color-error-text);
+}
+
+/* 通用的 modal 內文段落——目前給「首次進站提醒」（appendWelcomeNoticeModal()）用，
+   顏色／字級沿用一般正文，跟 .about-text 是同一套字級 token，只是不共用 class
+   （modal 卡片內距跟版面跟頁面段落不一樣）。 */
+.modal-text {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-body);
+  color: var(--color-ink);
+  line-height: 1.6;
+}
+
+.modal-text--muted {
+  color: var(--color-ink-muted);
+  font-size: var(--text-caption);
+}
+
+.welcome-notice-list {
+  margin: var(--space-3) 0;
+  padding-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  color: var(--color-ink-muted);
+  font-size: var(--text-body);
+  line-height: 1.6;
+}
+
+/* 「回到頂端」浮動按鈕：不分畫面，render() 每次重畫都會無條件加一個（見 main.ts 的
+   appendBackToTopButton()），只在使用者往下捲動超過門檻值（scrollY > 300）之後才
+   顯示——用 main.ts 綁在 window 上的 scroll 監聽器切換 .visible class，不用每次
+   render() 重畫都重新綁定監聽器。圓形＋陰影＋主色直接沿用既有的 --radius-circle／
+   --shadow-md／--color-primary-500，跟 .modal-close-btn 視覺風格一致。z-index 刻意
+   比 .modal-overlay 的 100 低一階，避免蓋在燈箱／彈窗上面。 */
+.back-to-top-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-circle);
+  border: none;
+  background: var(--color-primary-500);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  z-index: 90;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.back-to-top-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.board {
+  display: flex;
+  gap: var(--space-6);
+  margin-top: var(--space-4);
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.card {
+  padding: var(--space-4) var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.1s ease, background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: var(--color-primary-500);
+  box-shadow: var(--shadow-md);
+}
+
+.card--selected {
+  border-color: var(--color-primary-500);
+  background: var(--color-primary-100);
+}
+
+.card--correct {
+  border-color: var(--color-success-text);
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+  cursor: default;
+}
+
+.card--wrong {
+  border-color: var(--color-error-text);
+  background: var(--color-error-bg);
+  color: var(--color-error-text);
+}
+
+.game-footer {
+  margin-top: var(--space-6);
+  text-align: center;
+}
+
+.hint {
+  color: var(--color-ink-muted);
+}
+
+.question-prompt {
+  margin-top: var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.done {
+  font-family: var(--font-display);
+  font-size: var(--text-body-lg);
+  line-height: 1.6;
+  color: var(--color-ink);
+}
+
+.primary-btn {
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  border-radius: var(--radius-pill);
+  border: none;
+  background: var(--color-primary-500);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.primary-btn:hover {
+  background: var(--color-primary-700-hover);
+}
+
+/* 特別留給整個學習流程裡最有「破關獎勵」感的按鈕（例如全部題型都跑完一輪的
+   「從頭再玩一次」），對應 design tokens 的 buttonReward（accent-orange） */
+.primary-btn--reward {
+  background: var(--color-accent-orange);
+}
+
+.primary-btn--reward:hover {
+  background: var(--color-reward-hover);
+}
+
+.secondary-btn {
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-primary-100);
+  background: var(--color-surface);
+  color: var(--color-primary-700);
+  cursor: pointer;
+  margin-right: var(--space-3);
+  transition: border-color 0.15s ease;
+}
+
+.secondary-btn:hover {
+  border-color: var(--color-primary-500);
+}
+
+.play-btn {
+  display: block;
+  margin-top: var(--space-3);
+}
+
+.error {
+  color: var(--color-error-text);
+}
+
+/* Stage B：句子排序 */
+
+.answer-area {
+  min-height: 56px;
+  margin-top: var(--space-4);
+  padding: var(--space-3);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.answer-area--correct {
+  border-color: var(--color-success-text);
+  border-style: solid;
+  background: var(--color-success-bg);
+}
+
+.answer-area--wrong {
+  border-color: var(--color-error-text);
+  border-style: solid;
+  background: var(--color-error-bg);
+}
+
+.answer-placeholder {
+  color: var(--color-ink-muted);
+  font-size: var(--text-body);
+}
+
+.token-pool {
+  margin-top: var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.token {
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: transform 0.1s ease, border-color 0.15s ease;
+}
+
+.token:hover {
+  transform: translateY(-1px);
+  border-color: var(--color-primary-500);
+}
+
+.token--correct-pos {
+  border-color: var(--color-success-text);
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+
+.token--wrong-pos {
+  border-color: var(--color-error-text);
+  background: var(--color-error-bg);
+  color: var(--color-error-text);
+}
+
+.token--dragging {
+  opacity: 0.4;
+}
+
+.token--drag-over {
+  border-color: var(--color-primary-500);
+  border-style: dashed;
+  transform: scale(1.05);
+}
+
+.assist-row {
+  margin-top: var(--space-4);
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.hint--correct {
+  color: var(--color-success-text);
+}
+
+.hint--wrong {
+  color: var(--color-error-text);
+}
+
+/* Stage B-2：句子填空 / Stage C：選擇題 共用的選項按鈕 */
+
+.options {
+  margin-top: var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.option {
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: transform 0.1s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.option:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: var(--color-primary-500);
+}
+
+.option--correct {
+  border-color: var(--color-success-text);
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+  cursor: default;
+}
+
+.option--wrong {
+  border-color: var(--color-error-text);
+  background: var(--color-error-bg);
+  color: var(--color-error-text);
+}
+
+.fill-blank-sentence {
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  line-height: 1.8;
+  margin-top: var(--space-4);
+  color: var(--color-ink);
+}
+
+.blank {
+  display: inline-block;
+  min-width: 60px;
+  border-bottom: 2px solid var(--color-primary-500);
+  color: var(--color-primary-500);
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Stage C：短文理解 */
+
+.passage-box {
+  margin-top: var(--space-4);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  line-height: 1.7;
+  color: var(--color-ink);
+}
+
+.passage-box h2 {
+  font-family: var(--font-display);
+  color: var(--color-primary-700);
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-h3);
+}
+
+/* 短文標題跟「朗讀短文」按鈕同一列，標題齊左、按鈕靠右。 */
+.passage-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.passage-header h2 {
+  margin: 0;
+}
+
+.passage-read-aloud-btn {
+  flex-shrink: 0;
+  padding: var(--space-2) var(--space-5);
+  font-family: var(--font-display);
+  font-size: var(--text-caption);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-primary-100);
+  background: var(--color-surface);
+  color: var(--color-primary-700);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.passage-read-aloud-btn:hover {
+  border-color: var(--color-primary-500);
+}
+
+.passage-read-aloud-btn--playing {
+  background: var(--color-primary-700);
+  border-color: var(--color-primary-700);
+  color: #fff;
+}
+
+/* 短文裡「點了會顯示中文意思」的字——虛線底線提示可以點，不加底色以免看起來像按鈕。 */
+.passage-word {
+  position: relative;
+  cursor: pointer;
+  border-bottom: 2px dashed var(--color-primary-500);
+}
+
+.passage-word--active {
+  color: var(--color-primary-700);
+  font-weight: 700;
+}
+
+/* 中文意思的小泡泡，浮在字的正下方，不影響旁邊文字的排版（position: absolute）。
+   改成 flex row 是因為泡泡裡除了中文意思，查得到 vocab.id 的字還會多放一顆收藏星星
+   （見 buildInteractivePassage()），兩者要並排對齊，不是各自佔一行。 */
+.passage-word-tooltip {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-ink);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--text-caption);
+  white-space: normal;
+  text-align: center;
+  max-width: 200px;
+  width: max-content;
+  padding: 4px 8px 4px 10px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 泡泡背景是深色（--color-ink），星星按鈕的預設灰色在上面看不清楚，
+   這裡覆寫成白色線條／收藏後一樣變金黃色，跟其他地方的星星保持同一種「已收藏」配色。 */
+.passage-word-tooltip .favorite-star-btn {
+  color: #fff;
+}
+
+.passage-word-tooltip .favorite-star-btn--active {
+  color: var(--color-accent-yellow);
+}
+
+.passage-word-tooltip::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-bottom-color: var(--color-ink);
+}
+
+.question-text {
+  margin-top: var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+/* Stage D 綜合關卡：短文理解題沒有整篇短文框可以看，只放一顆「朗讀短文」按鈕，
+   讓使用者可以只靠聽短文語音作答；獨立一行，跟下面的題目文字之間留一點呼吸空間。 */
+.capstone-audio-row {
+  margin-top: var(--space-4);
+}
+
+/* 「字卡暖身」：插在 Stage A 之前，先看字卡（單字＋例句＋語音），再接一題該單字的測驗，
+   逐字交錯（見 flashcardGame.ts）。字卡本身沿用 .passage-box 同一種「有邊框的卡片」語彙，
+   但置中呈現、字級加大，強調「先看、先聽」這個記憶階段跟其他題型「先讀題目再作答」的差異；
+   測驗階段（.question-text／.options）直接沿用 Stage C/D 既有樣式，不用另外寫一套。 */
+.flashcard-skip-row {
+  margin-top: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-caption);
+  color: var(--color-ink-muted);
+  cursor: pointer;
+}
+
+.flashcard-skip-row input {
+  cursor: pointer;
+}
+
+/* 這一組（預設 3 張）字卡看到第幾張的小提示，放在跳過字卡的選項下面、字卡本體上面。 */
+.flashcard-group-hint {
+  margin-top: var(--space-3);
+  font-size: var(--text-caption);
+  color: var(--color-ink-muted);
+}
+
+.flashcard-card {
+  margin-top: var(--space-4);
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.flashcard-word-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.flashcard-word-en {
+  font-family: var(--font-display);
+  font-size: var(--text-h1);
+  font-weight: 700;
+  color: var(--color-primary-700);
+}
+
+.flashcard-replay-btn {
+  border: none;
+  background: none;
+  font-size: var(--text-h3);
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.flashcard-replay-btn:hover {
+  transform: scale(1.15);
+}
+
+.flashcard-word-zh {
+  margin-top: var(--space-2);
+  font-size: var(--text-body-lg);
+  color: var(--color-ink);
+}
+
+/* ---- 單字收藏：星星按鈕（單字總覽／收藏清單／Stage C 短文翻譯泡泡／字卡暖身共用）----
+   未收藏＝空心線條星星（灰色，跟頁面其他次要圖示同色）；已收藏＝實心金黃色星星，
+   跟 --color-tier-gold／--color-accent-yellow 這種「達成／收藏」語意的暖色呼應。 */
+.favorite-star-btn {
+  border: none;
+  background: none;
+  padding: 0;
+  line-height: 0;
+  cursor: pointer;
+  color: var(--color-ink-muted);
+  transition: transform 0.1s ease, color 0.15s ease;
+}
+
+.favorite-star-btn:hover {
+  transform: scale(1.15);
+}
+
+.favorite-star-btn--active {
+  color: var(--color-accent-yellow);
+}
+
+/* ---- 收藏清單（renderFavorites()）專屬的排序控制項：三個按鈕（收藏時間／字母 A→Z／
+   字母 Z→A），目前選中的排序方式用主色底＋白字標示，其餘是淡底色，跟 .nav-item 的
+   active 狀態同一種視覺邏輯（實心 vs. 淡色），放在標題底下、單字列表上方。 ---- */
+.favorites-sort {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.favorites-sort-btn {
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-body);
+  font-weight: 600;
+  background: var(--color-primary-tint);
+  color: var(--color-primary-700);
+  cursor: pointer;
+}
+
+.favorites-sort-btn--active {
+  background: var(--color-primary-500);
+  color: #fff;
+}
+
+/* ---- 單字總覽（主題內）／收藏清單（全站）共用的單字列表：一行一個單字，
+   左邊英文／詞性／中文，右邊播放發音＋收藏星星，沿用 .menu-item 既有的卡片外觀。 ---- */
+.vocab-overview-list {
+  margin-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.vocab-overview-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.vocab-overview-row-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.vocab-overview-example-toggle-btn {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: var(--color-primary-700);
+  cursor: pointer;
+}
+
+.vocab-overview-example-toggle-btn:hover {
+  text-decoration: underline;
+}
+
+.vocab-overview-info {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.vocab-overview-en {
+  font-family: var(--font-display);
+  font-size: var(--text-body-lg);
+  font-weight: 700;
+  color: var(--color-primary-700);
+}
+
+.vocab-overview-pos {
+  font-size: var(--text-caption);
+  color: var(--color-ink-muted);
+  background: var(--color-primary-100);
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.vocab-overview-zh {
+  font-size: var(--text-body);
+  color: var(--color-ink);
+}
+
+.vocab-overview-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-shrink: 0;
+}
+
+.flashcard-example {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 2px dashed var(--color-border);
+}
+
+.flashcard-example-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.flashcard-example-en {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-style: italic;
+  color: var(--color-ink);
+}
+
+.flashcard-example-zh {
+  margin-top: var(--space-1);
+  font-size: var(--text-caption);
+  color: var(--color-ink-muted);
+}
+
+/* 測驗階段的「播放語音」按鈕（聽音選英文／聽音選中文），沿用 Stage C/D 朗讀按鈕
+   同一顆 .passage-read-aloud-btn 樣式，這裡只補一個外層留白用的容器 class。 */
+.flashcard-listen-row {
+  margin-top: var(--space-4);
+}
+
+/* 測驗答完（不管答對還是答錯）顯示這一題對應單字的英文＋中文，讓使用者知道自己
+   剛剛作答的到底是哪個字——尤其聽音選中文題型，畫面上原本不會出現任何英文文字。
+   旁邊再放一顆播放語音的按鈕，答錯時也能直接聽一次正確發音。 */
+.flashcard-quiz-reveal {
+  margin-top: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.flashcard-quiz-reveal-text {
+  font-family: var(--font-display);
+  font-size: var(--text-body-lg);
+  font-weight: 700;
+  color: var(--color-primary-700);
+}
+
+/* 學習報告 */
+
+.stats-summary {
+  margin-top: var(--space-5);
+  display: flex;
+  gap: var(--space-3);
+}
+
+.stats-summary-item {
+  flex: 1;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4) var(--space-2);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stats-summary-value {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  color: var(--color-accent-orange);
+}
+
+.stats-summary-label {
+  font-size: var(--text-caption);
+  color: var(--color-ink-muted);
+}
+
+.stats-list {
+  margin-top: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* 同一個主題的四種題型合併成一張卡片：預設收合只顯示 .stats-topic-summary
+   這一行精簡摘要，點整張卡片（不只是箭頭圖示）才展開看 .stats-stage-list。 */
+.stats-topic-card {
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5);
+  cursor: pointer;
+}
+
+/* ---- 挑戰紀錄頁的熟悉度分級，延伸自題型選單 .menu-item--* 的同一套視覺語言
+   （色條＋淡底色，同樣的 token），但外層卡片跟內層題型列的判斷規則不一樣：
+   外層卡片用 topicProgressTier()（完成度優先、正確率次之，main.ts），
+   內層題型列直接重用跟題型選單一樣的 progressTier()。"not-started" 兩層都
+   維持現有中性樣式，不加 modifier class。刻意不用橘色／紅色，理由跟
+   .menu-item--* 那次一致：橘色留給 CTA/獎勵，紅色是答錯的瞬間回饋。 ---- */
+.stats-topic-card--practicing {
+  border-left: 5px solid var(--color-primary-500);
+  background: var(--color-primary-tint);
+}
+
+.stats-topic-card--good {
+  border-left: 5px solid var(--color-success);
+  background: var(--color-success-tint);
+}
+
+.stats-topic-card--mastered {
+  border-left: 5px solid var(--color-accent-yellow);
+  background: var(--color-accent-yellow-tint);
+}
+
+.stats-topic-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.stats-topic-summary-text {
+  min-width: 0;
+}
+
+.stats-topic-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-body-lg);
+  color: var(--color-ink);
+}
+
+.stats-topic-summary .stats-card-detail {
+  margin-top: 4px;
+}
+
+/* 箭頭圖示只是視覺提示（展開時轉 180 度朝上），實際可點擊範圍是整張卡片，
+   不是只有箭頭本身。 */
+.stats-topic-chevron {
+  flex-shrink: 0;
+  display: inline-flex;
+  color: var(--color-ink-muted);
+  transition: transform 0.15s ease;
+}
+
+.stats-topic-card--expanded .stats-topic-chevron {
+  transform: rotate(180deg);
+}
+
+.stats-stage-list {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px dashed var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.stats-stage-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+/* 展開後的題型明細列分級：跟外層 .stats-topic-card--* 同一套「色條＋淡底色」手法，
+   但這裡的列原本沒有 padding/border（純 flex 排版貼齊卡片邊緣），直接加色條會
+   太貼、tint 底色也會頂到卡片邊界不好看——所以額外補上 padding + 圓角，用等寬的
+   負 margin 抵銷 padding，讓分級列跟沒有分級（not-started）的列左右邊界對齊，
+   不會因為多了 padding 而整排錯位。"not-started" 沒有 modifier class，維持
+   現有中性樣式（沒有色條/底色，也沒有這裡的 padding）。 */
+.stats-stage-row--practicing,
+.stats-stage-row--good,
+.stats-stage-row--mastered {
+  padding: var(--space-3);
+  margin: 0 calc(-1 * var(--space-3));
+  border-radius: var(--radius-md);
+}
+
+.stats-stage-row--practicing {
+  border-left: 5px solid var(--color-primary-500);
+  background: var(--color-primary-tint);
+}
+
+.stats-stage-row--good {
+  border-left: 5px solid var(--color-success);
+  background: var(--color-success-tint);
+}
+
+.stats-stage-row--mastered {
+  border-left: 5px solid var(--color-accent-yellow);
+  background: var(--color-accent-yellow-tint);
+}
+
+.stats-stage-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.stats-stage-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-body);
+  color: var(--color-ink);
+  margin-bottom: var(--space-2);
+}
+
+.stats-stage-btn {
+  flex-shrink: 0;
+  margin-right: 0;
+}
+
+.stats-bar-track {
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-100);
+  overflow: hidden;
+}
+
+.stats-bar-fill {
+  height: 100%;
+  background: var(--color-success); /* 沒有分級 class 時的備援色，實務上一定會搭配下面三個
+                                        modifier class 之一（有 progress 才會畫出這條 bar）。 */
+  border-radius: var(--radius-pill);
+  transition: width 0.2s ease;
+}
+
+/* 填色呼應 .stats-stage-row--* 的色條顏色，讓進度條本身也有意義，不只是單純的
+   「正確率長度」，跟題型選單同一套顏色語言一致。 */
+.stats-bar-fill--practicing {
+  background: var(--color-primary-500);
+}
+
+.stats-bar-fill--good {
+  background: var(--color-success);
+}
+
+.stats-bar-fill--mastered {
+  background: var(--color-accent-yellow);
+}
+
+.stats-card-detail {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-body);
+  color: var(--color-ink);
+}
+
+.stats-card-detail--muted {
+  color: var(--color-ink-muted);
+  font-size: var(--text-caption);
+}
+
+/* 個人設定（換頭像／改名字）用的小標題 */
+
+.section-heading {
+  margin: var(--space-6) 0 0;
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  color: var(--color-primary-700);
+}
+
+/* 「關於本站」獨立頁面（renderAbout()）——不再有獨立的 .section-heading 標題
+   （改由 .about-tagline 當作視覺上的頁面標題），內文沿用一般段落文字的字級／顏色。 */
+.about-text {
+  margin: var(--space-4) 0 0;
+  font-size: var(--text-body);
+  color: var(--color-ink-muted);
+  line-height: 1.8;
+}
+
+/* 標語段落（「每天玩一點英語！」）取代原本的 .section-heading 標題，字級／字型／
+   顏色都比照 .section-heading（--text-h3、--font-display、700、--color-primary-700），
+   在頁面上撐起跟原本標題一樣的視覺份量。 */
+.about-tagline {
+  margin-top: var(--space-6);
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  color: var(--color-primary-700);
+}
+
+/* 版本號＋作者資訊那一行，字級比正文再小一階、顏色更淡，跟上面的說明文字拉開
+   一點視覺層級（這是次要的附加資訊，不是頁面重點）。目前 design tokens 沒有比
+   --text-caption 更小的字級 token，這裡直接用具體數值（13px），不是顏色所以
+   不算新增色彩 token。 */
+.about-meta {
+  margin: var(--space-5) 0 0;
+  font-size: 13px;
+  color: var(--color-ink-muted);
+}
+
+.about-meta a {
+  color: inherit;
+}
+
+/* 底部裝飾插畫（renderAbout() 最後 appendChild 的 <img>）——純裝飾，隨 #app 容器
+   （max-width: 1000px，見本檔第 43 行）等比縮放，不用另外寫 media query。
+   margin-top 特意比 .about-text 段落間距更大，做出「內文結束、圖片是獨立裝飾區塊」
+   的視覺區隔。 */
+.about-banner-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: var(--space-7);
+  border-radius: var(--radius-lg);
+}
+
+/* ---- 成就徽章（資料來源 content/badges/badges.json，43 個徽章、10 大分類）----
+   版面規格：徽章圖案在上、說明文在下，圖案統一 200x200px、圓形遮罩；
+   已取得＝100% 透明度，尚未取得＝24% 透明度（頭像跟徽章都不加外框線條）。
+   圖片還在製作中，先用 --color-primary-500 藍色底色＋徽章代號（如 VM-01）當佔位圖，
+   TODO：待美術圖檔完成後，把 .badge-media-fill 換成 <img src={icon_placeholder}>，
+   版面結構（.badge-media 容器＋圓形遮罩）不用動。 */
+
+/* 所有類別＋徽章都包在同一個白底圓角的框架裡，四邊留一致的 padding
+   （跟 .stage-banner 同一套「有底色的圓角容器」概念）。 */
+.badge-frame {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.badge-category {
+  margin-top: 0;
+}
+
+/* 不同類別之間用一條虛線分隔（第一個類別上面不用，緊接在框架自己的 padding 下面就好）。 */
+.badge-category + .badge-category {
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px dashed var(--color-border);
+}
+
+.badge-category-title {
+  font-family: var(--font-display);
+  font-size: var(--text-body-lg);
+  font-weight: 700;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-category-icon {
+  display: inline-flex;
+  line-height: 0; /* 避免 <svg> 底部多出一截行高造成的空隙，圖示才能跟文字精準對齊 */
+}
+
+/* auto-fill＋固定 200px 最小欄寬：手機上會自動變成較少欄，不用另外寫 media query。 */
+.badge-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-5);
+  justify-items: center;
+}
+
+.badge-card {
+  width: 100%;
+  max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-2);
+}
+
+/* 說明文字改成 hover／點擊才彈出：.badge-media-wrap 負責定位泡泡＋接收點擊，
+   .badge-media 維持原本的圓形遮罩（overflow:hidden）不變——泡泡故意放在
+   .badge-media-wrap 這一層而不是 .badge-media 裡面，不然會被圓形遮罩裁掉看不到。 */
+.badge-media-wrap {
+  position: relative;
+  cursor: pointer;
+}
+
+.badge-media {
+  width: 200px;
+  height: 200px;
+  border-radius: var(--radius-circle);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.badge-tooltip {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-ink);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--text-caption);
+  white-space: normal;
+  text-align: center;
+  width: max-content;
+  max-width: 220px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+}
+
+.badge-tooltip::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-bottom-color: var(--color-ink);
+}
+
+/* 滑鼠移到徽章上（有滑鼠的裝置）或點擊/點選（平板等沒有滑鼠、:hover 不一定會觸發
+   的裝置，見 main.ts 的 activeBadgeTooltipCode／.badge-media-wrap--active）都要能彈出。 */
+.badge-media-wrap:hover .badge-tooltip,
+.badge-media-wrap--active .badge-tooltip {
+  opacity: 1;
+}
+
+.badge-media-fill {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-circle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-500);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  opacity: 1; /* 已取得：徽章圖案 100% 透明度 */
+}
+
+/* 美術圖已經畫好時（badgeImages.ts 找得到對應代號的圖檔），直接顯示真圖，
+   跟佔位圖共用同一套透明度／鎖定規則。 */
+.badge-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 1; /* 已取得：徽章圖案 100% 透明度 */
+}
+
+.badge-media--locked .badge-media-fill,
+.badge-media--locked img {
+  opacity: 0.24; /* 尚未取得：徽章圖案 24% 透明度 */
+}
+
+.badge-card h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.badge-card .badge-count {
+  margin: 0;
+  font-size: var(--text-caption);
+  font-weight: 700;
+  color: var(--color-primary-700);
+}
+
+.badge-card .badge-dev-note {
+  margin: 0;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--color-ink-muted);
+}
+
+/* 「獲得新徽章」的 pop（main.ts 的 appendBadgeUnlockModal()）：跟「變更頭像／
+   修改名稱」共用同一套 .modal-overlay／.modal-card 外殼，這裡只加內容本身的樣式。
+   同一輪可能一次列出好幾個新達成的徽章，用小一點的縮圖（72px，比徽章頁的
+   200px 小很多，這裡只是通知不是徽章總覽）＋名稱＋說明文橫向排一列。 */
+.badge-unlock-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.badge-unlock-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.badge-unlock-media {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-circle);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.badge-unlock-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.badge-unlock-media .badge-media-fill {
+  font-size: var(--text-caption); /* 縮圖版的代號佔位圖字也要跟著縮小，不然 72px 圓圈塞不下 */
+}
+
+.badge-unlock-text {
+  min-width: 0;
+}
+
+.badge-unlock-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.badge-unlock-desc {
+  margin: 4px 0 0;
+  font-size: var(--text-caption);
+  color: var(--color-ink-muted);
+}
+
+.badge-unlock-card .primary-btn {
+  width: 100%;
+}
+
+/* 「獲得新徽章」pop 出現時灑落的紙花（main.ts 的 buildConfettiOverlay()）——純視覺
+   裝飾，pointer-events: none 不擋任何點擊，疊在 .modal-overlay 裡但排在卡片「前面」
+   （DOM 順序），所以會被卡片蓋在上面，只在卡片周圍/畫面上方看得到飄落的效果。
+   每片紙花的起始位置／延遲／掉落時間／飄移距離／初始旋轉角度由 JS 內聯變數
+   （--confetti-*）控制，這裡只定義動畫本身，讓每次跳出來的紙花不會整齊劃一。 */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -20px;
+  width: 10px;
+  height: 14px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: confetti-fall var(--confetti-duration, 2.5s) ease-in var(--confetti-delay, 0s) 1 both;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translate(0, 0) rotate(var(--confetti-rotate-start, 0deg));
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--confetti-drift, 0px), 70vh) rotate(calc(var(--confetti-rotate-start, 0deg) + 540deg));
+    opacity: 0;
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "id": "passage.other_adverbs_responses.001",
+  "topic": "other_adverbs_responses",
+  "title": "Our Class Pet",
+  "text": "Our class officially got a new pet hamster this week! We named him Peanut. \"Can I hold him?\" I asked. \"Sure!\" said my teacher. Peanut is very soft and really cute. At first, he ran away quickly and hid in his little house. \"Maybe he is scared,\" my friend said. We waited quietly, and then Peanut came out again. \"Is he still hiding?\" someone asked. \"No, he is not hiding anymore,\" I said. \"Yes, he wants to play!\" We took turns holding Peanut together. I fed him a piece of carrot too. Everyone was very happy. \"Can we feed him again tomorrow?\" I asked. \"Sure, we can!\" said my teacher.",
+  "sentence_ids": [],
+  "vocab_ids": [
+    "voc.other_adverbs_responses.001",
+    "voc.other_adverbs_responses.002",
+    "voc.other_adverbs_responses.003",
+    "voc.other_adverbs_responses.004",
+    "voc.other_adverbs_responses.005",
+    "voc.other_adverbs_responses.006",
+    "voc.other_adverbs_responses.007",
+    "voc.other_adverbs_responses.008",
+    "voc.other_adverbs_responses.009",
+    "voc.other_adverbs_responses.010",
+    "voc.other_adverbs_responses.011",
+    "voc.other_adverbs_responses.012",
+    "voc.other_adverbs_responses.013",
+    "voc.other_adverbs_responses.014",
+    "voc.other_adverbs_responses.015"
+  ],
+  "questions": [
+    {
+      "question": "What did Peanut do when he was scared at first?",
+      "source_sentence": "At first, he ran away quickly and hid in his little house.",
+      "options": [
+        "He ran away and hid",
+        "He bit the teacher",
+        "He fell asleep",
+        "He climbed the desk"
+      ],
+      "answer": "He ran away and hid"
+    },
+    {
+      "question": "What did the narrator say when someone asked if Peanut was still hiding?",
+      "source_sentence": "\"No, he is not hiding anymore,\" I said.",
+      "options": [
+        "He is not hiding anymore",
+        "He is still hiding",
+        "He ran away again",
+        "Nobody knows"
+      ],
+      "answer": "He is not hiding anymore"
+    },
+    {
+      "question": "What did the teacher say when asked to feed Peanut again tomorrow?",
+      "source_sentence": "\"Sure, we can!\" said my teacher.",
+      "options": ["Sure, we can!", "No, not tomorrow.", "Maybe next week.", "I'm not sure."],
+      "answer": "Sure, we can!"
+    }
+  ],
+  "status": "published"
+}

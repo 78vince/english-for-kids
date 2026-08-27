@@ -1,0 +1,657 @@
+[
+  {
+    "id": "voc.animals_insects.020",
+    "en": "mouse",
+    "zh": "老鼠",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [
+      "voc.animals_insects.018"
+    ],
+    "example_sentence": {
+      "en": "A mouse is hiding in the box.",
+      "zh": "有一隻老鼠躲在箱子裡。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.030",
+    "en": "whale",
+    "zh": "鯨魚",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The whale is the biggest animal in the sea.",
+      "zh": "鯨魚是海裡最大的動物。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.002",
+    "en": "bear",
+    "zh": "熊",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The bear is big and strong.",
+      "zh": "熊又大又壯。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.013",
+    "en": "frog",
+    "zh": "青蛙",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The frog jumps very high.",
+      "zh": "青蛙跳得很高。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.024",
+    "en": "rabbit",
+    "zh": "兔子",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The rabbit likes to eat carrots.",
+      "zh": "兔子喜歡吃紅蘿蔔。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.022",
+    "en": "pet",
+    "zh": "寵物",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I want a pet at home.",
+      "zh": "我想要在家養一隻寵物。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.012",
+    "en": "fish",
+    "zh": "魚",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": "fish",
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The fish swims in the water.",
+      "zh": "魚在水裡游泳。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.015",
+    "en": "horse",
+    "zh": "馬",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I can ride a horse.",
+      "zh": "我會騎馬。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.028",
+    "en": "tiger",
+    "zh": "老虎",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The tiger has orange and black fur.",
+      "zh": "老虎有橘色跟黑色的毛。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.010",
+    "en": "duck",
+    "zh": "鴨子",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The duck swims in the pond.",
+      "zh": "鴨子在池塘裡游泳。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.018",
+    "en": "mice",
+    "zh": "老鼠（複數）",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [
+      "voc.animals_insects.020"
+    ],
+    "example_sentence": {
+      "en": "The mice run under the table.",
+      "zh": "那些老鼠在桌子底下跑來跑去。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.021",
+    "en": "panda",
+    "zh": "大貓熊",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The panda eats bamboo every day.",
+      "zh": "貓熊每天都吃竹子。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.007",
+    "en": "chicken",
+    "zh": "雞",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": "chicken",
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The chicken lives on the farm.",
+      "zh": "那隻雞住在農場裡。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.014",
+    "en": "hippo",
+    "zh": "河馬",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The hippo likes to stay in the water.",
+      "zh": "河馬喜歡待在水裡。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.006",
+    "en": "cat",
+    "zh": "貓",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My cat likes to sleep.",
+      "zh": "我的貓喜歡睡覺。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.026",
+    "en": "snake",
+    "zh": "蛇",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The snake has no legs.",
+      "zh": "蛇沒有腳。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.031",
+    "en": "zebra",
+    "zh": "斑馬",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The zebra has black and white stripes.",
+      "zh": "斑馬有黑白條紋。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.016",
+    "en": "koala",
+    "zh": "無尾熊",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The koala sleeps in the tree all day.",
+      "zh": "無尾熊整天都在樹上睡覺。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.003",
+    "en": "bee",
+    "zh": "蜜蜂",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The bee flies to the flower.",
+      "zh": "蜜蜂飛到花那裡。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.008",
+    "en": "cow",
+    "zh": "乳牛",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The cow gives us milk.",
+      "zh": "乳牛給我們牛奶。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.011",
+    "en": "elephant",
+    "zh": "大象",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The elephant has a long nose.",
+      "zh": "大象有長長的鼻子。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.009",
+    "en": "dog",
+    "zh": "狗",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My dog runs very fast.",
+      "zh": "我的狗跑得很快。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.001",
+    "en": "animal",
+    "zh": "動物",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I like every animal.",
+      "zh": "我喜歡每一種動物。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.027",
+    "en": "spider",
+    "zh": "蜘蛛",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The spider makes a big web.",
+      "zh": "蜘蛛織了一張大網。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.029",
+    "en": "turtle",
+    "zh": "烏龜",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The turtle walks very slowly.",
+      "zh": "烏龜走得很慢。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.023",
+    "en": "pig",
+    "zh": "豬",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The pig is pink and round.",
+      "zh": "豬是粉紅色圓圓的。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.025",
+    "en": "sheep",
+    "zh": "綿羊",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The sheep has soft white wool.",
+      "zh": "綿羊有柔軟的白色羊毛。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.019",
+    "en": "monkey",
+    "zh": "猴子",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The monkey likes to eat bananas.",
+      "zh": "猴子喜歡吃香蕉。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.005",
+    "en": "butterfly",
+    "zh": "蝴蝶",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The butterfly has pretty wings.",
+      "zh": "蝴蝶有漂亮的翅膀。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.004",
+    "en": "bird",
+    "zh": "鳥",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The bird sings in the tree.",
+      "zh": "鳥在樹上唱歌。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  },
+  {
+    "id": "voc.animals_insects.017",
+    "en": "lion",
+    "zh": "獅子",
+    "pos": "名詞",
+    "topic": "animals_insects",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The lion is the king of animals.",
+      "zh": "獅子是萬獸之王。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Animals & insects",
+    "status": "published"
+  }
+]

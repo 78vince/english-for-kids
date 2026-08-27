@@ -1,0 +1,9 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PassageGlossary",
+  "description": "補充 content/passages/<topic>.json 短文裡「不在該主題 vocab_ids 也不在任何主題 vocab 清單裡」的額外單字翻譯，給短文理解（Stage C）點字看中文意思用。key 是小寫英文單字，value 是中文意思。已經有 vocab 資料的單字（不管是不是這個主題的）不用重複列在這裡，畫面渲染時會優先查 vocab 資料，這裡只是補漏。",
+  "type": "object",
+  "additionalProperties": {
+    "type": "string"
+  }
+}

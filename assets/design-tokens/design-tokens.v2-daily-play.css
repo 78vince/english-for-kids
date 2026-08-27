@@ -1,0 +1,95 @@
+/* =========================================================
+   Design Tokens v2 — 「每天玩一點，英語變好玩」風格改版
+   基礎：assets/design-tokens/design-tokens.css（原稿）
+   改版原則：品牌色不重做，只放大字級、調整留白／中性色、
+   新增功能列與徽章分級所需的元件 token
+   本檔案為獨立提案版本，不覆蓋原始 design-tokens.css，
+   確認採用後再合併回主檔案
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Huninn&display=swap');
+
+:root {
+  /* ---------- Color / Brand（沿用原稿，不更動）---------- */
+  --color-primary-700: #0052A3;
+  --color-primary-500: #2E7BD6;
+  --color-primary-100: #C4E2EF;
+  --color-secondary-500: #5B7CCB;
+
+  /* ---------- Color / Accent（沿用原稿；pink 改為低頻率使用，非改色）---------- */
+  --color-accent-orange: #FF8A61;
+  --color-accent-pink:   #FFBDEF;
+  --color-accent-yellow: #FFD166;
+
+  /* ---------- Color / Feedback（沿用原稿）---------- */
+  --color-success: #6FCF97;
+  --color-error:   #FF6B6B;
+
+  /* ---------- Color / Neutral（調整：淡紫改中性灰藍，強化「簡單大器」的乾淨感）---------- */
+  --color-bg:        #F4F6F9;   /* 原 #F7F2F8，改為中性淺灰藍，降低粉嫩感 */
+  --color-surface:   #FFFFFF;
+  --color-ink:       #2B2A4A;
+  --color-ink-muted: #6B6789;
+  --color-border:    #DCE2EA;   /* 原 #E4D9EA，改中性灰藍邊框 */
+
+  /* ---------- Color / Tint（2026-08-20 新增：題型選單卡片的「熟悉度分級」用淡色底，
+     從既有 --color-primary-500／--color-success／--color-accent-yellow 提亮而來，
+     不新增色相，只是同一個顏色的極淡版本，讓卡片底色可以呼應色條又不會蓋過白底陰影）---------- */
+  --color-primary-tint: #EAF2FB;
+  --color-success-tint: #EAFBF1;
+  --color-accent-yellow-tint: #FFF8E6;
+
+  /* ---------- Typography（放大字級，呼應「較大字級」需求）---------- */
+  --font-display: 'Huninn', 'Noto Sans TC', sans-serif;
+  --font-body:    'Huninn', 'Noto Sans TC', sans-serif;
+
+  --text-display: 54px;   /* 原 40px，2026-08-07 再放大一輪 */
+  --text-h1: 42px;         /* 原 32px，2026-08-07 再放大一輪 */
+  --text-h2: 32px;         /* 原 24px，2026-08-07 再放大一輪 */
+  --text-h3: 28px;         /* 原 20px，2026-08-07 再放大一輪 */
+  --text-body-lg: 23px;    /* 原 18px，2026-08-07 再放大一輪 */
+  --text-body: 21px;       /* 原 16px，2026-08-07 再放大一輪 */
+  --text-caption: 17px;    /* 原 14px，2026-08-07 再放大一輪 */
+
+  /* ---------- Radius（沿用原稿）---------- */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+  --radius-circle: 50%;
+
+  /* ---------- Spacing（沿用原稿）---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* ---------- Shadow（沿用原稿）---------- */
+  --shadow-sm: 0 2px 8px rgba(0, 82, 163, 0.08);
+  --shadow-md: 0 6px 16px rgba(0, 82, 163, 0.12);
+  --shadow-lg: 0 12px 28px rgba(0, 82, 163, 0.16);
+
+  /* ---------- 新增：功能列（Function Nav）---------- */
+  --nav-height: 64px;
+  --nav-bg: var(--color-surface);
+  --nav-border: var(--color-border);
+  --nav-item-color: var(--color-ink-muted);
+  --nav-item-active-bg: var(--color-primary-700);
+  --nav-item-active-color: #FFFFFF;
+  --nav-item-radius: var(--radius-md);
+
+  /* ---------- 新增：成就徽章分級色 ---------- */
+  --color-tier-bronze: #B9835A;
+  --color-tier-bronze-bg: #F6E9DF;
+  --color-tier-silver: #A6AEBD;
+  --color-tier-silver-bg: #EEF0F3;
+  --color-tier-gold: #E8B84B;
+  --color-tier-gold-bg: #FBF1DA;
+  --color-tier-locked: #C9CDD4;
+  --color-tier-locked-bg: #F1F2F4;
+}

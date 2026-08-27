@@ -1,0 +1,338 @@
+[
+  {
+    "id": "voc.occupations.006",
+    "en": "singer",
+    "zh": "歌手",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "She wants to be a singer.",
+      "zh": "她想成為一位歌手。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  },
+  {
+    "id": "voc.occupations.001",
+    "en": "doctor",
+    "zh": "醫生",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My uncle is a doctor.",
+      "zh": "我叔叔是一位醫生。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  },
+  {
+    "id": "voc.occupations.003",
+    "en": "farmer",
+    "zh": "農夫",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The farmer grows rice.",
+      "zh": "這位農夫種稻米。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  },
+  {
+    "id": "voc.occupations.007",
+    "en": "actor",
+    "zh": "男演員",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "He is a famous actor.",
+      "zh": "他是一位有名的男演員。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  },
+  {
+    "id": "voc.occupations.013",
+    "en": "mailman",
+    "zh": "郵差",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The mailman brings letters every day.",
+      "zh": "郵差每天送信。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  },
+  {
+    "id": "voc.occupations.011",
+    "en": "waiter",
+    "zh": "男服務生",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The waiter brings our food.",
+      "zh": "這位男服務生送來我們的食物。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  },
+  {
+    "id": "voc.occupations.009",
+    "en": "police officer",
+    "zh": "警察",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The police officer helps people.",
+      "zh": "這位警察幫助人們。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  },
+  {
+    "id": "voc.occupations.004",
+    "en": "cook",
+    "zh": "廚師",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The cook makes yummy food.",
+      "zh": "這位廚師做好吃的食物。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  },
+  {
+    "id": "voc.occupations.012",
+    "en": "waitress",
+    "zh": "女服務生",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The waitress is very nice.",
+      "zh": "這位女服務生人很好。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  },
+  {
+    "id": "voc.occupations.010",
+    "en": "soldier",
+    "zh": "軍人",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My father was a soldier.",
+      "zh": "我爸爸曾經是一位軍人。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  },
+  {
+    "id": "voc.occupations.008",
+    "en": "actress",
+    "zh": "女演員",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "She is a famous actress.",
+      "zh": "她是一位有名的女演員。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  },
+  {
+    "id": "voc.occupations.005",
+    "en": "driver",
+    "zh": "司機",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The bus driver is friendly.",
+      "zh": "這位公車司機很友善。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  },
+  {
+    "id": "voc.occupations.002",
+    "en": "nurse",
+    "zh": "護士",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "The nurse is very kind.",
+      "zh": "這位護士很親切。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  },
+  {
+    "id": "voc.occupations.014",
+    "en": "engineer",
+    "zh": "工程師",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My sister wants to be an engineer.",
+      "zh": "我姊姊想成為一位工程師。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  },
+  {
+    "id": "voc.occupations.015",
+    "en": "homemaker",
+    "zh": "家庭主夫、家庭主婦",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My dad is a homemaker.",
+      "zh": "我爸爸是家庭主夫。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  },
+  {
+    "id": "voc.occupations.016",
+    "en": "content creator",
+    "zh": "內容創作者",
+    "pos": "名詞",
+    "topic": "occupations",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "She makes videos as a content creator.",
+      "zh": "她是一位拍影片的內容創作者。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Occupations",
+    "status": "published"
+  }
+]

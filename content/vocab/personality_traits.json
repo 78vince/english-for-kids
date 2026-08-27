@@ -1,0 +1,296 @@
+[
+  {
+    "id": "voc.personality_traits.001",
+    "en": "kind",
+    "zh": "親切的",
+    "pos": "形容詞",
+    "topic": "personality_traits",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Personality Traits",
+    "status": "published",
+    "example_sentence": {
+      "en": "My teacher is very kind.",
+      "zh": "我的老師很親切。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.personality_traits.002",
+    "en": "shy",
+    "zh": "害羞的",
+    "pos": "形容詞",
+    "topic": "personality_traits",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Personality Traits",
+    "status": "published",
+    "example_sentence": {
+      "en": "The new student is shy.",
+      "zh": "這個新同學很害羞。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.personality_traits.003",
+    "en": "friendly",
+    "zh": "友善的",
+    "pos": "形容詞",
+    "topic": "personality_traits",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Personality Traits",
+    "status": "published",
+    "example_sentence": {
+      "en": "Our neighbor is very friendly.",
+      "zh": "我們的鄰居很友善。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.personality_traits.004",
+    "en": "brave",
+    "zh": "勇敢的",
+    "pos": "形容詞",
+    "topic": "personality_traits",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Personality Traits",
+    "status": "published",
+    "example_sentence": {
+      "en": "The firefighter is brave.",
+      "zh": "這位消防員很勇敢。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.personality_traits.005",
+    "en": "smart",
+    "zh": "聰明的",
+    "pos": "形容詞",
+    "topic": "personality_traits",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Personality Traits",
+    "status": "published",
+    "example_sentence": {
+      "en": "He is a smart student.",
+      "zh": "他是個聰明的學生。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.personality_traits.006",
+    "en": "funny",
+    "zh": "有趣的",
+    "pos": "形容詞",
+    "topic": "personality_traits",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Personality Traits",
+    "status": "published",
+    "example_sentence": {
+      "en": "My brother tells funny jokes.",
+      "zh": "我哥哥會說有趣的笑話。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.personality_traits.007",
+    "en": "lazy",
+    "zh": "懶惰的",
+    "pos": "形容詞",
+    "topic": "personality_traits",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Personality Traits",
+    "status": "published",
+    "example_sentence": {
+      "en": "The lazy cat sleeps all day.",
+      "zh": "這隻懶惰的貓睡了一整天。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.personality_traits.008",
+    "en": "active",
+    "zh": "活潑好動的",
+    "pos": "形容詞",
+    "topic": "personality_traits",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Personality Traits",
+    "status": "published",
+    "example_sentence": {
+      "en": "My little brother is very active.",
+      "zh": "我弟弟很活潑好動。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.personality_traits.009",
+    "en": "quiet",
+    "zh": "安靜的",
+    "pos": "形容詞",
+    "topic": "personality_traits",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Personality Traits",
+    "status": "published",
+    "example_sentence": {
+      "en": "The library is very quiet.",
+      "zh": "圖書館很安靜。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.personality_traits.010",
+    "en": "polite",
+    "zh": "有禮貌的",
+    "pos": "形容詞",
+    "topic": "personality_traits",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Personality Traits",
+    "status": "published",
+    "example_sentence": {
+      "en": "She is polite to everyone.",
+      "zh": "她對每個人都很有禮貌。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.personality_traits.011",
+    "en": "naughty",
+    "zh": "調皮的",
+    "pos": "形容詞",
+    "topic": "personality_traits",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Personality Traits",
+    "status": "published",
+    "example_sentence": {
+      "en": "The naughty boy hides my shoes.",
+      "zh": "這個調皮的男孩把我的鞋子藏起來。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.personality_traits.012",
+    "en": "patient",
+    "zh": "有耐心的",
+    "pos": "形容詞",
+    "topic": "personality_traits",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Personality Traits",
+    "status": "published",
+    "example_sentence": {
+      "en": "The teacher is patient with us.",
+      "zh": "老師對我們很有耐心。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.personality_traits.013",
+    "en": "honest",
+    "zh": "誠實的",
+    "pos": "形容詞",
+    "topic": "personality_traits",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Personality Traits",
+    "status": "published",
+    "example_sentence": {
+      "en": "Always be honest with your friends.",
+      "zh": "對朋友要一直誠實。",
+      "status": "draft"
+    }
+  },
+  {
+    "id": "voc.personality_traits.014",
+    "en": "curious",
+    "zh": "好奇的",
+    "pos": "形容詞",
+    "topic": "personality_traits",
+    "scope": "elementary_core",
+    "difficulty_tier": 3,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "source": "國小常用英語主題字彙 - Personality Traits",
+    "status": "published",
+    "example_sentence": {
+      "en": "The curious cat looks into the box.",
+      "zh": "這隻好奇的貓往箱子裡看。",
+      "status": "draft"
+    }
+  }
+]

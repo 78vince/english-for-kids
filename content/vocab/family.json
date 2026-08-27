@@ -1,0 +1,317 @@
+[
+  {
+    "id": "voc.family.003",
+    "en": "cousin",
+    "zh": "堂（表）兄弟姊妹",
+    "pos": "名詞",
+    "topic": "family",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My cousin comes to my house on Sunday.",
+      "zh": "我的表（堂）兄弟姊妹星期天來我家。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Family",
+    "status": "published"
+  },
+  {
+    "id": "voc.family.020",
+    "en": "son",
+    "zh": "兒子",
+    "pos": "名詞",
+    "topic": "family",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "He is their only son.",
+      "zh": "他是他們唯一的兒子。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Family",
+    "status": "published"
+  },
+  {
+    "id": "voc.family.011",
+    "en": "grandmother",
+    "zh": "外婆、奶奶（= grandma）",
+    "pos": "名詞",
+    "topic": "family",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My grandmother lives near my house.",
+      "zh": "我的奶奶（外婆）住在我家附近。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Family",
+    "status": "published"
+  },
+  {
+    "id": "voc.family.013",
+    "en": "grow",
+    "zh": "成長、長大",
+    "pos": "動詞",
+    "topic": "family",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I grow taller every year.",
+      "zh": "我每年都長高。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Family",
+    "status": "published"
+  },
+  {
+    "id": "voc.family.014",
+    "en": "live",
+    "zh": "住",
+    "pos": "動詞",
+    "topic": "family",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I live in a small town.",
+      "zh": "我住在一個小鎮。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Family",
+    "status": "published"
+  },
+  {
+    "id": "voc.family.001",
+    "en": "aunt",
+    "zh": "阿姨、姑姑、伯母、舅媽",
+    "pos": "名詞",
+    "topic": "family",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My aunt gives me a present.",
+      "zh": "我的阿姨（姑姑）送我一個禮物。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Family",
+    "status": "published"
+  },
+  {
+    "id": "voc.family.007",
+    "en": "family",
+    "zh": "家庭、家人",
+    "pos": "名詞",
+    "topic": "family",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "I love my family.",
+      "zh": "我愛我的家人。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Family",
+    "status": "published"
+  },
+  {
+    "id": "voc.family.017",
+    "en": "mother",
+    "zh": "媽媽（= mom; mommy）",
+    "pos": "名詞",
+    "topic": "family",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My mother sings to me at night.",
+      "zh": "我媽媽晚上會唱歌給我聽。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Family",
+    "status": "published"
+  },
+  {
+    "id": "voc.family.018",
+    "en": "parent",
+    "zh": "父母親",
+    "pos": "名詞",
+    "topic": "family",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My parents love me very much.",
+      "zh": "我的父母親很愛我。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Family",
+    "status": "published"
+  },
+  {
+    "id": "voc.family.008",
+    "en": "father",
+    "zh": "爸爸（= dad; daddy）",
+    "pos": "名詞",
+    "topic": "family",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My father drives me to school.",
+      "zh": "我爸爸開車送我上學。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Family",
+    "status": "published"
+  },
+  {
+    "id": "voc.family.006",
+    "en": "daughter",
+    "zh": "女兒",
+    "pos": "名詞",
+    "topic": "family",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "She is my daughter.",
+      "zh": "她是我的女兒。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Family",
+    "status": "published"
+  },
+  {
+    "id": "voc.family.002",
+    "en": "brother",
+    "zh": "哥哥、弟弟",
+    "pos": "名詞",
+    "topic": "family",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My brother plays soccer with me.",
+      "zh": "我哥哥（弟弟）跟我一起踢足球。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Family",
+    "status": "published"
+  },
+  {
+    "id": "voc.family.019",
+    "en": "sister",
+    "zh": "姐姐、妹妹",
+    "pos": "名詞",
+    "topic": "family",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My sister shares her toys with me.",
+      "zh": "我姐姐（妹妹）會跟我分享她的玩具。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Family",
+    "status": "published"
+  },
+  {
+    "id": "voc.family.021",
+    "en": "uncle",
+    "zh": "叔叔、舅舅、姑丈、姨丈",
+    "pos": "名詞",
+    "topic": "family",
+    "scope": "elementary_core",
+    "difficulty_tier": 1,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My uncle gave me a new bike.",
+      "zh": "我叔叔（舅舅）送我一台新腳踏車。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Family",
+    "status": "published"
+  },
+  {
+    "id": "voc.family.009",
+    "en": "grandfather",
+    "zh": "外公、爺爺（= grandpa）",
+    "pos": "名詞",
+    "topic": "family",
+    "scope": "elementary_core",
+    "difficulty_tier": 2,
+    "ipa": null,
+    "audio": null,
+    "image": null,
+    "sense_of": null,
+    "related_forms": [],
+    "example_sentence": {
+      "en": "My grandfather tells funny jokes.",
+      "zh": "我的爺爺（外公）會說有趣的笑話。",
+      "status": "draft"
+    },
+    "source": "國小常用英語主題字彙 - Family",
+    "status": "published"
+  }
+]
