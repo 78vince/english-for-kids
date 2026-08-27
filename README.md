@@ -1,6 +1,6 @@
 # 兒童英語學習平台（English for Kids）
 
-> 目前狀態：Phase 2 全部完成，準備進入 Phase 3。Phase 1（四種文字型題型、登入登出、成效追蹤）已完成；Phase 2（擴充主題、成就徽章、單字收藏、字卡學習單元、進度視覺分級）已完成，課程內容（content 端）與 App 端接線都已全部 43 個正式主題（含 Unit 0 兩個暖身主題，全站合計 45 個主題）建置並上線完成，單元 0～七全部可以在畫面上實際玩到。
+> 目前狀態：Phase 3 完成，已正式上架 GitHub Pages：<https://78vince.github.io/english-for-kids/>。Phase 1（四種文字型題型、登入登出、成效追蹤）已完成；Phase 2（擴充主題、成就徽章、單字收藏、字卡學習單元、進度視覺分級）已完成，課程內容（content 端）與 App 端接線都已全部 43 個正式主題（含 Unit 0 兩個暖身主題，全站合計 45 個主題）建置並上線完成，單元 0～七全部可以在畫面上實際玩到。
 
 ## 這個專案是什麼
 
@@ -58,5 +58,7 @@ Vincent - 小禮
 - [x] 新增單元七「文法小幫手」11 個主題（content 端）：Advanced Pronouns／Wh-Words & Frequency／Articles & Determiners／Sentence Connectors／Prepositions／Other Nouns／Other Verbs I・II／Other Adjectives I・II／Other Adverbs & Responses，正式推翻原本「文法/功能詞不獨立成關卡」的規劃（見 `docs/content-plan.md` 3.2 節），單字／句子／短文資料與驗證腳本、成就徽章系統（新增 WC-07「文法小幫手」）皆已完成並通過驗證
 - [x] Phase 2 App 端接線（單元七）：`main.ts` 的 `TOPICS`／`UNITS`／`TOPIC_THUMBS` 已新增單元七 11 個主題並上線，全部 43 個正式主題（含單元 0 共 45 個）現在都已接進 App 選單可玩
 - [x] 決定並補上開源授權條款：CC BY-NC 4.0（見 `LICENSE`）
-- [ ] Phase 3：上架 GitHub Pages（正式站即 Demo，不用另外做展示頁）；App 端待執行首次進站提醒＋「關於本站」常駐使用須知段落，詳見 `docs/handoff-prompt-welcome-notice-and-about-usage-section.md`
+- [x] Phase 3：上架 GitHub Pages，正式站：<https://78vince.github.io/english-for-kids/>；首次進站提醒 popup＋「關於本站」常駐使用須知段落已完成並上線
 - [ ] Phase 4：語音辨識與口說題型（延後）
+
+（頁面左右側裝飾性背景圖：已規劃兩款羊毛氈字母提示詞，決定先不做，暫緩）

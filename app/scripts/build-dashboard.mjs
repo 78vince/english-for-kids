@@ -262,7 +262,7 @@ function replaceMarked(source, markerName, replacement) {
 const existingPath = path.join(rootDir, "dashboard.html");
 let html = readFileSync(existingPath, "utf-8");
 
-html = html.replace(/專案 Dashboard · 最後更新 [^<]+/, `專案 Dashboard · 最後更新 ${today}（全部正式主題已接進 App，含單元六）`);
+html = html.replace(/專案 Dashboard · 最後更新 [^<]+/, `專案 Dashboard · 最後更新 ${today}（全部 43 個正式主題已接進 App，含單元七；正式站：78vince.github.io/english-for-kids）`);
 html = replaceMarked(html, "KPIS", kpiHtml.trim());
 html = replaceMarked(html, "CONTENT_PROGRESS", contentProgressHtml.trim());
 html = replaceMarked(html, "STATS_ROWS", statsRowsHtml);

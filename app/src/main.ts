@@ -982,6 +982,33 @@ function renderProfileSelect(): void {
     renderAddProfileConfirm();
   }
 
+  // 首次進站（甚至還沒登入）就能看到本站的介紹＋插畫，不用特地點進「關於本站」才知道
+  // 這是什麼——跟關於本站頁面（renderAbout()）的故事段落＋插畫是同一份文字／圖片，
+  // Phase 3 要開放給不特定訪客，這裡刻意不重複「使用須知」跟版本資訊那些次要資訊，
+  // 只放最核心的品牌介紹，避免登入前的畫面塞太多東西。
+  const homeTagline = document.createElement("p");
+  homeTagline.className = "about-text about-tagline";
+  homeTagline.textContent = "English for Kids - 每天玩一點英語！";
+  app!.appendChild(homeTagline);
+
+  const homeStoryParagraphs = [
+    "孩子還小的時候，我們用繪本和單字卡陪他一起學英語；上小學後，也開始讓他用 App 練習。這幾年陸續讓孩子試過三、四款英語學習 App，各有特色，孩子也確實學到不少東西。",
+    "不過用久了發現，這些 App 大多不是設計給學齡前的幼兒，就是偏向成人自學，內容跟小學生的生活情境有點距離，孩子沒辦法完全對應到學校教的東西。",
+    "所以我決定自己動手做一個更適合小學階段的英語學習平台，讓孩子每天玩一點英語，內容也能隨時依照他的程度調整。目前我的孩子讀小學三年級，平台內容也以小學階段的單字和文法為主。如果你家的孩子也有類似需求，歡迎多加利用！",
+  ];
+  for (const text of homeStoryParagraphs) {
+    const p = document.createElement("p");
+    p.className = "about-text";
+    p.textContent = text;
+    app!.appendChild(p);
+  }
+
+  const homeBannerImg = document.createElement("img");
+  homeBannerImg.className = "about-banner-img";
+  homeBannerImg.src = aboutBannerUrl;
+  homeBannerImg.alt = "";
+  app!.appendChild(homeBannerImg);
+
   // 疊在畫面最上層——跟「獲得新徽章」pop 一樣，只要條件成立就在 render() 重畫時附加。
   if (!hasSeenWelcomeNotice()) {
     appendWelcomeNoticeModal();

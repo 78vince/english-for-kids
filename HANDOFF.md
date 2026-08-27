@@ -165,6 +165,14 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.93 Phase 3 完成：GitHub Pages 正式上線（2026-08-27）
+
+`git push`（SSH）成功後，GitHub Actions 第一次執行 `deploy.yml` 失敗，`configure-pages@v5` 回報 `HttpError: Not Found`——原因是 repo 的 Settings → Pages → Source 預設是「Deploy from a branch」，Actions 部署模式需要先手動切換成「GitHub Actions」，否則 Pages 站台根本還沒建立。經使用者明確同意（「你直接幫我處理」）後，直接用瀏覽器工具進到 repo 設定頁把 Source 切成「GitHub Actions」，再回到失敗的 workflow run 用「Re-run all jobs」重新觸發一次，這次 build／deploy 兩個 job 都成功（deploy 10s 完成），正式站確認可以打開：<https://78vince.github.io/english-for-kids/>。
+
+首次進站提醒 popup 已確認在正式站上正常運作（見第 9.88 節，App 端 session 已執行完成，`docs/handoff-prompt-welcome-notice-and-about-usage-section.md` 這份 handoff 不用再追）。`README.md` 已更新為 Phase 3 完成狀態並補上正式站網址，Phase 3 全部項目結束，下一步是 Phase 4（延後）或既有的體驗優化項目。
+
+頁面左右側裝飾性背景（羊毛氈字母，見前面規劃討論）使用者決定暫緩不做，`README.md` TODO 已註記這項先擱置，不是遺漏。
+
 ### 9.92 Phase 3 執行：git 初始化＋首次 commit＋GitHub Pages 部署 workflow（2026-08-27）
 
 使用者說「下一步」，延續 Phase 3 規劃，開始執行技術性、不涉及 `app/src/*.ts` 的部分。
@@ -217,6 +225,17 @@ Phase 3（上架 GitHub）的唯一決定點——授權條款——使用者說
 - 依既有流程（見 9.7 節）處理：原圖裁切壓縮成 200×200 的 JPG 縮圖，存成 `app/src/assets/badges/WC-08.jpg`；`badgeImages.ts` 用 `import.meta.glob` 依檔名自動對應徽章代號，不用改任何程式碼，`WC-08.jpg` 存進去就會自動顯示，不用再退回藍色底色＋代號的佔位圖。
 - `npm run build`（`tsc --noEmit && vite build`）通過，grep 打包後的 `dist/assets/*.js` 確認 `WC-08` 有進到最終產出；`demo-standalone.html` 已重新產生並覆蓋專案根目錄。不涉及 `content/` 資料，`content-review.html`／`dashboard.html` 未重新產生。
 - **已知未解的美術素材問題**：`app/src/assets/badges/WC-07.jpg` 目前放的其實是舊版編號時期「環遊字世界」的熱氣球+地球插畫（文字「WORD EXPLORER」／「ALL WORLDS MASTER」），2026-08-25（9.83 節）徽章重新編號後，`badges.json` 裡的 `WC-07` 代號已經改成「文法小幫手」，但這張圖沒有跟著換——也就是說**現在的 `WC-07` 徽章（文法小幫手）畫面上顯示的是語意不符的舊圖**，需要另外設計一張真正對應「文法小幫手」主題的新圖，並把現有 `WC-07.jpg` 這張熱氣球圖處理掉（或保留原始素材另作他用）。這次只處理了使用者明確要求的 `WC-08`，`WC-07` 的錯圖問題留待下次一併處理。
+
+### 9.91 「誰在玩？」首頁底部加入品牌介紹文字＋插畫（2026-08-27）
+
+使用者要求在「誰在玩？」（`renderProfileSelect()`，登入前的第一個畫面）最下方加上本站的說明文與插畫，讓 Phase 3 開放給不特定訪客時，還沒登入就能立刻知道「這是什麼」，不用特地點進「關於本站」。
+
+- `renderProfileSelect()` 在使用者清單／新增使用者流程之後，新增跟「關於本站」頁面同一份標語（「English for Kids - 每天玩一點英語！」）＋三段故事文字（沿用 `.about-text`／`.about-tagline` 樣式）＋底部插畫（`aboutBannerUrl`，沿用 `.about-banner-img` 樣式），插畫一樣隨容器寬度響應式縮放。
+- 刻意只放「品牌介紹」這個核心區塊，不重複「使用須知」段落跟版本／作者資訊那些次要內容，避免登入前的畫面塞太多東西——這些完整資訊仍只在「關於本站」頁面看得到。
+- 這段內容是直接複製貼上（不是抽成共用函式），因為 `renderAbout()` 內部有 `verify-about-page.ts` 用整段函式內文比對的既有驗證，抽成共用函式必須改動 `renderAbout()` 的寫法才能重複使用，有弄壞既有驗證的風險；直接複製一份不會動到 `renderAbout()`，是風險最低的做法。
+- 首次進站提醒 pop（`appendWelcomeNoticeModal()`）維持疊在最上層，不受影響。
+- `content/` 完全沒動；`npm run build`（`tsc --noEmit && vite build`）與全部 21 支 `verify-*.ts` 皆通過。
+- `content-review.html`／`dashboard.html` 與此改動無關，未重新產生；`demo-standalone.html` 已重新產生並覆蓋專案根目錄。
 
 ### 9.90 學習成就宮格排版：遊玩時間拆兩行＋窄螢幕響應式（2026-08-27）
 
