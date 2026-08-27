@@ -165,6 +165,17 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.92 Phase 3 執行：git 初始化＋首次 commit＋GitHub Pages 部署 workflow（2026-08-27）
+
+使用者說「下一步」，延續 Phase 3 規劃，開始執行技術性、不涉及 `app/src/*.ts` 的部分。
+
+- 清掉一個先前處理徽章備份 zip 時失敗留下的 39MB 暫存殘檔（`zixF1EGs`，因為連結資料夾的檔案刪除保護機制擋下，改用 `allow_cowork_file_delete` 取得授權後刪除）。
+- `.gitignore` 新增排除 `English-for-Kids-backup-*.zip`——備份壓縮檔（8/19、8/26 兩份，共約 118MB）是專案本身的重複快照，不適合進版本控制，另外用 zip 存放即可。
+- 新增 `.github/workflows/deploy.yml`：push 到 `main` 分支時自動觸發，`actions/checkout` → `actions/setup-node@v4`（Node 20，快取 `app/package-lock.json`）→ `npm ci`／`npm run build`（皆在 `app/` 目錄下執行）→ `actions/upload-pages-artifact`（路徑 `app/dist`）→ `actions/deploy-pages` 部署，也保留 `workflow_dispatch` 手動觸發選項。`app/vite.config.ts` 原本就有 `base: "./"` 的相對路徑設定，跟這個 workflow 產出的 `dist/` 直接搭配，不用再調整。
+- `git init`（分支重新命名為 `main`，跟 workflow 觸發條件一致）、設定 `user.name`／`user.email`，`git add -A` 後首次 commit（426 個檔案），排除 `node_modules/`／`dist/`／備份 zip 後 `.git` 目錄約 38MB。
+- **還沒完成、需要使用者自己操作的部分**：在 GitHub 上建立一個新的空 repo（不要勾選自動產生 README/gitignore/license，本地端都已經有了）、把本機 repo 加上遠端網址並 push、到 repo 的 Settings → Pages 把來源設定改成「GitHub Actions」——這幾步需要使用者自己的 GitHub 帳號授權，這邊環境沒有 GitHub 登入權限，沒辦法代為執行。
+- 不涉及 `content/` 資料或任何 App 邏輯，不用重跑 `verify-*.ts`。
+
 ### 9.91 Phase 3 規劃調整：GitHub Pages 直接取代 Demo 頁面＋撰寫首次進站提醒 handoff prompt（2026-08-26）
 
 使用者討論 Phase 3「Demo 展示頁面」這項，決定不用另外做展示版——直接把 `dist/` 部署上 GitHub Pages，正式站本身就是完整可玩的 Demo，不需要另外包裝。原本的「Demo 展示頁面」併入「GitHub Pages 部署」這一步，不再是獨立產出；`app/demo-standalone.html`（單檔版）保留作為「不想連網、想下載後離線玩」的備用選項，不用特別包裝。
