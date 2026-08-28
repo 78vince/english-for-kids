@@ -165,6 +165,14 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.99 App 圖示（favicon／加入主畫面）：K 字母怪獸美術＋ handoff（2026-08-28）
+
+使用者問「做成桌面應用程式時可以有固定的 icon 嗎」——目前完全沒有 favicon／`apple-touch-icon`／web app manifest。設計方向跟徽章系列同一套羊毛氈／黏土手作風格，但改用**滿版純色背景＋安全邊界**（不是徽章的白底留白做法，因為 App 圖示會被系統裁成圓角方形/圓形，留白會讓圖案顯得很小）。跟使用者來回討論主角造型：先提案貓頭鷹吉祥物，使用者想改成「字母怪獸」（呼應徽章系統既有的「數字視覺主角」規則，把字母也擬人化），依序生成了 A／K／O 三個候選、以及一組 K-I-D-S 排排站的插圖（後者不適合當正式圖示，四個角色縮到 favicon 尺寸會糊在一起，只當作附帶插圖留著備用），最後使用者選定 **K 字母怪獸**（單腳站立、一手舉高揮手、另一腳踢出的動感站姿）當正式 App 圖示。
+
+- 原始生成圖（`/Users/admin/VK Agent/image-generator-skill/for Kids/badge 2/app_icon_letter_k_monster_one_foot.png`，1024×1024）用 Python/PIL 檢查過角色主體輪廓的安全邊界（排除模糊陰影/壓縮雜訊後，實際輪廓 margin 落在 11.7%～23.6% 之間），足夠安全不用額外重新置中裁切，直接以此為來源縮圖。
+- 已產生全部尺寸並直接放進 `app/public/`：`favicon.ico`（16/32/48 多尺寸）、`apple-touch-icon.png`（180×180）、`icons/icon-192.png`、`icons/icon-512.png`、`icons/favicon-16.png`、`icons/favicon-32.png`。32px 以上肉眼確認清晰可辨（臉、四肢、笑臉都看得出來），16px 只剩色塊輪廓可辨（跟所有 favicon 在這個尺寸的普遍限制一樣，不是這次美術的問題）。
+- 技術接線（新增 `manifest.webmanifest`＋`index.html` 補 `<link>`／`<meta>` 標籤）寫成 `docs/handoff-prompt-app-icon-manifest.md` 交給 App 端 session，範圍刻意只到「有固定安裝圖示＋全螢幕獨立視窗」，不含 service worker／離線快取（沒有被要求，不擴大範圍）。
+
 ### 9.98 App 端執行：手機版排版第二輪修正（題型選單標題／字卡圖示排列／徽章彈窗捲動鎖定）（2026-08-28）
 
 承接上一節（9.97）內容端寫的 `docs/handoff-prompt-mobile-layout-round2.md`，這次由 App 端 session 執行三項修正：
