@@ -165,6 +165,33 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.96 短文朗讀 "Mia" 拼讀 bug 排查結案：確認跟語速無關，改用換名字解決（2026-08-28）
+
+承接上一節（9.95）留下的排查缺口——使用者實際在真實瀏覽器測過：**開啟慢速模式（0.6）跟一般語速（0.9）朗讀 Pronouns 短文，"Mia" 都一樣被拼成 "M-I-A"**，兩種語速結果相同。這證實 9.95 節的假設（語速被大幅調低時較容易誤判）並不成立，語速快慢跟這個 bug 完全無關；問題出在 "Mia" 這個字本身（三個字母、大寫開頭，外觀跟 "USA"／"FBI" 這類縮寫詞很像），瀏覽器語音引擎的文字正規化規則本身就容易把它誤判成需要逐字母拼讀的縮寫，不管唸多快多慢都一樣。
+
+- **撤掉不對症的修法**：`speech.ts` 移除 9.95 節新增的 `PASSAGE_SLOW_RATE = 0.75`／`currentPassageRate()`，`speakPassage()` 改回跟 `speakEnglish()` 共用同一組 `currentRate()`（`NORMAL_RATE = 0.9`／`SLOW_RATE = 0.6`），因為分岔出第二組倍率並沒有解決問題，只是徒增程式複雜度，維持單一組語速設定比較好維護。
+- **改用內容層面修法**：跟使用者確認後，直接把三篇短文裡的角色名字 "Mia" 全部改成 "Ella"（三個字母→四個字母，外觀比較不像縮寫詞，且專案內尚未用過這個名字，不會跟既有角色撞名）：
+  - `content/passages/pronouns.json`：短文本文「She is Mia, my friend.」→「She is Ella, my friend.」，題目 1 的選項「Mia」→「Ella」。
+  - `content/passages/food_drink.json`：短文本文「My name is Mia.」→「My name is Ella.」，題目 1／2 的問句（"What does Mia want..."／"What does Mia's brother..."）同步改成 Ella／Ella's。
+  - `content/passages/personality_traits.json`：短文本文「Mia is quiet and shy...」→「Ella is quiet and shy...」，題目 2 的問句與 `source_sentence` 同步改成 Ella。
+  - `app/scripts/verify-passage-glossary.ts` 的 `EXPECTED_UNCOVERED`（短文裡「預期查不到中文意思」的人名/文法字排除清單）三個對應主題（`pronouns`／`food_drink`／`personality_traits`）裡的 `"mia"` 同步改成 `"ella"`。
+- **這個方向比較根本的原因**：換名字是保證有效、不需要實際聽過確認的做法（跟語速調整不同，這次不是「猜測性修法」）；相對地，如果要在程式層面用類似 `AMBIGUOUS_STANDALONE_WORDS` 那種「唸的時候換一個發音相同的拼法」的替換技巧，需要實際在瀏覽器裡聽過替代拼法唸起來像不像 "Mia" 才能確認有沒有用，沒有瀏覽器沒辦法做這件事；而且未來如果新增的短文角色剛好也用到其他容易被誤判的短名字（例如 Ben／Tom／Amy／Lily 這類三四個字母的名字都有理論上的風險，只是目前沒被回報出問題），這個「發現就直接換名字」的處理方式也比較容易重複套用，不用每次都另外寫一組替換邏輯。
+
+驗證：`npm run build`（`tsc --noEmit && vite build`）通過；全部 21 支 `verify-*.ts` 重跑皆通過（含更新後的 `verify-passage-glossary.ts`）；`grep -rl "Mia" content/ app/src/` 確認三篇短文內容跟程式邏輯都沒有殘留 "Mia"（`app/src/speech.ts` 裡保留的是說明這次排查歷史的註解文字，不影響實際朗讀行為）；`dashboard.html`／`content-review.html`／`demo-standalone.html`（App 端與專案根目錄兩份都同步）皆已重新產生。
+
+**待使用者確認**：換名字這個修法理論上一定有效（因為問題字本身換掉了），但沒有瀏覽器還是沒辦法實際聽過，麻煩實測一下 Pronouns／Food & Drink／Personality Traits 三篇短文朗讀 "Ella" 時發音正常，沒有再出現類似的拼讀問題。
+
+### 9.95 App 端執行：`.stage-banner` 手機版 RWD 修正＋短文朗讀 "Mia" 拼讀 bug 排查（2026-08-28）
+
+承接上一節（9.94）內容端寫的 `docs/handoff-prompt-stage-banner-rwd-and-passage-tts-bug.md`，這次由 App 端 session 執行兩項修正：
+
+- **`.stage-banner` 窄螢幕 RWD**：`style.css` 在 `.stage-banner` 相關規則後面新增 `@media (max-width: 640px)` 區塊，把 `.stage-banner` 改成 `flex-direction: column; align-items: stretch;`，`.stage-banner-actions` 改成 `justify-content: flex-end;`——640px 以下標題文字獨占一整列，「🐢 慢速」「← 返回選單」按鈕群組換到下面單獨一列並靠右對齊，不再被擠壓成窄直條逐字換行。桌面／平板寬度（斷點外）維持原本 `justify-content: space-between` 的左右排列，不受影響。新增 `app/scripts/verify-stage-banner-responsive.ts`（3 個測試：斷點內 `.stage-banner` 是否改成 column、`.stage-banner-actions` 是否靠右對齊、斷點外預設規則是否維持原樣），跟現有 `verify-brand-banner-responsive.ts` 同一套做法。
+  - **附帶修正**：新增這個 `.stage-banner` 的 640px 媒體查詢後，`style.css` 裡同時存在三個 `@media (max-width: 640px)` 區塊（`.stage-banner`／`.brand-banner--user`／`.profile-stats-grid`），導致 `verify-brand-banner-responsive.ts` 原本「抓檔案裡第一個 640px 媒體查詢」的天真假設失效，錯誤比對到桌面版預設的 `.brand-banner.brand-banner--user { ... }` 規則（不在媒體查詢內，恰好排在新插入的 `.stage-banner` 區塊跟真正的手機版覆寫區塊之間）。已改用「`.brand-banner.brand-banner--user {` 必須緊接在 `@media (max-width: 640px) {` 開頭之後（中間只能有空白/換行）」的嚴格錨點重新鎖定正確區塊，5 個測試全部恢復通過。
+- **短文朗讀 "Mia" 拼讀問題排查結論**：`speech.ts` 新增 `PASSAGE_SLOW_RATE = 0.75`（比一般慢速 `SLOW_RATE = 0.6` 保守），新增 `currentPassageRate()`，只有 `speakPassage()`（短文整篇朗讀）改用這個較保守的倍率，`speakEnglish()`（單字／句子朗讀）維持原本的 `SLOW_RATE = 0.6` 不變——因為單字/句子朗讀的文字通常很短，跟整段短文比起來誤判逐字母拼讀的風險本來就比較低，沒有必要跟著調整。
+  - **重要限制說明**：這個修法是根據 handoff prompt 裡的推論（語速被大幅調低時，TTS 引擎對短專有名詞的誤判機率變高）直接採用的候選修法之一，**沒有辦法在這個沒有瀏覽器/音訊的沙盒環境裡實際聽過確認**。`npm run build` 跟全部 `verify-*.ts` 都通過（純邏輯層面確認 rate 數值有正確分流），但「調到 0.75 是否真的解決 Mia 被拼讀、同時聽感還是有明顯變慢」這件事需要使用者在真實瀏覽器裡實測確認：麻煩開啟慢速模式後，分別朗讀 Pronouns（「She is Mia, my friend.」）跟 Food & Drink 短文（兩篇都有 Mia），確認讀音恢復正常；也建議順便測一次一般語速（慢速關閉）確保沒有意外改到不該動的地方。如果 0.75 聽起來還是會拼讀，可以再往上微調（例如 0.8），或考慮 handoff prompt 裡提到的另一個候選方向（排除特定語音引擎）。
+
+驗證：`npm run build`（`tsc --noEmit && vite build`）通過；全部 21 支 `verify-*.ts`（含新增的 `verify-stage-banner-responsive.ts`、修正後的 `verify-brand-banner-responsive.ts`）重跑皆通過；手動 grep 打包後的 `dist/assets/*.css`／`*.js` 確認 `.stage-banner{flex-direction:column` 跟慢速倍率 `.75` 都有進到最終產出；`demo-standalone.html`（含專案根目錄那份）已重新產生。
+
 ### 9.94 使用者手機實測回饋：Greetings 例句拆解＋兩個 App 端 bug handoff（2026-08-28）
 
 正式站上線後使用者用手機實測，回報三個問題：

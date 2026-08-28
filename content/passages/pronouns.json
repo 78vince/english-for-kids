@@ -2,7 +2,7 @@
   "id": "pass.pronouns.p01",
   "title": "My New Classroom",
   "topic": "pronouns",
-  "text": "Hi! I am Ben. This is my classroom. He is Tom, my classmate. She is Mia, my friend. We are all classmates together. They are very kind to me. Look at that cat. It is orange. It likes to sleep in the classroom. You can visit us anytime! I am happy here every day.",
+  "text": "Hi! I am Ben. This is my classroom. He is Tom, my classmate. She is Ella, my friend. We are all classmates together. They are very kind to me. Look at that cat. It is orange. It likes to sleep in the classroom. You can visit us anytime! I am happy here every day.",
   "sentence_ids": [],
   "vocab_ids": [
     "voc.pronouns.001",
@@ -19,7 +19,7 @@
       "question": "Who is Ben's classmate?",
       "options": [
         "Tom",
-        "Mia",
+        "Ella",
         "Amy",
         "Lily"
       ],

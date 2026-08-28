@@ -112,7 +112,7 @@ const EXPECTED_UNCOVERED: Record<string, string[]> = {
     "a", "amy", "if", "lily", "my", "our", "story", "the",
   ],
   pronouns: [
-    "ben", "mia", "my", "that", "the", "this", "tom",
+    "ben", "ella", "my", "that", "the", "this", "tom",
   ],
   // "i"／"one" 原本在這些主題自己的排除清單裡（沒有任何主題的 vocab 收錄這兩個字，
   // 所以之前是「預期查不到」），但 Unit 0 新增 voc.unit_zero.005（I）之後，這個字變成
@@ -135,7 +135,7 @@ const EXPECTED_UNCOVERED: Record<string, string[]> = {
   appearance: ["a", "my"],
   emotions: ["a", "also", "my", "the"],
   personality_traits: [
-    "a", "ben", "lily", "mia",
+    "a", "ben", "lily", "ella",
   ],
   // 2026-08-22：Parts of Body 補了 8 個新字（eyebrow/chest/knee/cheek/feet/teeth/tongue/
   // fingernail），其中 feet 是 foot 的不規則複數，新增後讓短文裡原本查不到的 "feet"
@@ -163,7 +163,7 @@ const EXPECTED_UNCOVERED: Record<string, string[]> = {
   other_adjectives_2: [],
   other_adverbs_responses: [],
   animals_insects: ["my", "a", "the", "was", "had"],
-  food_drink: ["my", "mia", "a"],
+  food_drink: ["my", "ella", "a"],
   clothing_accessories: [
     "my", "leo", "a", "has", "our",
   ],

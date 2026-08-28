@@ -47,6 +47,18 @@ if (typeof window !== "undefined" && "speechSynthesis" in window) {
 const NORMAL_RATE = 0.9;
 const SLOW_RATE = 0.6; // 明顯放慢但不到逐字唸的程度，可依實際聽感微調
 
+// 2026-08-27 使用者用手機實測回報，短文朗讀（speakPassage）唸 Pronouns 短文時，
+// "Mia" 這個專有名詞被瀏覽器語音引擎誤判成需要逐字母拼讀的縮寫（唸成 "M-I-A" 而不是
+// 完整名字）。原本一度懷疑跟慢速模式（0.6 倍速）有關，一度在這裡加了一個 speakPassage
+// 專用的、比較保守的 PASSAGE_SLOW_RATE = 0.75，想說用比較不極端的慢速倍率避開這個問題。
+// 2026-08-28 使用者實際測過：**常速跟慢速都一樣會被拼讀**，證實這個 bug 跟語速快慢
+// 完全無關，是這個字本身（3 個字母、大寫開頭，外觀很像縮寫）被引擎誤判，不是語速造成的。
+// 所以已經把這個「短文朗讀用比較保守倍率」的嘗試撤掉，短文朗讀跟單字/句子朗讀一樣
+// 沿用同一組 NORMAL_RATE／SLOW_RATE，不需要為了這個 bug 另外分岔出一組倍率。
+// 真正的修法是把短文裡的角色名字 "Mia" 直接改成 "Ella"（見
+// content/passages/food_drink.json／personality_traits.json／pronouns.json），
+// 詳見 HANDOFF.md 對應章節的排查記錄。
+
 const SLOW_MODE_STORAGE_KEY = "englishForKids.settings.slowSpeech.v1";
 
 // 慢速模式是「這台裝置聽力偏好」，不是學習成效資料，故意不比照 progress.ts 等模組
@@ -127,7 +139,7 @@ export function speakPassage(text: string, onEnd: () => void): void {
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "en-US";
   utterance.voice = pickPreferredVoice() ?? null;
-  utterance.rate = currentRate();
+  utterance.rate = currentRate(); // 一般語速稍微放慢；慢速模式開啟時更慢（跟 speakEnglish 用同一組倍率）
   utterance.onend = onEnd;
   utterance.onerror = onEnd;
   window.speechSynthesis.speak(utterance);

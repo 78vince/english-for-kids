@@ -12,6 +12,12 @@
 // - .brand-banner h1 在斷點內字級變小（不是原本的 --text-h1）
 // - 桌面／平板寬度（斷點外）維持原樣，不受影響
 // 這次調整純 CSS，main.ts 只用來確認 DOM 順序沒有被意外改動。
+//
+// 2026-08-27 補充：style.css 裡後來又新增了另一個 @media (max-width: 640px) 區塊
+// （.stage-banner 的窄螢幕修正，見 verify-stage-banner-responsive.ts），所以這支腳本
+// 全面改用「鎖定含 .brand-banner.brand-banner--user 規則」的targeted regex 找出屬於
+// 品牌橫幅的那個 640px 區塊，不能再用「檔案裡第一個 @media (max-width: 640px)」這種
+// 天真假設（那樣會抓到錯誤的區塊，或抓不到桌面版預設規則）。
 // 用法：npx tsx scripts/verify-brand-banner-responsive.ts
 
 import { readFileSync } from "node:fs";
@@ -23,14 +29,26 @@ function assert(condition: boolean, message: string): void {
 const styleCss = readFileSync(new URL("../src/style.css", import.meta.url), "utf-8");
 const mainTs = readFileSync(new URL("../src/main.ts", import.meta.url), "utf-8");
 
+// 鎖定屬於品牌橫幅的那個 640px 區塊（style.css 裡可能有不只一個同斷點的 @media 區塊，
+// 用內含的 .brand-banner.brand-banner--user 規則當錨點，才不會抓到別的功能新增的區塊）。
+// 注意：`.brand-banner.brand-banner--user {` 這串文字在檔案裡出現兩次——一次是桌面版
+// 預設規則（不在任何 @media 裡面，屬於「v2 全站外殼」區塊），一次才是真正窄螢幕覆寫用的
+// 那個巢狀在 @media 裡的規則。如果只鎖定「@media 開頭之後，隨便隔多遠都算」的寬鬆比對，
+// 遇到桌面版預設規則排在真正目標 @media 區塊「前面」的情況（例如中間插入了其他功能的
+// @media (max-width: 640px) 區塊），會誤抓到桌面版那個、不是巢狀在 @media 裡的規則。
+// 這裡改成要求 `.brand-banner.brand-banner--user {` 必須是「緊接在 @media (max-width: 640px) {
+// 開頭之後的第一條規則」（中間只能有空白/換行），才能鎖定真正的窄螢幕覆寫區塊。
+const brandBannerMediaMatch = styleCss.match(
+  /@media \(max-width: 640px\) \{\s*\.brand-banner\.brand-banner--user \{[^}]*\}[\s\S]*?\n\}\n/
+);
+assert(brandBannerMediaMatch !== null, "應該找得到含 .brand-banner--user 規則的 @media (max-width: 640px) 區塊");
+const brandBannerMediaBlock = brandBannerMediaMatch![0];
+const brandBannerMediaIndex = styleCss.indexOf(brandBannerMediaBlock);
+
 // ---- 測試 1：640px 窄螢幕斷點裡，.brand-banner--user 改成上下堆疊（column）。 ----
 {
-  const mediaQueryMatch = styleCss.match(
-    /@media \(max-width: 640px\) \{[\s\S]*?\.brand-banner\.brand-banner--user \{[^}]*\}[\s\S]*?\n\}\n/
-  );
-  assert(mediaQueryMatch !== null, "應該找得到含 .brand-banner--user 規則的 @media (max-width: 640px) 區塊");
   assert(
-    mediaQueryMatch![0].includes("flex-direction: column;"),
+    brandBannerMediaBlock.includes("flex-direction: column;"),
     "窄螢幕斷點裡 .brand-banner--user 應該改成 flex-direction: column（文字在上、頭像在下）"
   );
 
@@ -40,9 +58,7 @@ const mainTs = readFileSync(new URL("../src/main.ts", import.meta.url), "utf-8")
 // ---- 測試 2：窄螢幕斷點裡，.brand-banner-avatar 改用固定尺寸（不是 height:100%），
 //      且置中——這是修掉「頭像跟著文字欄高度一起被拉大」這個根本問題的關鍵。 ----
 {
-  const mediaQueryMatch = styleCss.match(/@media \(max-width: 640px\) \{[\s\S]*?\n\}\n/);
-  assert(mediaQueryMatch !== null, "應該找得到 @media (max-width: 640px) 區塊");
-  const mq = mediaQueryMatch![0];
+  const mq = brandBannerMediaBlock;
 
   assert(mq.includes(".brand-banner-avatar {"), "窄螢幕斷點裡應該要有 .brand-banner-avatar 的覆蓋規則");
   const avatarRuleInMq = mq.match(/\.brand-banner-avatar \{[^}]*\}/);
@@ -64,9 +80,7 @@ const mainTs = readFileSync(new URL("../src/main.ts", import.meta.url), "utf-8")
 //      上面」，這裡鎖定這次的具體調整：尺寸真的是 72px 的 4 倍（288px），且用 order: -1
 //      把頭像排到文字欄前面（視覺上頭像在上、文字在下），不是改動 main.ts 的 DOM 順序。 ----
 {
-  const mediaQueryMatch = styleCss.match(/@media \(max-width: 640px\) \{[\s\S]*?\n\}\n/);
-  assert(mediaQueryMatch !== null, "應該找得到 @media (max-width: 640px) 區塊");
-  const avatarRuleInMq = mediaQueryMatch![0].match(/\.brand-banner-avatar \{[^}]*\}/);
+  const avatarRuleInMq = brandBannerMediaBlock.match(/\.brand-banner-avatar \{[^}]*\}/);
   assert(avatarRuleInMq !== null, "應該找得到窄螢幕斷點裡的 .brand-banner-avatar 規則內容");
 
   assert(avatarRuleInMq![0].includes("height: 288px;"), "窄螢幕斷點裡的頭像高度應該是 288px（72px 的 4 倍）");
@@ -87,9 +101,7 @@ const mainTs = readFileSync(new URL("../src/main.ts", import.meta.url), "utf-8")
 // ---- 測試 3：窄螢幕斷點裡，.brand-banner h1 字級調小（不是原本桌面版的 --text-h1），
 //      減少長名字造成的換行行數。 ----
 {
-  const mediaQueryMatch = styleCss.match(/@media \(max-width: 640px\) \{[\s\S]*?\n\}\n/);
-  assert(mediaQueryMatch !== null, "應該找得到 @media (max-width: 640px) 區塊");
-  const mq = mediaQueryMatch![0];
+  const mq = brandBannerMediaBlock;
 
   assert(mq.includes(".brand-banner h1 {"), "窄螢幕斷點裡應該要有 .brand-banner h1 的字級覆蓋規則");
   const h1RuleInMq = mq.match(/\.brand-banner h1 \{[^}]*\}/);
@@ -106,10 +118,11 @@ const mainTs = readFileSync(new URL("../src/main.ts", import.meta.url), "utf-8")
 //      仍然是 height: 100%／width: auto，.brand-banner.brand-banner--user 預設仍然是
 //      左右排列（不是 column），確認這次修正只影響窄螢幕，沒有動到桌面版版面。 ----
 {
-  // 抓出 @media 區塊之前的內容，確認桌面版預設規則沒被改掉。
-  const mediaQueryIndex = styleCss.indexOf("@media (max-width: 640px)");
-  assert(mediaQueryIndex !== -1, "應該找得到 @media (max-width: 640px) 的位置");
-  const beforeMediaQuery = styleCss.slice(0, mediaQueryIndex);
+  // 抓出「品牌橫幅那個」@media 區塊之前的內容，確認桌面版預設規則沒被改掉
+  // （不能用 styleCss.indexOf("@media (max-width: 640px)") 天真取第一個位置，
+  // 檔案裡現在有不只一個同斷點的 @media 區塊，見檔案開頭註解）。
+  assert(brandBannerMediaIndex !== -1, "應該找得到品牌橫幅那個 @media (max-width: 640px) 區塊的位置");
+  const beforeMediaQuery = styleCss.slice(0, brandBannerMediaIndex);
 
   const defaultAvatarRule = beforeMediaQuery.match(/\.brand-banner-avatar \{[^}]*\}/);
   assert(defaultAvatarRule !== null, "應該找得到桌面版預設的 .brand-banner-avatar 規則（在 @media 區塊之前）");

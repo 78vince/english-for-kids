@@ -2,7 +2,7 @@
   "id": "pass.food_drink.p01",
   "title": "My Favorite Meal",
   "topic": "food_drink",
-  "text": "Hi! My name is Mia. Today I want rice and a hot dog for lunch. My brother likes noodles and pizza better. For dessert, we share a cake and some cookies. I drink juice, and my brother drinks milk. After lunch, we both want watermelon. It is a happy meal!",
+  "text": "Hi! My name is Ella. Today I want rice and a hot dog for lunch. My brother likes noodles and pizza better. For dessert, we share a cake and some cookies. I drink juice, and my brother drinks milk. After lunch, we both want watermelon. It is a happy meal!",
   "sentence_ids": [],
   "vocab_ids": [
     "voc.food_drink.004",
@@ -17,7 +17,7 @@
   "questions": [
     {
       "id": "pass.food_drink.p01.q1",
-      "question": "What does Mia want for lunch?",
+      "question": "What does Ella want for lunch?",
       "options": [
         "Rice and a hot dog",
         "Noodles and pizza",
@@ -30,7 +30,7 @@
     },
     {
       "id": "pass.food_drink.p01.q2",
-      "question": "What does Mia's brother like better?",
+      "question": "What does Ella's brother like better?",
       "options": [
         "Noodles and pizza",
         "Rice and a hot dog",

@@ -179,6 +179,23 @@ body {
   color: var(--color-ink);
 }
 
+/* ---- 窄螢幕（手機寬度）響應式：.stage-banner 原本是 justify-content: space-between
+   的單列排版，標題文字（.stage-banner-text，min-width:0 會被壓縮）跟右側按鈕群組
+   （.stage-banner-actions，內部按鈕都是 flex-shrink:0 不會縮）搶版面，手機寬度下
+   標題被擠成一欄只能放一兩個字的窄直條——跟 .brand-banner--user 的頭像疊字問題
+   同一類成因，比照同一個做法修：640px 以下改上下堆疊，標題文字獨占一整列，
+   動作按鈕群組換到下面單獨一列。 ---- */
+@media (max-width: 640px) {
+  .stage-banner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .stage-banner-actions {
+    justify-content: flex-end;
+  }
+}
+
 /* ============================================================
    v2 全站外殼：品牌橫幅＋功能列（appendShell()，取代原本每個畫面
    右上角的「頭像＋登出」小標籤）。因為整個 App 只操作單一 #app
