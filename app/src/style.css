@@ -435,6 +435,22 @@ body {
   color: var(--color-ink-muted);
 }
 
+/* 窄螢幕（手機寬度）響應式：頭像固定 200px，橫向排列時窄螢幕下沒有足夠寬度
+   容納頭像＋名字／上次登入文字，導致文字被擠出卡片外側（破格）。改成上下堆疊，
+   頭像跟文字都置中；桌面版的 --radius-pill（999px，配合橫向的矮扁形狀）改成
+   --radius-xl，避免堆疊後變高的卡片被畫成上下都是半圓的膠囊形狀。 */
+@media (max-width: 640px) {
+  .profile-login-btn {
+    flex-direction: column;
+    text-align: center;
+    border-radius: var(--radius-xl);
+  }
+
+  .profile-login-info {
+    align-items: center;
+  }
+}
+
 .add-profile-form {
   margin-top: var(--space-5);
   display: flex;
@@ -1013,6 +1029,26 @@ body {
   margin: 0;
   color: var(--color-ink);
   font-size: var(--text-caption);
+}
+
+/* 窄螢幕（手機寬度）響應式：跟「誰在玩」清單項目（.profile-login-btn）同一類成因，
+   200px 固定尺寸的頭像橫向排列時，窄螢幕下沒有足夠寬度容納頭像＋名字／時間資訊，
+   文字被擠出卡片外側（破格）。改成上下堆疊，頭像跟文字都置中；.profile-card-meta
+   本身是 auto/1fr 的兩欄小表格，維持原本靠左排版即可，置中的是整個表格區塊本身
+   （靠父層 align-items: center 讓表格以自身內容寬度置中），不用特別改表格內部對齊。 */
+@media (max-width: 640px) {
+  .profile-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-card-info {
+    text-align: center;
+  }
+
+  .profile-card-info h3 {
+    text-align: center;
+  }
 }
 
 .profile-settings-actions {
@@ -1961,6 +1997,15 @@ body {
   color: var(--color-ink-muted);
 }
 
+/* 窄螢幕（手機寬度）響應式：三張數據卡（已挑戰過的題型／累計完成次數／平均最佳
+   正確率）原本橫向並排（flex:1 各佔三分之一），窄螢幕下每張卡都被壓得很窄，
+   數字跟文字容易換行擠壓；跟使用者確認過改成單欄、上下堆疊排列。 */
+@media (max-width: 640px) {
+  .stats-summary {
+    flex-direction: column;
+  }
+}
+
 .stats-list {
   margin-top: var(--space-5);
   display: flex;
@@ -2096,6 +2141,21 @@ body {
 .stats-stage-btn {
   flex-shrink: 0;
   margin-right: 0;
+}
+
+/* 窄螢幕（手機寬度）響應式：資訊區（.stats-stage-info，含標題／進度條／文字說明）
+   跟「再次挑戰／開始挑戰」按鈕原本左右並排，窄螢幕下改成上下排列，按鈕獨立一列
+   撐滿寬度，比橫向擠在一起容易點擊、也比較不會跟資訊文字互相搶版面。 */
+@media (max-width: 640px) {
+  .stats-stage-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .stats-stage-btn {
+    align-self: stretch;
+  }
 }
 
 .stats-bar-track {

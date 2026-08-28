@@ -165,6 +165,19 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.101 手機版排版第三輪修正：頭像/文字破格＋挑戰紀錄卡片改上下排列（2026-08-28）
+
+使用者用手機截圖回報四處排版問題（都是使用者直接口頭描述，這次沒有另外寫 handoff prompt 文件），由 App 端 session 直接執行：
+
+1. **「誰在玩」清單項目（`.profile-login-btn`）破格**：頭像固定 200px、跟名字/上次登入文字橫向排列（`display:flex; align-items:center`，沒有 `flex-wrap`），窄螢幕下沒有足夠寬度容納兩者，文字被擠出卡片右側邊界。640px 以下改成 `flex-direction: column`，頭像跟文字都置中；順便把桌面版用的 `--radius-pill`（999px，配合橫向矮扁形狀設計）在窄螢幕覆蓋成 `--radius-xl`，避免堆疊後變高的卡片被畫成上下都是半圓的膠囊形狀。
+2. **「個人檔案」個人小卡（`.profile-card`）破格**：跟 1 同一類成因（`flex-wrap: wrap` 沒有真的觸發換行，而是內容溢出），640px 以下改上下堆疊置中（`.profile-card-info`／`h3` 文字也一併置中），`.profile-card-meta` 兩欄小表格本身不用改，靠父層置中即可。
+3. **挑戰紀錄展開後的題型明細列（`.stats-stage-row`）**：資訊區（標題／進度條／文字說明）跟「再次挑戰／開始挑戰」按鈕原本橫向並排，跟使用者確認後改成上下排列——640px 以下 `.stats-stage-row` 改 `flex-direction: column`，`.stats-stage-btn` 加 `align-self: stretch` 讓按鈕獨立一列撐滿寬度，比橫向擠在一起好點擊。
+4. **挑戰紀錄頂部三張數據卡（`.stats-summary`）**：原本橫向三欄（`flex:1` 各佔三分之一），窄螢幕下改成單欄、上下堆疊（`.stats-summary` 640px 以下改 `flex-direction: column`）。
+
+新增 `app/scripts/verify-mobile-layout-round3.ts`（4 個測試，每個 selector 各自對應一項，統一用「selector 緊接在 `@media (max-width: 640px) {` 開頭之後」的嚴格錨點——這個專案已經因為「檔案裡第一個 @media」這種天真假設踩雷三次了（見 9.95／9.98 節的排查記錄），這次一開始就用嚴格錨點寫，不重蹈覆轍）。
+
+驗證：`npm run build`（`tsc --noEmit && vite build`）通過；全部 26 支 `verify-*.ts`（含新增的 `verify-mobile-layout-round3.ts`）重跑皆通過；手動 grep 打包後的 `dist/assets/*.css` 確認 `profile-login-btn{flex-direction:column`／`profile-card{flex-direction:column`／`stats-stage-row{flex-direction:column`／`stats-summary{flex-direction:column` 都有進到最終產出；`dashboard.html`／`content-review.html`／`demo-standalone.html`（App 端與專案根目錄兩份都同步）皆已重新產生。這四項都是純 CSS 排版調整，`main.ts` 沒有改動，`content/` 也不受影響。
+
 ### 9.100 App 端執行：加入主畫面／安裝應用程式固定圖示（manifest＋index.html）（2026-08-28）
 
 承接上一節（9.99）內容端已經放進 `app/public/` 的圖示檔案＋寫好的 `docs/handoff-prompt-app-icon-manifest.md`，這次由 App 端 session 執行技術接線：
