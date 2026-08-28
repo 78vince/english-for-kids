@@ -165,6 +165,16 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.97 使用者手機實測第二輪回饋：三個 App 端排版 handoff（2026-08-28）
+
+上一輪修正（9.95／9.96）push 上線後，使用者繼續用手機實測，又回報三個排版問題，已寫成 `docs/handoff-prompt-mobile-layout-round2.md` 交給 App 端 session：
+
+1. **「題型選單」標題（`renderMenu()`）窄螢幕一樣被擠壓**：上一輪只修了 `.stage-banner`，但題型選單標題用的是另一個 class `.game-header--with-back`（沒套用到同一輪修正），同一種標題被返回按鈕擠壓的問題在這裡重演，而且這裡的按鈕文字「← 返回選擇主題」比 `.stage-banner` 的「← 返回選單」更長，問題更明顯。修法比照上一輪：640px 斷點內改成 `flex-direction: column`。
+2. **字卡／測驗畫面文字與喇叭／星星圖示要改成上下排列（圖示在上、文字在下）**：涉及 `.flashcard-word-row`（字卡正面單字＋🔊＋⭐）、`.flashcard-example-row`（例句＋🔊）、`.flashcard-quiz-reveal`（測驗答完後「👉 正確單字」＋🔊）三處。用 `flex-direction: column-reverse` 搭配「文字在 DOM 前、圖示在 DOM 後」的既有順序，窄螢幕下不用改 DOM 順序就能讓圖示自動排到文字上面；`.flashcard-word-row` 因為有兩顆圖示（🔊＋⭐）需要在同一行，額外要在 `main.ts` 把兩顆圖示包進一個新的 `.flashcard-word-icons` 容器。
+3. **「獲得新徽章」彈窗遮罩，使用者往上滑動後跳出時覆蓋不完整**：`.modal-overlay` 本身的 `position: fixed; inset: 0;` 寫法沒有問題，也確認過沒有祖先元素有 `transform` 等會讓 fixed 定位失效的樣式。推測是 iOS Safari 的已知行為——捲動時網址列收合、可視區域變高，`position: fixed` 元素在某些情況下沒有正確重新計算，導致遮罩維持在插入當下算出來的（較矮的）高度，底部露出縫隙。檢查過 `main.ts` 目前完全沒有「開啟彈窗時鎖定背景捲動」的邏輯（`appendModalShell()`／`appendBadgeUnlockModal()` 都沒有），已在 handoff 裡給出用 `position: fixed` 鎖定 `body`（不是單純 `overflow: hidden`，那個在 iOS Safari 上常鎖不住）、記錄／還原捲動位置的具體實作，這也是解決這類問題業界常見的做法。這一項沒辦法在沒有瀏覽器的環境確認是否真的解決，已在 handoff 裡註明要請使用者在真機上實測確認，並列了如果鎖定捲動還不夠的候選候補方向（強制捲回頂部、`100dvh` 相關技巧）。
+
+這三項都只動 `app/src/style.css`／`app/src/main.ts`，`content/` 不受影響，我這邊沒有進一步修改 content 端。
+
 ### 9.96 短文朗讀 "Mia" 拼讀 bug 排查結案：確認跟語速無關，改用換名字解決（2026-08-28）
 
 承接上一節（9.95）留下的排查缺口——使用者實際在真實瀏覽器測過：**開啟慢速模式（0.6）跟一般語速（0.9）朗讀 Pronouns 短文，"Mia" 都一樣被拼成 "M-I-A"**，兩種語速結果相同。這證實 9.95 節的假設（語速被大幅調低時較容易誤判）並不成立，語速快慢跟這個 bug 完全無關；問題出在 "Mia" 這個字本身（三個字母、大寫開頭，外觀跟 "USA"／"FBI" 這類縮寫詞很像），瀏覽器語音引擎的文字正規化規則本身就容易把它誤判成需要逐字母拼讀的縮寫，不管唸多快多慢都一樣。
