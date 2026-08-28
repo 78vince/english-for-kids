@@ -165,6 +165,15 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.102 新增雙擊上傳工具「上傳更新.command」（2026-08-28）
+
+每次要上傳新進度到 GitHub，流程一直是：我（content 端 session）在沙盒裡跑 `npm run build`／全部 `verify-*.ts`／`git add`／`git commit`，因為沙盒沒有對外網路，最後一步 `git push` 都要請使用者自己開 Terminal 手動執行——過程中也發生過使用者忘記先 commit、或重開機後不確定該怎麼做的情況。使用者要求做一個「快捷功能」，於是在專案根目錄新增 `上傳更新.command`（macOS 可雙擊執行的 shell script）：
+
+- 雙擊後依序執行：檢查 `app/node_modules` 是否存在（沒有的話先 `npm install`）→ `npm run build` → 跑遍 `app/scripts/verify-*.ts` 全部（任何一支失敗就中止並印出錯誤，不會盲目往下 commit/push）→ 印出 `git status --short` 讓使用者看到這次有哪些變更 → 沒有變更就直接結束 → 有變更的話詢問是否確認上傳、輸入這次更新的簡短說明（可留空用預設的日期時間訊息）→ `git add -A && git commit && git push`。
+- 這支腳本是給**使用者自己在他的 Mac 上雙擊執行**的，不是我在沙盒裡跑——這樣 `git push` 才能真的用上使用者本機已經設定好的 SSH 金鑰（見 9.92 節），不受沙盒沒有對外網路的限制，一次雙擊就能取代原本「等 Claude commit 好、再自己開 Terminal 打 git push」的兩階段流程。
+- `README.md` 新增「上傳更新到 GitHub」段落說明用法（含 macOS Gatekeeper 第一次雙擊會被擋下、要改成右鍵→打開的提示）。
+- 這個檔案本身第一次還是透過原本的流程（我 commit、使用者手動 `git push`）送上去，之後的更新才能開始用這支腳本本身。
+
 ### 9.101 手機版排版第三輪修正：頭像/文字破格＋挑戰紀錄卡片改上下排列（2026-08-28）
 
 使用者用手機截圖回報四處排版問題（都是使用者直接口頭描述，這次沒有另外寫 handoff prompt 文件），由 App 端 session 直接執行：
