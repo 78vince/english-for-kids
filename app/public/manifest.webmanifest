@@ -1,0 +1,15 @@
+{
+  "name": "English for Kids - 每天玩一點英語！",
+  "short_name": "English for Kids",
+  "description": "台灣國小階段常見英語學習主題的兒童英語學習平台，用主題式單字、句型、短文的遊戲化關卡在家複習英文。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0052A3",
+  "theme_color": "#0052A3",
+  "lang": "zh-Hant",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

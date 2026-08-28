@@ -165,6 +165,19 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.100 App 端執行：加入主畫面／安裝應用程式固定圖示（manifest＋index.html）（2026-08-28）
+
+承接上一節（9.99）內容端已經放進 `app/public/` 的圖示檔案＋寫好的 `docs/handoff-prompt-app-icon-manifest.md`，這次由 App 端 session 執行技術接線：
+
+- 新增 `app/public/manifest.webmanifest`，照 handoff 內容原樣建立（`name`／`short_name`／`description`／`start_url`／`scope`／`display: standalone`／`background_color`／`theme_color`／`lang`／`icons`），`icons[].src` 刻意用相對路徑（`icons/icon-192.png`，沒有開頭斜線），因為 manifest 裡的路徑是相對於 manifest 檔案本身解析，開頭斜線在 GitHub Pages 子路徑（`https://78vince.github.io/english-for-kids/`）下會被解析成網域根目錄，指向錯誤位置。
+- `app/index.html` 的 `<head>` 在 `<title>` 後面、`<link rel="stylesheet">` 前面補上 favicon（`.ico`＋16/32px png 兩種尺寸）、`apple-touch-icon`、`manifest`、`theme-color`、三個 `apple-mobile-web-app-*` 標籤，沿用既有 `href="/src/..."` 這種開頭斜線寫法（Vite 的 `base: "./"` 設定會在 build 時自動改寫成部署子路徑相對路徑，不用手動處理）。`apple-mobile-web-app-title` 刻意用比較短的「English for Kids」而不是網頁完整標題「每天玩一點 - English for Kids」，避免 iOS 主畫面圖示下方的名稱被截斷。
+- 新增 `app/scripts/verify-app-icon-manifest.ts`（4 個測試：`app/public/` 圖示檔案齊全、manifest 內容與相對路徑正確、`index.html` 的 `<head>` 標籤齊全、`npm run build` 之後 `dist/` 底下對應檔案存在且路徑已被正確改寫成相對路徑）。
+- **範圍刻意沒有擴大**：沒有寫 service worker、沒有做離線快取、沒有改 `main.ts`——這次只處理「加入主畫面/安裝應用程式時有固定圖示＋全螢幕獨立視窗」這個明確需求，跟 handoff 描述的範圍一致。
+
+驗證：`npm run build`（`tsc --noEmit && vite build`）通過，確認 `dist/` 底下有 `favicon.ico`／`apple-touch-icon.png`／`manifest.webmanifest`／`icons/icon-192.png`／`icons/icon-512.png`，且 `dist/index.html` 裡的路徑正確改寫成 `./favicon.ico`、`./manifest.webmanifest` 這種相對路徑（不是還留著開頭斜線）；全部 25 支 `verify-*.ts`（含新增的 `verify-app-icon-manifest.ts`）重跑皆通過；`dashboard.html`／`content-review.html`／`demo-standalone.html` 已重新產生（`demo-standalone.html` 本身的 `<head>` 是獨立寫死的極簡版本，不含 favicon/manifest 標籤，這點不影響 standalone 版本能不能正常開啟，standalone 版本本來就不是給人「安裝」的用途）。
+
+**待使用者確認**：分頁 favicon（K 字母怪獸圖示）已經可以本機用 `npm run dev`／`npm run preview` 看到，但手機「加入主畫面」/「安裝應用程式」之後主畫面圖示長怎樣、名稱有沒有被截斷、點開是不是全螢幕獨立視窗（沒有網址列），這些沒辦法在沒有手機的沙盒環境確認，需要在 iPhone Safari 或 Android Chrome 上實測，且要等這次改動實際部署到 GitHub Pages 正式站之後才能測（GitHub Pages 部署流程是每次 push 到 main 時由 CI 重新 `npm run build` 產生 `app/dist` 上傳，不是用專案根目錄這些手動維護的 demo 檔案）。
+
 ### 9.99 App 圖示（favicon／加入主畫面）：K 字母怪獸美術＋ handoff（2026-08-28）
 
 使用者問「做成桌面應用程式時可以有固定的 icon 嗎」——目前完全沒有 favicon／`apple-touch-icon`／web app manifest。設計方向跟徽章系列同一套羊毛氈／黏土手作風格，但改用**滿版純色背景＋安全邊界**（不是徽章的白底留白做法，因為 App 圖示會被系統裁成圓角方形/圓形，留白會讓圖案顯得很小）。跟使用者來回討論主角造型：先提案貓頭鷹吉祥物，使用者想改成「字母怪獸」（呼應徽章系統既有的「數字視覺主角」規則，把字母也擬人化），依序生成了 A／K／O 三個候選、以及一組 K-I-D-S 排排站的插圖（後者不適合當正式圖示，四個角色縮到 favicon 尺寸會糊在一起，只當作附帶插圖留著備用），最後使用者選定 **K 字母怪獸**（單腳站立、一手舉高揮手、另一腳踢出的動感站姿）當正式 App 圖示。
