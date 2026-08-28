@@ -172,6 +172,7 @@ Obsidian/發想/開發/兒童英語學習平台/
 - 原始生成圖（`/Users/admin/VK Agent/image-generator-skill/for Kids/badge 2/app_icon_letter_k_monster_one_foot.png`，1024×1024）用 Python/PIL 檢查過角色主體輪廓的安全邊界（排除模糊陰影/壓縮雜訊後，實際輪廓 margin 落在 11.7%～23.6% 之間），足夠安全不用額外重新置中裁切，直接以此為來源縮圖。
 - 已產生全部尺寸並直接放進 `app/public/`：`favicon.ico`（16/32/48 多尺寸）、`apple-touch-icon.png`（180×180）、`icons/icon-192.png`、`icons/icon-512.png`、`icons/favicon-16.png`、`icons/favicon-32.png`。32px 以上肉眼確認清晰可辨（臉、四肢、笑臉都看得出來），16px 只剩色塊輪廓可辨（跟所有 favicon 在這個尺寸的普遍限制一樣，不是這次美術的問題）。
 - 技術接線（新增 `manifest.webmanifest`＋`index.html` 補 `<link>`／`<meta>` 標籤）寫成 `docs/handoff-prompt-app-icon-manifest.md` 交給 App 端 session，範圍刻意只到「有固定安裝圖示＋全螢幕獨立視窗」，不含 service worker／離線快取（沒有被要求，不擴大範圍）。
+- **2026-08-28 追加調整**：使用者接著要求再做一版更簡化的造型——單色羊毛氈身體＋黏土眼睛、不做手腳（`/Users/admin/VK Agent/image-generator-skill/for Kids/badge 2/app_icon_letter_k_felt_plush.png`）。用色相分析（B 通道是否明顯比 R/G 高，排除掉單純比對單一背景色會被漸層/陰影誤判的問題）量測過兩版的角色輪廓安全邊界：手腳版原圖本身安全（11.7%～23.6%），但用同一份 hue-based 分析重新檢查後發現簡化版留白更充足（14.4%～22.6%），且縮到 16px favicon 時**字形本身依然清楚可辨**，比手腳版縮到同尺寸只剩色塊模糊好判讀很多——判斷原因是手腳版在小尺寸时滾動眼睛、四肢細節會互相干擾，簡化版單靠字形輪廓本身當視覺主體，反而更適合小尺寸圖示的判讀需求。使用者確認後正式採用羊毛氈素色版，`app/public/` 底下全部尺寸的圖檔已覆蓋更新為這版，`docs/handoff-prompt-app-icon-manifest.md` 的技術接線內容不用改（只是換了來源圖檔，接線方式跟檔名都一樣）。
 
 ### 9.98 App 端執行：手機版排版第二輪修正（題型選單標題／字卡圖示排列／徽章彈窗捲動鎖定）（2026-08-28）
 
