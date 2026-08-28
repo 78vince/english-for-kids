@@ -165,6 +165,21 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.98 App 端執行：手機版排版第二輪修正（題型選單標題／字卡圖示排列／徽章彈窗捲動鎖定）（2026-08-28）
+
+承接上一節（9.97）內容端寫的 `docs/handoff-prompt-mobile-layout-round2.md`，這次由 App 端 session 執行三項修正：
+
+- **問題 1「題型選單」標題窄螢幕 RWD**：`style.css` 在 `.game-header--with-back` 規則後面新增 `@media (max-width: 640px)` 區塊，改成 `flex-direction: column; align-items: stretch;`，返回按鈕跟著掉到標題文字下面獨立一行（維持預設靠左，這裡只有一顆按鈕，不像 `.stage-banner-actions` 需要額外 `justify-content: flex-end`）。新增 `app/scripts/verify-game-header-with-back-responsive.ts`（2 個測試：斷點內是否改成 column、斷點外是否維持原樣）。
+- **問題 2 字卡／測驗畫面圖示改排到文字上面**：
+  - `.flashcard-word-row`（字卡正面，單字＋🔊＋⭐）：`main.ts` 把播放鍵跟收藏星星包進新的 `.flashcard-word-icons` 容器（`display:flex; gap`），`style.css` 640px 斷點內 `.flashcard-word-row` 改成 `flex-direction: column-reverse`，讓「文字在前、圖示容器在後」的 DOM 順序反過來排列，兩顆圖示自然排在文字上面同一行。
+  - `.flashcard-example-row`（例句＋🔊）／`.flashcard-quiz-reveal`（測驗答完的「👉 正確單字」＋🔊）：都只有一顆圖示，不用改 `main.ts`，直接在 640px 斷點內加 `flex-direction: column-reverse` 就能達成同樣效果（`.flashcard-quiz-reveal` 桌面版本來就靠左，窄螢幕維持 `align-items: flex-start`，跟另外兩個置中的不一樣）。
+  - 新增 `app/scripts/verify-flashcard-icons-responsive.ts`（4 個測試：`main.ts` 的 DOM 組裝順序、`.flashcard-word-icons` 容器樣式存在、三個 selector 斷點內都是 `column-reverse`、斷點外維持原樣橫向排列）。
+- **問題 3 徽章解鎖彈窗背景捲動鎖定**：`main.ts` 新增 `lockBodyScroll()`／`unlockBodyScroll()`（用計數器管理鎖定狀態、記錄並在解鎖時還原捲動位置，用 `position: fixed` 鎖 `body` 而不是單純 `overflow: hidden`，避免 iOS Safari 鎖不住背景捲動的已知問題）。`appendModalShell()`（「變更頭像」「修改名稱」「首次進站提醒」共用的外殼）跟 `appendBadgeUnlockModal()`（「獲得新徽章」pop）開頭都呼叫 `lockBodyScroll()`；`closeProfileDetailModal()`／`closeBadgeUnlockModal()`（兩者各自唯一的關閉函式，叉叉／點遮罩／確認鈕都會經過同一個）都呼叫 `unlockBodyScroll()`。新增 `app/scripts/verify-modal-scroll-lock.ts`（4 個測試，純原始碼靜態檢查：函式存在且用計數器管理／兩個 append 函式開頭都呼叫 lock／兩個 close 函式都呼叫 unlock／每個關閉路徑都經過同一個關閉函式，沒有繞過鎖定機制）。
+  - **重要限制說明**：這是使用者回報的 iOS Safari 專屬視覺 bug，沒辦法在沒有瀏覽器/真機的沙盒環境裡重現或確認修法是否真的解決，`verify-modal-scroll-lock.ts` 只能確認「接線邏輯正確」，沒辦法確認「畫面上遮罩真的完整覆蓋了」。麻煩在真實 iOS Safari 上重現原本的操作（作答時往上滑動把 `.stage-banner` 滑出畫面外，答完跳出「獲得新徽章」pop），確認這次遮罩有完整覆蓋、沒有縫隙；也麻煩測一下「變更頭像」「修改名稱」這兩個共用外殼的既有彈窗，確認鎖定/解鎖背景捲動沒有把原本正常的關閉行為弄壞（例如關閉後畫面跳掉、捲動位置跑掉）。如果實測後鎖定捲動還不夠，handoff 裡列的候補方向是：彈窗開啟當下額外強制 `window.scrollTo(0, 0)`，或改用 `100dvh` 相關的 CSS 技巧。
+- **修 bug 時再度踩到的既有雷**：新增 `.game-header--with-back` 的 640px 媒體查詢後，`style.css` 裡同斷點的 `@media` 區塊又多了一個，導致上一輪（9.95）新增的 `verify-stage-banner-responsive.ts` 又壞掉（原理跟 9.95 節修過的 `verify-brand-banner-responsive.ts` bug一模一樣：規則抓到桌面版預設的 `.stage-banner { ... }`，不是巢狀在正確 `@media` 裡的那個）。已用同一套「`.stage-banner {` 必須緊接在 `@media (max-width: 640px) {` 開頭之後」的嚴格錨點修好，3 個測試恢復通過。這已經是第三次踩到同一種問題，往後每次在 `style.css` 新增 640px 媒體查詢，都要留意這個坑，新寫的驗證腳本（`verify-game-header-with-back-responsive.ts`／`verify-flashcard-icons-responsive.ts`）這次一開始就用了嚴格錨點，沒有再重蹈覆轍。
+
+驗證：`npm run build`（`tsc --noEmit && vite build`）通過；全部 24 支 `verify-*.ts`（含 3 支新增的、修正後的 `verify-stage-banner-responsive.ts`）重跑皆通過；手動 grep 打包後的 `dist/assets/*.css`／`*.js` 確認 `.game-header--with-back{flex-direction:column`、`flashcard-word-icons`、`column-reverse`（3 處）都有進到最終產出；`dashboard.html`／`content-review.html`／`demo-standalone.html`（App 端與專案根目錄兩份都同步）皆已重新產生。
+
 ### 9.97 使用者手機實測第二輪回饋：三個 App 端排版 handoff（2026-08-28）
 
 上一輪修正（9.95／9.96）push 上線後，使用者繼續用手機實測，又回報三個排版問題，已寫成 `docs/handoff-prompt-mobile-layout-round2.md` 交給 App 端 session：

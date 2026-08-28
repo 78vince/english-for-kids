@@ -2243,6 +2243,7 @@ function renderProfileDetail(): void {
 
 function closeProfileDetailModal(): void {
   profileDetailModal = "none";
+  unlockBodyScroll();
   render();
 }
 
@@ -2326,12 +2327,47 @@ function renderAbout(): void {
   app!.appendChild(bannerImg);
 }
 
+// 開啟任何 .modal-overlay（變更頭像／修改名稱／首次進站提醒／獲得新徽章……）期間，
+// 鎖定背景捲動：一來避免使用者誤觸背景內容，二來這是解決 iOS Safari「網址列收合後
+// position:fixed 遮罩沒有正確重新計算可視高度、底部露出縫隙」這類問題最常見的做法——
+// 鎖定捲動能讓瀏覽器在彈窗開啟期間穩定可視區域尺寸。用一個計數器而不是布林值，
+// 是為了保險起見支援「巢狀/連續開啟多個彈窗」的情境（目前程式應該不會真的疊兩層，
+// 但用計數器不會因為疊層而不小心提早解鎖）。
+let modalScrollLockCount = 0;
+let savedScrollY = 0;
+
+function lockBodyScroll(): void {
+  if (modalScrollLockCount === 0) {
+    savedScrollY = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${savedScrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+  }
+  modalScrollLockCount++;
+}
+
+function unlockBodyScroll(): void {
+  modalScrollLockCount = Math.max(0, modalScrollLockCount - 1);
+  if (modalScrollLockCount === 0) {
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    window.scrollTo(0, savedScrollY);
+  }
+}
+
 /**
  * 通用的小視窗外殼：半透明背景遮罩＋置中的卡片，點遮罩空白處或右上角的叉叉都能關閉
  * （點卡片本身不會關閉，靠 e.target === overlay 判斷有沒有點在遮罩上而不是卡片上）。
  * 回傳卡片本身的 DOM 節點，方便呼叫端把「變更頭像」或「修改名稱」的內容繼續往裡面加。
+ * 開啟時鎖定背景捲動（見上方 lockBodyScroll()），跟 closeProfileDetailModal() 的
+ * unlockBodyScroll() 成對——不管最後從叉叉、點遮罩、還是各自的確認鈕關閉，都會
+ * 經過同一個 closeProfileDetailModal()，保證背景捲動一定會被正確解鎖。
  */
 function appendModalShell(title: string): HTMLElement {
+  lockBodyScroll();
   const overlay = document.createElement("div");
   overlay.className = "modal-overlay";
   overlay.addEventListener("click", (e) => {
@@ -2526,15 +2562,20 @@ function renderFlashcards(): void {
     wordEn.className = "flashcard-word-en";
     wordEn.textContent = vocab.en;
     wordRow.appendChild(wordEn);
+    // 🔊／⭐ 包成一個共用小容器，窄螢幕用 column-reverse 呈現時，這兩顆才會排在同一行
+    // （而不是各自變成獨立一行），詳見 style.css 的 .flashcard-word-icons。
+    const iconsWrap = document.createElement("div");
+    iconsWrap.className = "flashcard-word-icons";
     const replayWordBtn = document.createElement("button");
     replayWordBtn.type = "button";
     replayWordBtn.className = "flashcard-replay-btn";
     replayWordBtn.textContent = "🔊";
     replayWordBtn.setAttribute("aria-label", "重播單字發音");
     replayWordBtn.addEventListener("click", () => speakEnglish(vocab.en));
-    wordRow.appendChild(replayWordBtn);
+    iconsWrap.appendChild(replayWordBtn);
     // 字卡也能收藏（跟單字總覽／Stage C 短文點字翻譯泡泡共用同一顆星星按鈕）。
-    wordRow.appendChild(buildFavoriteStarButton(activeProfile!.id, vocab.id));
+    iconsWrap.appendChild(buildFavoriteStarButton(activeProfile!.id, vocab.id));
+    wordRow.appendChild(iconsWrap);
     card.appendChild(wordRow);
 
     const wordZh = document.createElement("p");
@@ -3599,6 +3640,7 @@ function finalizeRoundCompletion(
 
 function closeBadgeUnlockModal(): void {
   pendingBadgeUnlocks = [];
+  unlockBodyScroll();
   render();
 }
 
@@ -3644,8 +3686,12 @@ function buildConfettiOverlay(): HTMLDivElement {
  * 一樣的 .modal-overlay／.modal-card 外殼樣式，維持整站小視窗長相一致；
  * 額外疊一層紙花動畫（buildConfettiOverlay()）營造歡樂氛圍，放在卡片「後面」
  * （DOM 順序在卡片之前），讓紙花從畫面上方灑落、卡片本身維持在最上層清楚可讀。
+ * 開啟時鎖定背景捲動（lockBodyScroll()，見 appendModalShell() 旁的說明），
+ * 跟 closeBadgeUnlockModal() 的 unlockBodyScroll() 成對，三種關閉方式
+ * （叉叉／點遮罩／「太棒了！」按鈕）都經過同一個 closeBadgeUnlockModal()。
  */
 function appendBadgeUnlockModal(): void {
+  lockBodyScroll();
   const overlay = document.createElement("div");
   overlay.className = "modal-overlay";
   overlay.addEventListener("click", (e) => {

@@ -100,6 +100,18 @@ body {
   flex-shrink: 0;
 }
 
+/* 窄螢幕（手機寬度）響應式：跟 .stage-banner 同一類成因——標題文字（flex:1，
+   會被壓縮）跟返回按鈕（flex-shrink:0，不會縮）搶版面，這個畫面的按鈕文字
+   「← 返回選擇主題」又比其他畫面的「← 返回選單」長，窄螢幕下更容易被擠壓成
+   逐字換行的窄直條。比照 .stage-banner 的做法，640px 以下改上下堆疊。 */
+@media (max-width: 640px) {
+  .game-header--with-back {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+}
+
 /* 四種題型畫面共用的題型橫幅：跟 .brand-banner 一樣是「有底色的圓角橫幅」，
    但故意做矮一點、字也小一點，跟首頁/目錄頁的橫幅明顯區分開來（不用漸層、
    不放頭像/招呼語，只放題型範圍當標題＋進度文字）。 */
@@ -1677,6 +1689,25 @@ body {
   gap: var(--space-3);
 }
 
+/* 🔊 播放鍵＋⭐ 收藏星星的共用容器，窄螢幕 column-reverse 排版時這兩顆會排在同一行，
+   不會各自變成獨立一行，見下方 640px 區塊。 */
+.flashcard-word-icons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* 窄螢幕（手機寬度）響應式：長片語（例如 "excuse me"／"you're welcome"）換行時，
+   圖示卡在文字中間高度看起來很擠，改成圖示們在上面一行、文字在下面一行。
+   用 column-reverse（而不是 column + order）是因為 DOM 順序本來就是「文字在前、
+   圖示（容器）在後」，反過來排列剛好符合視覺需求，不用額外處理 order。 */
+@media (max-width: 640px) {
+  .flashcard-word-row {
+    flex-direction: column-reverse;
+    gap: var(--space-2);
+  }
+}
+
 .flashcard-word-en {
   font-family: var(--font-display);
   font-size: var(--text-h1);
@@ -1841,6 +1872,16 @@ body {
   gap: var(--space-2);
 }
 
+/* 窄螢幕響應式：跟 .flashcard-word-row 同一類需求，長例句換行時圖示卡在文字中間
+   高度很擠，改成圖示在上、文字在下；這裡只有一顆播放鍵，不用額外包容器。 */
+@media (max-width: 640px) {
+  .flashcard-example-row {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: var(--space-2);
+  }
+}
+
 .flashcard-example-en {
   font-family: var(--font-body);
   font-size: var(--text-body);
@@ -1868,6 +1909,16 @@ body {
   display: flex;
   align-items: center;
   gap: var(--space-2);
+}
+
+/* 窄螢幕響應式：跟上面兩個 flashcard-*-row 同一類需求，圖示改排到文字上面；
+   這裡桌面版本來就是靠左（不像 word-row/example-row 置中），維持靠左。 */
+@media (max-width: 640px) {
+  .flashcard-quiz-reveal {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
 }
 
 .flashcard-quiz-reveal-text {
