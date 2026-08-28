@@ -1,60 +1,132 @@
 [
   {
     "id": "sent.greetings.b1.001",
-    "en": "Good morning! Good afternoon! Hi, everyone!",
-    "zh": "早安！午安！嗨，大家好！",
+    "en": "Good morning, everyone!",
+    "zh": "大家早安！",
     "topic": "greetings",
     "stage": "B",
-    "grammar_point": "問候語疊加句",
+    "grammar_point": "問候語（早晨見面）",
     "vocab_ids": [
-      "voc.greetings.004",
-      "voc.greetings.005",
-      "voc.greetings.001"
+      "voc.greetings.004"
     ],
     "audio": null,
     "status": "published"
   },
   {
     "id": "sent.greetings.b1.002",
-    "en": "Excuse me, can you help me, please?",
-    "zh": "不好意思，你可以幫我嗎？",
+    "en": "Good afternoon, teacher!",
+    "zh": "老師午安！",
     "topic": "greetings",
     "stage": "B",
-    "grammar_point": "禮貌用語疊加句",
+    "grammar_point": "問候語（下午見面）",
     "vocab_ids": [
-      "voc.greetings.012",
-      "voc.greetings.013",
-      "voc.greetings.008"
+      "voc.greetings.005"
     ],
     "audio": null,
     "status": "published"
   },
   {
     "id": "sent.greetings.b1.003",
-    "en": "Sorry! Good night and bye, see you tomorrow.",
-    "zh": "對不起！晚安，掰掰，明天見。",
+    "en": "Good night! Sleep well.",
+    "zh": "晚安！好好睡一覺。",
     "topic": "greetings",
     "stage": "B",
-    "grammar_point": "道歉 + 道別問候疊加句",
+    "grammar_point": "問候語（睡前道別）",
     "vocab_ids": [
-      "voc.greetings.011",
-      "voc.greetings.007",
-      "voc.greetings.003"
+      "voc.greetings.007"
     ],
     "audio": null,
     "status": "published"
   },
   {
     "id": "sent.greetings.b1.004",
-    "en": "Thank you very much! You're welcome, hello!",
-    "zh": "非常謝謝你！不客氣，哈囉！",
+    "en": "Hi! My name is Amy.",
+    "zh": "嗨！我的名字是艾咪。",
     "topic": "greetings",
     "stage": "B",
-    "grammar_point": "感謝 + 回應疊加句",
+    "grammar_point": "問候語（自我介紹前的招呼）",
+    "vocab_ids": [
+      "voc.greetings.001"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.greetings.b1.005",
+    "en": "Hello! Nice to meet you.",
+    "zh": "哈囉！很高興認識你。",
+    "topic": "greetings",
+    "stage": "B",
+    "grammar_point": "問候語（初次見面）",
+    "vocab_ids": [
+      "voc.greetings.002"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.greetings.b1.006",
+    "en": "Bye! See you tomorrow.",
+    "zh": "掰掰！明天見。",
+    "topic": "greetings",
+    "stage": "B",
+    "grammar_point": "道別用語",
+    "vocab_ids": [
+      "voc.greetings.003"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.greetings.b1.007",
+    "en": "Sorry, I am late.",
+    "zh": "對不起，我遲到了。",
+    "topic": "greetings",
+    "stage": "B",
+    "grammar_point": "道歉用語",
+    "vocab_ids": [
+      "voc.greetings.011"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.greetings.b1.008",
+    "en": "Excuse me, can you help me?",
+    "zh": "不好意思，你可以幫我嗎？",
+    "topic": "greetings",
+    "stage": "B",
+    "grammar_point": "禮貌用語（開口請求）",
+    "vocab_ids": [
+      "voc.greetings.012",
+      "voc.greetings.013"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.greetings.b1.009",
+    "en": "Can I have some water, please?",
+    "zh": "請問我可以喝點水嗎？",
+    "topic": "greetings",
+    "stage": "B",
+    "grammar_point": "禮貌用語（客氣要求）",
+    "vocab_ids": [
+      "voc.greetings.008"
+    ],
+    "audio": null,
+    "status": "published"
+  },
+  {
+    "id": "sent.greetings.b1.010",
+    "en": "Thank you! You're welcome.",
+    "zh": "謝謝你！不客氣。",
+    "topic": "greetings",
+    "stage": "B",
+    "grammar_point": "感謝與回應（一問一答）",
     "vocab_ids": [
       "voc.greetings.009",
-      "voc.greetings.010",
-      "voc.greetings.002"
+      "voc.greetings.010"
     ],
     "audio": null,
     "status": "published"

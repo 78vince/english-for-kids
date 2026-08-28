@@ -165,6 +165,14 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.94 使用者手機實測回饋：Greetings 例句拆解＋兩個 App 端 bug handoff（2026-08-28）
+
+正式站上線後使用者用手機實測，回報三個問題：
+
+1. **Greetings 例句過於複雜**：`content/sentences/greetings.json` 原本只有 4 句，每句都是把 3 個不相關（甚至互斥，例如「早安！午安！」時段矛盾）的招呼語硬湊成一句疊加句，Stage B-1／B-2 玩起來像在解一句拼裝的長句而不是學一個簡單招呼語。已直接重寫成 10 句、每句只講一個單一情境的自然短句（早安／午安／晚安道別／自我介紹前招呼／初次見面／道別／道歉／禮貌請求／感謝與回應各自獨立成句），大部分句子直接沿用 `content/vocab/greetings.json` 裡各單字本來就有的 `example_sentence` 草稿（本來就是簡單自然的句子，一魚兩吃）。13 個單字裡故意跟原本一樣不含 `good evening`（維持跟原設計一致的覆蓋範圍）。`npm run build`、`verify-multi-topic.ts`／`verify-ordering-logic.ts`／`verify-fillblank-logic.ts`／`verify-passage-glossary.ts`／`verify-capstone-questions.ts` 全部重跑通過；`dashboard.html`／`app/content-review.html`／`demo-standalone.html`（含根目錄那份）都已同步重新產生。句數從 4→10，Stage B-1/B-2 單輪題數會變多，如果之後使用者覺得單元 0 玩起來太長，可以再考慮精簡。
+2. **`.stage-banner` 手機版 RWD 沒做好**：窄螢幕下標題文字被右側「慢速／返回選單」按鈕擠成一欄逐字換行的窄直條。已寫成 handoff prompt `docs/handoff-prompt-stage-banner-rwd-and-passage-tts-bug.md`，比照先前 `.brand-banner--user` 頭像疊字問題（`verify-brand-banner-responsive.ts`）的同一套做法，640px 斷點內把 `.stage-banner` 改成 `flex-direction: column`，純 CSS 修法，待 App 端 session 執行。
+3. **短文朗讀時 "Mia" 被逐字母拼讀**：Stage C 朗讀 Pronouns 短文「She is Mia, my friend.」時，`Mia` 被瀏覽器語音引擎拼成 M-I-A。確認過 `speakPassage()` 是把原始短文全文直接丟給 `SpeechSynthesisUtterance`，程式面沒有拆字重組，判斷是瀏覽器 TTS 引擎本身的已知行為（短專有名詞在語速被大幅調低時容易被誤判成要逐字母拼讀），最可能與 2026-08-26 剛上線的慢速朗讀（`SLOW_RATE = 0.6`）交互作用有關。這邊沒有瀏覽器沒辦法重現/確認根因，已寫進同一份 handoff prompt，附排查步驟（先測關閉慢速是否恢復正常）與候選修法（調高 `SLOW_RATE` 或排除特定語音），交給 App 端 session 實測後處理。
+
 ### 9.93 Phase 3 完成：GitHub Pages 正式上線（2026-08-27）
 
 `git push`（SSH）成功後，GitHub Actions 第一次執行 `deploy.yml` 失敗，`configure-pages@v5` 回報 `HttpError: Not Found`——原因是 repo 的 Settings → Pages → Source 預設是「Deploy from a branch」，Actions 部署模式需要先手動切換成「GitHub Actions」，否則 Pages 站台根本還沒建立。經使用者明確同意（「你直接幫我處理」）後，直接用瀏覽器工具進到 repo 設定頁把 Source 切成「GitHub Actions」，再回到失敗的 workflow run 用「Re-run all jobs」重新觸發一次，這次 build／deploy 兩個 job 都成功（deploy 10s 完成），正式站確認可以打開：<https://78vince.github.io/english-for-kids/>。
