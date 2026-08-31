@@ -59,12 +59,14 @@ Vincent - 小禮
 
 - [x] Phase 1：四種文字型題型（Stage A 單字配對／Stage B-1 句子排序／Stage B-2 句子填空／Stage C 短文理解／Stage D 綜合關卡）、登入登出、成效追蹤
 - [x] 成就徽章系統（43 個徽章）、單字收藏功能、字卡學習單元、題型選單與挑戰紀錄頁的進度視覺分級、App 內「關於本站」頁面（版本／作者資訊）
-- [x] Phase 2 內容擴充（content 端）：32 個主題（含 Unit 0 兩個暖身主題）單字／句子／短文資料已全部建置完成並通過驗證，共 672 個單字、279 句、32 篇短文。單元一原本的 Personal characteristics 已拆成 Appearance／Emotions／Personality traits 三個新主題（單元一因此變成 6 個主題）；單元六「時間與節日」原規劃 3 個主題，因 Time 候選字過多拆成 Time 與 Calendar 兩個主題，最終變成 4 個主題（Time、Calendar、Holidays & festivals、Sizes & measurements）；2026-08-25：單元三的 Colors 改名擴充為「Art 美術」、Numbers 改名擴充為「Math 數學」（沿用原 fileKey），並新增 Science 自然科學主題（20 字），單元三因此變成 6 個主題
-- [x] Phase 2 App 端接線：全部 32 個主題（含 Unit 0 兩個暖身主題）都已接進 `app/src/main.ts` 的 `TOPICS`／`UNITS`／`TOPIC_THUMBS`，單元 0～六全部可以在 App 選單裡實際玩到；Colors／Numbers 顯示名稱已改為 Art／Math，Science 自然科學主題已上線
-- [x] 新增單元七「文法小幫手」11 個主題（content 端）：Advanced Pronouns／Wh-Words & Frequency／Articles & Determiners／Sentence Connectors／Prepositions／Other Nouns／Other Verbs I・II／Other Adjectives I・II／Other Adverbs & Responses，正式推翻原本「文法/功能詞不獨立成關卡」的規劃（見 `docs/content-plan.md` 3.2 節），單字／句子／短文資料與驗證腳本、成就徽章系統（新增 WC-07「文法小幫手」）皆已完成並通過驗證
-- [x] Phase 2 App 端接線（單元七）：`main.ts` 的 `TOPICS`／`UNITS`／`TOPIC_THUMBS` 已新增單元七 11 個主題並上線，全部 43 個正式主題（含單元 0 共 45 個）現在都已接進 App 選單可玩
+- [x] Phase 2 內容擴充（content 端）：全部 43 個正式主題（含 Unit 0 兩個暖身主題，全站合計 45 個主題）單字／句子／短文資料已全部建置完成並通過驗證，共 897 個單字、496 句、43 篇短文
+- [x] Phase 2 App 端接線：全部 43 個正式主題（含 Unit 0）都已接進 `app/src/main.ts` 的 `TOPICS`／`UNITS`／`TOPIC_THUMBS`，單元 0～七全部可以在 App 選單裡實際玩到
+- [x] 新增單元七「文法小幫手」11 個主題：Advanced Pronouns／Wh-Words & Frequency／Articles & Determiners／Sentence Connectors／Prepositions／Other Nouns／Other Verbs I・II／Other Adjectives I・II／Other Adverbs & Responses，正式推翻原本「文法/功能詞不獨立成關卡」的規劃，content 端與 App 端皆已完成並上線
 - [x] 決定並補上開源授權條款：CC BY-NC 4.0（見 `LICENSE`）
 - [x] Phase 3：上架 GitHub Pages，正式站：<https://78vince.github.io/english-for-kids/>；首次進站提醒 popup＋「關於本站」常駐使用須知段落已完成並上線
+- [x] 上架後手機版排版三輪修正：題型橫幅／題型選單標題窄螢幕橫向擠壓、字卡作答區喇叭與文字排列、徽章解鎖彈窗遮罩滾動後蓋不滿全螢幕、個人小卡與挑戰紀錄卡片溢出容器等問題皆已修正
+- [x] App 圖示與加入主畫面：自訂「羊毛氈字母怪獸 K」圖示＋`manifest.webmanifest`，可加入手機主畫面時顯示自訂圖示（不含離線快取／Service Worker）
+- [x] 自助上傳工具 `上傳更新.command`：雙擊即可自動建置檢查＋跑全部驗證腳本＋commit＋push 到 GitHub，不用再手動下指令
 - [ ] Phase 4：語音辨識與口說題型（延後）
 
 （頁面左右側裝飾性背景圖：已規劃兩款羊毛氈字母提示詞，決定先不做，暫緩）

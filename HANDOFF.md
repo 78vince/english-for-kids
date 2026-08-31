@@ -1,6 +1,6 @@
 # 兒童英語學習平台 — 專案交接文件（HANDOFF）
 
-最後更新：2026-08-25　　目前階段：**Phase 1 已達標＋視覺風格 v2 改版完成，Phase 2 內容擴充持續進行中（單元一～五主題皆已接進 App，Personal Characteristics 已拆成三個獨立主題；「世界」已全面改名為「單元」，Unit 0 併入 0～6 連貫序列，`content/badges/badges.json` 已同步完成，WC-01~07 徽章恢復正常判斷；點擊互動跳回頂端的問題已修正並加上「回到頂端」按鈕；「關於本站」頁面介紹文字已換成新版，全站已無「GEPT Kids」字樣殘留；單元 0「教室常用語」已拆成 Greetings 問候與禮貌用語／Pronouns 代名詞兩個主題；Family 主題移除 dad／daddy／mom／mommy／grandma／grandpa 六個字，從 21 字變 15 字；單元一名稱由「我和我的家」改為「我和身邊的人」，content 端與 `main.ts` 皆已同步完成；Appearance 主題補充 11 個外觀描述詞，從 7 字變 18 字；Emotions 主題補充 9 個心理狀態單字，從 11 字變 20 字；Kitchen & Dining 主題補充 15 個廚房用品單字，從 13 字變 28 字；Colors 主題補充 7 個顏色相關單字，從 12 字變 19 字；Numbers 主題移除 first／second／third／number／how many 5 個字，從 30 字變 25 字，短文換成新故事「A Fun Day at the Zoo」；Weather & Nature 改名為 Weather，補充 16 個天氣/四季單字，從 16 字變 32 字，content 端與 `main.ts` 皆已同步完成；Geographical Terms 補充 11 個地景單字＋再補充 9 個常用地形/地表單字，從 5 字變 25 字；單元三新增 PE / Sports 體育課〔24 字〕與 Clubs & Hobbies 社團活動〔16 字〕兩個新主題，content 端與 `main.ts` 皆已同步完成；Places & Directions 補充 9 個導航方位單字，從 18 字變 27 字；Occupations 補充 3 個現代職業單字，從 13 字變 16 字；Money 補充 18 個金錢相關單字，從 4 字變 22 字；短文查字功能改成主題優先查詢＋收藏清單新增排序功能，content 端與 `main.ts` 皆已同步完成；Health 補充 17 個健康相關單字，從 4 字變 21 字；Forms of Address 補充 9 個稱謂相關單字，從 4 字變 13 字；單元二新增 Bathroom 浴室主題〔18 字〕，content 端與 `main.ts` 皆已同步完成；單元六「時間與節日」正式開始建置並完成，新增 Time〔22 字〕／Calendar〔27 字〕／Holidays & Festivals〔18 字〕／Sizes & Measurements〔13 字〕四個主題（原規劃只有 3 個主題，Time 因候選字過多拆成 Time 與 Calendar 兩個），content 端與 `main.ts` 皆已同步完成，全部 31 個主題〔含單元 0〕現在都已接進 App 選單可玩；單元三的 Colors 改名擴充為「Art 美術」〔35 字〕、Numbers 改名擴充為「Math 數學」〔49 字〕（`fileKey` 不變，只改顯示名稱），並新增 Science 自然科學主題〔20 字〕，content 端與 `main.ts` 皆已同步完成，全部 32 個主題〔含單元 0〕現在都已接進 App 選單可玩；content 端新增單元七「文法小幫手」11 個主題〔advanced_pronouns／wh_words_frequency／articles_determiners／sentence_connectors／prepositions／other_nouns／other_verbs_1／other_verbs_2／other_adjectives_1／other_adjectives_2／other_adverbs_responses〕，正式推翻「文法/功能詞不獨立成關卡」的原始政策，content 端與驗證腳本／徽章系統皆已同步完成，**App 端尚未接線**，詳見 9.83 節與 `docs/handoff-prompt-unit7-grammar-topics.md`），並新增「字卡暖身」學習單元**（登入登出、課程範圍、六種文字型題型〔字卡暖身＋Stage A-D，含 Stage D 綜合關卡〕、成效追蹤基本功能全部完成；單元 0「教室常用語」〔Greetings 問候與禮貌用語／Pronouns 代名詞兩個主題〕＋單元一「我和身邊的人」6 個主題〔Family／People／Appearance／Emotions／Personality Traits／Parts of Body〕＋單元二「食衣住行」6 個主題〔Food & Drink／Clothing & Accessories／Houses & Apartments／Kitchen & Dining／Bathroom／Transportation〕＋單元三「上學去」6 個主題〔School／Math／Art／PE / Sports／Clubs & Hobbies／Science〕＋單元四「大自然與動物」3 個主題〔Animals & Insects／Weather／Geographical Terms〕＋單元五「生活情境」5 個主題〔Places & Directions／Occupations／Money／Health／Forms of Address〕＋單元六「時間與節日」4 個主題〔Time／Calendar／Holidays & Festivals／Sizes & Measurements〕共 30 個正式主題＋單元 0（2 個暖身主題）皆可跑通，全站合計 32 個主題；首頁改成單元分組＋單元 0 獨立區塊；OB-02／OB-03／WC-01~07 徽章判斷邏輯已改成 `unit_completion`（`badges.json` 已同步更新徽章 ID，WC-01~07 恢復正常判斷；單元三完成度徽章邏輯已可實際解鎖）；Family／Colors／Animals & insects 三個主題的單字已補上 example_sentence 專屬例句；個人檔案頁新增「學習成就」六格量化數據卡；新增單字收藏功能，OB-04／FV-01~03 徽章已接上真正判斷邏輯；題型選單頁「返回」文字連結改成正式按鈕；題型選單卡片與挑戰紀錄頁皆已新增熟悉度分級色條＋淡底色；Stage D 短句填空題新增「播放這句」語音按鈕；新增獨立的「關於本站」頁面，已收進功能列常駐項目；功能列已改成動態量測寬度切換 icon-only（不再依賴固定螢幕寬度斷點），品牌橫幅仍維持手機寬度響應式設計，窄螢幕頭像已放大並移到文字上方）
+最後更新：2026-08-31　　目前階段：**Phase 1～3 全部達標，已正式上架 GitHub Pages（<https://78vince.github.io/english-for-kids/>）**。Phase 1（登入登出、六種文字型題型、成效追蹤）、Phase 2（全部 43 個正式主題＋單元 0，含單元七「文法小幫手」11 個主題，content 端與 App 端皆已接線完成，共 897 個單字／496 句／43 篇短文）、Phase 3（README／授權條款／GitHub Pages 正式上架／首次進站提醒＋「關於本站」使用須知）皆已完成。上架後又完成 3 輪手機版 RWD 修正（`.stage-banner`／`.game-header--with-back` 標題橫向擠壓、字卡作答區喇叭與文字排列、Modal 遮罩在捲動後蓋不滿全螢幕、個人小卡與挑戰紀錄卡片溢出容器等問題）、App 圖示／manifest（可加入主畫面時顯示自訂「羊毛氈字母怪獸 K」圖示）、以及 `上傳更新.command` 自助上傳工具（雙擊即可建置檢查＋跑驗證＋commit＋push，不用再手動下指令）。Phase 4（語音辨識與口說題型）尚未開始，維持延後。過去每一批內容擴充/改版的完整歷程仍保留在下方 9.x 變更紀錄，越新編號越靠上面；本段落之後只在階段性里程碑（Phase 完成、大改版）更新，逐批內容擴充明細請直接看 9.x 系列。
 
 專案定位：給家庭／個人使用的兒童英語學習平台，內容以台灣國小階段常見英語學習主題為主要範圍，初期在本地端開發測試，最終上架至 GitHub（開源）。
 
@@ -14,9 +14,10 @@
 |---|---|
 | 專案架構規劃（角色、課程範圍、遊戲題型、成效追蹤、技術問題、開發階段） | ✅ 已完成，見 Obsidian Canvas |
 | 兒童英語學習內容規劃（資料結構、關卡分類方式） | ✅ 已完成，見 `docs/content-plan.md`（原檔名 `content-plan-gept-kids.md`） |
-| 範例課程內容（32 個正式主題＋單元 0＋單元七 11 個主題） | ✅ 單元一～六全部 32 個正式主題＋單元 0（Greetings／Pronouns 兩個暖身主題）都已接進 App 選單可玩（見 9.82 節）；單元七「文法小幫手」11 個主題（content 端已完成，App 端待接線，見 9.83 節） |
+| 範例課程內容（43 個正式主題＋單元 0，含單元七 11 個文法主題） | ✅ 全部 43 個正式主題＋單元 0（Greetings／Pronouns 兩個暖身主題）都已接進 App 選單可玩，共 897 個單字／496 句／43 篇短文（見 9.x 系列） |
 | 免費語音辨識資源研究 | ✅ 已完成，候選方案已列出，**實作延後至最後階段** |
-| App 程式碼 | ✅ Phase 1 全部完成——登入登出、六種文字型題型（字卡暖身／配對／排序／填空／選擇／綜合關卡）、成效追蹤都已完成，見 `app/` 與第 9 節 |
+| App 程式碼 | ✅ Phase 1～3 全部完成——登入登出、六種文字型題型（字卡暖身／配對／排序／填空／選擇／綜合關卡）、成效追蹤、43 個成就徽章、App 圖示／manifest 都已完成並上架，見 `app/` 與第 9 節 |
+| 正式上架 | ✅ GitHub Pages 已上線：<https://78vince.github.io/english-for-kids/> |
 | 專案 Dashboard | ✅ 已建立，見 `dashboard.html` |
 
 ---
@@ -41,10 +42,10 @@
 
 | Phase | 內容 | 狀態 |
 |---|---|---|
-| Phase 1 | 本地端 MVP：登入登出、課程範圍、配對／排序／填空／選擇四種文字型題型、成效追蹤基本功能 | ✅ 已達標——登入登出（本機端「誰在玩」）、四種題型（Family／Colors／Animals & insects 三主題皆可玩）、成效追蹤都已完成（見第 9 節） |
-| Phase 2 | 完善課程內容與個人成效追蹤：擴充其餘主題、積分/徽章/報告 | 進行中——內容已擴充至 13/24 正式主題＋Unit 0（世界一 4 主題、世界二 5 主題、世界三 3 主題**已全部完成**、Animals & insects 皆完整）；連續學習天數、43 個成就徽章、個人檔案「學習成就」六格數據卡、單字收藏功能皆已完成；剩餘世界四～六共 11 個官方主題內容尚待擴充 |
-| Phase 3 | 上架 GitHub：README、授權條款、Demo 展示頁面 | 未開始 |
-| Phase 4 🔇 | 語音辨識與口說題型（延後開發，最後階段） | 研究已完成，實作待 Phase 1-3 完成後才開始 |
+| Phase 1 | 本地端 MVP：登入登出、課程範圍、配對／排序／填空／選擇四種文字型題型、成效追蹤基本功能 | ✅ 已達標——登入登出（本機端「誰在玩」）、四種題型、成效追蹤都已完成（見第 9 節） |
+| Phase 2 | 完善課程內容與個人成效追蹤：擴充其餘主題、積分/徽章/報告 | ✅ 已完成——全部 43 個正式主題＋單元 0（含單元七「文法小幫手」11 個主題）content 端與 App 端皆已接線，連續學習天數、43 個成就徽章、個人檔案「學習成就」六格數據卡、單字收藏功能皆已完成 |
+| Phase 3 | 上架 GitHub：README、授權條款、Demo 展示頁面 | ✅ 已完成——README／CC BY-NC 4.0 授權條款皆已補齊，正式站已上架 GitHub Pages：<https://78vince.github.io/english-for-kids/>，首次進站提醒＋「關於本站」使用須知已上線；上架後另完成 3 輪手機版 RWD 修正與 App 圖示／manifest |
+| Phase 4 🔇 | 語音辨識與口說題型（延後開發，最後階段） | 研究已完成，尚未開始實作 |
 
 **設計原則**：語音辨識技術風險與開發成本最高，故整個平台先用純文字/選擇/聽力型題型把核心學習迴圈（單字→短句→短文→關卡→成效追蹤）做完、上架驗證，最後才疊加口說功能。
 
@@ -80,23 +81,21 @@
 ```
 English for Kids/                      ← 專案資料夾（本檔案所在處）
 ├── HANDOFF.md                         ← 本文件
-├── README.md                          ← 專案 README 完整版（專案介紹、使用緣起、內容來源、作者資訊皆已補齊，2026-08-22）
+├── README.md                          ← 專案 README 完整版（專案介紹、使用緣起、內容來源、作者資訊皆已補齊）
+├── 上傳更新.command                    ← 雙擊即可建置檢查＋跑驗證＋commit＋push 到 GitHub 的自助上傳工具
 ├── .gitignore
-├── dashboard.html                     ← 專案 Dashboard（瀏覽器開啟）
-├── docs/
-│   ├── content-plan.md                ← 兒童英語學習內容規劃完整說明（原檔名 content-plan-gept-kids.md，已停用僅留轉址提示）
-│   └── handoff-prompt-phase1.md       ← 交給 AI 接手 Phase 1 開發時用的任務說明
-├── content/
+├── dashboard.html                     ← 專案 Dashboard（瀏覽器開啟，數字由 `app/scripts/build-dashboard.mjs` 部分自動產生）
+├── docs/                              ← 內容規劃文件＋交給「技術架構」session 執行的 handoff prompt 文件
+├── content/                           ← 課程內容 single source of truth；目前共 43 個正式主題＋單元 0，897 個單字／496 句／43 篇短文，實際數字請看 `dashboard.html` 或執行 build-dashboard.mjs
 │   ├── schema/                        ← vocab / sentence / passage JSON Schema
-│   ├── vocab/                         ← 14 個主題單字檔（13 正式主題＋unit_zero，共 236 字）
-│   ├── sentences/                     ← 14 個主題的 Stage B 例句檔（各 4 句）
-│   ├── passages/                      ← 14 個主題的 Stage C 短文＋理解題檔（各 1 篇＋3 題）
+│   ├── vocab/ sentences/ passages/    ← 各主題單字／例句／短文 JSON
 │   ├── glossary/                      ← 各主題短文點字看中文意思用的補充詞彙表
 │   ├── units/                         ← unit0.json
 │   └── badges/badges.json             ← 43 個成就徽章正式定義（10 大分類）
 └── app/                                ← 前端 App（Vite + TypeScript），見第 9 節
     ├── src/                           ← 遊戲邏輯與畫面（main.ts 入口；profile.ts 登入登出；progress.ts／badgeStats.ts／playLog.ts 成效追蹤；favorites.ts 單字收藏；sound.ts／speech.ts 音效與語音；flashcardGame.ts／matchingGame.ts／orderingGame.ts／fillBlankGame.ts／choiceGame.ts／capstoneQuestions.ts 各題型）
-    ├── scripts/                       ← 驗證用 script（不是正式測試框架，但涵蓋主要邏輯，共 16 支 verify-*.ts）
+    ├── public/                        ← 靜態資源（favicon／apple-touch-icon／manifest.webmanifest／icons/），build 時原樣複製進 dist/ 根目錄
+    ├── scripts/                       ← 驗證用 script（不是正式測試框架，但涵蓋主要邏輯，共 27 支 verify-*.ts）
     ├── demo-standalone.html           ← 單檔示範版，雙擊可直接在瀏覽器打開試玩
     └── content-review.html            ← 內容審閱頁（單字/句子/短文一次列出，方便校對文字）
 
@@ -118,11 +117,12 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 ## 8. 快速上手（下次回來接手時）
 
-1. 打開 `app/demo-standalone.html`（雙擊，不用跑任何指令）試玩：先選/新增使用者登入，再選主題（目前 13 個正式主題＋Unit 0 都可玩，世界一／世界二／世界三皆已完整），進去玩字卡暖身＋Stage A-D 六種題型
-2. 打開 `app/content-review.html` 校對目前 13 個正式主題＋Unit 0 的單字/例句/短文內容
-3. 打開 `dashboard.html` 看整體專案進度快照
-4. 看第 9 節「App 開發現況」了解程式碼骨架；Phase 1 規劃項目已全部完成，Phase 2 進行中（見第 1、3 節），第 10 節列了如果還想繼續強化可以做的非必要項目，或直接進 Phase 3（上架準備）
+1. 正式站已上線，直接開 <https://78vince.github.io/english-for-kids/> 就能看到目前完成的成果；本機開發可打開 `app/demo-standalone.html`（雙擊，不用跑任何指令）試玩，先選/新增使用者登入，再選主題（全部 43 個正式主題＋單元 0 都可玩），進去玩字卡暖身＋Stage A-D 六種題型
+2. 打開 `app/content-review.html` 校對目前所有主題的單字/例句/短文內容
+3. 打開 `dashboard.html` 看整體專案進度快照（KPI／內容進度為自動產生，「開發階段」分頁為手動維護）
+4. 看第 9 節「App 開發現況」了解程式碼骨架；Phase 1～3 已全部完成並上架（見第 1、3 節），Phase 4（語音辨識口說題型）尚未開始
 5. 要跑開發環境：`cd app && npm install && npm run dev`；`npm run build` 會產出 `dist/`
+6. 要把本機變更上傳到 GitHub：雙擊專案根目錄的 `上傳更新.command`，會自動建置檢查＋跑全部驗證腳本＋commit＋push，不用手動下指令（僅限使用者自己的 Mac 上執行，因為需要本機已設定好的 SSH 憑證）
 
 ---
 
@@ -164,6 +164,20 @@ Obsidian/發想/開發/兒童英語學習平台/
 - **我的**（`renderProfileDetail`，2026-08-05 再改版）：個人小卡改成左右兩欄（左邊頭像不加外框、右邊名字＋時間資訊），時間資訊有三項：加入時間、上次遊玩日期與時間（`formatDateTime()`）、累計遊玩時間（`app/src/playTime.ts`，估算「進入題型畫面」到「那一輪答完」之間經過的時間，玩到一半沒答完不會被算進去）；換頭像、改名字都改成點按鈕跳出小視窗（`.modal-overlay`／`.modal-card`）操作，頭像點了就直接存檔關窗，名字要打完按「儲存」才會存；刪除使用者、重置所有進度紀錄維持在頁面下方。原本的「學習成就總覽」整段在更早之前就移到成就徽章頁了。
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
+
+### 9.103 整理進度並更新所有紀錄文件（2026-08-31）
+
+使用者要求「整理目前的進度內容並更新所有紀錄」。檢查後發現 `HANDOFF.md` 開頭幾個結構性段落從 2026-08-25 之後就沒再同步更新過，跟 9.x 系列最新記錄（含 Phase 3 上線、單元七接線、三輪手機版 RWD 修正、App 圖示、`上傳更新.command`）明顯脫節，容易讓人誤以為專案還停在 Phase 2 進行中。這次整理內容：
+
+- **開頭狀態段落**（原第 3 行）：原本是一段從 2026-08-04 一路累加、幾乎不可讀的巨型段落，且結尾仍寫著「單元七 App 端尚未接線」（已過期）。已整段改寫成精簡的最新狀態摘要（Phase 1～3 全部完成＋正式站網址＋三輪 RWD／App 圖示／上傳工具），並註明逐批內容擴充明細仍以 9.x 系列為準，避免這個段落之後又變成第二份難以維護的流水帳。
+- **§1 目前進度總結表**：主題數／單字句子短文統計更新為最新的 43 個主題、897 字／496 句／43 篇短文，移除「單元七待接線」的過期敘述，新增「正式上架」一列。
+- **§3 開發階段規劃表**：Phase 2、Phase 3 從「進行中」／「未開始」更正為「✅ 已完成」，並補上正式站網址與上架後的修正項目。
+- **§6 檔案總覽**：`verify-*.ts` 數量由過期的「16 支」更正為實際的 27 支；補上 `app/public/`（圖示／manifest）與根目錄 `上傳更新.command` 的說明；`content/` 底下過期的逐檔案字數（14 個主題、236 字）改成指向 `dashboard.html` 看即時數字，避免又跟不上後續擴充。
+- **§8 快速上手**：補上正式站連結與 `上傳更新.command` 的使用說明，Phase 狀態同步更正。
+- **`README.md` TODO**：單字/句子/短文統計數字（672／279／32）更新為最新的 897／496／43；新增三輪手機版 RWD 修正、App 圖示／manifest、`上傳更新.command` 三個已完成項目的勾選條目（先前這三項工作只在 HANDOFF.md 的 9.x 系列有記錄，README 完全沒提到）。
+- **`dashboard.html`**：重新執行 `node app/scripts/build-dashboard.mjs` 確認自動產生區塊（KPI／內容進度）數字與上述一致（43 主題、897 字、496 句、43 短文），手動維護的「開發階段」分頁先前已在 9.93 一併更新過，這次未再變動。
+
+**刻意不做的事**：`### 9.x` 章節編號目前有 5 組重複（9.87／9.88／9.89／9.90／9.91 各出現兩次，來自不同並行 session 各自往下接續編號），這次沒有重新編號——文件內部有多處用「見 9.83 節」這類編號直接互相引用，強行重新編號有弄壞既有交叉引用的風險，且不影響閱讀（依然照時間新到舊排列），暫時維持現狀。
 
 ### 9.102 新增雙擊上傳工具「上傳更新.command」（2026-08-28）
 
