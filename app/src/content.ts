@@ -5,11 +5,14 @@
 // 之後如果要擴充成 24 個主題，這裡用一個 import.meta.glob 就能自動載入 content/vocab/*.json，
 // 不需要每加一個主題就手動加一行 import。
 
-import type { Badge, Passage, Sentence, Vocab } from "./types";
+import type { Badge, ChangelogEntry, Passage, Sentence, Vocab } from "./types";
 // content/badges/badges.json 是「一份清單」而不是像 vocab/sentences 那樣按主題各自一個檔案，
 // 所以不用 import.meta.glob，直接照 tsconfig 的 resolveJsonModule 設定當一般模組匯入即可，
 // 建置時期會被打包進 JS bundle，執行期不需要額外 fetch。
 import badgesData from "../../content/badges/badges.json";
+// content/changelog.json 跟 badges.json 一樣是單一清單檔案，比照同樣的匯入方式。
+// 這份資料本身已經由新到舊排列，畫面端不用另外排序，直接照陣列順序取前幾則渲染即可。
+import changelogData from "../../content/changelog.json";
 
 const vocabModules = import.meta.glob("../../content/vocab/*.json", {
   eager: true,
@@ -155,3 +158,7 @@ const BADGES = badgesData as Badge[];
 export function getAllBadges(): Badge[] {
   return [...BADGES].sort((a, b) => a.code.localeCompare(b.code));
 }
+
+// content/changelog.json（給使用者看的簡短更新紀錄）本身已經由新到舊排列，這裡不用
+// 另外排序，直接原樣匯出給 renderAbout() 取前 5 則使用。
+export const CHANGELOG: ChangelogEntry[] = changelogData;

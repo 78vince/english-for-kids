@@ -110,3 +110,12 @@ export interface Badge {
   icon_placeholder: string | null;
   status: Status;
 }
+
+// 對應 content/changelog.json——「關於本站」頁面給使用者看的簡短更新紀錄，跟
+// HANDOFF.md（給開發交接用、技術細節很多）是完全不同的兩份東西。資料本身已經由新到舊
+// 排列，畫面端直接照陣列順序取前 5 則渲染即可，不用另外排序。
+export interface ChangelogEntry {
+  date: string; // YYYY-MM-DD
+  title: string;
+  items: string[];
+}

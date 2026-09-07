@@ -1,6 +1,6 @@
 # 兒童英語學習平台 — 專案交接文件（HANDOFF）
 
-最後更新：2026-08-31　　目前階段：**Phase 1～3 全部達標，已正式上架 GitHub Pages（<https://78vince.github.io/english-for-kids/>）**。Phase 1（登入登出、六種文字型題型、成效追蹤）、Phase 2（全部 43 個正式主題＋單元 0，含單元七「文法小幫手」11 個主題，content 端與 App 端皆已接線完成，共 897 個單字／496 句／43 篇短文）、Phase 3（README／授權條款／GitHub Pages 正式上架／首次進站提醒＋「關於本站」使用須知）皆已完成。上架後又完成 3 輪手機版 RWD 修正（`.stage-banner`／`.game-header--with-back` 標題橫向擠壓、字卡作答區喇叭與文字排列、Modal 遮罩在捲動後蓋不滿全螢幕、個人小卡與挑戰紀錄卡片溢出容器等問題）、App 圖示／manifest（可加入主畫面時顯示自訂「羊毛氈字母怪獸 K」圖示）、以及 `上傳更新.command` 自助上傳工具（雙擊即可建置檢查＋跑驗證＋commit＋push，不用再手動下指令）。Phase 4（語音辨識與口說題型）尚未開始，維持延後。過去每一批內容擴充/改版的完整歷程仍保留在下方 9.x 變更紀錄，越新編號越靠上面；本段落之後只在階段性里程碑（Phase 完成、大改版）更新，逐批內容擴充明細請直接看 9.x 系列。
+最後更新：2026-09-07　　目前階段：**Phase 1～3 全部達標，已正式上架 GitHub Pages（<https://78vince.github.io/english-for-kids/>）**。Phase 1（登入登出、六種文字型題型、成效追蹤）、Phase 2（全部 43 個正式主題＋單元 0，含單元七「文法小幫手」11 個主題，content 端與 App 端皆已接線完成，共 897 個單字／496 句／43 篇短文）、Phase 3（README／授權條款／GitHub Pages 正式上架／首次進站提醒＋「關於本站」使用須知）皆已完成。上架後又完成 3 輪手機版 RWD 修正（`.stage-banner`／`.game-header--with-back` 標題橫向擠壓、字卡作答區喇叭與文字排列、Modal 遮罩在捲動後蓋不滿全螢幕、個人小卡與挑戰紀錄卡片溢出容器等問題）、App 圖示／manifest（可加入主畫面時顯示自訂「羊毛氈字母怪獸 K」圖示）、以及 `上傳更新.command` 自助上傳工具（雙擊即可建置檢查＋跑驗證＋commit＋push，不用再手動下指令）。Phase 4（語音辨識與口說題型）尚未開始，維持延後。過去每一批內容擴充/改版的完整歷程仍保留在下方 9.x 變更紀錄，越新編號越靠上面；本段落之後只在階段性里程碑（Phase 完成、大改版）更新，逐批內容擴充明細請直接看 9.x 系列。
 
 專案定位：給家庭／個人使用的兒童英語學習平台，內容以台灣國小階段常見英語學習主題為主要範圍，初期在本地端開發測試，最終上架至 GitHub（開源）。
 
@@ -165,7 +165,83 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
-### 9.103 整理進度並更新所有紀錄文件（2026-08-31）
+### 9.109 App 端執行：「關於本站」頁面新增「更新紀錄」區塊（2026-09-07）
+
+承接 9.108 節的 `docs/handoff-prompt-changelog-section.md`，三個檔案的改動：
+
+1. **`app/src/types.ts`**：新增 `ChangelogEntry` 介面（`date`／`title`／`items: string[]`），對應 `content/changelog.json` 的資料格式。
+2. **`app/src/content.ts`**：比照既有 `badgesData` 的匯入方式新增 `import changelogData from "../../content/changelog.json"`，匯出 `export const CHANGELOG: ChangelogEntry[] = changelogData;`——原樣匯出、不排序，因為 `changelog.json` 本身已經由新到舊排列。
+3. **`app/src/main.ts`**：`renderAbout()` 裡「使用須知」段落之後、版本號（`metaText`）之前新增「更新紀錄」標題＋清單，`CHANGELOG.slice(0, 5)` 只取最新 5 則，不做「查看更多」的展開功能，完全照 handoff 提供的程式碼實作，沒有需要偏離的地方。
+
+`app/src/style.css` 新增 `.changelog-list`／`.changelog-entry`／`.changelog-entry-header`／`.changelog-date`／`.changelog-items` 樣式，沿用 `.about-text` 系列的字級／行距（`--text-body`、1.8 行高），日期用 13px、`--color-ink-muted` 淺灰色跟標題拉開層級。沒有另外寫 `@media (max-width: 640px)`——理由跟 `.about-text` 一致：整段內容本來就是隨 `#app` 容器（`max-width: 1000px`）等比縮放的一般段落/清單，不需要額外斷點，避免重新發明版面規格。
+
+新增 `app/scripts/verify-changelog.ts`（3 個測試）：① `content/changelog.json` 每筆資料的 `date` 符合 `YYYY-MM-DD`、`title`／`items` 不是空字串、`items` 至少 1 條；② `content.ts` 有正確匯入並原樣匯出 `CHANGELOG`；③ `renderAbout()` 有用 `CHANGELOG.slice(0, 5)`，且「更新紀錄」區塊確實放在「使用須知」之後、版本號之前。全部通過。
+
+驗證：`npx tsc --noEmit` 乾淨無錯；全部 29 支 `verify-*.ts`（含新增的這支）重跑皆通過；`npm run build` 成功，手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認 `"更新紀錄"`／`"changelog-entry-header"`／首則更新紀錄的文字內容都有進到最終產出；`dashboard.html`／`content-review.html`／`demo-standalone.html`（App 端與專案根目錄兩份都同步）皆已重新產生。
+
+**這次也是純資料串接＋一般段落排版，已用自動化測試涵蓋讀取／匯出／放置順序**，但實際畫面觀感（標題大小、日期顏色深淺、手機寬度下是否跟其餘「關於本站」內容視覺一致）建議使用者在 `demo-standalone.html` 的「關於本站」頁面實際看一次確認。
+
+### 9.108 新增「更新紀錄」功能：關於本站頁面給使用者看的簡短更新說明（2026-09-07）
+
+平台已經正式上線給更多使用者，使用者提議在網頁裡加一個記錄每次更新內容的地方，但明確要求「說明不用太長」。討論後決定跟 `HANDOFF.md`（技術交接用、上百條、充滿程式碼細節）完全分開，另外做一份給家長看的精簡版：
+
+- **放置位置**：併入現有「關於本站」頁面新增一個「更新紀錄」區塊（使用者選擇，不新增獨立導覽分頁），只顯示最新 5 則。
+- **不做「有新更新」提示**（小紅點之類的機制）——使用者選擇先簡單就好。
+- **回溯歷史**：使用者選擇補 3-5 則重點大事件當開頭，已建立 `content/changelog.json`，先寫入 3 則（正式上線、手機操作優化、App 圖示），用家長看得懂的白話文字，不提技術細節。
+- **維護方式**：`content/changelog.json` 是純資料檔（跟 `badges.json` 同一類），之後每次有使用者感受得到的更新，直接由我編輯這個檔案加一條到最前面即可，**不需要再走 handoff 流程**——這次的 handoff（`docs/handoff-prompt-changelog-section.md`）只需要 App 端做一次性的讀取＋渲染機制（`content.ts` import＋`renderAbout()` 新增區塊＋CSS），之後維護不會再麻煩到 App 端。
+
+### 9.107 App 端執行：Stage B-1 新增「重置字塊」按鈕＋修正答錯次數重複累加（2026-09-07）
+
+承接 9.106 節的 `docs/handoff-prompt-ordering-reset-and-wrongcount.md`，`app/src/orderingGame.ts` 兩處修改：
+
+1. **答錯次數重複累加**：新增 `private wrongCountedThisSentence = false` 旗標（`loadSentence()` 時重置）。`evaluate()` 判定答錯的分支，`wrongCount` 只在 `!wrongCountedThisSentence` 時才 +1 並把旗標設成 true；`wrongStreak`（決定提示/跳過按鈕何時出現）跟 `onWrong()`（答錯音效）維持每次判定都照樣 +1／觸發，不受這個旗標影響，使用者用 `reorderPlaced()` 拖曳調整順序、字塊池清空觸發重新評分時，即使還是錯的，同一句也只會被扣一次。
+2. **重置字塊**：新增公開方法 `resetPlacedTokens()`——把 `placed` 全部字塊送回 `pool`、清空 `placed`、`feedback` 設回 `"building"`、呼叫 `onChange()`；已答對鎖住（`locked === true`）或 `placed` 本來就是空的時候直接 no-op。不會動到 `wrongCount`／`wrongStreak`，跟既有的 `returnToken()` 一樣純粹是排列操作，不算重新作答一次。
+
+`app/src/main.ts` 的 `renderOrdering()` 裡，「🔊 播放整句」按鈕後面加上「↺ 重置字塊」按鈕，顯示條件是 `game.feedback !== "correct" && game.placed.length > 0`（任何時候只要有已放置字塊且這一句還沒鎖住就能按，不限定答錯之後，符合使用者確認過的需求）。
+
+**跟 handoff 建議程式碼的一處差異**：handoff 原本建議顯示條件用 `!game.locked`，但 `orderingGame.ts` 的 `locked` 是 `private` 欄位，`main.ts` 存取不到，會編譯錯誤。動手改之前先 grep 過 `main.ts`，確認全檔案既有慣例（其餘 5 處類似「這一題是否已鎖住」的判斷）都是用 `game.feedback === "correct"`；又讀過 `orderingGame.ts` 全部 7 處 `this.locked` 的賦值點，確認 `locked` 永遠只在 `evaluate()` 判定答對、跟 `feedback = "correct"` 同一個區塊裡被設成 true，`loadSentence()` 重置時也跟 `feedback = "building"` 同步歸零，兩者狀態永遠同步，所以直接改用 `game.feedback !== "correct"`，語意等價，也維持跟全檔案一致的寫法。
+
+新增 `app/scripts/verify-ordering-reset-and-wrongcount.ts`（5 個測試）：① 排錯一次 → `wrongCount === 1`；② 用 `reorderPlaced()` 調整順序但仍答錯 → `wrongCount` 維持 1（不會變 2，這是這次修正的核心迴歸測試）；③ `resetPlacedTokens()` → 答案區淨空、字塊池數量回到全部、`feedback` 回到 `"building"`、`wrongCount` 不受影響；④ 換到下一句後再答錯一次 → `wrongCount` 正常累加到 2（確認只有「同一句內」不會重複疊加，跨句子還是正常累加）；⑤ 已答對鎖住時呼叫 `resetPlacedTokens()` → 確認完全 no-op（`feedback`／`placed`／`pool` 都不變）。全部 5 個測試通過。
+
+驗證：`npx tsc --noEmit` 乾淨無錯；全部 28 支 `verify-*.ts`（含新增的這支）重跑皆通過；`npm run build` 成功，手動 grep 打包後的 `dist/assets/*.js` 確認 `"重置字塊"`／`"resetPlacedTokens"` 兩個字串都有進到最終產出；`dashboard.html`／`content-review.html`／`demo-standalone.html`（App 端與專案根目錄兩份都同步）皆已重新產生。
+
+**這次修改都是純邏輯層面（資料狀態機），已經用自動化測試涵蓋，不需要真的開瀏覽器/實機才能驗證**；但畫面上按鈕的實際排版位置（是否跟其餘按鈕排列整齊、點擊後動畫觀感）建議使用者在 `demo-standalone.html` 裡拿 Parts of Body「My head and my neck hurts, too.」這句實際點一次「↺ 重置字塊」確認手感。
+
+### 9.106 使用者回報：Stage B-1 答錯次數重複累加＋新增「重置字塊」按鈕，撰寫 handoff（2026-09-07）
+
+使用者截圖回報 Parts of Body 主題 Stage B-1 句子排序，「答對 1　答錯 2」的計數不合理。追根究柢是 `orderingGame.ts` 的 `evaluate()` 只要字塊池是空的就會判定一次對錯，使用者排錯後如果用「拖曳調整已放置字塊順序」修正（`reorderPlaced()`），字塊池本來就還是空的，每調整一次就會立刻再判定一次——同一句因此被重複扣分好幾次，造成心理負擔。
+
+順便一併處理使用者提出的另一個需求：新增「重置字塊」按鈕，讓使用者可以一鍵把這一句所有已放置字塊送回字塊池整句重排，不用一個一個手動搬。跟使用者確認過，這個按鈕**任何時候都能按**，不限定答錯之後才出現。
+
+已撰寫 `docs/handoff-prompt-ordering-reset-and-wrongcount.md` 交給 App 端執行，內容包含：新增 `resetPlacedTokens()` 方法＋對應按鈕；新增 `wrongCountedThisSentence` 旗標讓 `wrongCount` 同一句最多只加 1 次（`wrongStreak`〔決定何時出現提示/跳過按鈕〕跟 `onWrong()` 音效都刻意維持每次判定都觸發，不受這個旗標影響）；換句子時（`loadSentence()`）重置旗標。這次邏輯單純、不涉及 UI 動畫，建議可以直接寫 `verify-*.ts` 驗證，不用真的開瀏覽器測。
+
+### 9.105 App 端執行：修正 Stage B-1「Is」字塊發音變 "Ice"（2026-09-07）
+
+承接上一節（9.104）的 `docs/handoff-prompt-stage-b1-is-pronunciation-bug.md`，`app/src/speech.ts` 的 `AMBIGUOUS_STANDALONE_WORDS` 對照表新增一條規則：
+
+```ts
+const AMBIGUOUS_STANDALONE_WORDS: Record<string, string> = {
+  I: "Eye",
+  Is: "Is.",
+};
+```
+
+採用 handoff 建議的候選 1（字尾補句點，讓引擎當作完整短句處理），因為改動最小、風險最低。跟 `AMBIGUOUS_STANDALONE_WORDS` 既有查表機制完全相容——`speakEnglish()` 本來就是 `AMBIGUOUS_STANDALONE_WORDS[text] ?? text` 查表，Stage B-1 字塊池點擊時呼叫 `speakEnglish(token.text)` 保留原始大小寫，句首字塊「Is」會直接命中這條新規則。
+
+- 沒有處理小寫 `is` 的對應規則：handoff 本身也說這是選擇性的（「理論上目前的架構不會發生，因為只有句首字塊會大寫」），而且原本 `speech.ts` 註解裡就記錄過先前排查時「is」（小寫、完整句子情境）已經確認沒問題，這次的 bug 只跟句首大寫字塊有關，維持現有的精確比對（不改成不分大小寫），避免引入不必要的複雜度。
+- 新增 `app/scripts/verify-ambiguous-word-pronunciation.ts`（4 個測試：對照表內容、`speakEnglish()` 有正確查表、`parts_of_body.json`／`places_directions.json` 兩句「Is」開頭句子還在且字塊化後第一個字塊剛好是 `"Is"`、Stage B-1 字塊池點擊確實保留原始大小寫）。
+
+**重要限制說明**：這個修法沒辦法在沒有喇叭/瀏覽器的沙盒環境裡實際聽過確認，是根據 handoff 的推薦順序先採用候選 1，還沒驗證是否真的解決「Ice」誤讀的問題。麻煩實機測過 Parts of Body（「Is your foot bigger than your hand?」）跟 Places & Directions（「Is the hospital near here or over there?」）這兩句的「Is」字塊，確認讀音正常；如果還是被唸成 "Ice"，改用 handoff 列的候選 2（把值換成 `"Izz"`）。
+
+驗證：`npm run build`（`tsc --noEmit && vite build`）通過；全部 27 支 `verify-*.ts`（含新增的 `verify-ambiguous-word-pronunciation.ts`）重跑皆通過；手動 grep 打包後的 `dist/assets/*.js` 確認 `Is."` 字串有進到最終產出；`dashboard.html`／`content-review.html`／`demo-standalone.html`（App 端與專案根目錄兩份都同步）皆已重新產生。這次只改了 `speech.ts` 一個檔案，`main.ts`／`content/` 都沒有改動。
+
+### 9.104 使用者回報：Stage B-1 單獨點「Is」字塊發音變成 "Ice"，撰寫 handoff（2026-09-07）
+
+使用者截圖回報 Parts of Body 主題 Stage B-1 句子排序，句子「Is your foot bigger than your hand?」單獨點句首字塊「Is」時發音變成 "Ice"，其餘字塊跟整句朗讀都正常。這跟先前 9.94/9.95/9.96 節排查過的「I」羅馬數字誤判是同一類問題（`speech.ts` 的 `AMBIGUOUS_STANDALONE_WORDS` 機制），但是不同的字——先前排查「is」時測的是完整句子裡的小寫 is，這次是句首大寫、單獨字塊的「Is」（`app/src/main.ts` 第 751 行 `tokenButton()` 點擊時用原始大小寫呼叫 `speakEnglish(token.text)`），情境不同，不影響先前的結論。
+
+已確認目前 content 裡有 2 句話句首是「Is」（`parts_of_body.json`／`places_directions.json`），撰寫 `docs/handoff-prompt-stage-b1-is-pronunciation-bug.md` 交給 App 端執行，列了兩個候選修法（補句點 `"Is."` 或換拼法 `"Izz"`），因為沙盒沒有喇叭/瀏覽器語音沒辦法直接驗證哪個有效，請 App 端實機測試後擇一採用。
+
+### 9.103 整理進度並更新所有紀錄文件（2026-09-07）
 
 使用者要求「整理目前的進度內容並更新所有紀錄」。檢查後發現 `HANDOFF.md` 開頭幾個結構性段落從 2026-08-25 之後就沒再同步更新過，跟 9.x 系列最新記錄（含 Phase 3 上線、單元七接線、三輪手機版 RWD 修正、App 圖示、`上傳更新.command`）明顯脫節，容易讓人誤以為專案還停在 Phase 2 進行中。這次整理內容：
 

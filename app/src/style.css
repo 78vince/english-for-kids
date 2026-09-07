@@ -2242,6 +2242,46 @@ body {
   color: inherit;
 }
 
+/* 「更新紀錄」區塊（renderAbout()，資料來源 content/changelog.json）——給使用者看的
+   簡短更新說明，跟上面的「使用須知」段落一樣沿用 .about-text 系列的字級／行距慣例，
+   不另外發明版面規格；只有日期用更小、更淡的顏色跟標題拉開層級。手機版沒有另外寫
+   @media (max-width: 640px)，理由跟 .about-text 一致：整段內容本來就是隨 #app 容器
+   （max-width: 1000px）等比縮放的一般段落/清單，不需要額外斷點。 */
+.changelog-list {
+  margin-top: var(--space-4);
+}
+
+.changelog-entry {
+  margin-top: var(--space-5);
+}
+
+.changelog-entry-header {
+  margin: 0;
+  font-size: var(--text-body);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.changelog-date {
+  margin-right: var(--space-2);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-ink-muted);
+}
+
+.changelog-items {
+  margin: var(--space-2) 0 0;
+  padding-left: 1.25em;
+  list-style: disc;
+}
+
+.changelog-items li {
+  margin-top: var(--space-1);
+  font-size: var(--text-body);
+  color: var(--color-ink-muted);
+  line-height: 1.8;
+}
+
 /* 底部裝飾插畫（renderAbout() 最後 appendChild 的 <img>）——純裝飾，隨 #app 容器
    （max-width: 1000px，見本檔第 43 行）等比縮放，不用另外寫 media query。
    margin-top 特意比 .about-text 段落間距更大，做出「內文結束、圖片是獨立裝飾區塊」

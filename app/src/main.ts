@@ -10,6 +10,7 @@
 
 import "./style.css";
 import {
+  CHANGELOG,
   getAllBadges,
   getPassageByTopic,
   getSentencesByTopic,
@@ -2311,6 +2312,38 @@ function renderAbout(): void {
     app!.appendChild(p);
   }
 
+  // 「更新紀錄」：給使用者看的簡短更新說明，跟 HANDOFF.md（開發交接用、技術細節很多）
+  // 完全分開。資料來源 content/changelog.json 本身已經由新到舊排列（見 CHANGELOG 的說明），
+  // 這裡只取最新 5 則，不做「查看更多」之類的展開功能，維持簡單。
+  const changelogSectionTitle = document.createElement("h2");
+  changelogSectionTitle.className = "section-heading";
+  changelogSectionTitle.textContent = "更新紀錄";
+  app!.appendChild(changelogSectionTitle);
+
+  const changelogList = document.createElement("div");
+  changelogList.className = "changelog-list";
+  for (const entry of CHANGELOG.slice(0, 5)) {
+    const entryEl = document.createElement("div");
+    entryEl.className = "changelog-entry";
+
+    const entryHeader = document.createElement("p");
+    entryHeader.className = "changelog-entry-header";
+    entryHeader.innerHTML = `<span class="changelog-date">${entry.date}</span> ${entry.title}`;
+    entryEl.appendChild(entryHeader);
+
+    const list = document.createElement("ul");
+    list.className = "changelog-items";
+    for (const item of entry.items) {
+      const li = document.createElement("li");
+      li.textContent = item;
+      list.appendChild(li);
+    }
+    entryEl.appendChild(list);
+
+    changelogList.appendChild(entryEl);
+  }
+  app!.appendChild(changelogList);
+
   // 版本號直接讀 package.json 的 version 欄位（見檔案開頭的 import pkg），不在這裡
   // 另外寫死一份版本字串，避免以後升版了兩處數字不同步。
   const metaText = document.createElement("p");
@@ -2858,6 +2891,21 @@ function renderOrdering(): void {
     playBtn.textContent = "🔊 播放整句";
     playBtn.addEventListener("click", () => speakEnglish(game.currentSentence.en));
     app!.appendChild(playBtn);
+
+    // 「重置字塊」：一鍵把這一句所有已放置字塊送回字塊池，讓使用者可以整句重排，
+    // 不用一個一個手動點/拖回去。任何時候（不限定答錯之後）只要有已放置字塊、
+    // 這一句還沒答對鎖住，就能按；是可逆操作、不扣分，所以不用二次確認彈窗。
+    // game.locked 是 OrderingGame 內部私有欄位，main.ts 這邊比照全檔案既有慣例
+    // （其他 Stage 畫面判斷「這一題是否已鎖住」都用 feedback === "correct"），
+    // 用 game.feedback !== "correct" 當作等價判斷（locked 只會在 evaluate() 判定
+    // 答對、feedback 同時設成 "correct" 時才變 true，兩者狀態永遠同步）。
+    if (game.feedback !== "correct" && game.placed.length > 0) {
+      const resetBtn = document.createElement("button");
+      resetBtn.className = "secondary-btn";
+      resetBtn.textContent = "↺ 重置字塊";
+      resetBtn.addEventListener("click", () => game.resetPlacedTokens());
+      app!.appendChild(resetBtn);
+    }
 
     if (game.feedback === "wrong") {
       const wrongMsg = document.createElement("p");

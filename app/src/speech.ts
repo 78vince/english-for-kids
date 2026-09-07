@@ -11,8 +11,21 @@
 // 繞開這個問題；不影響完整句子的發音。
 // （檢查過其他會出現在句子裡的短字：is / in / us / He / It / My / my——都不是羅馬數字也不是
 // 容易跟字母名稱搞混的字，目前沒有觀察到同樣的問題，所以先只處理 I。）
+//
+// 2026-08-28 使用者手機實測回報：Parts of Body 主題「Is your foot bigger than your hand?」
+// 這句話拆成 Stage B-1 字塊後，單獨點句首字塊「Is」（大寫，保留原句大小寫）會被引擎唸成
+// "Ice"。跟 "I" 是同一類「單獨一個字塊送進 TTS，前後文不足夠判斷詞性/詞義」的問題，但
+// 不是同一個字——先前排查 "is" 時測的是完整句子裡的小寫 is（例如 "He is happy."），跟
+// 這次「句首、大寫、單獨字塊」的情境不衝突，只是先前沒涵蓋到。這裡先採用 handoff 建議的
+// 候選 1（字尾補句點成 "Is."，讓引擎當作完整短句處理，而不是被當成單一縮寫字判斷）——
+// 這個修法沒辦法在沒有喇叭/瀏覽器的沙盒環境裡實際聽過確認，是根據 handoff 的推薦順序
+// 先採用，還沒驗證有沒有真的解決。麻煩實機測過 Parts of Body／Places & Directions 這兩句
+// 話的「Is」字塊，如果還是被唸成 "Ice"，改用 handoff 列的候選 2（把值換成 "Izz"）。
+// places_directions.json 的「Is the hospital near here or over there?」也是同樣的句首
+// 「Is」字塊，同一條規則就能一起修好，不用個別處理。
 const AMBIGUOUS_STANDALONE_WORDS: Record<string, string> = {
   I: "Eye",
+  Is: "Is.",
 };
 
 // 瀏覽器的語音清單（SpeechSynthesisVoice）沒有正式的「性別」欄位，只能靠名字裡的關鍵字

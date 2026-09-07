@@ -56,6 +56,11 @@ export class OrderingGame {
   /** 這一句連續答錯的次數，答對或換下一句就歸零；用來決定何時出現提示/跳過按鈕 */
   wrongStreak = 0;
 
+  /** 這一句「答錯次數」有沒有已經算過一次——同一句不管中途調整幾次都只算 1 次答錯，
+   * 避免使用者用拖曳調整順序時，每調整一次就重複扣分，造成心理負擔。
+   * 答對、跳過、換下一句（loadSentence）都會重置。 */
+  private wrongCountedThisSentence = false;
+
   /** 這一整輪（從進到 Stage B-1 到全部句子答完）有沒有用過提示——只要用過一次就一直是 true，
    * 不會在換下一句時重置，給「完美關卡」成就徽章（PF-01：全對且未使用提示）判斷用。 */
   hintUsedThisRound = false;
@@ -102,6 +107,7 @@ export class OrderingGame {
     this.feedback = "building";
     this.locked = false;
     this.wrongStreak = 0;
+    this.wrongCountedThisSentence = false;
     this.placed = [];
     if (index >= this.sentences.length) {
       this.pool = [];
@@ -169,6 +175,20 @@ export class OrderingGame {
     token.status = "pool";
     this.pool.push(token);
     if (this.feedback === "wrong") this.feedback = "building";
+    this.onChange();
+  }
+
+  /** 把這一句「全部」已放置的字塊一次送回字塊池，讓使用者可以整句重排。
+   * 跟 returnToken() 一樣不會動到 wrongCount／wrongStreak，純粹是排列操作，
+   * 不算「重新作答一次」。已經答對鎖住（locked）或本來就沒有已放置字塊時，什麼都不做。 */
+  resetPlacedTokens(): void {
+    if (this.locked || this.placed.length === 0) return;
+    for (const token of this.placed) {
+      token.status = "pool";
+    }
+    this.pool.push(...this.placed);
+    this.placed = [];
+    this.feedback = "building";
     this.onChange();
   }
 
@@ -276,7 +296,14 @@ export class OrderingGame {
     // 答錯了：保留使用者目前排的順序，不重新洗牌、不鎖住畫面——
     // 讓孩子自己看得出哪裡錯了，再手動調整，而不是被系統直接打回重來。
     this.feedback = "wrong";
-    this.wrongCount += 1;
+    // wrongCount（拿去做成效紀錄／畫面「答對 X 答錯 Y」顯示用）同一句最多只算 1 次，
+    // 避免使用者用 reorderPlaced() 拖曳調整順序時，每調整一次就重複扣分；wrongStreak
+    // （決定何時出現提示/跳過按鈕）跟 onWrong()（答錯音效）維持每次判定都 +1／觸發，
+    // 讓使用者每次調整後都還是能得到「還不對」的回饋，不會因為這個修正變得沒有反應。
+    if (!this.wrongCountedThisSentence) {
+      this.wrongCount += 1;
+      this.wrongCountedThisSentence = true;
+    }
     this.wrongStreak += 1;
     this.onChange();
     this.onWrong();
