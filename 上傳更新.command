@@ -22,7 +22,7 @@ if ! (cd app && npm run build); then
   echo ""
   echo "⚠️ 建置失敗，可能是相依套件損毀（常見於 Node.js 版本更新後，Rollup 的原生模組跟舊的"
   echo "   node_modules 對不上，出現 MODULE_NOT_FOUND 之類的錯誤）。自動重新安裝一次相依套件再試一次..."
-  rm -rf app/node_modules app/package-lock.json
+  command rm -rf app/node_modules app/package-lock.json
   (cd app && npm install)
   echo ""
   echo "重新安裝完成，再試一次建置..."
