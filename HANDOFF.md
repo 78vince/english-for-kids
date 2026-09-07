@@ -165,6 +165,14 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.110 修正「上傳更新.command」遇到 node_modules 損毀時不會自動重裝的問題（2026-09-07）
+
+使用者雙擊 `上傳更新.command` 時，`npm run build` 失敗，錯誤是 Rollup 原生模組 `MODULE_NOT_FOUND`（`rollup/dist/native.js`），這是 npm 安裝 optional native dependency 時常見的已知問題，通常發生在 Node.js 版本更新後，舊的 `node_modules` 裡快取的原生模組跟新版 Node 對不上。
+
+原本的腳本只在 `app/node_modules` **完全不存在**時才會 `npm install`，這種「資料夾存在但裡面東西壞掉」的情況完全沒被涵蓋到，使用者會卡住沒辦法自己排除。已修正：`npm run build` 失敗時，自動 `rm -rf app/node_modules app/package-lock.json` 重新安裝一次再重試一次建置，不用使用者自己開 Terminal 手動操作。
+
+也同步請使用者先手動跑一次 `rm -rf node_modules package-lock.json && npm install`（在 `app/` 目錄下）解決當下卡住的狀況，之後同類問題腳本會自己處理。
+
 ### 9.109 App 端執行：「關於本站」頁面新增「更新紀錄」區塊（2026-09-07）
 
 承接 9.108 節的 `docs/handoff-prompt-changelog-section.md`，三個檔案的改動：
