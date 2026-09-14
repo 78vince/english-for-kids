@@ -165,6 +165,16 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.111 使用者回報：Kitchen & Dining（tableware）Stage B-1 例句語意不清，直接改寫（2026-09-14）
+
+使用者截圖回報 Kitchen & Dining 主題（`content/sentences/tableware.json`，`fileKey` 是舊名 `tableware`）第 7 句「I use a straw, and the waiter puts the food on a tray.」語意不明——這句把「我自己用吸管喝東西」跟「服務生把食物放上托盤」兩個完全不相干情境（居家 vs. 餐廳服務生）硬用 and 接在一起，跟先前 9.9x 節修過的 Greetings 例句是同一類問題（為了塞進兩個 vocab_id 硬湊句子）。
+
+這是 content 端問題，直接修改，不用寫 handoff：改成單一情境的句子「I put the cup with a straw on the tray.」（我把插著吸管的杯子放到托盤上），`voc.tableware.018`（straw）／`voc.tableware.019`（tray）兩個目標單字都還在，`grammar_point` 改成「介系詞片語修飾名詞」，比原本的「and 連接兩個子句」更準確描述新句子的文法重點。
+
+驗證：全部 `verify-*.ts` 重跑皆通過；`app/demo-standalone.html`／根目錄 `demo-standalone.html`／`dashboard.html` 皆已重新產生同步。
+
+**附帶記錄**：這次驗證時發現沙盒環境的 `app/node_modules` 也遇到跟使用者 Mac 端同一類「Rollup 原生模組 MODULE_NOT_FOUND」問題（只是換成 `@rollup/rollup-linux-x64-gnu` 版本），原因是 `node_modules/` 是共用掛載資料夾、不進版本控制（`.gitignore` 已排除），沙盒（Linux）跟使用者的 Mac 分別 `npm install` 會裝各自平台的原生模組，交互使用時難免遇到平台不合的暫時狀態，重新 `npm install` 一次就解決，不影響最終產出內容，純粹紀錄備查。
+
 ### 9.110 修正「上傳更新.command」遇到 node_modules 損毀時不會自動重裝的問題（2026-09-07）
 
 使用者雙擊 `上傳更新.command` 時，`npm run build` 失敗，錯誤是 Rollup 原生模組 `MODULE_NOT_FOUND`（`rollup/dist/native.js`），這是 npm 安裝 optional native dependency 時常見的已知問題，通常發生在 Node.js 版本更新後，舊的 `node_modules` 裡快取的原生模組跟新版 Node 對不上。

@@ -85,11 +85,11 @@
   },
   {
     "id": "sent.tableware.b1.007",
-    "en": "I use a straw, and the waiter puts the food on a tray.",
-    "zh": "我用吸管，服務生把食物放在托盤上。",
+    "en": "I put the cup with a straw on the tray.",
+    "zh": "我把插著吸管的杯子放到托盤上。",
     "topic": "tableware",
     "stage": "B",
-    "grammar_point": "and 連接兩個子句",
+    "grammar_point": "介系詞片語修飾名詞",
     "vocab_ids": [
       "voc.tableware.018",
       "voc.tableware.019"
