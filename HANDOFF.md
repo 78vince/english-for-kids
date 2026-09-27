@@ -165,6 +165,16 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.120 使用者回報：手機語音跟預期不同，撰寫「語音設定」handoff（2026-09-27）
+
+使用者手機實測回報：唸出來的英文聲音跟電腦上聽到的不一樣，問能不能讓使用者自己選語音系統。評估後確認技術上可行——`app/src/speech.ts` 的 `pickPreferredVoice()`／`pickBennyVoice()`／`pickUserDialogueVoice()` 本來就是拿 `window.speechSynthesis.getVoices()`（這台裝置本身的語音清單）自動猜測，`app/src/voiceLab.ts`（語音比較實驗室）也已經把「列出裝置語音、猜性別、試聽」這套邏輯寫好了，這次只是要把類似的功能簡化後開放給一般使用者用。跟使用者確認範圍：不只是通用發音，Stage E 會話練習的 Benny（男聲）跟使用者回答（女聲）兩個角色也要能各自手動指定。
+
+寫好 handoff 交給 App 端執行：見 `docs/handoff-prompt-voice-selection-setting.md`，內容涵蓋：
+- `speech.ts` 新增三把裝置層級 localStorage key（`voiceGeneral.v1`／`voiceBenny.v1`／`voiceUserReply.v1`，比照 `SLOW_MODE_STORAGE_KEY` 的裝置設定寫法，刻意不跟帳號綁定，因為手機跟電腦的語音清單完全不同）＋ `getVoiceOverride()`／`setVoiceOverride()`／`getAvailableEnglishVoices()`／`previewVoiceByName()` 四個新 export。
+- 三個挑選函式開頭都先檢查有沒有手動覆寫，且覆寫的語音名稱要先確認在這台裝置目前的清單裡真的存在，找不到就乾淨 fallback 回原本的自動偵測邏輯。
+- `main.ts` 的 `renderProfileDetail()`（個人檔案頁）新增「🔊 語音設定」區塊，三個角色各一個下拉選單＋試聽按鈕，UI 大幅簡化（不像 Voice Lab 有 tab 分類跟音調/語速滑桿），並在文案裡明確告知這是裝置設定、換裝置要重選。
+- 特別提醒：這個功能沒辦法在沒有喇叭的開發沙盒裡實際聽過驗證，上線前務必實機測試手機語音清單有正常列出、試聽/套用有生效、換裝置會乾淨恢復自動模式。
+
 ### 9.119 App 端執行：單元/主題完成度徽章改為要求 Stage D + Stage E（2026-09-27）
 
 依 `docs/handoff-prompt-unit-completion-requires-stage-e.md` 執行，對應 9.118 的請求。
