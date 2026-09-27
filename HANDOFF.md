@@ -165,6 +165,21 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.121 App 端執行：新增「語音設定」——讓使用者自己選這台裝置要用哪個語音（2026-09-27）
+
+依 `docs/handoff-prompt-voice-selection-setting.md` 執行，對應 9.120 的請求。
+
+- **`app/src/speech.ts` 新增裝置層級語音覆寫設定**：三把 localStorage key（`englishForKids.settings.voiceGeneral.v1`／`voiceBenny.v1`／`voiceUserReply.v1`，對應 `VoiceRole = "general" | "benny" | "userReply"`），比照既有 `SLOW_MODE_STORAGE_KEY` 的寫法，是「裝置設定」不分使用者 profile。新增 `getVoiceOverride(role)`／`setVoiceOverride(role, name|null)`（傳 `null` 對應 `localStorage.removeItem`，清除設定改回自動偵測）／`resolveVoiceOverride(role)`（內部函式，只有選過的語音在這台裝置目前的清單裡真的存在才回傳，找不到就回傳 `undefined` 讓呼叫端 fallback 回自動偵測，不會卡在「選了但沒聲音」）三個核心函式。
+- `pickPreferredVoice()`／`pickBennyVoice()`／`pickUserDialogueVoice()` 三個函式開頭都先呼叫對應角色的 `resolveVoiceOverride(...)`，`if (override) return override;`——確認手動選擇的優先權真的蓋過原本的自動偵測邏輯，不是加在後面永遠不會被走到。
+- 新增兩個給設定畫面用的輔助 export：`getAvailableEnglishVoices()`（只列英語語音、排除卡通/老舊特效聲音，沿用檔案既有的 `KNOWN_FEMALE/MALE_VOICE_NAME_HINTS`／`isNoveltyVoice()` 判斷規則，推薦的排前面）、`previewVoiceByName(voiceName, sampleText)`（試聽按鈕用，直接指定語音唸一句範例句，不經過三個角色的自動判斷邏輯）。
+- **`app/src/main.ts`**：`renderProfileDetail()`（個人檔案頁）帳號設定按鈕跟危險操作（重置進度／刪除使用者）之間新增獨立的「🔊 語音設定」卡片區塊（`renderVoiceSettingsSection()`），三個角色各一個下拉選單（含「自動（系統推薦）」選項）＋試聽按鈕，文案明確寫「這是這台裝置的設定，不會跟著帳號走，換裝置要重新選一次」；同時把原本跟帳號設定按鈕共用同一個 `.profile-settings-actions` 容器的危險操作按鈕拆成獨立的 `dangerActions` 容器，讓語音設定區塊能插在兩者中間。另外掛上 `window.speechSynthesis.addEventListener("voiceschanged", ...)`，只在使用者停留在 `profileDetail` 畫面時才 `render()`，處理手機瀏覽器語音清單非同步載入、剛進頁面時清單是空的問題。
+- **CSS**：新增 `.voice-settings-section`（卡片留白，比照個人檔案頁其餘區塊間距）、`.voice-settings-hint`（淺色說明文字，仿 `.about-text`）、`.voice-settings-row`（label + select + 試聽按鈕橫向排列，640px 斷點改直排，沿用專案既有的窄螢幕直排寫法）、`.voice-settings-select`、`.voice-settings-preview-btn`（圓角按鈕樣式仿 `.secondary-btn`）。
+- **驗證**（新增 `app/scripts/verify-voice-selection-setting.ts`）：因為這個功能牽涉瀏覽器專屬的 `speechSynthesis` API，沒辦法在無喇叭的沙盒裡真的出聲驗證，比照 `verify-vocab-overview-english-toggle.ts` 的靜態原始碼比對手法，寫了 6 個測試：(1) 四個新 export 都存在，`setVoiceOverride(role, null)` 正確對應 `localStorage.removeItem`；(2) 三個挑選函式都在函式最前面就呼叫 `resolveVoiceOverride(...)` 並立刻 `if (override) return override;`，確認優先權真的排在自動偵測之前而不是永遠不會被走到的死碼；(3) `renderProfileDetail()` 有實際呼叫並掛上語音設定區塊，三個角色跟裝置設定說明文字都涵蓋到；(4) 三把 localStorage key 字串都存在且互不相同；(5) `voiceschanged` 監聽有正確掛上且只在 `profileDetail` 畫面才重繪；(6) CSS 涵蓋所有需要的樣式類別。全部通過，其餘既有 `verify-*.ts` 也全部重跑一次都通過。
+- `npx tsc --noEmit`、`npm run build` 都通過；有 grep 打包後的 `dist/assets/main-*.js`／`*.css` 確認 `voice-settings-section`／三把 key 字串／「語音設定」「這是這台裝置的設定」都真的進到最終產出。
+- **環境小插曲**：這次 build 一開始又遇到跟 9.109 一樣的 Rollup 原生模組 `MODULE_NOT_FOUND`（`node_modules` 裡殘留 macOS 版原生二進位，Linux 沙盒讀不到對應的 Linux 版）——`app/package.json` 本身已經沒有問題（9.109 移除的那行沒有復發），單純是這次沙盒裡的 `node_modules` 沒裝好，`rm -rf node_modules && npm install` 重裝一次就正常了，這次沒有再發現 `package.json` 本身的異常，`app/package-lock.json` 因為重裝而有版本雜湊更新，屬於正常變動。
+- **重要提醒（沒辦法在沙盒裡實機驗證，麻煩之後實際測試）**：手機上打開「個人檔案」頁確認語音清單有正常列出（不是空的）；選一個語音、按試聽，確認真的用選的那個聲音唸；回主題玩字卡/例句朗讀、進 Stage E 會話練習，確認通用發音跟 Benny／使用者回答兩個角色都套用了剛剛選的設定；選單選回「自動（系統推薦）」能乾淨清除設定；換一台裝置或清瀏覽器資料，確認乾淨回到「自動」不會卡住。
+- 沒有動到會話練習（voiceLab／conversationGame）相關檔案本身的邏輯，也沒有執行任何 git 操作。
+
 ### 9.120 使用者回報：手機語音跟預期不同，撰寫「語音設定」handoff（2026-09-27）
 
 使用者手機實測回報：唸出來的英文聲音跟電腦上聽到的不一樣，問能不能讓使用者自己選語音系統。評估後確認技術上可行——`app/src/speech.ts` 的 `pickPreferredVoice()`／`pickBennyVoice()`／`pickUserDialogueVoice()` 本來就是拿 `window.speechSynthesis.getVoices()`（這台裝置本身的語音清單）自動猜測，`app/src/voiceLab.ts`（語音比較實驗室）也已經把「列出裝置語音、猜性別、試聽」這套邏輯寫好了，這次只是要把類似的功能簡化後開放給一般使用者用。跟使用者確認範圍：不只是通用發音，Stage E 會話練習的 Benny（男聲）跟使用者回答（女聲）兩個角色也要能各自手動指定。

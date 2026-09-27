@@ -33,6 +33,11 @@ import {
   stopSpeaking,
   isSlowSpeechEnabled,
   setSlowSpeechEnabled,
+  getVoiceOverride,
+  setVoiceOverride,
+  getAvailableEnglishVoices,
+  previewVoiceByName,
+  type VoiceRole,
 } from "./speech";
 import { computeLearningPoints } from "./points";
 import {
@@ -398,6 +403,17 @@ if (restoredProfile) {
 }
 
 let screen: Screen = activeProfile ? "topicSelect" : "profileSelect";
+
+// 手機瀏覽器的語音清單常常是非同步載入的（speech.ts 內部也有同樣的
+// window.speechSynthesis.onvoiceschanged 監聽去更新它自己的快取）——如果使用者剛好
+// 停在「個人檔案」頁的語音設定區塊，清單載入完成後要重新畫一次，下拉選單才會補上完整
+// 清單，不然可能只剩「自動（系統推薦）」一個選項可選。只在 profileDetail 畫面時才重繪，
+// 避免使用者在別的畫面時被無關的重新渲染打斷。
+if (typeof window !== "undefined" && "speechSynthesis" in window) {
+  window.speechSynthesis.addEventListener("voiceschanged", () => {
+    if (screen === "profileDetail") render();
+  });
+}
 
 /** 離開短文理解畫面前的收尾：全文朗讀如果還在播就停掉，按鈕狀態也一併重置，
  * 不然使用者切到別的畫面聲音還會繼續唸、回來時按鈕又顯示錯的狀態。
@@ -2327,6 +2343,85 @@ function renderProfileAchievementsGrid(profileId: string): HTMLElement {
   return section;
 }
 
+/** 「語音設定」區塊：讓使用者自己指定這台裝置的三個發音角色（通用發音／Stage E 小熊
+ * Benny／Stage E 使用者回答）要用哪個語音，蓋過 speech.ts 各自的自動偵測邏輯。這是
+ * 「裝置設定」，不是「帳號設定」——存在 localStorage、不分使用者 profile，因為手機/
+ * 電腦內建的語音清單完全不同，如果綁到帳號，換裝置玩就會找不到同名語音、設定形同失效，
+ * 所以文案要清楚寫「這是這台裝置的設定，換裝置要重新選」。
+ * 選單只列英語語音、排除卡通/老舊特效聲音，不做 Voice Lab 那種黑白名單標籤／音調語速
+ * 滑桿——一般使用者只需要「選一個、聽一下、滿意就好」。 */
+function renderVoiceSettingsSection(): HTMLDivElement {
+  const section = document.createElement("div");
+  section.className = "voice-settings-section";
+
+  const title = document.createElement("h3");
+  title.textContent = "🔊 語音設定";
+  section.appendChild(title);
+
+  const hint = document.createElement("p");
+  hint.className = "voice-settings-hint";
+  hint.textContent = "這是這台裝置的設定，不會跟著帳號走——換到別的手機或電腦時，需要重新選一次。不選就會用系統自動推薦的語音。";
+  section.appendChild(hint);
+
+  const roles: { role: VoiceRole; label: string; sample: string }[] = [
+    { role: "general", label: "通用發音（單字／例句／短文朗讀）", sample: "Hello! Nice to meet you." },
+    { role: "benny", label: "🐻 小熊 Benny（會話練習男聲角色）", sample: "Good morning! How are you?" },
+    { role: "userReply", label: "👧 使用者回答（會話練習女聲角色）", sample: "Good morning! I am doing great!" },
+  ];
+
+  const voiceOptions = getAvailableEnglishVoices();
+
+  for (const { role, label, sample } of roles) {
+    const row = document.createElement("div");
+    row.className = "voice-settings-row";
+
+    const rowLabel = document.createElement("label");
+    rowLabel.textContent = label;
+    row.appendChild(rowLabel);
+
+    const select = document.createElement("select");
+    select.className = "voice-settings-select";
+
+    const autoOption = document.createElement("option");
+    autoOption.value = "";
+    autoOption.textContent = "自動（系統推薦）";
+    select.appendChild(autoOption);
+
+    for (const opt of voiceOptions) {
+      const optionEl = document.createElement("option");
+      optionEl.value = opt.name;
+      const genderLabel = opt.gender === "female" ? "女聲" : opt.gender === "male" ? "男聲" : "";
+      optionEl.textContent = `${opt.recommended ? "🌟 " : ""}${opt.name}${genderLabel ? `（${genderLabel}）` : ""}`;
+      select.appendChild(optionEl);
+    }
+
+    select.value = getVoiceOverride(role) ?? "";
+    select.addEventListener("change", () => {
+      setVoiceOverride(role, select.value === "" ? null : select.value);
+    });
+    row.appendChild(select);
+
+    const previewBtn = document.createElement("button");
+    previewBtn.type = "button";
+    previewBtn.className = "voice-settings-preview-btn";
+    previewBtn.textContent = "🔊 試聽";
+    previewBtn.addEventListener("click", () => {
+      const voiceName = select.value || getVoiceOverride(role);
+      if (voiceName) {
+        previewVoiceByName(voiceName, sample);
+      } else {
+        // 選的是「自動」，還沒真的選過語音——就直接唸一句讓使用者聽聽目前自動猜的聲音
+        speakEnglish(sample);
+      }
+    });
+    row.appendChild(previewBtn);
+
+    section.appendChild(row);
+  }
+
+  return section;
+}
+
 function renderProfileDetail(): void {
   appendShell("profile");
 
@@ -2400,11 +2495,20 @@ function renderProfileDetail(): void {
     render();
   });
   settingsActions.appendChild(changeNameBtn);
+  app!.appendChild(settingsActions);
+
+  // ---- 語音設定：讓使用者自己指定這台裝置的三個發音角色要用哪個語音（通用發音／
+  // Stage E 小熊 Benny／Stage E 使用者回答）。放在帳號設定按鈕跟下面的危險操作
+  // 之間——這是「裝置設定」，不是帳號設定，見 renderVoiceSettingsSection() 說明。 ----
+  app!.appendChild(renderVoiceSettingsSection());
 
   // ---- 危險操作：重置進度紀錄、刪除這個使用者——跟上面兩個按鈕排在同一列，
   // 用 #FF6B6B 警示色（.danger-btn）跟一般的帳號設定按鈕區隔開來，提醒這兩個是
   // 不可逆的動作（原本重置進度放在題型選單頁、刪除使用者放在選使用者畫面，
   // 改版後都收進「個人檔案」頁，刪除也只能刪自己目前登入的這個使用者）----
+  const dangerActions = document.createElement("div");
+  dangerActions.className = "profile-settings-actions";
+
   const resetBtn = document.createElement("button");
   resetBtn.className = "secondary-btn danger-btn";
   resetBtn.textContent = "重置進度紀錄";
@@ -2418,7 +2522,7 @@ function renderProfileDetail(): void {
       render();
     }
   });
-  settingsActions.appendChild(resetBtn);
+  dangerActions.appendChild(resetBtn);
 
   const deleteBtn = document.createElement("button");
   deleteBtn.className = "secondary-btn danger-btn";
@@ -2432,9 +2536,9 @@ function renderProfileDetail(): void {
       logout();
     }
   });
-  settingsActions.appendChild(deleteBtn);
+  dangerActions.appendChild(deleteBtn);
 
-  app!.appendChild(settingsActions);
+  app!.appendChild(dangerActions);
 
   if (profileDetailJustSaved) {
     const savedMsg = document.createElement("p");

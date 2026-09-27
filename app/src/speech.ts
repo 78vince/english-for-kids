@@ -121,8 +121,103 @@ function currentRate(): number {
   return slowModeEnabled ? SLOW_RATE : NORMAL_RATE;
 }
 
+// 「語音設定」功能：讓使用者自己手動指定這台裝置要用哪個語音，蓋過下方三個角色各自的
+// 自動偵測邏輯。這是「裝置設定」不是「帳號設定」——跟 SLOW_MODE_STORAGE_KEY 同一個等級，
+// 存在 localStorage、不分使用者 profile、不能存到雲端，因為手機/電腦的語音清單完全不同，
+// 綁到帳號換裝置就會找不到同名語音。
+const VOICE_OVERRIDE_GENERAL_STORAGE_KEY = "englishForKids.settings.voiceGeneral.v1";
+const VOICE_OVERRIDE_BENNY_STORAGE_KEY = "englishForKids.settings.voiceBenny.v1";
+const VOICE_OVERRIDE_USER_REPLY_STORAGE_KEY = "englishForKids.settings.voiceUserReply.v1";
+
+export type VoiceRole = "general" | "benny" | "userReply";
+
+const VOICE_OVERRIDE_KEYS: Record<VoiceRole, string> = {
+  general: VOICE_OVERRIDE_GENERAL_STORAGE_KEY,
+  benny: VOICE_OVERRIDE_BENNY_STORAGE_KEY,
+  userReply: VOICE_OVERRIDE_USER_REPLY_STORAGE_KEY,
+};
+
+/** 讀取使用者手動指定的語音名稱（SpeechSynthesisVoice.name）。
+ * 回傳 null 代表「沒有手動選過，維持自動偵測」——這是預設值，確保沒動過這個設定的人
+ * 行為完全不變。 */
+export function getVoiceOverride(role: VoiceRole): string | null {
+  if (typeof window === "undefined") return null;
+  try {
+    return window.localStorage.getItem(VOICE_OVERRIDE_KEYS[role]);
+  } catch {
+    return null;
+  }
+}
+
+/** 傳入 null 代表清除設定、改回自動偵測（對應 UI 下拉選單裡的「自動（系統推薦）」選項）。 */
+export function setVoiceOverride(role: VoiceRole, voiceName: string | null): void {
+  if (typeof window === "undefined") return;
+  try {
+    if (voiceName === null) {
+      window.localStorage.removeItem(VOICE_OVERRIDE_KEYS[role]);
+    } else {
+      window.localStorage.setItem(VOICE_OVERRIDE_KEYS[role], voiceName);
+    }
+  } catch {
+    // 忽略，跟其餘模組一致的容錯方式
+  }
+}
+
+/** 如果使用者手動選過，而且這個語音名稱在「這台裝置目前的語音清單」裡真的存在，就用它；
+ * 找不到（例如瀏覽器更新後語音改名、或是把 localStorage 從別的裝置複製過來）就回傳
+ * undefined，呼叫端要自己 fallback 回原本的自動偵測邏輯，不能讓使用者卡在「選了但沒聲音」。 */
+function resolveVoiceOverride(role: VoiceRole): SpeechSynthesisVoice | undefined {
+  const name = getVoiceOverride(role);
+  if (!name) return undefined;
+  if (cachedVoices.length === 0) refreshVoiceCache();
+  return cachedVoices.find((v) => v.name === name);
+}
+
+export interface VoiceOption {
+  name: string;
+  lang: string;
+  gender: "female" | "male" | "neutral";
+  recommended: boolean; // 對應 voiceLab.ts 的「白名單」：英語、排除卡通/老舊特效聲音
+}
+
+/** 給「語音設定」畫面列清單用：只列英語語音，排除卡通/老舊特效聲音，推薦的排在前面。
+ * 判斷邏輯直接沿用檔案最上方既有的 KNOWN_FEMALE/MALE_VOICE_NAME_HINTS、isNoveltyVoice()，
+ * 跟 voiceLab.ts 是同一套規則但各自維護一份（voiceLab.ts 是獨立頁面，故意不互相 import）。 */
+export function getAvailableEnglishVoices(): VoiceOption[] {
+  if (cachedVoices.length === 0) refreshVoiceCache();
+  const options = cachedVoices
+    .filter((v) => v.lang.toLowerCase().startsWith("en"))
+    .map((v) => {
+      const n = v.name.toLowerCase();
+      const novelty = isNoveltyVoice(v.name);
+      let gender: "female" | "male" | "neutral" = "neutral";
+      if (n.includes("female") || KNOWN_FEMALE_VOICE_NAME_HINTS.some((h) => n.includes(h))) gender = "female";
+      else if (n.includes("male") || KNOWN_MALE_VOICE_NAME_HINTS.some((h) => n.includes(h))) gender = "male";
+      return { name: v.name, lang: v.lang, gender, recommended: !novelty };
+    });
+  // 推薦的排前面，同一組內維持瀏覽器原始順序
+  return [...options.filter((o) => o.recommended), ...options.filter((o) => !o.recommended)];
+}
+
+/** 「語音設定」畫面的試聽按鈕用：直接指定語音名稱唸一句範例句，不經過三個角色的自動判斷邏輯。
+ * 找不到這個名字的語音（理論上不會發生，因為選單本來就是從這台裝置的清單生成的）就靜默不處理。 */
+export function previewVoiceByName(voiceName: string, sampleText = "Hello! Nice to meet you."): void {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  if (cachedVoices.length === 0) refreshVoiceCache();
+  const voice = cachedVoices.find((v) => v.name === voiceName);
+  if (!voice) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(sampleText);
+  utterance.voice = voice;
+  utterance.lang = voice.lang || "en-US";
+  utterance.rate = currentRate();
+  window.speechSynthesis.speak(utterance);
+}
+
 /** 全站通用：優先挑選美式英文 (en-US) 乾淨自然女聲；排除卡通特效聲音，退回美式預設語音。 */
 function pickPreferredVoice(): SpeechSynthesisVoice | undefined {
+  const override = resolveVoiceOverride("general");
+  if (override) return override;
   if (cachedVoices.length === 0) refreshVoiceCache();
   // 優先過濾美式英語 (en-US) 且排除卡通特效聲音
   const usVoices = cachedVoices.filter((v) => {
@@ -193,6 +288,8 @@ export function stopSpeaking(): void {
  * 次選：高品質系統男聲（Alex, Evan, Nathan, Daniel 等），全面排除 Fred 等機械雜音
  */
 function pickBennyVoice(): SpeechSynthesisVoice | undefined {
+  const override = resolveVoiceOverride("benny");
+  if (override) return override;
   if (cachedVoices.length === 0) refreshVoiceCache();
   const validVoices = cachedVoices.filter((v) => !isNoveltyVoice(v.name));
 
@@ -226,6 +323,8 @@ function pickBennyVoice(): SpeechSynthesisVoice | undefined {
  * 次選：高品質系統女聲（Samantha, Ava, Allison 等）
  */
 function pickUserDialogueVoice(): SpeechSynthesisVoice | undefined {
+  const override = resolveVoiceOverride("userReply");
+  if (override) return override;
   if (cachedVoices.length === 0) refreshVoiceCache();
   const validVoices = cachedVoices.filter((v) => !isNoveltyVoice(v.name));
 

@@ -1131,6 +1131,97 @@ body {
   gap: var(--space-3);
 }
 
+/* ---- 「語音設定」區塊：讓使用者自己指定這台裝置三個發音角色要用哪個語音。
+   卡片外觀比照個人檔案頁其餘區塊的留白習慣（見 .profile-settings-actions 上方
+   margin-top），標題／說明文字沿用「關於本站」頁 .about-text 的行距與淺色說明字。 ---- */
+.voice-settings-section {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-primary-100);
+  border-radius: var(--radius-lg);
+}
+
+.voice-settings-section h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-h3, var(--text-body-lg));
+  font-weight: 700;
+  color: var(--color-primary-700);
+}
+
+.voice-settings-hint {
+  margin: var(--space-2) 0 var(--space-4);
+  font-size: var(--text-caption);
+  color: var(--color-ink-muted);
+  line-height: 1.6;
+}
+
+.voice-settings-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--color-primary-100);
+}
+
+.voice-settings-row:first-of-type {
+  border-top: none;
+}
+
+.voice-settings-row label {
+  flex: 0 0 auto;
+  min-width: 220px;
+  font-size: var(--text-caption);
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.voice-settings-select {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-caption);
+  border-radius: var(--radius-md, 8px);
+  border: 2px solid var(--color-primary-100);
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.voice-settings-preview-btn {
+  flex: 0 0 auto;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-caption);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-primary-100);
+  background: var(--color-surface);
+  color: var(--color-primary-700);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.voice-settings-preview-btn:hover {
+  border-color: var(--color-primary-700);
+}
+
+/* 窄螢幕（手機寬度）改上下排列，比照專案裡其他 label/控制項的既有窄螢幕直排寫法
+   （例如 .profile-card 在 640px 斷點改 flex-direction: column）。 */
+@media (max-width: 640px) {
+  .voice-settings-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .voice-settings-row label {
+    min-width: 0;
+  }
+
+  .voice-settings-preview-btn {
+    align-self: flex-start;
+  }
+}
+
 /* ---- 學習積分：放在六格數字卡片「上方」的獨立大數字區塊，跟卡片視覺語言
    刻意區隔開（實心品牌色底、比卡片數字更大），像是六格細項加總出來的「總分」，
    不是塞成第七張一樣大小的卡片。積分本身是既有統計資料的加權算式（見 points.ts），
