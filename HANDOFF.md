@@ -165,6 +165,119 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.118 使用者回報：單元/主題完成度徽章跟 Stage E 上線後不吻合，撰寫 handoff（2026-09-27）
+
+背景：全站 43 主題的 Stage E（會話練習）已經 100% 上線，「挑戰紀錄」統計頁的 `getStageRowsForTopic()` 也已經把 Stage E 算進每個主題的完整關卡清單裡，但徽章判斷邏輯（`computeCompletedStageDTopics()`）還停留在只看 Stage D（`capstone`），完全沒接進 Stage E，造成使用者回報「目前的學習進度跟取得徽章的條件不吻合」。
+
+排查過程：先確認影響範圍——`recordQuestionAnswered(activeProfile!.id, "conversation", ...)` 這條線（累計題數 QM 系列、連勝十題 PF-02）**已經**正確把 Stage E 的作答次數算進去了，不受影響；真正沒接上的只有 OB-03「初次過關」（`badge.onboarding.first_stage_d`）跟 WC-01~08 這一整組單元完成徽章（`unit_completion` 分類），兩者都是透過 `computeCompletedStageDTopics()` 只看 Stage D 是否通過。用 `AskUserQuestion` 跟使用者確認具體是哪種不吻合，使用者確認：**「單元/主題完成度徽章應該也要求做完 Stage E」**。
+
+已直接處理（content 端）：`content/badges/badges.json` 裡 OB-03 跟 WC-01~08（含 WC-08 環遊字世界）的 `description`／`condition` 文字全部加上「與 Stage E 會話練習」，反映新的完成度定義。
+
+寫好 handoff 交給 App 端執行（`app/src/main.ts` 邏輯本身不屬於我的直接編輯範圍）：見 `docs/handoff-prompt-unit-completion-requires-stage-e.md`，內容涵蓋：
+- `computeCompletedStageDTopics()` 改名為 `computeCompletedTopics()`，判斷邏輯改成「Stage D 通過，且如果這個主題有 Stage E 內容，Stage E 也要通過」（用 `getConversationByTopic()` 判斷是否有 Stage E 內容，防呆處理未來可能出現的無 Stage E 過渡主題）；Stage E 的完成判斷用 `getStageProgress(profileId, fileKey, "conversation") !== null`，跟 Stage D 用同一套 `recordStageCompletion`／`finalizeRoundCompletion` 記錄機制，語意一致。
+- 呼叫端變數改名（`completedStageDTopics` → `completedTopics`），OB-03、`unit_completion` 兩個 case 都改用新變數。
+- 主題選單裡 Stage D／Stage E 的說明文字同步更新（Stage D 原本寫「過關就算這個主題單元完成」不再準確，需要改成提到 Stage E）。
+- **特別提醒 App 端注意的副作用**：徽章 `achieved` 狀態是每次即時算出來的，不是解鎖後永久保存，所以這次調整上線後，任何已經單靠 Stage D 拿到 WC 系列或 OB-03 徽章的玩家（包含我們家已經在玩的小孩），這些徽章會暫時「收回」變成未解鎖，要補完 Stage E 才會重新亮起來——這是預期行為，但務必先跟小朋友說一聲避免誤會。
+
+### 9.117 App 端執行：練習模式按鈕移入題型橫幅＋🐢 換成扁平單色圖示＋說明改成 hover/長按泡泡（2026-09-24）
+
+承接 9.116 節上線後，使用者用截圖回報「🐢 慢速」按鈕的 emoji 也想換成扁平單色圖示，同時提出「練習模式」按鈕應該直接放進題型橫幅（跟「🐢 慢速」「← 返回選單」同一排），不要再獨立佔一整列工具列，說明文字也精簡改成 hover（手機長按）才彈出，不要一直佔畫面空間。直接在對話中討論定案，沒有另外寫 handoff 文件。
+
+**🐢 → 扁平單色圖示**：新增 `TURTLE_ICON(size)`，用線條畫一隻烏龜（橢圓殼＋圓形頭＋四隻腳線條＋尾巴線條），跟 `EYE_OPEN_ICON`／`EYE_OFF_ICON` 共用同一組 `FLAT_ICON_VIEWBOX`（原本叫 `EYE_ICON_VIEWBOX`，改成更通用的名字，因為現在三種圖示都共用它）。`stageHeader()` 的慢速開關按鈕從 `textContent = "🐢 慢速"` 改成 `innerHTML = TURTLE_ICON(18) + <span>慢速</span>`。
+
+**練習模式按鈕移入題型橫幅**：`stageHeader(title, progressText, extraActions: HTMLElement[] = [])` 新增第三個參數，`.stage-banner-actions` 裡「🐢 慢速」按鈕後面、「← 返回選單」前面會插入 `extraActions` 的內容。`renderVocabOverview()` 把原本獨立的 `.vocab-overview-toolbar`（按鈕＋長說明文字段落）整個拿掉，改成建好練習模式按鈕跟說明泡泡後，透過 `stageHeader(title, progress, [toggleBtn, buildPracticeModeInfoTooltip()])` 傳進去。按鈕本身沿用既有的 `.stage-banner .slow-speech-toggle-btn` 深色配色，不用再另外補一份白底版本（之前 9.116 節為了獨立工具列補的那份白底 CSS 這次整組移除）。
+
+**說明文字改成 hover/長按泡泡**：新增 `buildPracticeModeInfoTooltip()`，回傳一個小「i」說明圖示（`INFO_ICON`，其實就是既有 `NAV_ICONS.about` 那顆說明圖示的同一個設計，只是換成可自訂大小的版本）搭配泡泡文字（精簡成一句：「英文例句會先模糊，點單句旁的眼睛圖示可個別顯示核對。」）。桌面滑鼠移過去（CSS `:hover`）或鍵盤 Tab 移過去（CSS `:focus-within`）就會顯示，不需要 JS；手機沒有 hover，改用 `touchstart` 計時器判斷「長按」（超過 450ms 還沒放開才顯示），短按或滑動（通常是想捲動畫面）不會誤觸跳出泡泡。泡泡開關跟 9.116 節「不呼叫 `render()`」的原則一致：長按只切換 `.practice-mode-info--open` 這個 class；點畫面其他地方要能關閉，比照徽章說明文泡泡（`activeBadgeTooltipCode`）同一種「模組層級狀態 + 一次性全域監聽器」寫法（新增 `openPracticeInfoTooltip` 狀態 + 一個全域 `touchstart` 監聽器），但刻意不呼叫 `render()`，因為開關泡泡純粹是本地 DOM class 切換，不需要整頁重繪。
+
+**手機版排版**：把練習模式按鈕跟說明圖示塞進題型橫幅後，「單字總覽」畫面窄螢幕下 `.stage-banner-actions` 最多會有 4 個項目（慢速／練習模式／說明圖示／返回選單），比照全站功能列既有的 icon-only 做法，640px 以下用 CSS 把 `.slow-speech-toggle-btn` 裡的 `<span>` 文字藏起來，只留圖示＋縮小 padding，並讓 `.stage-banner-actions` 可以 `flex-wrap`（安全網，真的放不下就換行，不會裁切）。
+
+`app/scripts/verify-vocab-overview-english-toggle.ts` 新增 3 個測試（第 7～9 個）：🐢 emoji 已換成 `TURTLE_ICON` 且文字包在 `<span>` 裡；`stageHeader()` 有 `extraActions` 參數且會塞進 `.stage-banner-actions`，`renderVocabOverview()` 確實把按鈕跟說明泡泡一起傳進去、舊的 `.vocab-overview-toolbar` 已經整個移除；`buildPracticeModeInfoTooltip()` 用長按（`touchstart` + 450ms 計時器）觸發而不是單純點擊，且全域關閉監聽器不呼叫 `render()`。全部 9 個測試（含 9.116 節原本的 6 個）都通過。
+
+驗證：`npx tsc --noEmit` 乾淨無錯；全部 31 支 `verify-*.ts`（含更新的這支）重跑皆通過；`npm run build` 成功，手動 grep 打包後的 `dist/assets/main-*.js`／`*.css` 確認 `"practice-mode-info"`／`"practice-mode-info-btn"`／`"practice-mode-info-bubble"` 都有進到最終產出、且已經沒有任何 🐢 emoji 殘留；`dashboard.html`／`content-review.html`／`demo-standalone.html`（App 端與專案根目錄兩份都同步）皆已重新產生。
+
+**這次也是純邏輯＋CSS 改動，已用自動化測試涵蓋結構性正確性**，但幾個地方沒辦法在沙盒裡實際看到，需要使用者用 `demo-standalone.html` 確認：① 烏龜圖示手繪線條組合看起來是否夠像烏龜、大小是否恰當；② 說明泡泡在桌面滑鼠 hover、手機長按（記得要「按住不放」約 0.5 秒，不是單純點一下）的實際手感跟位置（目前泡泡固定往右下角彈出，還沒做像徽章泡泡那樣的螢幕邊界自動偏移，極窄螢幕上有小機率會貼到邊緣，如果真的裁切到麻煩回報，再仿照 `.badge-tooltip`／`.passage-word-tooltip` 的 JS 動態偏移做法補上）；③ 窄螢幕下題型橫幅 4 個項目擠在一起的排版是否好按、間距是否舒服。
+
+### 9.116 App 端執行：「單字總覽」例句開關改版為「練習模式」（主開關＋模糊/顯示、每則例句獨立作用）（2026-09-24）
+
+承接 9.115 節上線後，使用者實際用過提出三點回饋，直接在對話中討論定案，沒有另外寫 handoff 文件：
+
+1. 按鈕的 icon 改用扁平單色 icon，不要 emoji。
+2. 原本的開關放在清單最上方、且是全域生效，清單一長就要捲回頂端才能再切換，且改成「每則例句各自獨立控制」比較符合需求。
+3. 原本切換會呼叫 `render()` 整頁重繪，導致所有已展開的例句被收合，希望切換後維持原本展開狀態。
+
+跟使用者來回討論後定案的設計（比原本更完整）：
+
+- **主開關「練習模式」**：預設關閉（跟這個功能出現以前的行為一致，例句一律清楚顯示）。開啟後，所有例句的英文預設變模糊（`filter: blur(5px)`，看得出長度但看不清楚內容）。
+- **每則例句自己的顯示鈕**：只有主開關開啟時才會出現（`.example-practice-toggle-btn`，扁平單色「眼睛」SVG，沿用全站既有的 `stroke="currentColor"` 圖示慣例，不用 emoji），只讓那一則例句變清楚，其他例句不受影響。主開關關閉時這顆按鈕完全不出現。
+- **全部靠 CSS class 切換，JS 端完全不呼叫 `render()`**：主開關切換的是外層 `.vocab-overview-list` 的 `practice-mode-on` class；每則例句自己的顯示鈕切換的是該例句 `.flashcard-example` 自己的 `example-revealed` class。模糊/清楚的樣式規則全部寫在 `style.css`（`.vocab-overview-list.practice-mode-on .flashcard-example-en` 模糊、加上 `.example-revealed` 還原清楚），JS 只做兩件事：切 class、換按鈕圖示，完全沒有整頁重建，所以切換主開關或任何一則例句的顯示鈕都不會影響其他已展開的例句、不會讓捲動位置跳掉。
+
+`app/src/main.ts` 具體改動：
+
+- `buildExampleSentenceBlock(example, withPracticeToggle = false)`：`withPracticeToggle` 為 `true` 時才在例句列多加一顆顯示鈕，點擊切換 `exampleBox.classList.toggle("example-revealed")` 並換圖示，沒有其他副作用。`renderFavorites()`（收藏清單）跟字卡暖身呼叫這個函式都沒傳這個參數，維持舊行為不受影響。
+- `buildVocabOverviewRow(vocab, withPracticeToggle = false)`：把 `withPracticeToggle` 往下傳給 `buildExampleSentenceBlock()`。
+- 舊的 `readVocabOverviewShowEnglish()`／`setVocabOverviewShowEnglish()`／`VOCAB_OVERVIEW_SHOW_ENGLISH_STORAGE_KEY` 整組換成 `readVocabOverviewPracticeMode()`／`setVocabOverviewPracticeMode()`／`VOCAB_OVERVIEW_PRACTICE_MODE_STORAGE_KEY`（localStorage key 也跟著改名，裝置層級設定，預設 `false`／關閉）。
+- `renderVocabOverview()` 的主開關按鈕點擊只做：讀目前 `list` 是否有 `practice-mode-on` class → 反轉 → 存 localStorage → `list.classList.toggle(...)` → 換按鈕圖示/文字/`aria-pressed`，全程沒有 `render()`。
+- 新增 `EYE_OPEN_ICON(size)`／`EYE_OFF_ICON(size)` 共用的扁平單色 SVG 圖示產生器（`viewBox 24x24`、`stroke="currentColor"`、無填色，跟 `NAV_ICON_VIEWBOX` 那組既有慣例一致），主開關跟每則例句的顯示鈕共用同一組圖示。
+
+`app/src/style.css` 具體改動：
+
+- `.vocab-overview-toolbar .slow-speech-toggle-btn` 加上 `display: inline-flex; align-items: center; gap` 讓 icon＋文字可以並排（主開關按鈕現在是 SVG + `<span>文字</span>`，不是純文字）。
+- 新增 `.vocab-overview-list.practice-mode-on .flashcard-example-en`（模糊）、`.vocab-overview-list.practice-mode-on .flashcard-example.example-revealed .flashcard-example-en`（還原清楚）、`.example-practice-toggle-btn`（預設 `display: none`）＋ `.vocab-overview-list.practice-mode-on .example-practice-toggle-btn`（練習模式開啟時才出現）。
+
+`app/scripts/verify-vocab-overview-english-toggle.ts` 整支改寫（沿用原檔名，內容配合新設計）：6 個測試，涵蓋 `buildExampleSentenceBlock()`／`buildVocabOverviewRow()` 的 `withPracticeToggle` 參數與傳遞、收藏清單／字卡暖身不受影響、練習模式讀寫函式與預設值、`renderVocabOverview()` 正確串接且不呼叫 `render()`、`style.css` 對應規則都存在。全部通過。
+
+驗證：`npx tsc --noEmit` 乾淨無錯；全部 31 支 `verify-*.ts`（含改寫的這支）重跑皆通過；`npm run build` 成功，手動 grep 打包後的 `dist/assets/main-*.js`／`*.css` 確認 `"練習模式"`／`"practice-mode-on"`／`"example-revealed"`／`"example-practice-toggle-btn"` 都有進到最終產出；`dashboard.html`／`content-review.html`／`demo-standalone.html`（App 端與專案根目錄兩份都同步）皆已重新產生。
+
+**這次也是純邏輯＋CSS class 切換，已用自動化測試涵蓋讀寫/傳遞邏輯跟「不呼叫 render()」這個關鍵行為**，但實際模糊的視覺程度是否恰當（5px 夠不夠模糊/會不會太模糊）、主開關跟每則例句顯示鈕的圖示是否清楚易懂、手機寬度下觀感，建議使用者在 `demo-standalone.html` 的「單字總覽」實際打開練習模式試用一輪確認。**沒有動到 9.112／9.113／9.114 節提到的會話練習（voiceLab／conversationGame）相關檔案，也沒有執行任何 git 操作。**
+
+### 9.115 App 端執行：「單字總覽」新增例句英文開關（2026-09-24）
+
+承接 9.114 節的 `docs/handoff-prompt-vocab-overview-example-english-toggle.md`，完全照 handoff 提供的程式碼實作，沒有需要偏離的地方：
+
+1. **`buildExampleSentenceBlock()`／`buildVocabOverviewRow()`**（`main.ts`）都新增 `showEnglish: boolean = true` 參數，`buildExampleSentenceBlock()` 內用 `exampleEn.hidden = !showEnglish` 控制英文文字那個 `<span>` 是否隱藏，🔊 播放發音按鈕不受影響、一律顯示。`renderFavorites()`（收藏清單）跟字卡暖身呼叫這兩個函式時都**沒有**傳第二個參數，維持預設值 `true`，確認沒有被連帶影響。
+2. **裝置層級持久化設定**：仿照 `speech.ts` 的 `isSlowSpeechEnabled()` 模式，在 `main.ts` 新增 `readVocabOverviewShowEnglish()`／`setVocabOverviewShowEnglish()`，存在 `localStorage`（key: `englishForKids.settings.vocabOverviewShowEnglish.v1`），沒存過值時預設回傳 `true`（開）。
+3. **`renderVocabOverview()`** 頂部加上工具列：切換按鈕（👁️ 例句顯示英文／🙈 例句隱藏英文）＋提示文字，點擊後存檔並呼叫 `render()` 重新整理畫面；`buildVocabOverviewRow(vocab, showEnglish)` 把目前開關狀態傳給每一列單字。
+
+**跟 handoff 假設不一致、需要補的地方**：handoff 建議按鈕直接沿用 `.slow-speech-toggle-btn` 既有樣式、不用另外寫 CSS，但檢查 `style.css` 發現那組樣式實際上是 `.stage-banner .slow-speech-toggle-btn`（深色題型橫幅專屬配色，靠 `.stage-banner` 祖先選擇器才會套用），「單字總覽」的工具列是白底一般頁面、不在 `.stage-banner` 裡面，直接沿用 class 名稱會拿到完全沒有樣式的裸按鈕。因此新增了 `.vocab-overview-toolbar .slow-speech-toggle-btn`（跟 `.active`／`:hover`）一份白底配色版本，形狀/間距規格（圓角、padding、字級）維持跟原本一致，只換了配色，沒有整個重新設計按鈕。另外新增 `.vocab-overview-toolbar`／`.vocab-overview-toolbar-hint`，640px 以下比照 `.stage-banner-actions` 的做法改上下排列。
+
+新增 `app/scripts/verify-vocab-overview-english-toggle.ts`（6 個測試）：① `buildExampleSentenceBlock()` 有 `showEnglish` 參數且正確控制 `hidden`；② `buildVocabOverviewRow()` 有 `showEnglish` 參數且正確傳給 `buildExampleSentenceBlock()`；③ `renderFavorites()` 呼叫 `buildVocabOverviewRow(vocab)` 沒有傳第二個參數（收藏清單沒被波及）；④ 字卡暖身呼叫 `buildExampleSentenceBlock(vocab.example_sentence)` 同樣沒有傳第二個參數；⑤ 讀寫函式存在且預設值 `true`；⑥ `renderVocabOverview()` 有讀取開關狀態並正確傳給每一列單字。全部通過。
+
+**附帶修正一個環境問題**：這次驗證時沙盒的 `npm run build` 一開始失敗，錯誤是 `Rollup 原生模組 MODULE_NOT_FOUND`——跟 9.110／9.111 節記錄的已知問題同一類，但這次多挖到一個根本原因：`app/package.json` 的 `devDependencies` 裡不知道什麼時候被直接寫死了一行 `"@rollup/rollup-darwin-x64": "^4.63.4"`（用 `git log -p -- package.json` 確認這行從來沒有被 commit 過，是純本機、未進版本控制的殘留），這會導致在非 macOS 環境（包含這個沙盒，也包含 GitHub Actions 的 `ubuntu-latest`）執行 `npm install` 直接報錯 `EBADPLATFORM` 而不是像一般 optional dependency 那樣安靜跳過。已經把這行從 `package.json` 移除（rollup 本來就會自己透過 `optionalDependencies` 依平台安裝對應的原生模組，不需要專案自己額外釘死特定平台版本），重新 `npm install` 後在這個沙盒／Linux 環境下 build 恢復正常。**這個修正還沒有被 commit**，麻煩使用者之後跑 `上傳更新.command` 時留意 `package.json`／`package-lock.json` 的異動內容，確認這個修正有一併進版本控制，避免以後 GitHub Actions 的 Ubuntu CI 也遇到同樣的建置失敗。
+
+驗證：`npx tsc --noEmit` 乾淨無錯；全部 31 支 `verify-*.ts`（含新增的這支）重跑皆通過；`npm run build` 成功（多入口 `main`／`voiceLab`，這是 9.112／9.113 節新增的會話練習功能帶進來的，跟這次改動無關），手動 grep 打包後的 `dist/assets/main-*.js`／`*.css` 確認 `"例句顯示英文"`／`"例句隱藏英文"`／`"vocab-overview-toolbar"` 都有進到最終產出；`dashboard.html`／`content-review.html`／`demo-standalone.html`（App 端與專案根目錄兩份都同步）皆已重新產生。
+
+**這次也是純邏輯＋一般按鈕/清單排版，已用自動化測試涵蓋讀寫/傳遞邏輯**，但實際切換觀感（按鈕配色是否協調、手機寬度下工具列排列、🔊 按鈕在英文隱藏時仍可正常播放）建議使用者在 `demo-standalone.html` 任一主題的「單字總覽」實際切一次開關確認，並進「收藏清單」確認例句英文沒有被連帶隱藏。**這次沒有動到 9.112／9.113／9.114 節提到的會話練習（voiceLab／conversationGame）相關檔案，也沒有執行 `git add -A`／commit，只留下修改過的檔案在工作目錄，避免干擾那批還在進行中的工作。**
+
+### 9.114 使用者提議：「單字總覽」新增例句英文開關，撰寫 handoff（2026-09-24）
+
+使用者提議在主題內的「單字總覽」畫面，例句區塊新增一個開關，可以把例句的英文文字先隱藏，讓使用者看著中文練習說英文，說完再打開核對，**預設中英文都顯示**。
+
+撰寫 `docs/handoff-prompt-vocab-overview-example-english-toggle.md` 交給 App 端執行，重點設計：
+
+- `buildExampleSentenceBlock()`／`buildVocabOverviewRow()` 新增 `showEnglish: boolean = true` 參數（預設 true，不影響既有呼叫端行為），只有隱藏英文那個 `<span>`，🔊 播放發音按鈕維持一律顯示（開關管的是「看不看得到英文文字」，跟「聽不聽得到發音」是分開的兩件事）。
+- 明確要求**只影響「單字總覽」**：「收藏清單」跟「字卡暖身」也共用同一組函式，但呼叫端不傳第二個參數、維持預設值 `true`，不會被連帶影響。
+- 開關狀態存 localStorage（比照 `speech.ts` 的 `isSlowSpeechEnabled()` 模式，裝置層級、不分使用者），按鈕直接沿用現成的 `.slow-speech-toggle-btn` 樣式，不用另外寫新 CSS。
+
+**這次沒有一併驗證/commit**：檢查 `git status` 發現工作目錄裡已經有一大批跟這次需求無關、看起來是 App 端正在進行中的其他功能（`conversationGame.ts`／`content/conversations/`／`voiceLab.ts` 等「會話練習」相關的新檔案跟修改，對應上面 9.112／9.113 節），為了不干擾那批還在進行中的工作，這次只新增 `docs/` 底下的 handoff 文件跟這則 HANDOFF 記錄，沒有跑 build/verify，也沒有執行 `git add -A`／commit。
+
+### 9.113 執行方案 C：全單字發音兜底 ＋ 智慧字幹還原 ＋ 會話生字庫擴充（2026-09-23）
+
+使用者截圖回報在會話練習中，許多單字（例如 `say`, `that`, `fantastic`, `scampered`, `pine`, `squirrel`）沒有虛線底線且無法點擊發音。經排查為過往系統將「發音能力」與「中文資料庫收錄」強綁定，導致進階生字、時態變化（如 `climbed`）與功能詞因無對應中文而被判定為不可點擊純文字。使用者指示採取「方案 C」全面解決。
+
+- **智慧字幹還原（Lemmatization / Stemming）**：`content.ts` 新增不規則動詞/名詞變化表（`said`→`say`, `ran`→`run`, `did`→`do`...）與正規規則還原（`-ed`, `-ing`, `-s`, `-es`, `-ies`），遇到時態變化自動還原原型進行詞義比對。
+- **常用文法詞與繪本會話詞庫擴充**：`content.ts` 內建 `COMMON_CONVERSATIONAL_WORDS` 全域補充庫，收錄文法功能詞（`the`, `that`, `did`, `back`, `down`, `course` 等）與生動繪本詞彙（`fantastic`, `squirrel`, `pine`, `path`, `scamper`, `practice`, `single`, `playful` 等）。
+- **全單字發音兜底機制**：`main.ts` 中的 `createChatRow`（會話練習）與 `buildInteractivePassage`（短文理解）移除未收錄字的阻擋邏輯，使句子內的所有英文單字 100% 成為可互動元件，點擊必播放標準發音；查得到中文顯示中文釋義，無收錄字則顯示英文原詞與 🔊 重播按鈕。
+- **驗證**：使用者截圖中全部 53 個字詞 100% 成功取得正確中文釋義；`npm run typecheck` 0 錯誤、`npm run build` 通過。
+
+### 9.112 Stage C 短文理解生字加入語音朗讀與 🔊 重播功能（2026-09-23）
+
+使用者回報希望在「短文理解」中的生字加入語音功能。原本 Stage C 的短文內生字點擊時僅會彈出中文釋義與收藏星星，沒有發音回饋與重聽機制。
+
+- **點擊即時發音**：`main.ts` 的 `buildInteractivePassage()` 在點擊生字（`.passage-word`）展開泡泡時，自動呼叫 `speakEnglish(token)` 發音；若此時整篇短文朗讀正在播放（`isPassageReading === true`），會先呼叫 `stopPassageReadingIfAny()` 停止全文朗讀，避免聲音碰撞。
+- **泡泡內 🔊 重播按鈕**：在 `.passage-word-tooltip` 內新增 `.passage-word-audio-btn`（🔊 重播發音），具備 `aria-label` 與 `title`，並透過 `e.stopPropagation()` 阻止事件冒泡；點擊可隨時重複朗讀該生字發音。
+- **手機螢幕邊界安全校正**：針對窄螢幕（320px～414px）行首與行尾的生字，計算 `tooltip.getBoundingClientRect()`，若靠近或超出邊界，自動向內平移偏移量，並動態設定 `--arrow-left` 變數使上方指示三角形箭頭精準指向單字中心。
+- **驗證**：`npm run typecheck` 0 錯誤、`npm run build` 通過（exit code 0）、`verify-passage-glossary.ts` 全數通過。
+
 ### 9.111 使用者回報：Kitchen & Dining（tableware）Stage B-1 例句語意不清，直接改寫（2026-09-14）
 
 使用者截圖回報 Kitchen & Dining 主題（`content/sentences/tableware.json`，`fileKey` 是舊名 `tableware`）第 7 句「I use a straw, and the waiter puts the food on a tray.」語意不明——這句把「我自己用吸管喝東西」跟「服務生把食物放上托盤」兩個完全不相干情境（居家 vs. 餐廳服務生）硬用 and 接在一起，跟先前 9.9x 節修過的 Greetings 例句是同一類問題（為了塞進兩個 vocab_id 硬湊句子）。
