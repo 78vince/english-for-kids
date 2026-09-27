@@ -1,0 +1,209 @@
+{
+  "id": "conv.animals_insects.01",
+  "topic": "animals_insects",
+  "title": "Animal Adventures with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Animal Guide"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_zoo_giraffe",
+      "image": "animals_insects_scene_1.jpg",
+      "description": "Visiting the Zoo and Seeing a Tall Giraffe"
+    },
+    {
+      "scene_id": "scene_monkeys_elephants",
+      "image": "animals_insects_scene_2.jpg",
+      "description": "Watching Playful Monkeys and Big Elephants"
+    },
+    {
+      "scene_id": "scene_pond_ducks_frogs",
+      "image": "animals_insects_scene_3.jpg",
+      "description": "Meeting Cute Ducks and Green Frogs by the Pond"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_zoo_giraffe",
+      "character_line": {
+        "en": "Welcome to the zoo! Look at that tall animal with a long neck!",
+        "zh": "歡迎來到動物園！看那隻脖子好長的動物！"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Wow, that is a tall giraffe!",
+          "zh": "哇，那是一隻好高的長頸鹿！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I have a yellow pencil.",
+          "zh": "我有一支黃色鉛筆。",
+          "is_correct": false,
+          "hint": "看見高高的長頸鹿，用「giraffe」回答喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "The clock is round.",
+          "zh": "時鐘是圓的。",
+          "is_correct": false,
+          "hint": "跟 Benny 一起讚嘆長頸鹿長長的脖子吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_zoo_giraffe",
+      "character_line": {
+        "en": "The giraffe is eating green leaves from the high tree!",
+        "zh": "長頸鹿正在吃高高樹上的綠色樹葉呢！"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "It can reach the top leaves!",
+          "zh": "它可以吃到最上面的葉子！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "I brush my teeth.",
+          "zh": "我刷牙。",
+          "is_correct": false,
+          "hint": "長頸鹿很高，能吃到高處的葉子喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "My shirt is blue.",
+          "zh": "我的襯衫是藍色的。",
+          "is_correct": false,
+          "hint": "觀察長頸鹿吃樹葉的可愛樣子吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_monkeys_elephants",
+      "character_line": {
+        "en": "Listen! What are those monkeys doing in the trees?",
+        "zh": "聽！那些猴子在樹上做什麼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "The monkeys are jumping and swinging!",
+          "zh": "猴子正在跳來跳去盪鞦韆！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "I sleep in my bed.",
+          "zh": "我在床上睡覺。",
+          "is_correct": false,
+          "hint": "活潑的猴子在樹枝間擺盪，說「jumping and swinging」！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "The table is clean.",
+          "zh": "桌子很乾淨。",
+          "is_correct": false,
+          "hint": "觀察猴子們敏捷好笑的動作吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_monkeys_elephants",
+      "character_line": {
+        "en": "And look beside them! The big gray elephant is waving its trunk!",
+        "zh": "再看看旁邊！那隻灰色大象正揮動長長的鼻子呢！"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "The elephant is so huge and strong!",
+          "zh": "大象真的好巨大、好強壯喔！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "I wear my red shoes.",
+          "zh": "我穿我的紅鞋子。",
+          "is_correct": false,
+          "hint": "大象很大隻，可以用「huge and strong」形容喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "It is raining outside.",
+          "zh": "外面正在下雨。",
+          "is_correct": false,
+          "hint": "跟 Benny 一起欣賞大象雄壯可愛的身影！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_pond_ducks_frogs",
+      "character_line": {
+        "en": "Look down at the pond! Quack, quack! What do you see?",
+        "zh": "看底下的池塘！呱呱！你看見了什麼？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "I see yellow ducks swimming!",
+          "zh": "我看見黃色小鴨正在游泳！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "I eat toast with jam.",
+          "zh": "我吃果醬吐司。",
+          "is_correct": false,
+          "hint": "水裡游泳發出呱呱叫的是「ducks」小鴨喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "Close the wooden door.",
+          "zh": "關上木門。",
+          "is_correct": false,
+          "hint": "告訴 Benny 池塘裡有哪些可愛小水鳥吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_pond_ducks_frogs",
+      "character_line": {
+        "en": "Ribbit! A little green frog is jumping onto a lily pad!",
+        "zh": "嘓嘓！一隻綠色小青蛙跳到了荷葉上！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Hop, hop! The frog jumps so high!",
+          "zh": "跳呀跳！青蛙跳得好高喔！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "I like my teacher.",
+          "zh": "我喜歡我的老師。",
+          "is_correct": false,
+          "hint": "小青蛙很會跳躍，說「The frog jumps high!」！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "Good night, my friend.",
+          "zh": "晚安，我的朋友。",
+          "is_correct": false,
+          "hint": "開心地和 Benny 一起學小青蛙跳吧！"
+        }
+      ]
+    }
+  ]
+}

@@ -46,6 +46,29 @@ npm run dev
 
 第一次雙擊如果被 macOS 擋下（顯示「無法辨識開發者」），改成對檔案按右鍵→打開，確認一次「打開」即可，之後就能正常雙擊。
 
+## 情境插畫自動化生圖工具（Google Flow Automation）
+
+專案內建透過本機 Chrome 遠端除錯連線（CDP）自動控制 Google Flow 的生圖腳本：
+
+1. **啟動除錯模式 Chrome**：
+   雙擊根目錄的 [`start-chrome-debug.command`](./start-chrome-debug.command)，或在終端機執行：
+   ```bash
+   ./start-chrome-debug.command
+   ```
+   （預設會開啟獨立 Profile 視窗直達 Google Flow，首次開啟請登入您的 Google 帳號）
+2. **執行自動生圖與入庫**：
+   ```bash
+   # 檢視待生成隊列與預覽
+   node scripts/generate-flow-scenes.mjs --dry-run
+
+   # 指定生成特定主題（例如 Health 主題第 1 張）
+   node scripts/generate-flow-scenes.mjs --topic=health --limit=1
+
+   # 批次自動生成整個主題
+   node scripts/generate-flow-scenes.mjs --topic=health
+   ```
+   圖片生成後會自動下載、更名為 `.jpg` 並直接寫入 `app/src/assets/scenes/`，隨後自動觸發前端 Vite 熱重載與打包編譯。
+
 ## 作者
 
 Vincent - 小禮
@@ -57,7 +80,10 @@ Vincent - 小禮
 
 ## TODO
 
-- [x] Phase 1：四種文字型題型（Stage A 單字配對／Stage B-1 句子排序／Stage B-2 句子填空／Stage C 短文理解／Stage D 綜合關卡）、登入登出、成效追蹤
+- [x] Phase 1：文字型題型（Stage A 單字配對／Stage B-1 句子填空／Stage B-2 句子排序／Stage C 短文理解／Stage D 綜合關卡）、登入登出、成效追蹤
+- [x] Stage E：情境會話練習（對話選擇題、情境插畫切換、自動播放與雙聲道發音引導；對話氣泡支援點字即時彈出中文翻譯、單字獨立語音發音與單字收藏；全站全部 43 個主題已 100% 全數建置上線！並已全面整合至「挑戰紀錄」統計、卡片展開明細與進度分級）
+- [x] Stage E 情境插畫生成：全站累計已完成 **129 / 129 張（100% 大功告成！）**！單元 0、單元一、單元二、單元三、單元四、單元五、單元六、單元七全部 43 個正式主題 **100% 全數生成、高品質轉檔並入庫上線**，Stage E 情境會話關卡視覺體驗全面圓滿完工！
+- [x] 語音比較實驗室 (Voice Lab)：獨立頁面 (`/voice-lab.html`)，提供高品質白名單/黑名單檢視、男女聲音色標記、自訂句試聽與 Benny 雙人對話模擬試聽器
 - [x] 成就徽章系統（43 個徽章）、單字收藏功能、字卡學習單元、題型選單與挑戰紀錄頁的進度視覺分級、App 內「關於本站」頁面（版本／作者資訊）
 - [x] Phase 2 內容擴充（content 端）：全部 43 個正式主題（含 Unit 0 兩個暖身主題，全站合計 45 個主題）單字／句子／短文資料已全部建置完成並通過驗證，共 897 個單字、496 句、43 篇短文
 - [x] Phase 2 App 端接線：全部 43 個正式主題（含 Unit 0）都已接進 `app/src/main.ts` 的 `TOPICS`／`UNITS`／`TOPIC_THUMBS`，單元 0～七全部可以在 App 選單裡實際玩到

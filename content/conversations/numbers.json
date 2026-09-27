@@ -1,0 +1,209 @@
+{
+  "id": "conv.numbers.01",
+  "topic": "numbers",
+  "title": "Counting Numbers with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Math Helper"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_wooden_blocks",
+      "image": "numbers_scene_1.jpg",
+      "description": "Counting Wooden Blocks in Math Class"
+    },
+    {
+      "scene_id": "scene_colored_pencils",
+      "image": "numbers_scene_2.jpg",
+      "description": "Counting Colored Pencils in the Pencil Case"
+    },
+    {
+      "scene_id": "scene_sweet_apples",
+      "image": "numbers_scene_3.jpg",
+      "description": "Counting Sweet Apples on the Fruit Plate"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_wooden_blocks",
+      "character_line": {
+        "en": "Let us count together! How many wooden blocks are here?",
+        "zh": "我們一起數數看！這裡有幾個木頭積木呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "There are five blocks!",
+          "zh": "這裡有五個積木！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I have a green frog.",
+          "zh": "我有一隻綠色青蛙。",
+          "is_correct": false,
+          "hint": "算算看積木的數量，用數字「five」回答喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "It is hot today.",
+          "zh": "今天天氣好熱。",
+          "is_correct": false,
+          "hint": "告訴 Benny 桌上有幾個小積木吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_wooden_blocks",
+      "character_line": {
+        "en": "Can you count numbers from one to ten?",
+        "zh": "你會從一數到十嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Yes, I can count to ten!",
+          "zh": "會的，我可以數到十！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "I wash my hands.",
+          "zh": "我洗手。",
+          "is_correct": false,
+          "hint": "回答「Yes, I can count to ten!」展現你的數數能力！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "The door is open.",
+          "zh": "門開著。",
+          "is_correct": false,
+          "hint": "自信地告訴 Benny 你很會數數字喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_colored_pencils",
+      "character_line": {
+        "en": "Look at your pencil case! How many pencils do you see?",
+        "zh": "看你的鉛筆盒！你看到幾支色鉛筆呢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "I see six colorful pencils.",
+          "zh": "我看見六支彩色鉛筆。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "My grandmother is tall.",
+          "zh": "我的祖母很高。",
+          "is_correct": false,
+          "hint": "數一數筆盒裡的鉛筆，用「six」回答數量喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "We have a big sofa.",
+          "zh": "我們有一張大沙發。",
+          "is_correct": false,
+          "hint": "告訴 Benny 鉛筆盒裡一共有幾支彩色筆！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_colored_pencils",
+      "character_line": {
+        "en": "You have six pencils! Can we share three of them?",
+        "zh": "你有六支鉛筆！我們可以借三支來畫畫嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Sure, here are three pencils for you!",
+          "zh": "當然，這三支筆給你！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "I go to sleep at night.",
+          "zh": "我晚上睡覺。",
+          "is_correct": false,
+          "hint": "分享三支筆給 Benny，說「here are three pencils for you」！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "This is my nose.",
+          "zh": "這是我的鼻子。",
+          "is_correct": false,
+          "hint": "跟 Benny 禮貌分享你漂亮的色鉛筆吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_sweet_apples",
+      "character_line": {
+        "en": "Look at the fruit plate! How many red apples are there?",
+        "zh": "看水果盤！那裡有幾顆紅蘋果呢？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "There are four red apples!",
+          "zh": "那裡有四顆紅蘋果！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "I wear my rain boots.",
+          "zh": "我穿雨鞋。",
+          "is_correct": false,
+          "hint": "數數盤子上的蘋果，用數字「four」回答喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "The yellow bus is fast.",
+          "zh": "黃色公車很快。",
+          "is_correct": false,
+          "hint": "回答盤子裡有幾顆美味的紅蘋果吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_sweet_apples",
+      "character_line": {
+        "en": "Counting numbers with you is so much fun!",
+        "zh": "跟你一起數數字真的好好玩喔！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes, math and numbers are awesome!",
+          "zh": "是的，數學與數字太棒了！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "Good night, Benny.",
+          "zh": "晚安，Benny。",
+          "is_correct": false,
+          "hint": "開心地回應「numbers are awesome!」分享對數字的喜愛！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I drink warm soup.",
+          "zh": "我喝熱湯。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你也很喜歡一起數數字喔！"
+        }
+      ]
+    }
+  ]
+}

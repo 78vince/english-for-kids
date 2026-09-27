@@ -13,7 +13,7 @@
 
 const STORAGE_KEY_PREFIX = "englishForKids.progress.v1";
 
-export type StageKey = "flashcards" | "matching" | "ordering" | "fillBlank" | "choice" | "capstone";
+export type StageKey = "flashcards" | "matching" | "ordering" | "fillBlank" | "choice" | "capstone" | "conversation";
 
 export interface StageProgress {
   timesCompleted: number;

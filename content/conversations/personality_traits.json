@@ -1,0 +1,209 @@
+{
+  "id": "conv.personality_traits.01",
+  "topic": "personality_traits",
+  "title": "Good Friends: Kind and Brave",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "School Friend"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_sharing_crayons",
+      "image": "personality_traits_scene_1.jpg",
+      "description": "Sharing Colorful Crayons with Friends in Art Class"
+    },
+    {
+      "scene_id": "scene_slide_playground",
+      "image": "personality_traits_scene_2.jpg",
+      "description": "Being Brave on the High Slide at the Playground"
+    },
+    {
+      "scene_id": "scene_study_desk",
+      "image": "personality_traits_scene_3.jpg",
+      "description": "Studying Diligently and Being Polite at Home"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_sharing_crayons",
+      "character_line": {
+        "en": "You share your crayons! You are so kind.",
+        "zh": "你跟大家分享蠟筆！你真善良。"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Thank you! I like to share.",
+          "zh": "謝謝！我喜歡跟朋友分享。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "No, I am very mean.",
+          "zh": "不，我很小氣很壞。",
+          "is_correct": false,
+          "hint": "主動借東西給同學是很棒又 kind（善良）的表現喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "It is twelve o'clock.",
+          "zh": "現在是十二點整。",
+          "is_correct": false,
+          "hint": "謝謝 Benny 的稱讚吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_sharing_crayons",
+      "character_line": {
+        "en": "Is your friend Leo funny?",
+        "zh": "你的好朋友 Leo 很風趣好笑嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Yes! He is very funny.",
+          "zh": "對啊！他常常逗大家笑。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "No, he is a pencil.",
+          "zh": "不，他是一支鉛筆。",
+          "is_correct": false,
+          "hint": "Leo 是幽默風趣的好朋友，用「funny」來形容他吧！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I do not like milk.",
+          "zh": "我不喜歡喝牛奶。",
+          "is_correct": false,
+          "hint": "回答 Benny「Yes! He is very funny」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_slide_playground",
+      "character_line": {
+        "en": "The slide is so high! Are you brave?",
+        "zh": "這個溜滑梯好高喔！你很勇敢嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Yes, I am brave! Watch me!",
+          "zh": "對，我很勇敢！看我溜！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "No, I am super lazy.",
+          "zh": "不，我超級懶惰。",
+          "is_correct": false,
+          "hint": "挑戰高高溜滑梯需要勇敢（brave）喔，鼓起勇氣回答吧！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "It is sunny today.",
+          "zh": "今天天氣很好。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你很勇敢：「Yes, I am brave! Watch me!」"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_slide_playground",
+      "character_line": {
+        "en": "Whoosh! That was fast! You did it!",
+        "zh": "咻！好快喔！你成功溜下來了！"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Yay! That was so much fun!",
+          "zh": "耶！太好玩了！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "I am angry at the slide.",
+          "zh": "我對溜滑梯很生氣。",
+          "is_correct": false,
+          "hint": "成功挑戰好玩的溜滑梯，跟 Benny 一起歡呼吧！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "Close your eyes.",
+          "zh": "把眼睛閉上。",
+          "is_correct": false,
+          "hint": "回答「Yay! That was so much fun!」分享你的快樂吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_study_desk",
+      "character_line": {
+        "en": "You are reading books! You are hard-working.",
+        "zh": "你在專心看書寫字耶！你好認真勤奮。"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Yes, I study hard every day.",
+          "zh": "是的，我每天都很認真學習。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "No, I am asleep.",
+          "zh": "不，我睡著了。",
+          "is_correct": false,
+          "hint": "認真讀書是 hard-working 的好習慣喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I have four apples.",
+          "zh": "我有四顆蘋果。",
+          "is_correct": false,
+          "hint": "肯定自己認真學習的態度吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_study_desk",
+      "character_line": {
+        "en": "You also say please and thank you. You are polite!",
+        "zh": "你還會常常說請和謝謝，真是有禮貌！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Being polite is very good!",
+          "zh": "有禮貌是非常棒的事！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "I like to be noisy.",
+          "zh": "我喜歡大吵大鬧。",
+          "is_correct": false,
+          "hint": "懂得說請和謝謝是有禮貌（polite）的好孩子喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "This is a bus.",
+          "zh": "這是一輛公車。",
+          "is_correct": false,
+          "hint": "回答 Benny「Being polite is very good!」吧！"
+        }
+      ]
+    }
+  ]
+}

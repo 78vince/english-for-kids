@@ -165,6 +165,19 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.119 App 端執行：單元/主題完成度徽章改為要求 Stage D + Stage E（2026-09-27）
+
+依 `docs/handoff-prompt-unit-completion-requires-stage-e.md` 執行，對應 9.118 的請求。
+
+- **`computeCompletedStageDTopics()` 改名為 `computeCompletedTopics()`**（`app/src/main.ts`）：判斷邏輯改成先看這個主題有沒有通過 Stage D（`getStageProgress(profileId, fileKey, "capstone") !== null`），沒通過就直接不算完成；通過的話，再用 `getConversationByTopic(fileKey)` 判斷這個主題有沒有 Stage E 內容——沒有內容就直接算完成（防呆：避免未來新增暫時性、還沒做 Stage E 的主題時卡住徽章），有內容的話就還要 `getStageProgress(profileId, fileKey, "conversation") !== null` 也成立才算完成。
+- 呼叫端變數／參數全部改名為 `completedTopics`：`computeBadgeViewState()` 的第 5 個參數、`snapshotBadgeAchievements()` 內的區域變數與呼叫、成就徽章頁面 render 函式內的區域變數與呼叫，四處都改好，grep `completedStageDTopics` 全檔案已無殘留。
+- `"onboarding"` case（`badge.onboarding.first_stage_d`）跟 `"unit_completion"` case（WC-01~08）都改用新的 `completedTopics` 判斷。
+- 主題選單說明文字更新：Stage D 從「過關就算這個主題單元完成」改成「過關再加上 Stage E 才算這個主題單元完成」；Stage E 從「身歷其境練習生活英語」改成「完成後這個主題單元才算全部通關」。沒有 Stage E 內容的極少數過渡情境（目前全部 43 個主題都已經有 Stage E，不存在這個情境）文字沒有特別處理，邏輯層的 fallback 已經正確涵蓋，可接受。
+- **驗證**（`app/scripts/verify-unit-completion-badges.ts`，改寫）：新增/調整共 12 個測試，其中最關鍵的是測試 2——只通過 Stage D、未通過 Stage E 時，`first_stage_d` 跟對應單元都應該判斷為「未完成」（這是跟舊邏輯行為相反的新規則），接著補上 Stage E 後才變成「完成」；測試 10 沿用 `unit_zero`（已拆成 greetings／pronouns，本身沒有對應 `content/conversations/unit_zero.json`）驗證「沒有 Stage E 內容的主題，Stage D 就足夠」的 fallback 情境，不需要另外造假資料；測試 3、4、9、11（既有的 unit1／unit3／unit7 完成情境）都補上對應主題的 Stage E 完成紀錄，否則會在新邏輯下變成一直卡在未完成；新增測試 12 是讀取 `main.ts` 原始碼做結構性檢查，確認改名跟呼叫點都正確、不再有 `completedStageDTopics` 字串殘留。全部 12 個測試通過，其餘既有 `verify-*.ts` 也全部重跑一次都通過。
+- `npx tsc --noEmit`、`npm run build` 都通過；有 grep 打包後的 `dist/assets/main-*.js` 確認新的說明文字（「過關再加上 Stage E 才算這個主題單元完成」「完成後這個主題單元才算全部通關」）真的有進到最終產出，也確認整個 bundle 裡沒有 `completedStageDTopics` 殘留字串。
+- **重要提醒（沿用 9.118 的警示，這裡再次記錄）**：徽章 `achieved` 狀態是即時計算、不是解鎖後永久保存，這次上線後，任何小孩之前只靠 Stage D 拿到的 WC 系列（單元完成）或 OB-03（初次過關）徽章，會暫時變回「未解鎖」，要補完對應主題的 Stage E 才會重新亮起來——這是預期行為，不是 bug，但上線前務必先跟小朋友說明一聲，避免他們以為徽章壞掉了。
+- 沒有動到會話練習（voiceLab／conversationGame）相關檔案本身的邏輯，也沒有執行任何 git 操作。
+
 ### 9.118 使用者回報：單元/主題完成度徽章跟 Stage E 上線後不吻合，撰寫 handoff（2026-09-27）
 
 背景：全站 43 主題的 Stage E（會話練習）已經 100% 上線，「挑戰紀錄」統計頁的 `getStageRowsForTopic()` 也已經把 Stage E 算進每個主題的完整關卡清單裡，但徽章判斷邏輯（`computeCompletedStageDTopics()`）還停留在只看 Stage D（`capstone`），完全沒接進 Stage E，造成使用者回報「目前的學習進度跟取得徽章的條件不吻合」。

@@ -1,0 +1,209 @@
+{
+  "id": "conv.other_adverbs_responses.01",
+  "topic": "other_adverbs_responses",
+  "title": "Smart Replies with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Chatterbox Pal"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_listen_again",
+      "image": "other_adverbs_responses_scene_1.jpg",
+      "description": "Listening Closely and Saying Can You Say That Again"
+    },
+    {
+      "scene_id": "scene_kitten_away",
+      "image": "other_adverbs_responses_scene_2.jpg",
+      "description": "Watching a Playful Kitten Dart Away across the Lawn"
+    },
+    {
+      "scene_id": "scene_polite_reply",
+      "image": "other_adverbs_responses_scene_3.jpg",
+      "description": "Nodding Warmly and Answering Yes of Course"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_listen_again",
+      "character_line": {
+        "en": "A noisy truck drove past! Did you hear what I just said?",
+        "zh": "一輛好吵的卡車開過去了！你有聽清楚我剛才說什麼嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Sorry, can you please say that again?",
+          "zh": "不好意思，你可以請你再說一次嗎？",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "The apple is red.",
+          "zh": "蘋果是紅色的。",
+          "is_correct": false,
+          "hint": "請求再說一次可以用副詞「again（再一次）」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I have two sisters.",
+          "zh": "我有兩個姊妹。",
+          "is_correct": false,
+          "hint": "有禮貌地請 Benny 再講一遍「say that again」！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_listen_again",
+      "character_line": {
+        "en": "Of course! I said: you are doing fantastic with your English!",
+        "zh": "當然可以！我是說：你的英文學得超級棒！"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Thank you! I practice hard every single day!",
+          "zh": "謝謝你！我每天都好認真在練習！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The tree is tall.",
+          "zh": "樹很高。",
+          "is_correct": false,
+          "hint": "開心接受讚美說「Thank you!」喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "Today is Sunday.",
+          "zh": "今天是星期日。",
+          "is_correct": false,
+          "hint": "跟 Benny 分享你每天用功練習的好習慣！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_kitten_away",
+      "character_line": {
+        "en": "Look at the garden path! Where did the playful little squirrel go?",
+        "zh": "看花園小徑！那隻調皮的小松鼠跑到哪裡去了？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "It ran away and scampered up the tall pine tree!",
+          "zh": "牠跑遠了，而且竄到了高高的松樹上！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The soup is hot.",
+          "zh": "湯很燙。",
+          "is_correct": false,
+          "hint": "離開或跑向遠處用副詞「away」喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "I sleep at nine.",
+          "zh": "我九點睡覺。",
+          "is_correct": false,
+          "hint": "指出小松鼠跑開「ran away」爬上樹了！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_kitten_away",
+      "character_line": {
+        "en": "It climbed so fast! Will it come back down to play?",
+        "zh": "牠爬得真快！牠等一下會不會再跑下來玩？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Maybe! If we stay quiet, it might come down!",
+          "zh": "也許會！如果我們保持安靜，牠可能會下來！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The pen is blue.",
+          "zh": "筆是藍色的。",
+          "is_correct": false,
+          "hint": "表示「也許、可能」可以用副詞「Maybe」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "It is ten dollars.",
+          "zh": "這是十元。",
+          "is_correct": false,
+          "hint": "猜想松鼠會不會下來，用「Maybe」回答吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_polite_reply",
+      "character_line": {
+        "en": "Can you help me carry these drawing papers into the room?",
+        "zh": "你能幫我把這些畫紙搬進房間嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Yes, of course! I am happy to help you!",
+          "zh": "當然好！我很樂意幫你的忙！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The clock is round.",
+          "zh": "時鐘是圓的。",
+          "is_correct": false,
+          "hint": "禮貌爽快地答應說「Yes, of course!」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I have two shirts.",
+          "zh": "我有兩件襯衫。",
+          "is_correct": false,
+          "hint": "開心地答應 Benny 的請求幫忙搬畫紙！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_polite_reply",
+      "character_line": {
+        "en": "Thank you so much! Smart replies make conversations so friendly!",
+        "zh": "非常謝謝你！聰明有禮的應答讓會話變得好親切！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "You are welcome! Talking with you is always fun!",
+          "zh": "不客氣！跟你聊天總是這麼好玩！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The desk is green.",
+          "zh": "書桌是綠色的。",
+          "is_correct": false,
+          "hint": "回應別人的感謝說「You are welcome!（不客氣）」喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I eat one apple.",
+          "zh": "我吃一顆蘋果。",
+          "is_correct": false,
+          "hint": "禮貌地回應不客氣，並期待下次聊天！"
+        }
+      ]
+    }
+  ]
+}

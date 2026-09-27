@@ -1,0 +1,209 @@
+{
+  "id": "conv.calendar.01",
+  "topic": "calendar",
+  "title": "Flipping the Calendar with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Calendar Guide"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_calendar_monday",
+      "image": "calendar_scene_1.jpg",
+      "description": "Benny Checking the Big Colorful Wall Calendar for Monday"
+    },
+    {
+      "scene_id": "scene_calendar_weekend",
+      "image": "calendar_scene_2.jpg",
+      "description": "Excited Kids Circling Saturday and Sunday for the Weekend"
+    },
+    {
+      "scene_id": "scene_birthday_month_july",
+      "image": "calendar_scene_3.jpg",
+      "description": "Celebrating Birthday Month in July with Balloons and Cakes"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_calendar_monday",
+      "character_line": {
+        "en": "A brand new week begins! What day is today?",
+        "zh": "全新的一週開始了！今天是星期幾呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Today is Monday! We go to school!",
+          "zh": "今天是星期一！我們要去上學！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I have five oranges.",
+          "zh": "我有五顆柳橙。",
+          "is_correct": false,
+          "hint": "一星期的開始是星期一「Today is Monday」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "The frog is green.",
+          "zh": "青蛙是綠色的。",
+          "is_correct": false,
+          "hint": "看看日曆上的第一天，告訴 Benny 今天是星期一吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_calendar_monday",
+      "character_line": {
+        "en": "Monday is great! What special class do we have on Tuesday?",
+        "zh": "星期一很棒！我們星期二有什麼特別的課程呢？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "We have fun music class on Tuesday!",
+          "zh": "我們星期二有好好玩的音樂課！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The table is brown.",
+          "zh": "桌子是棕色的。",
+          "is_correct": false,
+          "hint": "告訴 Benny 星期二有大家最喜歡的音樂課「music class」喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I jump very high.",
+          "zh": "我跳得非常高。",
+          "is_correct": false,
+          "hint": "星期二我們能開心地唱歌演奏樂器喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_calendar_weekend",
+      "character_line": {
+        "en": "Five days of school are done! Which days are the weekend?",
+        "zh": "上學五天結束了！哪兩天是週末呢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Saturday and Sunday are the weekend!",
+          "zh": "星期六和星期日是週末！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The ruler is thirty centimeters.",
+          "zh": "尺是三十公分長。",
+          "is_correct": false,
+          "hint": "週末是星期六和星期日「Saturday and Sunday」喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "I wear a warm coat.",
+          "zh": "我穿著一件溫暖外套。",
+          "is_correct": false,
+          "hint": "告訴 Benny 哪兩天可以放假跟家人一起去公園玩吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_calendar_weekend",
+      "character_line": {
+        "en": "Hooray for the weekend! What do you like to do on Sunday?",
+        "zh": "太棒了放假了！你星期日喜歡做什麼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "I love to ride my bike in the park on Sunday!",
+          "zh": "我星期日好喜歡在公園騎腳踏車！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The clock is round.",
+          "zh": "時鐘是圓形的。",
+          "is_correct": false,
+          "hint": "分享你星期日喜歡在公園騎腳踏車「ride my bike」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "My dog has brown spots.",
+          "zh": "我的狗狗有棕色斑點。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你在週末最喜歡做的戶外活動吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_birthday_month_july",
+      "character_line": {
+        "en": "Look at the big numbers on July! Why is there a birthday cake drawn here?",
+        "zh": "看看七月份上的大數字！為什麼這裡畫了一個生日蛋糕呢？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Because July is my birthday month!",
+          "zh": "因為七月是我的生日月份！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The snow is very cold.",
+          "zh": "白雪非常冰冷。",
+          "is_correct": false,
+          "hint": "七月畫著蛋糕是因為那是你的生日月份「birthday month」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I have two pencils.",
+          "zh": "我有兩支鉛筆。",
+          "is_correct": false,
+          "hint": "開心告訴 Benny 七月是慶祝生日的月份喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_birthday_month_july",
+      "character_line": {
+        "en": "Happy birthday month! How many months are in a whole year?",
+        "zh": "生日月快樂！一整年總共有多少個月份呢？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "There are twelve months in a year!",
+          "zh": "一年總共有十二個月份！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The street is very quiet.",
+          "zh": "街道非常安靜。",
+          "is_correct": false,
+          "hint": "一整年總共有十二個月份「twelve months」喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I like sweet honey.",
+          "zh": "我喜歡香甜的蜂蜜。",
+          "is_correct": false,
+          "hint": "數數看從一月到十二月總共有幾個月吧！"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "id": "conv.science.01",
+  "topic": "science",
+  "title": "Little Scientists with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Science Partner"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_leaf_magnifier",
+      "image": "science_scene_1.jpg",
+      "description": "Observing a Green Leaf with a Magnifying Glass"
+    },
+    {
+      "scene_id": "scene_planting_seed",
+      "image": "science_scene_2.jpg",
+      "description": "Planting a Tiny Seed in a Flower Pot"
+    },
+    {
+      "scene_id": "scene_horseshoe_magnet",
+      "image": "science_scene_3.jpg",
+      "description": "Testing Magnetic Attraction with a Red Magnet"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_leaf_magnifier",
+      "character_line": {
+        "en": "Welcome to the science lab! What does a magnifying glass do?",
+        "zh": "歡迎來到自然科學實驗室！放大鏡的功能是什麼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "It makes small things look bigger!",
+          "zh": "它可以讓微小的東西看起來更大！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "It cooks our dinner.",
+          "zh": "它幫我們煮晚餐。",
+          "is_correct": false,
+          "hint": "放大鏡是用來觀察細節，讓東西看起來「look bigger」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I sleep at night.",
+          "zh": "我晚上睡覺。",
+          "is_correct": false,
+          "hint": "告訴 Benny 放大鏡是怎樣幫助小科學家做觀察的！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_leaf_magnifier",
+      "character_line": {
+        "en": "Look through the glass! What do you see on this green leaf?",
+        "zh": "透過放大鏡看！你在這片綠色葉子上看到了什麼？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "I see tiny veins and patterns on the leaf!",
+          "zh": "我看到葉子上有細細的葉脈與紋路！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "I have four books in my bag.",
+          "zh": "我書包裡有四本書。",
+          "is_correct": false,
+          "hint": "仔細觀察葉子，會看到細緻的「veins and patterns」葉脈喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "My shoes are red.",
+          "zh": "我的鞋子是紅色的。",
+          "is_correct": false,
+          "hint": "分享你在放大鏡下發現的植物神奇秘密吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_planting_seed",
+      "character_line": {
+        "en": "Here is a tiny brown seed! How do we help it grow?",
+        "zh": "這是一顆小小的棕色種子！我們要怎麼幫助它發芽長大呢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "We plant it in soil and give it water!",
+          "zh": "我們把它種在泥土裡並澆水！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "We kick it across the room.",
+          "zh": "我們把它踢到房間另一頭。",
+          "is_correct": false,
+          "hint": "種子發芽需要泥土和水分，用「soil and water」回答！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "I wear warm pajamas.",
+          "zh": "我穿溫暖的睡衣。",
+          "is_correct": false,
+          "hint": "告訴 Benny 照顧植物小種子的正確科學方法吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_planting_seed",
+      "character_line": {
+        "en": "With sunlight and water, what will the seed become?",
+        "zh": "有了陽光和水分，小種子會變成什麼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "It will grow into a lovely green plant!",
+          "zh": "它會長成一株可愛的綠色植物！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "It becomes a yellow pencil.",
+          "zh": "它會變成一支黃色鉛筆。",
+          "is_correct": false,
+          "hint": "種子在陽光和水滋養下，會「grow into a green plant」！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I wash the dinner plate.",
+          "zh": "我清洗晚餐的盤子。",
+          "is_correct": false,
+          "hint": "期待小種子慢慢長成綠意盎然的小盆栽吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_horseshoe_magnet",
+      "character_line": {
+        "en": "Look at this red horseshoe magnet! What does it pull?",
+        "zh": "看這個紅色馬蹄形磁鐵！它可以吸起什麼東西呢？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "It pulls metal paperclips and keys!",
+          "zh": "它可以吸起金屬迴紋針和鑰匙！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "It pulls my wooden chair.",
+          "zh": "它吸起我的木頭椅子。",
+          "is_correct": false,
+          "hint": "磁鐵有磁力，能吸起「metal paperclips」金屬物品喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I like eating ice cream.",
+          "zh": "我喜歡吃冰淇淋。",
+          "is_correct": false,
+          "hint": "用小磁鐵吸吸看桌上的文具，回答金屬物品吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_horseshoe_magnet",
+      "character_line": {
+        "en": "Science experiments are full of wonderful surprises!",
+        "zh": "科學實驗真的充滿了驚奇與樂趣！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes! Exploring science is so exciting!",
+          "zh": "沒錯！探索自然科學好令人興奮！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "I have two big eyes.",
+          "zh": "我有兩隻大眼睛。",
+          "is_correct": false,
+          "hint": "開心地說「Exploring science is exciting!」讚賞科學的奧妙！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "The clock is round.",
+          "zh": "時鐘是圓的。",
+          "is_correct": false,
+          "hint": "跟 Benny 一起期待下一次好玩有趣的科學實驗吧！"
+        }
+      ]
+    }
+  ]
+}

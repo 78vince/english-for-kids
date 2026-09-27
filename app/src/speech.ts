@@ -33,15 +33,30 @@ const AMBIGUOUS_STANDALONE_WORDS: Record<string, string> = {
 // 找不到明確女聲時就直接退回瀏覽器預設語音（等於維持原本的行為，不會噴錯）。
 const KNOWN_FEMALE_VOICE_NAME_HINTS = [
   "samantha", "zira", "aria", "karen", "moira", "tessa", "victoria", "ava",
-  "allison", "susan", "fiona", "kate", "serena", "shelley", "sandy", "grace",
+  "allison", "susan", "fiona", "kate", "serena", "grace",
   "emma", "joanna", "salli", "kimberly", "kendra", "ivy", "justine", "nicole",
   "google us english", "google uk english female", "kyoko", "sara", "linda",
   "heather", "catherine",
 ];
 const KNOWN_MALE_VOICE_NAME_HINTS = [
-  "alex", "daniel", "fred", "david", "mark", "thomas", "oliver", "aaron",
+  "alex", "daniel", "david", "mark", "thomas", "oliver", "aaron",
   "george", "james", "arthur", "ryan", "google uk english male", "guy",
 ];
+
+// 系統（尤其 macOS / Windows）內建的老舊合成器（如 1984 年 Fred / Albert）、趣味/卡通/特效聲音，全面排除
+const DISALLOWED_NOVELTY_VOICE_NAMES = [
+  "fred", "albert", "bad news", "bahh", "bells", "boing", "bubbles", "cellos",
+  "good news", "jester", "junior", "organ", "superstar", "trinoids",
+  "whisper", "zarvox", "wobble", "ralph",
+  "sandy", "shelley", "flo", "eddy", "grandma", "grandpa", "rocko", "reed",
+];
+
+function isNoveltyVoice(name: string): boolean {
+  const n = name.toLowerCase();
+  return DISALLOWED_NOVELTY_VOICE_NAMES.some((hint) => n.includes(hint));
+}
+
+
 
 let cachedVoices: SpeechSynthesisVoice[] = [];
 
@@ -106,11 +121,18 @@ function currentRate(): number {
   return slowModeEnabled ? SLOW_RATE : NORMAL_RATE;
 }
 
-/** 盡量挑一個聽起來像女聲的英文語音；找不到就回傳 undefined，讓瀏覽器用預設語音。 */
+/** 全站通用：優先挑選美式英文 (en-US) 乾淨自然女聲；排除卡通特效聲音，退回美式預設語音。 */
 function pickPreferredVoice(): SpeechSynthesisVoice | undefined {
   if (cachedVoices.length === 0) refreshVoiceCache();
-  const enVoices = cachedVoices.filter((v) => v.lang.toLowerCase().startsWith("en"));
-  const pool = enVoices.length > 0 ? enVoices : cachedVoices;
+  // 優先過濾美式英語 (en-US) 且排除卡通特效聲音
+  const usVoices = cachedVoices.filter((v) => {
+    const l = v.lang.toLowerCase().replace("_", "-");
+    return (l === "en-us" || l.startsWith("en-us")) && !isNoveltyVoice(v.name);
+  });
+  const enVoices = cachedVoices.filter(
+    (v) => v.lang.toLowerCase().startsWith("en") && !isNoveltyVoice(v.name)
+  );
+  const pool = usVoices.length > 0 ? usVoices : (enVoices.length > 0 ? enVoices : cachedVoices);
   if (pool.length === 0) return undefined;
 
   const explicitFemale = pool.find((v) => v.name.toLowerCase().includes("female"));
@@ -125,7 +147,7 @@ function pickPreferredVoice(): SpeechSynthesisVoice | undefined {
   const notKnownMale = pool.find(
     (v) => !KNOWN_MALE_VOICE_NAME_HINTS.some((hint) => v.name.toLowerCase().includes(hint))
   );
-  return notKnownMale ?? undefined; // 全部都像男聲的話，維持瀏覽器預設，不硬選
+  return notKnownMale ?? pool[0];
 }
 
 export function speakEnglish(text: string): void {
@@ -162,4 +184,132 @@ export function speakPassage(text: string, onEnd: () => void): void {
 export function stopSpeaking(): void {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
   window.speechSynthesis.cancel();
+}
+
+
+/**
+ * Stage E 角色 1：小熊 Benny (男聲)
+ * 首選：Google UK English Male
+ * 次選：高品質系統男聲（Alex, Evan, Nathan, Daniel 等），全面排除 Fred 等機械雜音
+ */
+function pickBennyVoice(): SpeechSynthesisVoice | undefined {
+  if (cachedVoices.length === 0) refreshVoiceCache();
+  const validVoices = cachedVoices.filter((v) => !isNoveltyVoice(v.name));
+
+  // 1. 首選：Google UK English Male
+  const googleUkMale = validVoices.find((v) =>
+    v.name.toLowerCase().includes("google uk english male")
+  );
+  if (googleUkMale) return googleUkMale;
+
+  // 2. 次選：其他英語男聲
+  const enVoices = validVoices.filter((v) => v.lang.toLowerCase().startsWith("en"));
+  const explicitMale = enVoices.find((v) => v.name.toLowerCase().includes("male"));
+  if (explicitMale) return explicitMale;
+
+  const knownMale = enVoices.find((v) =>
+    KNOWN_MALE_VOICE_NAME_HINTS.some((hint) => v.name.toLowerCase().includes(hint))
+  );
+  if (knownMale) return knownMale;
+
+  // 3. 後備：排除已知女聲的英語語音
+  return (
+    enVoices.find(
+      (v) => !KNOWN_FEMALE_VOICE_NAME_HINTS.some((hint) => v.name.toLowerCase().includes(hint))
+    ) ?? validVoices[0]
+  );
+}
+
+/**
+ * Stage E 角色 2：使用者回答 (女聲)
+ * 首選：Google US English
+ * 次選：高品質系統女聲（Samantha, Ava, Allison 等）
+ */
+function pickUserDialogueVoice(): SpeechSynthesisVoice | undefined {
+  if (cachedVoices.length === 0) refreshVoiceCache();
+  const validVoices = cachedVoices.filter((v) => !isNoveltyVoice(v.name));
+
+  // 1. 首選：Google US English
+  const googleUs = validVoices.find((v) =>
+    v.name.toLowerCase().includes("google us english")
+  );
+  if (googleUs) return googleUs;
+
+  // 2. 次選：其他英語女聲
+  const enVoices = validVoices.filter((v) => v.lang.toLowerCase().startsWith("en"));
+  const explicitFemale = enVoices.find((v) => v.name.toLowerCase().includes("female"));
+  if (explicitFemale) return explicitFemale;
+
+  const knownFemale = enVoices.find((v) =>
+    KNOWN_FEMALE_VOICE_NAME_HINTS.some((hint) => v.name.toLowerCase().includes(hint))
+  );
+  if (knownFemale) return knownFemale;
+
+  return pickPreferredVoice();
+}
+
+export interface DialogueSpeechOptions {
+  persona: "boy" | "girl";
+  onEnd?: () => void;
+}
+
+/** Stage E 會話練習專用：小熊 Benny (Google UK English Male) 與 使用者回答 (Google US English) */
+export function speakDialogueLine(text: string, options: DialogueSpeechOptions): void {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+    options.onEnd?.();
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const spokenText = AMBIGUOUS_STANDALONE_WORDS[text] ?? text;
+  const utterance = new SpeechSynthesisUtterance(spokenText);
+  utterance.lang = "en-US";
+
+  // 連動上方慢速按鈕：慢速模式對齊全站標準 SLOW_RATE (0.6)，常速為自然會話語速 (0.95)
+  const isSlow = isSlowSpeechEnabled();
+  utterance.rate = isSlow ? SLOW_RATE : 0.95;
+  utterance.volume = 1.0; // 確保 Web Speech API 音量為最大值 1.0
+
+  if (options.persona === "boy") {
+    // 角色 1：小熊 Benny（Google UK English Male 男聲）
+    utterance.voice = pickBennyVoice() ?? null;
+    utterance.pitch = 1.0;
+    console.info(
+      `[Stage E TTS] 角色 1: 小熊 Benny | 語音: "${utterance.voice?.name ?? '系統預設'}" | Pitch: 1.0 | 語速: ${utterance.rate} | 音量: ${utterance.volume} (慢速模式: ${isSlow})`
+    );
+  } else {
+    // 角色 2：使用者回答（Google US English 女聲）
+    utterance.voice = pickUserDialogueVoice() ?? null;
+    utterance.pitch = 1.0;
+    console.info(
+      `[Stage E TTS] 角色 2: 使用者回答 | 語音: "${utterance.voice?.name ?? '系統預設'}" | Pitch: 1.0 | 語速: ${utterance.rate} | 音量: ${utterance.volume} (慢速模式: ${isSlow})`
+    );
+  }
+
+
+
+
+  let ended = false;
+  const triggerEnd = () => {
+    if (!ended) {
+      ended = true;
+      options.onEnd?.();
+    }
+  };
+
+  utterance.onend = triggerEnd;
+  utterance.onerror = triggerEnd;
+
+  // 防禦性 fallback：依字數推估最大播放時長（慢速時增加時間），防止瀏覽器 TTS 偶發遺失 onend 事件
+  const wordCount = spokenText.trim().split(/\s+/).length;
+  const baseTimePerWord = isSlowSpeechEnabled() ? 650 : 450;
+  const fallbackMs = Math.max(1600, wordCount * baseTimePerWord + 1200);
+  setTimeout(() => {
+    if (!ended && window.speechSynthesis.speaking) {
+      setTimeout(triggerEnd, 500);
+    } else {
+      triggerEnd();
+    }
+  }, fallbackMs);
+
+  window.speechSynthesis.speak(utterance);
 }

@@ -1,0 +1,209 @@
+{
+  "id": "conv.bathroom.01",
+  "topic": "bathroom",
+  "title": "Fresh and Clean in the Bathroom",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "School Friend"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_brushing_teeth",
+      "image": "bathroom_scene_1.jpg",
+      "description": "Brushing Teeth in Front of the Bathroom Mirror"
+    },
+    {
+      "scene_id": "scene_washing_face",
+      "image": "bathroom_scene_2.jpg",
+      "description": "Washing Face and Drying with a Soft Towel"
+    },
+    {
+      "scene_id": "scene_bubble_bath",
+      "image": "bathroom_scene_3.jpg",
+      "description": "Taking a Warm Bath with Soap Bubbles"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_brushing_teeth",
+      "character_line": {
+        "en": "Good morning! Did you brush your teeth?",
+        "zh": "早安！你今天刷好牙了嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Yes! I brush my teeth with my toothbrush.",
+          "zh": "刷好了！我用牙刷把牙齒刷得乾乾淨淨。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I brush my teeth with an apple.",
+          "zh": "我用蘋果刷牙。",
+          "is_correct": false,
+          "hint": "刷牙要用牙刷（toothbrush）配合牙膏喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "It is raining outside.",
+          "zh": "外面正在下雨。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你的牙齒刷得多乾淨！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_brushing_teeth",
+      "character_line": {
+        "en": "Your smile looks so bright and clean!",
+        "zh": "你的微笑看起來好耀眼、牙齒好白好乾淨！"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Thank you! Clean teeth keep me healthy.",
+          "zh": "謝謝！乾淨的牙齒讓我身體健康。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "My teeth are full of mud.",
+          "zh": "我的牙齒都是泥巴。",
+          "is_correct": false,
+          "hint": "刷乾淨牙齒很棒，接受稱讚說聲謝謝吧！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I have two sisters.",
+          "zh": "我有兩個姊妹。",
+          "is_correct": false,
+          "hint": "回答 Benny「Clean teeth keep me healthy.」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_washing_face",
+      "character_line": {
+        "en": "Now let's wash your face with warm water.",
+        "zh": "現在我們用溫水洗洗臉吧。"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Yes, water feels so fresh on my face!",
+          "zh": "好的，水潑在臉上感覺好清爽喔！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "I wash my face with hot soup.",
+          "zh": "我用熱湯洗臉。",
+          "is_correct": false,
+          "hint": "洗臉要用溫和乾淨的清水（water）喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "This is a yellow pencil.",
+          "zh": "這是一支黃色鉛筆。",
+          "is_correct": false,
+          "hint": "洗完臉感覺精神抖擻又舒服呢！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_washing_face",
+      "character_line": {
+        "en": "Here is a soft dry towel for you.",
+        "zh": "這裡有一條柔軟乾爽的毛巾給你擦拭。"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Thank you! The towel is so soft.",
+          "zh": "謝謝你！這條毛巾好柔軟。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The towel is a green crocodile.",
+          "zh": "毛巾是一隻綠色鱷魚。",
+          "is_correct": false,
+          "hint": "擦臉的布叫毛巾（towel）喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "It is eight o'clock.",
+          "zh": "現在是八點鐘。",
+          "is_correct": false,
+          "hint": "用柔軟的 towel 把臉上的水珠擦乾吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_bubble_bath",
+      "character_line": {
+        "en": "Look at the tub! Do you like a bubble bath?",
+        "zh": "看浴缸！你喜歡洗好玩的泡泡澡嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Yes! Bubbles make bath time so fun!",
+          "zh": "喜歡！泡泡讓洗澡變得超級好玩！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "I sleep inside the water tub with shoes.",
+          "zh": "我穿著鞋子睡在浴缸裡。",
+          "is_correct": false,
+          "hint": "泡泡澡是 bubble bath，洗澡放鬆真開心！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I like sweet bananas.",
+          "zh": "我喜歡甜香蕉。",
+          "is_correct": false,
+          "hint": "跟 Benny 分享你喜歡泡泡澡的心情吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_bubble_bath",
+      "character_line": {
+        "en": "You are smelling so clean and sweet now!",
+        "zh": "你現在全身聞起來好香好乾淨喔！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "I feel fresh, happy, and clean!",
+          "zh": "我感到神清氣爽、開心又乾淨！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "I am an angry monster.",
+          "zh": "我是一隻生氣的怪獸。",
+          "is_correct": false,
+          "hint": "洗完香噴噴的澡，感覺好舒服乾淨（clean）！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "Good morning, teacher.",
+          "zh": "早安，老師。",
+          "is_correct": false,
+          "hint": "開心回答「I feel fresh, happy, and clean!」吧！"
+        }
+      ]
+    }
+  ]
+}

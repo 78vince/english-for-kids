@@ -1,0 +1,209 @@
+{
+  "id": "conv.health.01",
+  "topic": "health",
+  "title": "Staying Healthy and Strong with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Wellness Buddy"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_garden_exercise",
+      "image": "health_scene_1.jpg",
+      "description": "Morning Exercise and Drinking Warm Water in the Garden"
+    },
+    {
+      "scene_id": "scene_resting_bed",
+      "image": "health_scene_2.jpg",
+      "description": "Feeling Under the Weather and Resting in a Cozy Bed"
+    },
+    {
+      "scene_id": "scene_healthy_smile",
+      "image": "health_scene_3.jpg",
+      "description": "Energetic Kid Smiling with Benny Full of Health and Power"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_garden_exercise",
+      "character_line": {
+        "en": "Good morning! Stretching in the garden feels so good! How do you feel?",
+        "zh": "早安！在花園伸展筋骨感覺真舒服！你感覺怎麼樣？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "I feel great, healthy, and strong today!",
+          "zh": "我今天感覺棒極了，健康又強壯！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "The bookstore is closed.",
+          "zh": "書店關門了。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你今天感覺很有活力「healthy and strong」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I have eight green pens.",
+          "zh": "我有八支綠色原子筆。",
+          "is_correct": false,
+          "hint": "大口呼吸新鮮空氣，分享你的好精神吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_garden_exercise",
+      "character_line": {
+        "en": "Drinking warm water after exercise is important! Why should we drink water?",
+        "zh": "運動後喝溫開水很重要！我們為什麼要喝水呢？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Drinking water keeps our bodies healthy and strong!",
+          "zh": "喝水能讓我們的身體保持健康與強壯！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The monkey is climbing.",
+          "zh": "猴子正在攀爬。",
+          "is_correct": false,
+          "hint": "告訴 Benny 多喝溫開水可以讓身體健康「keeps bodies healthy」喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "My uncle is a driver.",
+          "zh": "我叔叔是一位司機。",
+          "is_correct": false,
+          "hint": "水分對成長中的小朋友身體非常重要喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_resting_bed",
+      "character_line": {
+        "en": "Oh no, poor Leo is sneezing! What is wrong with him?",
+        "zh": "糟糕，可憐的里歐一直在打噴嚏！他怎麼了呢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "He has a cold and a bad headache.",
+          "zh": "他感冒了，而且頭很痛。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The elephant has big ears.",
+          "zh": "大象有大大的耳朵。",
+          "is_correct": false,
+          "hint": "看看他打噴嚏摸頭的樣子，他感冒頭痛「has a cold and headache」喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "This is a yellow ruler.",
+          "zh": "這是一把黃色的尺。",
+          "is_correct": false,
+          "hint": "描述生病的症狀告訴 Benny 喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_resting_bed",
+      "character_line": {
+        "en": "He should rest well! What warm words can we say to him?",
+        "zh": "他應該好好休息！我們能對他說什麼溫暖的話呢？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Take good rest and get well soon!",
+          "zh": "好好休息，祝你早日康復！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The train arrives at six.",
+          "zh": "火車在六點抵達。",
+          "is_correct": false,
+          "hint": "祝福生病的朋友早日康復「get well soon」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I like chocolate cookies.",
+          "zh": "我喜歡巧克力餅乾。",
+          "is_correct": false,
+          "hint": "溫暖關心朋友，祝他好好休息早日康復吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_healthy_smile",
+      "character_line": {
+        "en": "Leo took his medicine and slept well! Look, he is smiling again!",
+        "zh": "里歐吃了藥而且好好睡了一覺！看，他又展開笑臉了！"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Yay! He feels much better and well now!",
+          "zh": "太棒了！他現在感覺好多了，身體也很健康！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The supermarket sells fruit.",
+          "zh": "超市有賣水果。",
+          "is_correct": false,
+          "hint": "開心慶祝他恢復精神「feels much better and well」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I have two red shirts.",
+          "zh": "我有兩件紅色襯衫。",
+          "is_correct": false,
+          "hint": "看到朋友病好了，大聲歡呼「Yay!」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_healthy_smile",
+      "character_line": {
+        "en": "Eating good food and sleeping early keep us happy! Do you agree?",
+        "zh": "吃好食物與早點睡覺讓我們保持快樂！你贊同嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes! Good habits keep us healthy every day!",
+          "zh": "沒錯！良好的習慣讓我們每天都健康！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The desk is made of wood.",
+          "zh": "書桌是用木頭做的。",
+          "is_correct": false,
+          "hint": "肯定良好習慣能帶來健康「Good habits keep us healthy」喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "It is fifty cents.",
+          "zh": "這是五十分錢。",
+          "is_correct": false,
+          "hint": "贊同 Benny 說的早睡早起身體好喔！"
+        }
+      ]
+    }
+  ]
+}

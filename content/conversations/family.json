@@ -1,0 +1,209 @@
+{
+  "id": "conv.family.01",
+  "topic": "family",
+  "title": "A Warm Day with Family",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "School Friend"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_living_room",
+      "image": "family_scene_1.jpg",
+      "description": "Looking at the Photo Album in the Living Room"
+    },
+    {
+      "scene_id": "scene_garden",
+      "image": "family_scene_2.jpg",
+      "description": "Visiting Grandparents in the Sunny Garden"
+    },
+    {
+      "scene_id": "scene_playroom",
+      "image": "family_scene_3.jpg",
+      "description": "Playing Together in the Playroom"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_living_room",
+      "character_line": {
+        "en": "Look at this photo! Who is he?",
+        "zh": "你看這張照片！他是誰呀？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "He is my father.",
+          "zh": "他是我爸爸。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "She is my mother.",
+          "zh": "她是我媽媽。",
+          "is_correct": false,
+          "hint": "照片裡的是爸爸（男生的「他」），請用「He is my father」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "This is a red ball.",
+          "zh": "這是一顆紅色的球。",
+          "is_correct": false,
+          "hint": "Benny 在問照片裡的人是誰喔，回答「He is my father」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_living_room",
+      "character_line": {
+        "en": "Is that your sweet mother?",
+        "zh": "那是你溫柔的媽媽嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Yes! She is my mother.",
+          "zh": "對啊！她是我媽媽。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "No, he is my dog.",
+          "zh": "不是，他是我的狗。",
+          "is_correct": false,
+          "hint": "照片裡美麗的女士是媽媽喔，回答「Yes! She is my mother」吧！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I like apples.",
+          "zh": "我喜歡蘋果。",
+          "is_correct": false,
+          "hint": "回答 Benny 的問題，跟他說「Yes! She is my mother」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_garden",
+      "character_line": {
+        "en": "Who is in the garden?",
+        "zh": "誰在花園裡澆花呢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "My grandfather and grandmother.",
+          "zh": "我的爺爺和奶奶。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "They are my teachers.",
+          "zh": "他們是我的老師。",
+          "is_correct": false,
+          "hint": "在花園裡照顧花草的是慈祥的爺爺奶奶喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "It is a yellow bus.",
+          "zh": "它是一輛黃色公車。",
+          "is_correct": false,
+          "hint": "Benny 在問花園裡有誰，用「My grandfather and grandmother」回答吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_garden",
+      "character_line": {
+        "en": "Do you love your family?",
+        "zh": "你很愛你的家人嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Yes, I love my family!",
+          "zh": "是的，我好愛我的家人！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "No, I am sleeping.",
+          "zh": "不，我在睡覺。",
+          "is_correct": false,
+          "hint": "大方地跟 Benny 分享你愛家人的心情吧！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "It is cold milk.",
+          "zh": "這是冰牛奶。",
+          "is_correct": false,
+          "hint": "回答「Yes, I love my family!」大聲說出愛吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_playroom",
+      "character_line": {
+        "en": "Who is that baby boy?",
+        "zh": "那個玩積木的小男嬰是誰？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "He is my baby brother.",
+          "zh": "他是我的小弟弟。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "She is my sister.",
+          "zh": "她是我的姊姊。",
+          "is_correct": false,
+          "hint": "地上玩積木的是小男嬰喔，請用「He is my baby brother」回答！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I have two pens.",
+          "zh": "我有兩支筆。",
+          "is_correct": false,
+          "hint": "跟 Benny 介紹你的小弟弟吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_playroom",
+      "character_line": {
+        "en": "Do you play together every day?",
+        "zh": "你們每天都會一起玩嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes! We play every day.",
+          "zh": "對啊！我們每天一起玩。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "No, he is at school.",
+          "zh": "不，他在學校。",
+          "is_correct": false,
+          "hint": "小弟弟在家跟你一起玩得很開心喔，回答「Yes! We play every day」吧！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "Good evening, teacher.",
+          "zh": "晚安，老師。",
+          "is_correct": false,
+          "hint": "跟 Benny 聊聊你們一起玩的樂趣吧！"
+        }
+      ]
+    }
+  ]
+}

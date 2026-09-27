@@ -1,0 +1,209 @@
+{
+  "id": "conv.houses_apartments.01",
+  "topic": "houses_apartments",
+  "title": "Welcome to My Cozy Home with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "School Friend"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_front_door",
+      "image": "houses_apartments_scene_1.jpg",
+      "description": "Welcoming Benny at the Front Door"
+    },
+    {
+      "scene_id": "scene_living_room_sofa",
+      "image": "houses_apartments_scene_2.jpg",
+      "description": "Sitting on the Soft Sofa in the Bright Living Room"
+    },
+    {
+      "scene_id": "scene_bedroom_bookshelf",
+      "image": "houses_apartments_scene_3.jpg",
+      "description": "Visiting the Cozy Bedroom and Bookcase"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_front_door",
+      "character_line": {
+        "en": "Hello! Ding-dong! Is this your home?",
+        "zh": "哈囉！叮咚！這是你的家嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Yes! Welcome to my house!",
+          "zh": "對啊！歡迎光臨我家！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "No, this is a zoo.",
+          "zh": "不，這是一座動物園。",
+          "is_correct": false,
+          "hint": "好朋友來作客，熱情說「Welcome to my house（歡迎來我家）」吧！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I like blue shoes.",
+          "zh": "我喜歡藍色的鞋子。",
+          "is_correct": false,
+          "hint": "歡迎小熊 Benny 進門吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_front_door",
+      "character_line": {
+        "en": "Thank you! Please open the door.",
+        "zh": "謝謝你！請幫我開門吧。"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Sure! Come in and take off your shoes.",
+          "zh": "好的！請進，請在玄關脫鞋喔。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The door is a giant sandwich.",
+          "zh": "大門是一個巨大的三明治。",
+          "is_correct": false,
+          "hint": "大門是 door，請好朋友進屋子裡吧！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "Good night, friends.",
+          "zh": "晚安，朋友們。",
+          "is_correct": false,
+          "hint": "熱情邀請 Benny 進屋子裡坐坐吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_living_room_sofa",
+      "character_line": {
+        "en": "Your living room is so bright and clean!",
+        "zh": "你的客廳好明亮好乾淨喔！"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Thank you! Let's sit on the sofa.",
+          "zh": "謝謝！我們一起坐沙發吧。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "I sleep inside the refrigerator.",
+          "zh": "我都睡在冰箱裡面。",
+          "is_correct": false,
+          "hint": "客廳裡舒服的長椅是沙發（sofa）喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "It is four o'clock.",
+          "zh": "現在是四點鐘。",
+          "is_correct": false,
+          "hint": "邀請 Benny 一起坐上舒服的沙發（sofa）吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_living_room_sofa",
+      "character_line": {
+        "en": "This sofa is so soft and comfortable!",
+        "zh": "這張沙發好軟好舒服喔！"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Yes! Make yourself at home.",
+          "zh": "對啊！當作自己家不用客氣喔。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The sofa is very angry.",
+          "zh": "沙發非常生氣。",
+          "is_correct": false,
+          "hint": "熱情招待好朋友：「Make yourself at home.」"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I have two sisters.",
+          "zh": "我有兩個姊妹。",
+          "is_correct": false,
+          "hint": "讓好朋友在客廳放鬆休息吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_bedroom_bookshelf",
+      "character_line": {
+        "en": "Can I see your bedroom?",
+        "zh": "我可以參觀你的臥室房間嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Yes! Here is my bedroom and bed.",
+          "zh": "可以呀！這裡就是我的臥室和小床。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "No, I live in a tree house.",
+          "zh": "不行，我住在樹屋裡面。",
+          "is_correct": false,
+          "hint": "睡覺的房間是 bedroom，小床是 bed 喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "This is a bus stop.",
+          "zh": "這是一個公車站。",
+          "is_correct": false,
+          "hint": "大方帶 Benny 參觀可愛的小臥室吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_bedroom_bookshelf",
+      "character_line": {
+        "en": "You have many great books and toys!",
+        "zh": "你的書架上有好多好看的故事書和玩具喔！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "We can read and play together!",
+          "zh": "我們可以一起看書、一起玩！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "Do not touch anything.",
+          "zh": "什麼都不要碰。",
+          "is_correct": false,
+          "hint": "好朋友來家裡，一起分享看書玩玩具最開心了！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I want to eat soup.",
+          "zh": "我想要喝熱湯。",
+          "is_correct": false,
+          "hint": "回答「We can read and play together!」享受同樂吧！"
+        }
+      ]
+    }
+  ]
+}

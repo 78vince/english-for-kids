@@ -1,0 +1,209 @@
+{
+  "id": "conv.occupations.01",
+  "topic": "occupations",
+  "title": "Meeting Community Helpers with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Community Helper"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_classroom_teacher",
+      "image": "occupations_scene_1.jpg",
+      "description": "Cheerful Teacher in the Sunny Classroom"
+    },
+    {
+      "scene_id": "scene_clinic_doctor_nurse",
+      "image": "occupations_scene_2.jpg",
+      "description": "Kind Doctor and Friendly Nurse at the Clinic"
+    },
+    {
+      "scene_id": "scene_street_officer_firefighter",
+      "image": "occupations_scene_3.jpg",
+      "description": "Brave Police Officer and Firefighter on the City Street"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_classroom_teacher",
+      "character_line": {
+        "en": "Welcome to our bright classroom! Who is standing by the blackboard?",
+        "zh": "歡迎來到我們明亮的教室！是誰站在黑板旁邊呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "She is our kind English teacher!",
+          "zh": "她是我們親切的英文老師！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "It is an orange carrot.",
+          "zh": "這是一根橘色紅蘿蔔。",
+          "is_correct": false,
+          "hint": "站在黑板前面教大家讀書的是親切的「teacher」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I want a blue truck.",
+          "zh": "我想要一輛藍色卡車。",
+          "is_correct": false,
+          "hint": "告訴 Benny 黑板前面的是我們親切的英文老師喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_classroom_teacher",
+      "character_line": {
+        "en": "Teachers are wonderful! What do you want to be when you grow up?",
+        "zh": "老師真的很棒！你長大後想成為什麼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "I want to be a singer and sing happily!",
+          "zh": "我想成為一名歌手，開心地唱歌！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The table has four legs.",
+          "zh": "這張桌子有四隻腳。",
+          "is_correct": false,
+          "hint": "分享你長大後想做的工作，說「I want to be...」喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "The cloud is very white.",
+          "zh": "白雲非常潔白。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你想成為一名開心的歌手或喜歡的職業！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_clinic_doctor_nurse",
+      "character_line": {
+        "en": "Here is the town clinic! Who helps us when we feel sick?",
+        "zh": "這裡是小鎮診所！當我們生病時是誰在幫助我們？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "The kind doctor and nurse help us!",
+          "zh": "親切的醫生和護理師幫助我們！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "I play soccer in the yard.",
+          "zh": "我在院子裡踢足球。",
+          "is_correct": false,
+          "hint": "生病時細心照顧我們的是醫生「doctor」和護士「nurse」喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "This is a small fork.",
+          "zh": "這是一支小叉子。",
+          "is_correct": false,
+          "hint": "診所裡有穿白袍的親切醫生跟護理師喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_clinic_doctor_nurse",
+      "character_line": {
+        "en": "They take good care of everyone! Should we say thank you?",
+        "zh": "他們細心照顧大家！我們是不是該說聲謝謝呢？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Yes! Thank you for keeping us healthy!",
+          "zh": "對！謝謝您們守護我們的健康！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The train runs on the track.",
+          "zh": "火車在鐵軌上行駛。",
+          "is_correct": false,
+          "hint": "有禮貌地向守護健康的醫生與護士說聲「Thank you」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I have two red shirts.",
+          "zh": "我有兩件紅色襯衫。",
+          "is_correct": false,
+          "hint": "感謝醫護人員讓我們保持健康「healthy」喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_street_officer_firefighter",
+      "character_line": {
+        "en": "Look at the busy street! Who helps keep our neighborhood safe?",
+        "zh": "看繁忙的街道！是誰在維護社區的安全呢？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "The brave police officer keeps us safe!",
+          "zh": "勇敢的警察守護著我們的安全！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "My pencil case is green.",
+          "zh": "我的鉛筆盒是綠色的。",
+          "is_correct": false,
+          "hint": "守護城市治安、維持交通安全的是勇敢的警察「police officer」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I like sweet banana milk.",
+          "zh": "我喜歡香甜的香蕉牛奶。",
+          "is_correct": false,
+          "hint": "告訴 Benny 是勇敢的警察叔叔阿姨在守護大家喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_street_officer_firefighter",
+      "character_line": {
+        "en": "All these community helpers work so hard! Aren't they amazing?",
+        "zh": "所有社區助手都這麼努力工作！他們是不是很了不起？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes, they are all our community heroes!",
+          "zh": "是的，他們都是我們社區的英雄！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The clock has two hands.",
+          "zh": "時鐘有兩根指針。",
+          "is_correct": false,
+          "hint": "讚美大家都是社區裡的了不起英雄「community heroes」喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "It is twenty dollars.",
+          "zh": "這是二十元。",
+          "is_correct": false,
+          "hint": "回答「Yes!」肯定所有辛苦為大家服務的人們吧！"
+        }
+      ]
+    }
+  ]
+}

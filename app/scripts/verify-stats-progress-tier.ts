@@ -203,9 +203,9 @@ const TOTAL_STAGES = ALL_STAGE_KEYS.length; // 跟 main.ts 的 STAGE_ROWS.length
   assert(mainTs.includes("function topicProgressTier("), "main.ts 應該要有 topicProgressTier() 函式");
   assert(
     mainTs.includes(
-      "const topicTier = topicProgressTier(topicPlayedCount, STAGE_ROWS.length, topicAverageAccuracy);"
+      "const topicTier = topicProgressTier(topicPlayedCount, stageRows.length, topicAverageAccuracy);"
     ),
-    "renderStats() 應該用 topicPlayedCount／STAGE_ROWS.length／topicAverageAccuracy 呼叫 topicProgressTier()"
+    "renderStats() 應該用 topicPlayedCount／stageRows.length／topicAverageAccuracy 呼叫 topicProgressTier()"
   );
   assert(
     mainTs.includes("stats-topic-card--${topicTier}"),

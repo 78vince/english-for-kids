@@ -1,0 +1,209 @@
+{
+  "id": "conv.sentence_connectors.01",
+  "topic": "sentence_connectors",
+  "title": "Connecting Ideas with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Sentence Builder"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_word_blocks",
+      "image": "sentence_connectors_scene_1.jpg",
+      "description": "Connecting Word Blocks with And and But on the Playmat"
+    },
+    {
+      "scene_id": "scene_action_badges",
+      "image": "sentence_connectors_scene_2.jpg",
+      "description": "Benny Holding Can and Do Action Badges enthusiastically"
+    },
+    {
+      "scene_id": "scene_finished_puzzle",
+      "image": "sentence_connectors_scene_3.jpg",
+      "description": "Holding Hands and Saying Because at the Finished Puzzle"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_word_blocks",
+      "character_line": {
+        "en": "Look at these colorful word blocks! Can you make a sentence with \"and\"?",
+        "zh": "看這些彩色的文字積木！你能用「and」造一個句子嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "I like apples and sweet bananas!",
+          "zh": "我喜歡蘋果和香甜的香蕉！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "The ruler is thirty cm.",
+          "zh": "尺有三十公分長。",
+          "is_correct": false,
+          "hint": "用「and（和、而且）」連接兩種喜歡的水果喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "She is my aunt.",
+          "zh": "她是我的阿姨。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你同時喜歡蘋果跟香蕉喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_word_blocks",
+      "character_line": {
+        "en": "Great! Now let's try \"but\"! I like running, but...",
+        "zh": "太棒了！現在換「but」試試看！我喜歡跑步，但是……"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "I am tired today, but I am still happy!",
+          "zh": "我今天有點累，但我還是很開心！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The duck is yellow.",
+          "zh": "鴨子是黃色的。",
+          "is_correct": false,
+          "hint": "用「but（但是）」連接轉折的語氣喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I have four books.",
+          "zh": "我有四本書。",
+          "is_correct": false,
+          "hint": "說說看「雖然累但很快樂」的句子吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_action_badges",
+      "character_line": {
+        "en": "Look at my shiny action badge! What amazing things can you do?",
+        "zh": "看我閃亮的動作徽章！你能做出什麼厲害的事情呢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "I can jump high and swim very well!",
+          "zh": "我可以跳得很高，而且很會游泳！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The desk is green.",
+          "zh": "書桌是綠色的。",
+          "is_correct": false,
+          "hint": "用「I can...（我能夠）」分享你的能力喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "It is ten o'clock.",
+          "zh": "現在是十點鐘。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你會跳高跟游泳的拿手好戲！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_action_badges",
+      "character_line": {
+        "en": "You can swim so well! Do you practice every weekend?",
+        "zh": "你游得這麼棒！你每個週末都有練習嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Yes, I do! I practice with my dad!",
+          "zh": "是的，我有！我都跟我爸爸一起練習！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The soup is hot.",
+          "zh": "湯很燙。",
+          "is_correct": false,
+          "hint": "問句用「Do you...」回答用「Yes, I do」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "The frog jumps.",
+          "zh": "青蛙在跳。",
+          "is_correct": false,
+          "hint": "回答「Yes, I do!」告訴 Benny 你常常練習！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_finished_puzzle",
+      "character_line": {
+        "en": "We completed the big puzzle together! Why are you smiling so brightly?",
+        "zh": "我們一起完成大拼圖了！為什麼你笑得這麼燦爛呢？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Because we worked hard together!",
+          "zh": "因為我們大家一起努力完成了！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The train is long.",
+          "zh": "火車很長。",
+          "is_correct": false,
+          "hint": "回答「Why（為什麼）」要用「Because（因為）」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I eat five biscuits.",
+          "zh": "我吃五塊餅乾。",
+          "is_correct": false,
+          "hint": "用「Because」說出一起合作完成的成就感！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_finished_puzzle",
+      "character_line": {
+        "en": "Teamwork makes everything possible! Are we best friends?",
+        "zh": "團隊合作讓一切都成真！我們是最好的朋友對吧？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes, we are! Best friends forever!",
+          "zh": "是的，我們是！永遠的好朋友！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The pen is blue.",
+          "zh": "筆是藍色的。",
+          "is_correct": false,
+          "hint": "肯定地回答「Yes, we are!」喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "Today is sunny.",
+          "zh": "今天陽光明媚。",
+          "is_correct": false,
+          "hint": "跟 Benny 溫暖擊掌宣示永遠的好友情！"
+        }
+      ]
+    }
+  ]
+}

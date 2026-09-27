@@ -119,3 +119,43 @@ export interface ChangelogEntry {
   title: string;
   items: string[];
 }
+
+// 對應 content/schema/conversation.schema.json —— Stage E 會話練習的資料型別
+export interface ConversationCharacter {
+  name: string;
+  avatar: string;
+  role: string;
+}
+
+export interface ConversationScene {
+  scene_id: string;
+  image: string;
+  description: string;
+}
+
+export interface ConversationOption {
+  id: string;
+  en: string;
+  zh: string;
+  is_correct: boolean;
+  hint?: string;
+}
+
+export interface ConversationTurn {
+  turn_id: number;
+  scene_id: string;
+  character_line: {
+    en: string;
+    zh: string;
+  };
+  options: ConversationOption[];
+}
+
+export interface Conversation {
+  id: string;
+  topic: string;
+  title: string;
+  character: ConversationCharacter;
+  scenes: ConversationScene[];
+  turns: ConversationTurn[];
+}

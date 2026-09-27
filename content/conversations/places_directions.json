@@ -1,0 +1,209 @@
+{
+  "id": "conv.places_directions.01",
+  "topic": "places_directions",
+  "title": "Finding Our Way with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Neighborhood Guide"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_park_zoo",
+      "image": "places_directions_scene_1.jpg",
+      "description": "Visiting the Friendly Town Park and Big Zoo"
+    },
+    {
+      "scene_id": "scene_crossroad_bookstore",
+      "image": "places_directions_scene_2.jpg",
+      "description": "Standing at the Crossroad and Finding the Bookstore"
+    },
+    {
+      "scene_id": "scene_school_supermarket",
+      "image": "places_directions_scene_3.jpg",
+      "description": "Arriving Safely at School next to the Supermarket"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_park_zoo",
+      "character_line": {
+        "en": "Look at the colorful town map! Where is the park?",
+        "zh": "看這張色彩繽紛的城鎮地圖！公園在哪裡呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "The park is next to the zoo!",
+          "zh": "公園就在動物園旁邊！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I have five red apples.",
+          "zh": "我有五顆紅蘋果。",
+          "is_correct": false,
+          "hint": "告訴 Benny 公園就在動物園旁邊「The park is next to...」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "The sky is green today.",
+          "zh": "今天天空是綠色的。",
+          "is_correct": false,
+          "hint": "仔細看地圖上的綠色公園和動物園在哪裡吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_park_zoo",
+      "character_line": {
+        "en": "Great job! Can we see cute lions at the zoo today?",
+        "zh": "太棒了！我們今天可以在動物園看到可愛的獅子嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Yes! We can see lions and monkeys!",
+          "zh": "可以！我們能看到獅子和猴子！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "I sleep at eight o'clock.",
+          "zh": "我八點鐘睡覺。",
+          "is_correct": false,
+          "hint": "開心回答「Yes!」告訴 Benny 動物園有獅子和猴子喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "My pencil is very short.",
+          "zh": "我的鉛筆很短。",
+          "is_correct": false,
+          "hint": "動物園裡面有好多可愛動物，快跟 Benny 一起去看！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_crossroad_bookstore",
+      "character_line": {
+        "en": "Now we are at the crossroad. How do we go to the bookstore?",
+        "zh": "現在我們來到十字路口了。我們該怎麼去書店呢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Turn left, and it is on the right.",
+          "zh": "先左轉，它就在右邊喔。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "She is my kind grandmother.",
+          "zh": "她是我親切的祖母。",
+          "is_correct": false,
+          "hint": "指引方向說「Turn left（左轉）」帶 Benny 去書店喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "I like cold water.",
+          "zh": "我喜歡喝冰水。",
+          "is_correct": false,
+          "hint": "告訴 Benny 先向左轉，書店就在右邊喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_crossroad_bookstore",
+      "character_line": {
+        "en": "Thank you! What can we find inside the bookstore?",
+        "zh": "謝謝你！我們在書店裡可以找到什麼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "We can find fun picture books there!",
+          "zh": "我們可以在那裡找到有趣的繪本！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The cat is climbing the tree.",
+          "zh": "貓咪正在爬樹。",
+          "is_correct": false,
+          "hint": "書店裡有滿滿的精彩童書，告訴 Benny「picture books」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "Today is hot and rainy.",
+          "zh": "今天又熱又下雨。",
+          "is_correct": false,
+          "hint": "書店是買書和看繪本的地方喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_school_supermarket",
+      "character_line": {
+        "en": "Look ahead! Is our school near the big supermarket?",
+        "zh": "看前面！我們的學校在大型超市附近嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Yes, our school is right next to it!",
+          "zh": "沒錯，我們的學校就在它的正隔壁！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "I wear yellow socks.",
+          "zh": "我穿著黃色的襪子。",
+          "is_correct": false,
+          "hint": "肯定地回答學校就在超市旁邊「next to it」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "The frog jumps into water.",
+          "zh": "青蛙跳進水裡了。",
+          "is_correct": false,
+          "hint": "看前面那棟漂亮的學校建築就在超市旁喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_school_supermarket",
+      "character_line": {
+        "en": "We walked so well and arrived safely! Are you happy?",
+        "zh": "我們走得很好而且平安抵達了！你開心嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "I am super happy! You are a great guide!",
+          "zh": "我超級開心！你是很棒的嚮導！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "It is half past ten.",
+          "zh": "現在是十點半。",
+          "is_correct": false,
+          "hint": "謝謝 Benny 帶路，跟他說你有多開心「super happy」吧！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I have an orange ruler.",
+          "zh": "我有一把橘色的尺。",
+          "is_correct": false,
+          "hint": "跟熱心的 Benny 擊掌慶祝平安抵達學校吧！"
+        }
+      ]
+    }
+  ]
+}

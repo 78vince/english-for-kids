@@ -1,0 +1,209 @@
+{
+  "id": "conv.pronouns.01",
+  "topic": "pronouns",
+  "title": "Meet My Friends: Learning Pronouns with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "School Friend"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_playground",
+      "image": "pronouns_scene_1.jpg",
+      "description": "Playing Soccer on the Sunny Playground"
+    },
+    {
+      "scene_id": "scene_reading_tree",
+      "image": "pronouns_scene_2.jpg",
+      "description": "Reading Under the Tree with a Sweet Kitten"
+    },
+    {
+      "scene_id": "scene_picnic",
+      "image": "pronouns_scene_3.jpg",
+      "description": "Sharing Snacks at the Friendship Picnic"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_playground",
+      "character_line": {
+        "en": "Look! Who is that boy?",
+        "zh": "你看！那個男孩子是誰？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "He is Leo. He is my friend.",
+          "zh": "他是 Leo。他是我的朋友。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "She is a small girl.",
+          "zh": "她是一個小女孩。",
+          "is_correct": false,
+          "hint": "那是男同學喔，請用「He（他）」來回答！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "They are teachers.",
+          "zh": "他們是老師。",
+          "is_correct": false,
+          "hint": "操場上是一位男同學在踢球，請用「He（他）」回答喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_playground",
+      "character_line": {
+        "en": "He has a ball. Do you like soccer?",
+        "zh": "他有一顆球。你喜歡足球嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Yes, I do! I like to play with him.",
+          "zh": "是的，我喜歡！我喜歡和他一起玩。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "No, it is a yellow duck.",
+          "zh": "不，它是一隻黃色鴨子。",
+          "is_correct": false,
+          "hint": "Benny 問你（you）喜不喜歡足球，用「I（我）」來回答吧！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "She is sleeping now.",
+          "zh": "她現在正在睡覺。",
+          "is_correct": false,
+          "hint": "Benny 問的是你喔，試著用「I（我）」來回答吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_reading_tree",
+      "character_line": {
+        "en": "Who is that girl under the tree?",
+        "zh": "大樹下的那個女孩子是誰？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "She is Ella. She is reading a book.",
+          "zh": "她是 Ella。她正在看書。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "He is my big brother.",
+          "zh": "他是我的大哥哥。",
+          "is_correct": false,
+          "hint": "坐在長椅上的是女孩子喔，請用「She（她）」來回答！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "It is a red car.",
+          "zh": "這是一輛紅色車子。",
+          "is_correct": false,
+          "hint": "我們要介紹的是女同學 Ella，請用「She（她）」喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_reading_tree",
+      "character_line": {
+        "en": "Look at the white cat! Is it cute?",
+        "zh": "你看那隻白貓！牠可愛嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Yes, it is! It is very cute.",
+          "zh": "是的！牠非常可愛。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "They are swimming.",
+          "zh": "他們正在游泳。",
+          "is_correct": false,
+          "hint": "我們在說小動物（cat），代名詞要用「It（牠）」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "He is very tall.",
+          "zh": "他很高。",
+          "is_correct": false,
+          "hint": "這是一隻小貓咪，請用「It（牠）」來回答吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_picnic",
+      "character_line": {
+        "en": "Look at our classmates! What are they doing?",
+        "zh": "看我們的同學！他們在做什麼？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "They are happy. They are eating together.",
+          "zh": "他們很開心。他們正在一起吃東西。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "He is at home.",
+          "zh": "他在家裡。",
+          "is_correct": false,
+          "hint": "草地上有一群同學（複數），我們要用「They（他們）」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "It is an old box.",
+          "zh": "這是一個舊盒子。",
+          "is_correct": false,
+          "hint": "草地上有很多好朋友，請用「They（他們）」來回答。"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_picnic",
+      "character_line": {
+        "en": "Can we go and play with them?",
+        "zh": "我們可以過去和他們一起玩嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes! We are all good friends.",
+          "zh": "好呀！我們大家都是好朋友。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "No, you are a doctor.",
+          "zh": "不，你是一位醫生。",
+          "is_correct": false,
+          "hint": "Benny 邀請我們一起加入，用「We（我們）」來回答吧！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "She has a blue pen.",
+          "zh": "她有一支藍色原子筆。",
+          "is_correct": false,
+          "hint": "Benny 說「Can we...?（我們可以...嗎？）」，回答「We（我們）」吧！"
+        }
+      ]
+    }
+  ]
+}

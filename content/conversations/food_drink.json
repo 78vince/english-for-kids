@@ -1,0 +1,209 @@
+{
+  "id": "conv.food_drink.01",
+  "topic": "food_drink",
+  "title": "Yummy Food and Drinks with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "School Friend"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_breakfast_table",
+      "image": "food_drink_scene_1.jpg",
+      "description": "Breakfast Table with Fresh Milk and Toast Bread"
+    },
+    {
+      "scene_id": "scene_fruit_basket",
+      "image": "food_drink_scene_2.jpg",
+      "description": "Fruit Basket with Red Apples and Yellow Bananas"
+    },
+    {
+      "scene_id": "scene_dinner_soup",
+      "image": "food_drink_scene_3.jpg",
+      "description": "Warm Dinner Table with Rice and Soup"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_breakfast_table",
+      "character_line": {
+        "en": "Good morning! Are you hungry for breakfast?",
+        "zh": "早安！你肚子餓想吃早餐了嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Yes, I am hungry!",
+          "zh": "是的，我肚子好餓喔！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "No, I am a red pen.",
+          "zh": "不，我是一支紅筆。",
+          "is_correct": false,
+          "hint": "早上起來肚子餓可以用「hungry」來回答喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "It is raining outside.",
+          "zh": "外面正在下雨。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你準備好享受美味早餐了！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_breakfast_table",
+      "character_line": {
+        "en": "Do you want some milk or bread?",
+        "zh": "你想要喝點牛奶還是吃麵包呢？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "I want milk and bread, please.",
+          "zh": "我想喝牛奶和吃麵包，謝謝。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "I eat shoes for breakfast.",
+          "zh": "我早餐吃鞋子。",
+          "is_correct": false,
+          "hint": "鞋子不能吃啦！牛奶是 milk，麵包是 bread 喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "Good night, Benny.",
+          "zh": "晚安，Benny。",
+          "is_correct": false,
+          "hint": "現在是早餐時間，用禮貌的「please」跟 Benny 點餐吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_fruit_basket",
+      "character_line": {
+        "en": "Look at the basket! Do you like apples?",
+        "zh": "看這個水果籃！你喜歡蘋果嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Yes, I love sweet red apples!",
+          "zh": "喜歡，我好喜歡甜甜的紅蘋果！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "No, apples are blue chairs.",
+          "zh": "不，蘋果是藍色的椅子。",
+          "is_correct": false,
+          "hint": "蘋果是 apple，紅紅甜甜的水果喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "I have four books.",
+          "zh": "我有四本書。",
+          "is_correct": false,
+          "hint": "回答 Benny 你喜不喜歡吃蘋果吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_fruit_basket",
+      "character_line": {
+        "en": "Here is a yellow banana for you!",
+        "zh": "這裡有一根黃香蕉給你吃！"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Thank you! Bananas are so yummy.",
+          "zh": "謝謝你！香蕉真好吃。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "Go away, banana.",
+          "zh": "走開，香蕉。",
+          "is_correct": false,
+          "hint": "收到好朋友分享的香蕉，記得說謝謝「Thank you」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "It is seven o'clock.",
+          "zh": "現在是七點鐘。",
+          "is_correct": false,
+          "hint": "禮貌地向 Benny 道謝並品嚐美味的香蕉吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_dinner_soup",
+      "character_line": {
+        "en": "Time for dinner! We have warm soup.",
+        "zh": "晚餐時間到了！我們有熱騰騰的湯喔。"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Yum! The soup smells so good.",
+          "zh": "哇！熱湯聞起來好香喔。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "I wash my bicycle in soup.",
+          "zh": "我在湯裡面洗腳踏車。",
+          "is_correct": false,
+          "hint": "熱湯是暖呼呼的美味食物（soup）喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "She is my teacher.",
+          "zh": "她是我的老師。",
+          "is_correct": false,
+          "hint": "稱讚這碗香噴噴的熱湯吧：「The soup smells so good!」"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_dinner_soup",
+      "character_line": {
+        "en": "Are you full and happy now?",
+        "zh": "你現在吃飽飽很開心滿足了嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes, I am full! Thank you, Benny.",
+          "zh": "吃飽了！謝謝你，Benny。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "I am an angry lion.",
+          "zh": "我是一隻生氣的獅子。",
+          "is_correct": false,
+          "hint": "吃飽飽肚子不餓了，可以用「full（飽的）」來回答！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "Close the door.",
+          "zh": "把門關上。",
+          "is_correct": false,
+          "hint": "跟好朋友分享吃飽飽的滿足心情吧！"
+        }
+      ]
+    }
+  ]
+}

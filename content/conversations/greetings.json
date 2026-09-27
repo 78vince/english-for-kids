@@ -1,0 +1,209 @@
+{
+  "id": "conv.greetings.01",
+  "topic": "greetings",
+  "title": "A Friendly Day with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "School Friend"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_morning",
+      "image": "greetings_scene_1.jpg",
+      "description": "Morning at Sunny Oaks School Gate"
+    },
+    {
+      "scene_id": "scene_classroom",
+      "image": "greetings_scene_2.jpg",
+      "description": "Afternoon in the Art Classroom"
+    },
+    {
+      "scene_id": "scene_evening",
+      "image": "greetings_scene_3.jpg",
+      "description": "Evening Farewell Under the Sunset Sky"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_morning",
+      "character_line": {
+        "en": "Good morning! How are you?",
+        "zh": "早安！你好嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Good morning! I am doing great!",
+          "zh": "早安！我精神很好！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "Good night! Go to bed.",
+          "zh": "晚安！去睡覺吧。",
+          "is_correct": false,
+          "hint": "現在是早晨喔！跟 Benny 說一聲「Good morning」吧！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "Goodbye! See you.",
+          "zh": "再見！再會。",
+          "is_correct": false,
+          "hint": "我們才剛到學校呢，先跟 Benny 打個招呼說「Good morning」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_morning",
+      "character_line": {
+        "en": "Nice to see you! Are you ready for school?",
+        "zh": "很高興見到你！準備好上學了嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Yes! I am very happy today.",
+          "zh": "是的！我今天很開心。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "No, I am hungry.",
+          "zh": "不，我肚子餓。",
+          "is_correct": false,
+          "hint": "Benny 開心地跟你打招呼，回答「I am happy」跟他分享快樂吧！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "Good evening, teacher.",
+          "zh": "晚安，老師。",
+          "is_correct": false,
+          "hint": "現在是早晨喔，試著回答「I am very happy today」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_classroom",
+      "character_line": {
+        "en": "Look! Do you like to draw?",
+        "zh": "你看！你喜歡畫畫嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Yes, I do! I love drawing.",
+          "zh": "是的，我喜歡！我喜歡畫畫。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "I want to sleep.",
+          "zh": "我想睡覺。",
+          "is_correct": false,
+          "hint": "現在是好玩的美術課，回答「Yes, I do!」吧！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "It is too cold.",
+          "zh": "天氣太冷了。",
+          "is_correct": false,
+          "hint": "Benny 問你喜不喜歡畫畫，用「Yes, I do!」回答吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_classroom",
+      "character_line": {
+        "en": "Please pass me the blue crayon.",
+        "zh": "請把藍色蠟筆遞給我。"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Here you are! You are welcome.",
+          "zh": "拿去吧！不客氣。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "I don't know.",
+          "zh": "我不知道。",
+          "is_correct": false,
+          "hint": "朋友有禮貌地說 Please，回答「Here you are」拿給他吧！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "Good morning.",
+          "zh": "早安。",
+          "is_correct": false,
+          "hint": "當朋友跟我們借東西時，可以說「Here you are!」遞給他喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_evening",
+      "character_line": {
+        "en": "The sun is going down. It is evening!",
+        "zh": "太陽要下山了。傍晚了呢！"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Good evening! Today was fun.",
+          "zh": "傍晚好！今天真好玩。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "Good morning! Wake up.",
+          "zh": "早安！快起床。",
+          "is_correct": false,
+          "hint": "太陽已經下山是傍晚了喔，要說「Good evening」！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I am sorry.",
+          "zh": "對不起。",
+          "is_correct": false,
+          "hint": "天色變晚了，跟 Benny 說「Good evening」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_evening",
+      "character_line": {
+        "en": "Time to go home! Goodbye, my friend!",
+        "zh": "該回家了！再見，我的朋友！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Goodbye, Benny! See you tomorrow!",
+          "zh": "再見，Benny！明天見！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "Hello, what is your name?",
+          "zh": "哈囉，你叫什麼名字？",
+          "is_correct": false,
+          "hint": "要放學回家囉，跟 Benny 說「Goodbye, see you tomorrow」吧！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "Thank you, please.",
+          "zh": "謝謝你，請。",
+          "is_correct": false,
+          "hint": "要跟好朋友道別了，說一聲「Goodbye」吧！"
+        }
+      ]
+    }
+  ]
+}

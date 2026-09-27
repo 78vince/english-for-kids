@@ -1,0 +1,209 @@
+{
+  "id": "conv.pe_sports.01",
+  "topic": "pe_sports",
+  "title": "Active Sports Day with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Sports Captain"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_running_track",
+      "image": "pe_sports_scene_1.jpg",
+      "description": "Warming Up on the School Running Track"
+    },
+    {
+      "scene_id": "scene_soccer_field",
+      "image": "pe_sports_scene_2.jpg",
+      "description": "Playing Soccer on the Sunny Grass Lawn"
+    },
+    {
+      "scene_id": "scene_indoor_gym",
+      "image": "pe_sports_scene_3.jpg",
+      "description": "Bouncing Basketballs in the Bright Gym"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_running_track",
+      "character_line": {
+        "en": "Put on your sneakers! Are you ready for PE class?",
+        "zh": "穿上你的球鞋！準備好上體育課了嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Yes, I am ready to run and jump!",
+          "zh": "是的，我準備好跑跑跳跳了！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I have a red backpack.",
+          "zh": "我有一個紅書包。",
+          "is_correct": false,
+          "hint": "體育課準備好運動，可以用「ready to run and jump」回答喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "The book is on the desk.",
+          "zh": "書在書桌上。",
+          "is_correct": false,
+          "hint": "充滿活力地告訴 Benny 你準備好動起來了！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_running_track",
+      "character_line": {
+        "en": "Let us warm up first! Stretch your arms up high!",
+        "zh": "我們先來熱身！把雙手向上高高伸展！"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Look! I can stretch high to the sky!",
+          "zh": "看！我可以向上伸展到天空那麼高！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "I eat toast for breakfast.",
+          "zh": "我吃烤吐司當早餐。",
+          "is_correct": false,
+          "hint": "跟著熱身動作，說「I can stretch high!」喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "My sister is a baby.",
+          "zh": "我的妹妹是一個小嬰兒。",
+          "is_correct": false,
+          "hint": "把雙臂抬高伸展，做好運動前的預備動作吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_soccer_field",
+      "character_line": {
+        "en": "Here comes the soccer ball! Can you kick it to me?",
+        "zh": "足球滾過來了！你可以一腳踢給我嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Watch this! I kick the ball to you!",
+          "zh": "看我的！我把球踢給你！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The clock has two hands.",
+          "zh": "時鐘有兩根指針。",
+          "is_correct": false,
+          "hint": "踢足球時，可以用動詞「kick the ball」回答喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "I sleep in my bedroom.",
+          "zh": "我在臥室睡覺。",
+          "is_correct": false,
+          "hint": "瞄準 Benny，把足球精神飽滿地傳過去吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_soccer_field",
+      "character_line": {
+        "en": "GOAL! Great kick! Do you like playing soccer?",
+        "zh": "進球了！踢得太棒了！你喜歡踢足球嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Yes, playing soccer is so exciting!",
+          "zh": "是的，踢足球真的好刺激好玩！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "My shirt is yellow.",
+          "zh": "我的衣服是黃色的。",
+          "is_correct": false,
+          "hint": "分享運動的熱情，說「playing soccer is exciting」！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I wear soft pajamas.",
+          "zh": "我穿柔軟的睡衣。",
+          "is_correct": false,
+          "hint": "肯定剛才精彩的進球，表達對足球的喜愛吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_indoor_gym",
+      "character_line": {
+        "en": "Now we are in the gym! Let us bounce the basketball!",
+        "zh": "現在我們進到體育館了！我們來拍拍籃球吧！"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Bounce, bounce! I can catch the ball!",
+          "zh": "拍球拍球！我接得住球喔！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "I brush my hair.",
+          "zh": "我梳頭髮。",
+          "is_correct": false,
+          "hint": "在體育館拍球練習，用「I can catch the ball!」回答！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "The teacher reads a story.",
+          "zh": "老師讀一個故事。",
+          "is_correct": false,
+          "hint": "展示你接球與拍球的好身手吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_indoor_gym",
+      "character_line": {
+        "en": "Playing sports makes our bodies so strong and healthy!",
+        "zh": "做運動讓我們的身體變得好強壯、好健康！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes! Moving our bodies feels wonderful!",
+          "zh": "沒錯！動動身體的感覺太棒了！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "I have two pencils.",
+          "zh": "我有兩支鉛筆。",
+          "is_correct": false,
+          "hint": "贊同做運動的好處，說「Moving feels wonderful!」！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "The plate is clean.",
+          "zh": "盤子很乾淨。",
+          "is_correct": false,
+          "hint": "跟 Benny 一起享受運動流汗後的滿滿活力吧！"
+        }
+      ]
+    }
+  ]
+}

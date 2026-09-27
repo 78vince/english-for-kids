@@ -1,0 +1,209 @@
+{
+  "id": "conv.money.01",
+  "topic": "money",
+  "title": "Fun Shopping Day with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Shopping Buddy"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_coins_piggy_bank",
+      "image": "money_scene_1.jpg",
+      "description": "Benny and Kid Checking Coins and Pocket Money at Home"
+    },
+    {
+      "scene_id": "scene_bakery_counter",
+      "image": "money_scene_2.jpg",
+      "description": "Friendly Neighborhood Bakery Counter with Fresh Bread"
+    },
+    {
+      "scene_id": "scene_cashier_receipt",
+      "image": "money_scene_3.jpg",
+      "description": "Paying Cash at the Cashier and Receiving the Receipt"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_coins_piggy_bank",
+      "character_line": {
+        "en": "We are going shopping! How much money do we have in our piggy bank?",
+        "zh": "我們要去買東西了！我們的存錢筒裡有多少錢呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "We have ten dollars in shiny coins!",
+          "zh": "我們有十元的閃亮硬幣！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "The frog jumps into pond.",
+          "zh": "青蛙跳進池塘裡了。",
+          "is_correct": false,
+          "hint": "數數存錢筒裡的硬幣「ten dollars in coins」告訴 Benny 喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "My sister is very tall.",
+          "zh": "我妹妹非常高。",
+          "is_correct": false,
+          "hint": "告訴 Benny 我們準備了多少零錢要去買東西吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_coins_piggy_bank",
+      "character_line": {
+        "en": "Ten dollars! What delicious treat do you want to buy?",
+        "zh": "十元！你想買什麼好吃的點心呢？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "I want to buy a sweet strawberry bun!",
+          "zh": "我想買一個香甜的草莓麵包！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "Today is cold and windy.",
+          "zh": "今天很冷又颳風。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你想買「buy」什麼好吃的點心吧！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "The airplane flies high.",
+          "zh": "飛機飛得好高。",
+          "is_correct": false,
+          "hint": "麵包店裡有香甜草莓麵包，說「I want to buy...」喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_bakery_counter",
+      "character_line": {
+        "en": "Smell that fresh bread! How much is this warm bread?",
+        "zh": "聞聞看這新鮮麵包的香味！這個熱騰騰的麵包多少錢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "It is five dollars each!",
+          "zh": "一個五元喔！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "My hair is brown.",
+          "zh": "我的頭髮是棕色的。",
+          "is_correct": false,
+          "hint": "看看價錢標籤，回答「It is five dollars」喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "The dog barks loudly.",
+          "zh": "狗狗大聲叫。",
+          "is_correct": false,
+          "hint": "告訴 Benny 麵包一個只要五元喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_bakery_counter",
+      "character_line": {
+        "en": "That is a great price! Can we also buy a small juice?",
+        "zh": "價格好划算！我們還可以再買一瓶小果汁嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Yes, we still have five dollars left!",
+          "zh": "可以，我們還剩下五元！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "I jump on one foot.",
+          "zh": "我用單腳跳躍。",
+          "is_correct": false,
+          "hint": "算算看：十元買了五元麵包，還剩下五元「five dollars left」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "The mountain is green.",
+          "zh": "高山是綠色的。",
+          "is_correct": false,
+          "hint": "告訴 Benny 我們的零錢剛剛好還可以買一瓶小果汁喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_cashier_receipt",
+      "character_line": {
+        "en": "Now we are at the cashier! How should we pay?",
+        "zh": "現在我們來到收銀台了！我們該怎麼付款呢？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Here is ten dollars cash, please!",
+          "zh": "給您十元現金，謝謝！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "I have a big sister.",
+          "zh": "我有一個大姊姊。",
+          "is_correct": false,
+          "hint": "有禮貌地把現金拿給店員「Here is ten dollars」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "The tiger has sharp teeth.",
+          "zh": "老虎有鋒利的牙齒。",
+          "is_correct": false,
+          "hint": "在收銀台結帳要拿錢並說「please」喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_cashier_receipt",
+      "character_line": {
+        "en": "The clerk gave us our warm bread and receipt! What should we say?",
+        "zh": "店員把熱騰騰的麵包和發票交給我們了！我們該說什麼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Thank you very much! Have a nice day!",
+          "zh": "非常謝謝您！祝您有美好的一天！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The bus is turning left.",
+          "zh": "公車正在向左轉。",
+          "is_correct": false,
+          "hint": "結帳完成接過麵包，記得說「Thank you very much」喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I wear my blue boots.",
+          "zh": "我穿著我的藍色靴子。",
+          "is_correct": false,
+          "hint": "禮貌地祝店員有美好的一天「Have a nice day」吧！"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "id": "conv.holidays_festivals.01",
+  "topic": "holidays_festivals",
+  "title": "Joyful Holiday Celebrations with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Holiday Buddy"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_christmas_tree",
+      "image": "holidays_festivals_scene_1.jpg",
+      "description": "Sparkling Christmas Tree with Gifts and Twinkling Lights"
+    },
+    {
+      "scene_id": "scene_lunar_new_year",
+      "image": "holidays_festivals_scene_2.jpg",
+      "description": "Chinese Lunar New Year with Red Lanterns and Envelopes"
+    },
+    {
+      "scene_id": "scene_halloween_pumpkin",
+      "image": "holidays_festivals_scene_3.jpg",
+      "description": "Spooky Fun Halloween with Jack-o'-Lantern Pumpkins and Costumes"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_christmas_tree",
+      "character_line": {
+        "en": "Look at the glowing green tree with ornaments! What festival is this?",
+        "zh": "看掛滿裝飾品閃閃發光的綠樹！這是什麼節日呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "It is Christmas! Merry Christmas, Benny!",
+          "zh": "這是聖誕節！聖誕快樂，Benny！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "The train runs fast.",
+          "zh": "火車跑得好快。",
+          "is_correct": false,
+          "hint": "滿是彩燈禮物的常青樹是聖誕節「Christmas」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I have an eraser.",
+          "zh": "我有一個橡皮擦。",
+          "is_correct": false,
+          "hint": "祝小熊 Benny「Merry Christmas」聖誕快樂吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_christmas_tree",
+      "character_line": {
+        "en": "Merry Christmas! What surprise is waiting under the tree?",
+        "zh": "聖誕快樂！聖誕樹下等著什麼驚喜呢？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "There are colorful gift boxes for everyone!",
+          "zh": "有給每個人的彩色禮物盒！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The soup is hot.",
+          "zh": "熱湯很燙。",
+          "is_correct": false,
+          "hint": "聖誕樹下擺滿了精美的禮物盒「gift boxes」喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "The bird sings softly.",
+          "zh": "小鳥輕輕歌唱。",
+          "is_correct": false,
+          "hint": "告訴 Benny 樹下有大家期待的驚喜禮物盒喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_lunar_new_year",
+      "character_line": {
+        "en": "Now the whole town is decorated with bright red lanterns! What holiday is coming?",
+        "zh": "現在整個城鎮都掛滿亮紅色燈籠！什麼節日要到了呢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "It is Lunar New Year! We get red envelopes!",
+          "zh": "是農曆新年！我們會拿到紅包！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The shoe is clean.",
+          "zh": "鞋子很乾淨。",
+          "is_correct": false,
+          "hint": "掛紅燈籠拿紅包的是農曆新年「Lunar New Year」喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "I like cold milk.",
+          "zh": "我喜歡喝冰牛奶。",
+          "is_correct": false,
+          "hint": "告訴 Benny 紅通通的節日是熱鬧的農曆新年喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_lunar_new_year",
+      "character_line": {
+        "en": "Red envelopes and dumplings! Who do we visit during Lunar New Year?",
+        "zh": "紅包和好吃的餃子！農曆新年期間我們會拜訪誰呢？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "We visit our grandparents and family!",
+          "zh": "我們會拜訪阿公阿嬤和親戚家人！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The cat sleeps on chair.",
+          "zh": "貓咪在椅子上睡覺。",
+          "is_correct": false,
+          "hint": "過年時我們會拜訪阿公阿嬤與親戚家人「grandparents and family」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I have seven blocks.",
+          "zh": "我有七個積木。",
+          "is_correct": false,
+          "hint": "告訴 Benny 全家人聚在一起吃年夜飯的習俗喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_halloween_pumpkin",
+      "character_line": {
+        "en": "Look at the glowing orange pumpkin lantern! What spooky holiday is tonight?",
+        "zh": "看那發光的橘色南瓜燈！今晚是什麼搞怪又好玩的節日呢？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "It is Halloween! Trick or treat!",
+          "zh": "是萬聖節！不給糖就搗蛋！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The cloud is grey.",
+          "zh": "雲是灰色的。",
+          "is_correct": false,
+          "hint": "刻著南瓜燈扮裝要糖果的是萬聖節「Halloween」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "The bus is big.",
+          "zh": "公車很大台。",
+          "is_correct": false,
+          "hint": "說出最經典的萬聖節密語「Trick or treat」喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_halloween_pumpkin",
+      "character_line": {
+        "en": "Haha, your cute costume is wonderful! Holidays bring so much joy, right?",
+        "zh": "哈哈，你的可愛裝扮太棒了！節慶帶來好多歡樂對不對？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes! Every holiday is magical and fun!",
+          "zh": "是的！每個節日都充滿魔法與歡樂！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The pencil is sharp.",
+          "zh": "鉛筆很尖。",
+          "is_correct": false,
+          "hint": "贊同每一個節日都充滿魔力與歡樂「magical and fun」喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "It is three dollars.",
+          "zh": "這是三元。",
+          "is_correct": false,
+          "hint": "跟 Benny 一起慶祝每個美好的節日吧！"
+        }
+      ]
+    }
+  ]
+}

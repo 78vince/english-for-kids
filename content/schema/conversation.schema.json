@@ -1,0 +1,129 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Conversation Practice (Stage E)",
+  "type": "object",
+  "required": [
+    "id",
+    "topic",
+    "title",
+    "character",
+    "scenes",
+    "turns"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "topic": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "character": {
+      "type": "object",
+      "required": [
+        "name",
+        "avatar",
+        "role"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "scene_id",
+          "image",
+          "description"
+        ],
+        "properties": {
+          "scene_id": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "turns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "turn_id",
+          "scene_id",
+          "character_line",
+          "options"
+        ],
+        "properties": {
+          "turn_id": {
+            "type": "integer"
+          },
+          "scene_id": {
+            "type": "string"
+          },
+          "character_line": {
+            "type": "object",
+            "required": [
+              "en",
+              "zh"
+            ],
+            "properties": {
+              "en": {
+                "type": "string"
+              },
+              "zh": {
+                "type": "string"
+              }
+            }
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "en",
+                "zh",
+                "is_correct"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "en": {
+                  "type": "string"
+                },
+                "zh": {
+                  "type": "string"
+                },
+                "is_correct": {
+                  "type": "boolean"
+                },
+                "hint": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

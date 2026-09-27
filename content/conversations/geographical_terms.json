@@ -1,0 +1,209 @@
+{
+  "id": "conv.geographical_terms.01",
+  "topic": "geographical_terms",
+  "title": "Exploring Nature Landscapes with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Nature Explorer"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_mountain_trail",
+      "image": "geographical_terms_scene_1.jpg",
+      "description": "Hiking up a Green Mountain Trail with Tall Trees"
+    },
+    {
+      "scene_id": "scene_forest_river",
+      "image": "geographical_terms_scene_2.jpg",
+      "description": "A Sparkling Clean River Flowing through the Forest"
+    },
+    {
+      "scene_id": "scene_ocean_beach",
+      "image": "geographical_terms_scene_3.jpg",
+      "description": "Sunny Sandy Beach and Gentle Ocean Waves"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_mountain_trail",
+      "character_line": {
+        "en": "Put on your hiking shoes! Let us climb up the green mountain!",
+        "zh": "穿上登山鞋！我們一起爬上這座綠油油的大山吧！"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Let us hike to the top of the mountain!",
+          "zh": "我們一起健行爬到山頂吧！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I have a toy car.",
+          "zh": "我有一輛玩具車。",
+          "is_correct": false,
+          "hint": "爬山健行，可以用「hike to the top of the mountain」回答喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "My shirt has red buttons.",
+          "zh": "我的襯衫有紅鈕扣。",
+          "is_correct": false,
+          "hint": "滿懷活力地跟 Benny 一起出發爬山吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_mountain_trail",
+      "character_line": {
+        "en": "The air is so fresh here in the tall pine forest!",
+        "zh": "高聳的松樹森林裡，空氣好清新喔！"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "The forest trees are so tall and green!",
+          "zh": "森林裡的樹木好高大好翠綠！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "I sleep in the living room.",
+          "zh": "我在客廳睡覺。",
+          "is_correct": false,
+          "hint": "讚美森林裡的樹木，說「The forest trees are tall」！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I eat breakfast with milk.",
+          "zh": "我配牛奶吃早餐。",
+          "is_correct": false,
+          "hint": "深呼吸，享受森林芬多精的清新吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_forest_river",
+      "character_line": {
+        "en": "Listen! Can you hear the sound of flowing water?",
+        "zh": "聽！你有聽到潺潺的流水聲嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Yes, there is a river next to us!",
+          "zh": "聽到了，我們身旁有一條小河！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "I draw a purple flower.",
+          "zh": "我畫一朵紫色的花。",
+          "is_correct": false,
+          "hint": "流水潺潺的地方是一條「river」河流喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "The book is in my bag.",
+          "zh": "書在我的書包裡。",
+          "is_correct": false,
+          "hint": "跟著水聲走，發現清澈的小河流吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_forest_river",
+      "character_line": {
+        "en": "The river water is so clean! Look at the tiny fish!",
+        "zh": "河水好清澈喔！看那些小魚！"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Little fish are swimming in the river!",
+          "zh": "小魚正在小河裡游泳！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "I wash my socks.",
+          "zh": "我洗我的襪子。",
+          "is_correct": false,
+          "hint": "看著小魚在小河游動，說「fish swimming in the river」！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "My nose is on my face.",
+          "zh": "我的鼻子在我的臉上。",
+          "is_correct": false,
+          "hint": "告訴 Benny 河水有多麼清涼純淨吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_ocean_beach",
+      "character_line": {
+        "en": "Now we have walked to the coast! Look at the yellow sand!",
+        "zh": "現在我們走到海岸邊了！看金黃色的沙灘！"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "We are at the sunny sandy beach!",
+          "zh": "我們來到陽光明媚的沙灘了！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "I write with my pen.",
+          "zh": "我用原子筆寫字。",
+          "is_correct": false,
+          "hint": "海岸邊有沙子的地方是「beach」海灘喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "The clock is ticking.",
+          "zh": "時鐘滴答滴答響。",
+          "is_correct": false,
+          "hint": "脫下鞋子，踩在溫暖的金色沙灘上吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_ocean_beach",
+      "character_line": {
+        "en": "Look out at the deep blue sea! The waves are rolling in!",
+        "zh": "望向那片蔚藍的大海！海浪正一陣陣湧上來呢！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "The blue sea and waves look magnificent!",
+          "zh": "蔚藍的大海與浪花看起來好壯觀！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "I have twenty blocks.",
+          "zh": "我有二十個積木。",
+          "is_correct": false,
+          "hint": "欣賞遼闊的大海，說「The blue sea looks magnificent」！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "Goodbye, small dog.",
+          "zh": "再見，小狗。",
+          "is_correct": false,
+          "hint": "跟 Benny 一起吹吹海風，欣賞壯麗海景吧！"
+        }
+      ]
+    }
+  ]
+}

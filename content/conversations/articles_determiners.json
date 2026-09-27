@@ -1,0 +1,209 @@
+{
+  "id": "conv.articles_determiners.01",
+  "topic": "articles_determiners",
+  "title": "Counting and Choosing with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Little Organizer"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_picnic_fruit",
+      "image": "articles_determiners_scene_1.jpg",
+      "description": "Choosing A or An Fruit at the Picnic Table"
+    },
+    {
+      "scene_id": "scene_toy_cars",
+      "image": "articles_determiners_scene_2.jpg",
+      "description": "Benny and Kid Sharing Both Toy Cars on the Rug"
+    },
+    {
+      "scene_id": "scene_book_shelf",
+      "image": "articles_determiners_scene_3.jpg",
+      "description": "Gathering All and Every Book neatly on the Wooden Shelf"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_picnic_fruit",
+      "character_line": {
+        "en": "Here is our picnic fruit basket! What would you like to eat?",
+        "zh": "這是我們的野餐水果籃！你想吃什麼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "I want an apple and a sweet banana!",
+          "zh": "我想要一顆蘋果和一根香甜的香蕉！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "The bed is soft.",
+          "zh": "床很柔軟。",
+          "is_correct": false,
+          "hint": "注意母音開頭用「an apple」，子音用「a banana」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I have green shoes.",
+          "zh": "我有綠色鞋子。",
+          "is_correct": false,
+          "hint": "挑選水果說「an apple and a banana」給 Benny 聽喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_picnic_fruit",
+      "character_line": {
+        "en": "An apple and a banana! Can I also have an orange?",
+        "zh": "一顆蘋果和一根香蕉！我也能吃一顆柳橙嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Sure! Here is an orange for you!",
+          "zh": "當然！這顆柳橙給你！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The monkey jumps.",
+          "zh": "猴子在跳。",
+          "is_correct": false,
+          "hint": "柳橙 orange 是母音開頭，說「an orange」喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "My hair is brown.",
+          "zh": "我的頭髮是棕色的。",
+          "is_correct": false,
+          "hint": "大方地分給 Benny 一顆柳橙吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_toy_cars",
+      "character_line": {
+        "en": "Look at these two cool toy cars on the rug! Which one do you like?",
+        "zh": "看地毯上這兩輛酷炫的玩具車！你喜歡哪一輛？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "I like both of the cars! They are fast!",
+          "zh": "兩輛我都喜歡！它們都跑好快！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The soup is warm.",
+          "zh": "熱湯很溫暖。",
+          "is_correct": false,
+          "hint": "兩者都喜歡可以用「both」喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "I sleep early.",
+          "zh": "我很早睡。",
+          "is_correct": false,
+          "hint": "告訴 Benny 兩台車你都很喜歡「both of the cars」！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_toy_cars",
+      "character_line": {
+        "en": "Both of them! Let's race together across the rug!",
+        "zh": "兩輛都喜歡！那我們在地毯上一決勝負賽車吧！"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Ready, set, go! Both cars are zooming!",
+          "zh": "各就各位，預備，跑！兩台車都飛快奔馳！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The sky is blue.",
+          "zh": "天空是藍色的。",
+          "is_correct": false,
+          "hint": "興奮地喊「Ready, set, go!」開始賽車吧！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I have five pens.",
+          "zh": "我有五支筆。",
+          "is_correct": false,
+          "hint": "形容兩輛車一起衝刺「Both cars...」喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_book_shelf",
+      "character_line": {
+        "en": "Playtime is over! What should we do with all these storybooks?",
+        "zh": "遊戲時間結束了！我們該怎麼處理所有這些故事書呢？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Let's put all the books on the shelf!",
+          "zh": "我們把所有的書都放回書架上吧！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The fish swims fast.",
+          "zh": "魚游得很快。",
+          "is_correct": false,
+          "hint": "整理全部的書可以用「all the books」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "It is nine o'clock.",
+          "zh": "現在是九點鐘。",
+          "is_correct": false,
+          "hint": "提議把所有書整齊擺回架子上吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_book_shelf",
+      "character_line": {
+        "en": "Every book is in its place now! Our room looks so tidy!",
+        "zh": "每一本書現在都在它的位置上了！我們的房間看起來好整潔！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes! Every corner is clean and neat!",
+          "zh": "沒錯！每一個角落都乾淨又整齊！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The clock ticks.",
+          "zh": "時鐘在滴答響。",
+          "is_correct": false,
+          "hint": "形容每一個角落可以用「Every corner」喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I like sweet pears.",
+          "zh": "我喜歡甜梨子。",
+          "is_correct": false,
+          "hint": "跟 Benny 一起讚美整理好的整齊房間吧！"
+        }
+      ]
+    }
+  ]
+}

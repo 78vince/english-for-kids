@@ -19,7 +19,8 @@ export type StageKeyForBadges =
   | "ordering"
   | "fillBlank"
   | "choice"
-  | "capstone";
+  | "capstone"
+  | "conversation";
 
 interface BadgeStatsData {
   totalQuestionsAnswered: number;
@@ -51,6 +52,7 @@ function emptyStats(): BadgeStatsData {
       fillBlank: 0,
       choice: 0,
       capstone: 0,
+      conversation: 0,
     },
     correctStreak: 0,
     correctStreakAchievedCount: 0,

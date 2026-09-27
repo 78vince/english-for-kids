@@ -1,0 +1,209 @@
+{
+  "id": "conv.people.01",
+  "topic": "people",
+  "title": "Friends and Neighbors Around Us",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "School Friend"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_school_hallway",
+      "image": "people_scene_1.jpg",
+      "description": "Greeting Our Teacher in the Bright School Hallway"
+    },
+    {
+      "scene_id": "scene_community_park",
+      "image": "people_scene_2.jpg",
+      "description": "Meeting Boys and Girls at the Sunny Community Park"
+    },
+    {
+      "scene_id": "scene_front_porch",
+      "image": "people_scene_3.jpg",
+      "description": "Saying Hello to Friendly Neighbors on the Porch"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_school_hallway",
+      "character_line": {
+        "en": "Good morning! Who is that woman?",
+        "zh": "早安！那位親切的女士是誰？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "She is our kind teacher.",
+          "zh": "她是我們親切的老師。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "He is a student.",
+          "zh": "他是一位學生。",
+          "is_correct": false,
+          "hint": "走廊上抱著書本的是女老師喔，請用「She is our kind teacher」回答！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "It is a pencil case.",
+          "zh": "這是一個鉛筆盒。",
+          "is_correct": false,
+          "hint": "Benny 問的是走廊上的人是誰喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_school_hallway",
+      "character_line": {
+        "en": "Are you a good student?",
+        "zh": "你是一名好學生嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Yes, I am a good student!",
+          "zh": "是的，我是一名好學生！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "No, I am a doctor.",
+          "zh": "不，我是一名醫生。",
+          "is_correct": false,
+          "hint": "在學校上課的小朋友都是 student 喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I like ice cream.",
+          "zh": "我喜歡冰淇淋。",
+          "is_correct": false,
+          "hint": "回答 Benny「Yes, I am a good student!」大聲說出自信吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_community_park",
+      "character_line": {
+        "en": "Look! There are many people here.",
+        "zh": "你看！公園裡有好多人喔。"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Yes, they are my friends.",
+          "zh": "對啊，他們都是我的朋友。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "They are my cats.",
+          "zh": "牠們是我的貓咪。",
+          "is_correct": false,
+          "hint": "公園裡跟我們一起玩耍的是朋友（friends）喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "Goodbye, teacher.",
+          "zh": "再見，老師。",
+          "is_correct": false,
+          "hint": "跟 Benny 介紹公園裡熱鬧的朋友們吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_community_park",
+      "character_line": {
+        "en": "Who is that tall boy?",
+        "zh": "那個高個子的小男孩是誰？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "He is Sam. He is a nice boy.",
+          "zh": "他是 Sam。他是一個很好的男孩子。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "She is a baby girl.",
+          "zh": "她是一個女嬰兒。",
+          "is_correct": false,
+          "hint": "在草地上跑步的是小男孩喔，用「He is a nice boy」回答！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "This is my blue hat.",
+          "zh": "這是我的藍色帽子。",
+          "is_correct": false,
+          "hint": "回答 Benny 那個小男孩的名字吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_front_porch",
+      "character_line": {
+        "en": "Who is that friendly lady?",
+        "zh": "那位微笑打招呼的女士是誰？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "She is our neighbor.",
+          "zh": "她是我們的鄰居。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "He is a king.",
+          "zh": "他是一位國王。",
+          "is_correct": false,
+          "hint": "住在隔壁常遇到的是鄰居（neighbor）喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "It is a wooden chair.",
+          "zh": "它是一張木頭椅子。",
+          "is_correct": false,
+          "hint": "用「neighbor（鄰居）」來回答 Benny 吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_front_porch",
+      "character_line": {
+        "en": "Do you say hello to her?",
+        "zh": "你有常常跟她說 Hello 打招呼嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes! I always say hello.",
+          "zh": "有啊！我常常跟她打招呼。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "No, run away.",
+          "zh": "不，趕快跑開。",
+          "is_correct": false,
+          "hint": "遇到親切的鄰居要大方打招呼喔，回答「Yes! I always say hello」吧！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I am eating cake.",
+          "zh": "我正在吃蛋糕。",
+          "is_correct": false,
+          "hint": "禮貌的小朋友會說 hello 喔！"
+        }
+      ]
+    }
+  ]
+}

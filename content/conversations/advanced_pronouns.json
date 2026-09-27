@@ -1,0 +1,209 @@
+{
+  "id": "conv.advanced_pronouns.01",
+  "topic": "advanced_pronouns",
+  "title": "Who and Whom with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Grammar Buddy"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_family_photo",
+      "image": "advanced_pronouns_scene_1.jpg",
+      "description": "Benny and Friends Sharing Family Photos in the Living Room"
+    },
+    {
+      "scene_id": "scene_school_lawn",
+      "image": "advanced_pronouns_scene_2.jpg",
+      "description": "Playing Together on the School Lawn and Pointing to Friends"
+    },
+    {
+      "scene_id": "scene_courtyard_teamwork",
+      "image": "advanced_pronouns_scene_3.jpg",
+      "description": "High-Five Celebration for Teamwork in the Courtyard"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_family_photo",
+      "character_line": {
+        "en": "Look at this family photo! Who is the tall boy in blue?",
+        "zh": "看這張家庭合照！穿藍色衣服的高個子男生是誰？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "He is my big brother Leo!",
+          "zh": "他是我哥哥里歐！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I eat sweet bread.",
+          "zh": "我吃甜麵包。",
+          "is_correct": false,
+          "hint": "男生要用「He（他）」來回答喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "The clock is round.",
+          "zh": "時鐘是圓的。",
+          "is_correct": false,
+          "hint": "告訴 Benny 穿藍衣服的他是哥哥喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_family_photo",
+      "character_line": {
+        "en": "He looks very kind! And who is the smiling girl next to him?",
+        "zh": "他看起來真親切！站在他旁邊微笑的女孩是誰？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "She is my little sister Amy!",
+          "zh": "她是我妹妹艾咪！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The bus is turning.",
+          "zh": "公車正在轉彎。",
+          "is_correct": false,
+          "hint": "女生要用「She（她）」來回答喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I have two pencils.",
+          "zh": "我有兩支鉛筆。",
+          "is_correct": false,
+          "hint": "告訴 Benny 微笑的她是可愛的妹妹艾咪！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_school_lawn",
+      "character_line": {
+        "en": "Look across the grass! Tom and Sam are playing soccer! Do you know them?",
+        "zh": "看草地對面！湯姆和山姆正在踢足球！你認識他們嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Yes! They are my best classmates!",
+          "zh": "認識！他們是我最好的同班同學！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The spoon is silver.",
+          "zh": "湯匙是銀色的。",
+          "is_correct": false,
+          "hint": "兩個人以上用「They（他們）」來回答喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "Today is Tuesday.",
+          "zh": "今天是星期二。",
+          "is_correct": false,
+          "hint": "告訴 Benny 他們都是你最棒的同班同學！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_school_lawn",
+      "character_line": {
+        "en": "They are calling us over! Should we join them?",
+        "zh": "他們在叫我們過去呢！我們要去加入他們嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Yes, we can play soccer together!",
+          "zh": "好啊，我們可以一起踢足球！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The ant is tiny.",
+          "zh": "螞蟻很小一隻。",
+          "is_correct": false,
+          "hint": "我們大家一起玩用「We（我們）」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I like apple juice.",
+          "zh": "我喜歡蘋果汁。",
+          "is_correct": false,
+          "hint": "開心地說「Yes」跟 Benny 一起過去玩吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_courtyard_teamwork",
+      "character_line": {
+        "en": "We scored a wonderful goal! Whose soccer ball was that?",
+        "zh": "我們踢進了精彩的一球！那是誰的足球呢？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "It is mine! My dad gave it to me!",
+          "zh": "那是我的！我爸爸送給我的！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The desk is green.",
+          "zh": "書桌是綠色的。",
+          "is_correct": false,
+          "hint": "表示「我的所有物」可以用「mine（我的）」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "It is ten dollars.",
+          "zh": "這是十元。",
+          "is_correct": false,
+          "hint": "跟 Benny 說那顆球是你的「mine」喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_courtyard_teamwork",
+      "character_line": {
+        "en": "You and I are the best team! Can you give me a high-five?",
+        "zh": "你和我真是最棒的團隊！你能跟我擊掌嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "High-five, Benny! We are great friends!",
+          "zh": "擊掌，Benny！我們是好朋友！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The soup is cold.",
+          "zh": "湯冷掉了。",
+          "is_correct": false,
+          "hint": "跟小熊 Benny 開心擊掌慶祝「High-five」吧！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I have one brother.",
+          "zh": "我有一個兄弟。",
+          "is_correct": false,
+          "hint": "用「We」肯定你們是最棒的好朋友！"
+        }
+      ]
+    }
+  ]
+}

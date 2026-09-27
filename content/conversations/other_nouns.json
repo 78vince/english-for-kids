@@ -1,0 +1,209 @@
+{
+  "id": "conv.other_nouns.01",
+  "topic": "other_nouns",
+  "title": "Everyday Wonders with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Curious Explorer"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_packing_bottle",
+      "image": "other_nouns_scene_1.jpg",
+      "description": "Packing a Cute Water Bottle and Lunch Box for the Trip"
+    },
+    {
+      "scene_id": "scene_birthday_robot",
+      "image": "other_nouns_scene_2.jpg",
+      "description": "Benny Showing a Shiny Toy Robot on the Birthday Table"
+    },
+    {
+      "scene_id": "scene_stargazing_dream",
+      "image": "other_nouns_scene_3.jpg",
+      "description": "Stargazing at Night Talking about Future Dreams and Wishes"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_packing_bottle",
+      "character_line": {
+        "en": "We are getting ready for our outing! What should we put in our backpack?",
+        "zh": "我們正在為郊遊做準備！我們應該在背包裡放些什麼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "A clean water bottle and a lunch box!",
+          "zh": "一個乾淨的水瓶和一個便當盒！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "The cat runs away.",
+          "zh": "貓咪跑走了。",
+          "is_correct": false,
+          "hint": "出門記得帶水瓶「bottle」和便當盒「box」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "Today is Friday.",
+          "zh": "今天是星期五。",
+          "is_correct": false,
+          "hint": "告訴 Benny 背包裡要裝水瓶和便當！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_packing_bottle",
+      "character_line": {
+        "en": "Great! Did you also bring your cell phone to call home?",
+        "zh": "太棒了！你也有帶手機以便打電話回家嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Yes, my cell phone is in the front pocket!",
+          "zh": "有的，我的手機在前口袋裡！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The desk is made of wood.",
+          "zh": "書桌是用木頭做的。",
+          "is_correct": false,
+          "hint": "回答手機「cell phone」收在前口袋裡喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I like yellow cheese.",
+          "zh": "我喜歡黃起司。",
+          "is_correct": false,
+          "hint": "告訴 Benny 手機已經收好了！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_birthday_robot",
+      "character_line": {
+        "en": "Happy birthday! Look at this present! What kind of toy is this?",
+        "zh": "生日快樂！看看這份禮物！這是什麼玩具呢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "It is a shiny silver robot toy!",
+          "zh": "這是一隻閃亮的銀色機器人玩具！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The cloud is fluffy.",
+          "zh": "白雲蓬鬆鬆的。",
+          "is_correct": false,
+          "hint": "用「robot（機器人）」回答這個酷炫玩具喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "I sleep at ten.",
+          "zh": "我十點睡覺。",
+          "is_correct": false,
+          "hint": "驚喜地說這是一隻機器人玩具吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_birthday_robot",
+      "character_line": {
+        "en": "Beep boop! The robot can walk! Did you make a birthday wish?",
+        "zh": "嗶嗶啵啵！機器人會走路！你許生日願望了嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Yes, I wished for happy days and fun adventures!",
+          "zh": "許了，我許願每天都快樂、充滿好玩的冒險！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The pencil is red.",
+          "zh": "鉛筆是紅色的。",
+          "is_correct": false,
+          "hint": "開心分享你的美好生日願望「birthday wish」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "It is nine dollars.",
+          "zh": "這是九元。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你許了每天都快樂的願望！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_stargazing_dream",
+      "character_line": {
+        "en": "Look up at the starry night sky! What is your biggest dream?",
+        "zh": "抬頭看滿天繁星的夜空！你最大的夢想是什麼？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "My dream is to travel around the world!",
+          "zh": "我的夢想是環遊世界！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The tree is tall.",
+          "zh": "樹很高。",
+          "is_correct": false,
+          "hint": "分享夢想可以用「My dream is to...」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I eat one apple.",
+          "zh": "我吃一顆蘋果。",
+          "is_correct": false,
+          "hint": "跟 Benny 說說你心中最棒的大夢想吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_stargazing_dream",
+      "character_line": {
+        "en": "Traveling the world is incredible! Let's work hard for our dreams!",
+        "zh": "環遊世界太不可思議了！讓我們為了夢想一起努力！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes! Dreams will come true with hard work!",
+          "zh": "沒錯！努力就能讓夢想成真！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The water is cold.",
+          "zh": "水很冰涼。",
+          "is_correct": false,
+          "hint": "肯定地說「Dreams will come true」夢想成真喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I have two chairs.",
+          "zh": "我有兩張椅子。",
+          "is_correct": false,
+          "hint": "跟 Benny 一起為未來的夢想加油！"
+        }
+      ]
+    }
+  ]
+}

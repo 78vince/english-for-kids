@@ -1,0 +1,209 @@
+{
+  "id": "conv.prepositions.01",
+  "topic": "prepositions",
+  "title": "Hide and Seek with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Hide-and-Seek Champ"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_behind_armchair",
+      "image": "prepositions_scene_1.jpg",
+      "description": "Benny Hiding Behind the Tall Armchair in the Living Room"
+    },
+    {
+      "scene_id": "scene_under_table",
+      "image": "prepositions_scene_2.jpg",
+      "description": "A Cute Kitten Sleeping Under the Wooden Table"
+    },
+    {
+      "scene_id": "scene_between_pillows",
+      "image": "prepositions_scene_3.jpg",
+      "description": "Finding the Surprise Gift Between Two Soft Pillows"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_behind_armchair",
+      "character_line": {
+        "en": "Ready or not, here I come! Where am I hiding?",
+        "zh": "準備好了沒，我來囉！我躲在哪裡呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "You are hiding behind the big green armchair!",
+          "zh": "你正躲在大綠色扶手椅的後面！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I like strawberry jam.",
+          "zh": "我喜歡草莓果醬。",
+          "is_correct": false,
+          "hint": "在物體後面要用「behind（在...後面）」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "The clock is seven.",
+          "zh": "時鐘是七點。",
+          "is_correct": false,
+          "hint": "指出小熊 Benny 躲在扶手椅後面喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_behind_armchair",
+      "character_line": {
+        "en": "Haha, you found me! Whose brown shoes are in front of the door?",
+        "zh": "哈哈，被你找到了！門前面是誰的棕色鞋子？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "They are in front of the door, ready for a walk!",
+          "zh": "它們在門的前面，準備好要出門散步了！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The bird sings loud.",
+          "zh": "鳥兒大聲歌唱。",
+          "is_correct": false,
+          "hint": "在...前面用「in front of」喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I have two sisters.",
+          "zh": "我有兩個姊妹。",
+          "is_correct": false,
+          "hint": "回答鞋子就在門的正前方喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_under_table",
+      "character_line": {
+        "en": "Listen closely! Who is purring under the dining table?",
+        "zh": "仔細聽！是誰在餐桌底下發出呼嚕呼嚕聲？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "A cute little kitten is sleeping under the table!",
+          "zh": "一隻可愛的小貓咪正在桌子底下睡覺！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The mountain is tall.",
+          "zh": "高山很高。",
+          "is_correct": false,
+          "hint": "在下方或下面要用「under（在...底下）」喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "I eat green grapes.",
+          "zh": "我吃綠葡萄。",
+          "is_correct": false,
+          "hint": "告訴 Benny 桌子底下睡著一隻小貓咪！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_under_table",
+      "character_line": {
+        "en": "Shh, let her sleep! What is sitting on top of the table?",
+        "zh": "噓，讓她好好睡！那桌子上方放著什麼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "A vase of colorful flowers is on the table!",
+          "zh": "一瓶色彩繽紛的花朵插在桌上！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The bus is fast.",
+          "zh": "公車很快。",
+          "is_correct": false,
+          "hint": "在表面上方要用「on（在...上面）」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I sleep at eight.",
+          "zh": "我八點睡覺。",
+          "is_correct": false,
+          "hint": "看看桌上擺著美麗花瓶「on the table」！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_between_pillows",
+      "character_line": {
+        "en": "Look on the sofa! What is tucked between the two soft cushions?",
+        "zh": "看看沙發上！兩個柔軟靠墊中間夾著什麼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "It is a surprise storybook between the cushions!",
+          "zh": "是一本夾在靠墊之間的驚喜故事書！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The tree is green.",
+          "zh": "樹是綠色的。",
+          "is_correct": false,
+          "hint": "在兩者之間要用「between（在...之間）」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I have five toys.",
+          "zh": "我有五個玩具。",
+          "is_correct": false,
+          "hint": "告訴 Benny 靠墊中間有一本故事書喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_between_pillows",
+      "character_line": {
+        "en": "You know all the prepositions so well! Where should we read it?",
+        "zh": "你把介系詞學得真好！我們該在哪裡讀它呢？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Let's sit beside each other and read together!",
+          "zh": "我們並肩坐在彼此身旁一起讀吧！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The pen is black.",
+          "zh": "筆是黑色的。",
+          "is_correct": false,
+          "hint": "坐在旁邊可以用「beside（在...身旁）」喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "It is six o'clock.",
+          "zh": "現在是六點鐘。",
+          "is_correct": false,
+          "hint": "開心地提議坐在一起讀繪本吧！"
+        }
+      ]
+    }
+  ]
+}

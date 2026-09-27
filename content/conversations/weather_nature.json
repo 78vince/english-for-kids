@@ -1,0 +1,209 @@
+{
+  "id": "conv.weather_nature.01",
+  "topic": "weather_nature",
+  "title": "Watching the Weather with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Weather Buddy"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_sunny_morning",
+      "image": "weather_nature_scene_1.jpg",
+      "description": "Sunny Morning with Blue Sky and Fluffy Clouds"
+    },
+    {
+      "scene_id": "scene_rainy_puddles",
+      "image": "weather_nature_scene_2.jpg",
+      "description": "Rainy Afternoon with Puddles and Umbrellas"
+    },
+    {
+      "scene_id": "scene_rainbow_clearing",
+      "image": "weather_nature_scene_3.jpg",
+      "description": "Magical Seven-Colored Rainbow after the Rain"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_sunny_morning",
+      "character_line": {
+        "en": "Good morning! Look outside! How is the weather today?",
+        "zh": "早安！看看外面！今天天氣如何呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "It is sunny and bright outside!",
+          "zh": "外面陽光明媚好晴朗！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I have two sisters.",
+          "zh": "我有兩個姊妹。",
+          "is_correct": false,
+          "hint": "回答今天外面的好天氣，說「It is sunny」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "The chair is wooden.",
+          "zh": "椅子是木頭做的。",
+          "is_correct": false,
+          "hint": "告訴 Benny 外面陽光有多溫暖舒服吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_sunny_morning",
+      "character_line": {
+        "en": "The sky is so blue with soft white clouds!",
+        "zh": "天空好藍，還飄著軟綿綿的白雲呢！"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "The warm sun makes the day wonderful!",
+          "zh": "溫暖的太陽讓今天變得好美好！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "I drink cold milk.",
+          "zh": "我喝冰牛奶。",
+          "is_correct": false,
+          "hint": "晴天有溫暖的大太陽，用「The sun makes the day wonderful」！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "This is my pencil box.",
+          "zh": "這是我的鉛筆盒。",
+          "is_correct": false,
+          "hint": "享受晴朗舒適的早晨好天氣吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_rainy_puddles",
+      "character_line": {
+        "en": "Pitter-patter! The rain is falling! Do you have an umbrella?",
+        "zh": "滴滴答答！下雨了！你有帶雨傘嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Yes, I have a colorful umbrella!",
+          "zh": "有的，我有一把彩色的小雨傘！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "I kick the soccer ball.",
+          "zh": "我踢足球。",
+          "is_correct": false,
+          "hint": "下雨天出門需要「umbrella」雨傘喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "My cat is sleeping.",
+          "zh": "我的貓在睡覺。",
+          "is_correct": false,
+          "hint": "撐起雨傘，跟 Benny 一起擋雨吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_rainy_puddles",
+      "character_line": {
+        "en": "Splash! Look at the water puddles on the ground!",
+        "zh": "嘩啦！看地上的小水窪！"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "I can wear my boots and splash!",
+          "zh": "我可以穿雨鞋踏水花踩踩水！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "I brush my teeth now.",
+          "zh": "我現在刷牙。",
+          "is_correct": false,
+          "hint": "雨天穿「boots」雨鞋在水窪踩水很有趣喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "The library is quiet.",
+          "zh": "圖書館很安靜。",
+          "is_correct": false,
+          "hint": "分享雨天穿雨鞋踏水窪的童趣樂趣吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_rainbow_clearing",
+      "character_line": {
+        "en": "The rain has stopped! Look up at the clearing sky!",
+        "zh": "雨停了！抬頭看放晴的天空！"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Look! A beautiful rainbow in the sky!",
+          "zh": "看！天空中有一道美麗的彩虹！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "I eat hot vegetable soup.",
+          "zh": "我喝熱蔬菜湯。",
+          "is_correct": false,
+          "hint": "雨過天晴常常會看見七彩美麗的「rainbow」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "Close the bedroom window.",
+          "zh": "關上臥室窗戶。",
+          "is_correct": false,
+          "hint": "欣喜地指著天空中美麗的彩虹吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_rainbow_clearing",
+      "character_line": {
+        "en": "Nature and weather always bring amazing surprises!",
+        "zh": "大自然和天氣總是帶給我們驚奇呢！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes, watching the weather is wonderful!",
+          "zh": "沒錯，觀察天氣真的好神奇太棒了！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "I have five fingers.",
+          "zh": "我有五隻手指頭。",
+          "is_correct": false,
+          "hint": "讚美天氣變化，說「watching the weather is wonderful」！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "The bus arrives at eight.",
+          "zh": "公車八點抵達。",
+          "is_correct": false,
+          "hint": "跟 Benny 一起感受大自然的奇妙變化吧！"
+        }
+      ]
+    }
+  ]
+}

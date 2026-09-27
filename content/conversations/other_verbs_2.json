@@ -1,0 +1,209 @@
+{
+  "id": "conv.other_verbs_2.01",
+  "topic": "other_verbs_2",
+  "title": "Think and Smile with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Wise Pal"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_know_answer",
+      "image": "other_verbs_2_scene_1.jpg",
+      "description": "Raising Hands with Benny Saying I Know the Answer"
+    },
+    {
+      "scene_id": "scene_laugh_joke",
+      "image": "other_verbs_2_scene_2.jpg",
+      "description": "Laughing Merrily over a Funny Illustrated Joke Book"
+    },
+    {
+      "scene_id": "scene_grandma_house",
+      "image": "other_verbs_2_scene_3.jpg",
+      "description": "Arriving at Grandma Cozy Country House with Big Hugs"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_know_answer",
+      "character_line": {
+        "en": "Teacher asked a riddle! Who can solve it?",
+        "zh": "老師出了一個謎語！誰能夠解開它？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "I know the answer! Let me raise my hand!",
+          "zh": "我知道答案！讓我來舉手回答！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "The ruler is long.",
+          "zh": "尺很長。",
+          "is_correct": false,
+          "hint": "知道答案用動詞「know（知道）」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I have two shirts.",
+          "zh": "我有兩件襯衫。",
+          "is_correct": false,
+          "hint": "自信舉起手說「I know the answer!」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_know_answer",
+      "character_line": {
+        "en": "Bingo! You got it right! How did you know that?",
+        "zh": "答對了！你回答得完全正確！你是怎麼知道的呢？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "I read and remember it in our science book!",
+          "zh": "我在我們的自然課本裡讀過並記住了！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The frog jumps.",
+          "zh": "青蛙跳。",
+          "is_correct": false,
+          "hint": "分享你在書裡讀過且記住「remember」喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "Today is Tuesday.",
+          "zh": "今天是星期二。",
+          "is_correct": false,
+          "hint": "告訴 Benny 閱讀能讓人學到好多知識！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_laugh_joke",
+      "character_line": {
+        "en": "Look at page ten of this comic! Why is the puppy wearing glasses?",
+        "zh": "看這本漫畫的第十頁！為什麼小狗戴著眼鏡？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Haha! It is so funny! I laugh out loud!",
+          "zh": "哈哈！太好笑了！我都大聲笑出來了！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The shoe is clean.",
+          "zh": "鞋子很乾淨。",
+          "is_correct": false,
+          "hint": "覺得好笑發笑用動詞「laugh（大笑）」喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "I sleep at eight.",
+          "zh": "我八點睡覺。",
+          "is_correct": false,
+          "hint": "跟 Benny 一起哈哈大笑開心地享受幽默！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_laugh_joke",
+      "character_line": {
+        "en": "Laughing together brings so much joy! Let's read another page!",
+        "zh": "一起笑帶來好多歡樂！我們再來讀下一頁吧！"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Let's turn the page and see what happens next!",
+          "zh": "我們翻開下一頁，看看接下來發生什麼事！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The desk is green.",
+          "zh": "書桌是綠色的。",
+          "is_correct": false,
+          "hint": "提議一起做某事可以用「Let's...」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "It is fifty dollars.",
+          "zh": "這是五十元。",
+          "is_correct": false,
+          "hint": "興奮地翻到下一頁繼續看漫畫吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_grandma_house",
+      "character_line": {
+        "en": "Here is Grandma's house with flowers! Where does Grandma live?",
+        "zh": "到了外婆滿是花朵的家！外婆住在哪裡呢？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "She lives in a cozy country house near the woods!",
+          "zh": "她住在樹林旁邊一棟溫馨的鄉村木屋裡！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The cat is climbing.",
+          "zh": "貓咪在爬樹。",
+          "is_correct": false,
+          "hint": "居住在某個地方用動詞「live（居住）」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I like apple juice.",
+          "zh": "我喜歡蘋果汁。",
+          "is_correct": false,
+          "hint": "告訴 Benny 外婆住在樹林旁的溫馨鄉村！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_grandma_house",
+      "character_line": {
+        "en": "Grandma is opening the door with warm cookies! What should we do?",
+        "zh": "外婆拿著烤好的熱餅乾開門了！我們該做什麼？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Give her a big warm hug and say \"We love you\"!",
+          "zh": "給她一個大大的溫暖擁抱，並說「我們愛您」！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The pencil is short.",
+          "zh": "鉛筆很短。",
+          "is_correct": false,
+          "hint": "用溫暖的擁抱「hug」與表達愛意「love」對待外婆喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "It is seven o'clock.",
+          "zh": "現在是七點鐘。",
+          "is_correct": false,
+          "hint": "給親愛的外婆一個大擁抱吧！"
+        }
+      ]
+    }
+  ]
+}

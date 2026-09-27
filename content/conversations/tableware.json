@@ -1,0 +1,209 @@
+{
+  "id": "conv.tableware.01",
+  "topic": "tableware",
+  "title": "Setting the Table with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "School Friend"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_plates_bowls",
+      "image": "tableware_scene_1.jpg",
+      "description": "Placing Clean Plates and Bowls on the Table"
+    },
+    {
+      "scene_id": "scene_spoons_forks",
+      "image": "tableware_scene_2.jpg",
+      "description": "Holding Shiny Spoons and Forks Carefully"
+    },
+    {
+      "scene_id": "scene_drinking_cups",
+      "image": "tableware_scene_3.jpg",
+      "description": "Drinking Water with Clean Cups"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_plates_bowls",
+      "character_line": {
+        "en": "Let's set the table! Can you pass the plates?",
+        "zh": "我們來擺餐桌吧！你能幫忙拿盤子過來嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Sure! Here are two clean plates.",
+          "zh": "沒問題！這裡有兩個乾淨的盤子。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I throw plates on the floor.",
+          "zh": "我把盤子丟在地上。",
+          "is_correct": false,
+          "hint": "盤子是 plate，輕拿輕放才安全喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "It is cloudy outside.",
+          "zh": "外面陰天。",
+          "is_correct": false,
+          "hint": "幫忙擺上乾淨的盤子（plates）吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_plates_bowls",
+      "character_line": {
+        "en": "We also need bowls for the rice.",
+        "zh": "我們裝白飯也需要小碗喔。"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "I will put the bowls on the table.",
+          "zh": "我會把碗整齊擺在桌上。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "Bowls are made of sweet chocolate.",
+          "zh": "碗是用甜巧克力做的。",
+          "is_correct": false,
+          "hint": "碗是 bowl，用來裝熱熱的飯菜喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "Good morning, teacher.",
+          "zh": "早安，老師。",
+          "is_correct": false,
+          "hint": "回答 Benny「I will put the bowls on the table.」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_spoons_forks",
+      "character_line": {
+        "en": "Do we use a spoon for soup?",
+        "zh": "我們喝湯是用湯匙對嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Yes! A spoon is for soup.",
+          "zh": "對啊！湯匙是用來喝湯的。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "No, I drink soup with a shoe.",
+          "zh": "不，我用鞋子喝湯。",
+          "is_correct": false,
+          "hint": "喝湯要用湯匙（spoon）才正確衛生喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "I have a blue bicycle.",
+          "zh": "我有一輛藍色腳踏車。",
+          "is_correct": false,
+          "hint": "用「spoon（湯匙）」回答 Benny 吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_spoons_forks",
+      "character_line": {
+        "en": "And what do you use for fruit?",
+        "zh": "那吃水果切片你用什麼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "I use a small fork for fruit.",
+          "zh": "我用小叉子叉水果吃。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "I eat fruit with my ears.",
+          "zh": "我用耳朵吃水果。",
+          "is_correct": false,
+          "hint": "叉子是 fork，用來叉蘋果香蕉很方便喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "The sky is blue.",
+          "zh": "天空是藍色的。",
+          "is_correct": false,
+          "hint": "回答 Benny「I use a small fork for fruit.」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_drinking_cups",
+      "character_line": {
+        "en": "Are you thirsty? Here is a clean cup.",
+        "zh": "你口渴了嗎？這裡有一個乾淨的杯子。"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Thank you! I will drink some water.",
+          "zh": "謝謝你！我來喝點水。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "I drink dirty mud.",
+          "zh": "我喝骯髒的泥巴。",
+          "is_correct": false,
+          "hint": "喝乾淨的開水（water）才能保持健康喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I have three red books.",
+          "zh": "我有三本紅色的書。",
+          "is_correct": false,
+          "hint": "向 Benny 道謝並喝一口開水吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_drinking_cups",
+      "character_line": {
+        "en": "Everything is ready! Let's enjoy our meal!",
+        "zh": "餐具都擺好囉！我們開動享用美味的一餐吧！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yay! Enjoy your meal, Benny!",
+          "zh": "耶！Benny，祝你用餐愉快！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "I will run away.",
+          "zh": "我要跑掉了。",
+          "is_correct": false,
+          "hint": "開動前跟好朋友互道「Enjoy your meal（用餐愉快）」吧！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "Open the window.",
+          "zh": "打開窗戶。",
+          "is_correct": false,
+          "hint": "開心地和 Benny 一起用餐吧！"
+        }
+      ]
+    }
+  ]
+}

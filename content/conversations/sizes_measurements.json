@@ -1,0 +1,209 @@
+{
+  "id": "conv.sizes_measurements.01",
+  "topic": "sizes_measurements",
+  "title": "Measuring and Comparing with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Measuring Buddy"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_height_chart",
+      "image": "sizes_measurements_scene_1.jpg",
+      "description": "Standing beside a Wooden Wall Height Chart to Measure Height"
+    },
+    {
+      "scene_id": "scene_ruler_pencil",
+      "image": "sizes_measurements_scene_2.jpg",
+      "description": "Comparing a Long Green Ruler with a Short Pencil on the Desk"
+    },
+    {
+      "scene_id": "scene_toy_scale",
+      "image": "sizes_measurements_scene_3.jpg",
+      "description": "Balancing Heavy and Light Fruit Toys on a Colorful Scale"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_height_chart",
+      "character_line": {
+        "en": "Stand against the wall height chart! Wow, you grew taller! How tall are you?",
+        "zh": "靠在牆壁的身高尺站好！哇，你長高了！你有多高呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "I am tall! I am one hundred and twenty centimeters!",
+          "zh": "我好高喔！我有一百二十公分！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "The apple is red.",
+          "zh": "蘋果是紅色的。",
+          "is_correct": false,
+          "hint": "看看身高尺上的刻度，自信地說「I am tall!」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I have five crayons.",
+          "zh": "我有五支蠟筆。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你量出來的身高公分數吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_height_chart",
+      "character_line": {
+        "en": "You are growing so fast! Am I taller or shorter than you?",
+        "zh": "你長得好快喔！那我比你高還是比你矮呢？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "I am taller, and you are shorter, cute Benny!",
+          "zh": "我比你高，而你比較矮，可愛的 Benny！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The rain is falling.",
+          "zh": "雨正在下。",
+          "is_correct": false,
+          "hint": "比較兩人的身高，說「I am taller, and you are shorter」喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "The bed is soft.",
+          "zh": "床很柔軟。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你比小熊高，小熊比較嬌小可愛喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_ruler_pencil",
+      "character_line": {
+        "en": "Let's check our desk! Look at this ruler and this tiny pencil! How are they different?",
+        "zh": "我們來看看書桌！看這把尺和這支小鉛筆！它們有什麼不同呢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "The green ruler is long, and the pencil is short!",
+          "zh": "綠色的尺很長，而鉛筆短短的！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The dog runs in park.",
+          "zh": "狗狗在公園跑。",
+          "is_correct": false,
+          "hint": "比較長短，說「ruler is long, pencil is short」喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "I eat brown bread.",
+          "zh": "我吃全麥麵包。",
+          "is_correct": false,
+          "hint": "告訴 Benny 直尺很長，而鉛筆短短的喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_ruler_pencil",
+      "character_line": {
+        "en": "Look at the school textbook and the notebook! Which one is thicker?",
+        "zh": "看學校教科書和作業本！哪一本比較厚呢？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "The science book is thick, and the notebook is thin!",
+          "zh": "自然課本很厚，而作業筆記本很薄！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The fish is swimming.",
+          "zh": "魚正在游泳。",
+          "is_correct": false,
+          "hint": "比較厚度，說「book is thick, notebook is thin」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I like orange juice.",
+          "zh": "我喜歡柳橙汁。",
+          "is_correct": false,
+          "hint": "摸摸看百科書很厚，而小筆記本很薄喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_toy_scale",
+      "character_line": {
+        "en": "Here is our toy scale! We put a big watermelon toy on one side and a tiny strawberry on the other! What happens?",
+        "zh": "這是我們的玩具天秤！我們一邊放個大西瓜玩具、另一邊放顆小草莓！會發生什麼事呢？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "The big watermelon is heavy, and the strawberry is light!",
+          "zh": "大西瓜很重，而小草莓輕輕的！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The train has six cars.",
+          "zh": "火車有六節車廂。",
+          "is_correct": false,
+          "hint": "比較重量，大西瓜重「heavy」、小草莓輕「light」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "The door is blue.",
+          "zh": "門是藍色的。",
+          "is_correct": false,
+          "hint": "天秤沉下去那邊比較重，翹起來那邊比較輕喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_toy_scale",
+      "character_line": {
+        "en": "Measuring and comparing things is so exciting! Did you learn a lot today?",
+        "zh": "測量和比較東西真是太好玩了！你今天學到很多嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes! Measuring sizes and weights is so much fun!",
+          "zh": "是的！測量尺寸和重量真是太有趣了！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The clock is ticking.",
+          "zh": "時鐘正在滴答走。",
+          "is_correct": false,
+          "hint": "開心回答測量尺寸與重量非常有趣「so much fun」喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I have ten coins.",
+          "zh": "我有十個硬幣。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你今天學會了比較長短大小與輕重吧！"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "id": "conv.emotions.01",
+  "topic": "emotions",
+  "title": "How Are You Feeling Today?",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "School Friend"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_birthday_party",
+      "image": "emotions_scene_1.jpg",
+      "description": "Celebrating a Joyful Birthday Party with Balloons"
+    },
+    {
+      "scene_id": "scene_rainy_window",
+      "image": "emotions_scene_2.jpg",
+      "description": "Looking Outside the Rainy Window with Books"
+    },
+    {
+      "scene_id": "scene_bedtime_cozy",
+      "image": "emotions_scene_3.jpg",
+      "description": "Getting Ready for Bed in a Warm, Cozy Room"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_birthday_party",
+      "character_line": {
+        "en": "Happy Birthday! Are you happy today?",
+        "zh": "生日快樂！你今天開心嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Yes! I am very happy!",
+          "zh": "對啊！我超級開心！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "No, I am super sad.",
+          "zh": "不，我好傷心。",
+          "is_correct": false,
+          "hint": "生日派對有很多氣球和蛋糕，大家都很 happy（開心）喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "It is a green desk.",
+          "zh": "這是一張綠色書桌。",
+          "is_correct": false,
+          "hint": "跟 Benny 分享你今天興奮開心的好心情吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_birthday_party",
+      "character_line": {
+        "en": "Look at the gifts! Are you excited?",
+        "zh": "看桌上的禮物盒！你覺得很期待興奮嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Yes, I am so excited!",
+          "zh": "對啊，我超級期待！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "No, I am very angry.",
+          "zh": "不，我非常生氣。",
+          "is_correct": false,
+          "hint": "準備拆禮物是令人期待又 excited（興奮）的時刻喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I have two sisters.",
+          "zh": "我有兩個姊妹。",
+          "is_correct": false,
+          "hint": "用「excited（興奮期待）」回答 Benny 吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_rainy_window",
+      "character_line": {
+        "en": "Oh no, it is raining. Are you sad?",
+        "zh": "哎呀下大雨了。不能出去玩，你覺得難過嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "A little sad, but it is okay.",
+          "zh": "有一點點難過，但沒關係。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "I am angry at everyone.",
+          "zh": "我對每個人都很生氣。",
+          "is_correct": false,
+          "hint": "下雨不能跑跑雖然有點 sad，但不用對別人發脾氣喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "This is my yellow bus.",
+          "zh": "這是我的黃色公車。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你的心情：「A little sad, but it is okay.」"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_rainy_window",
+      "character_line": {
+        "en": "We can read funny books inside!",
+        "zh": "我們可以在室內看好笑的故事書呀！"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Great idea! Now I am glad.",
+          "zh": "好主意！現在我又感到高興了。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "I am still very scared.",
+          "zh": "我還是好害怕。",
+          "is_correct": false,
+          "hint": "看書很有趣，心情會變好變 glad（高興）喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "Open your school bag.",
+          "zh": "把你的書包打開。",
+          "is_correct": false,
+          "hint": "贊成 Benny 的好提議，跟他說「Great idea! Now I am glad」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_bedtime_cozy",
+      "character_line": {
+        "en": "It is late now. Are you tired?",
+        "zh": "時間很晚了。你現在覺得累了嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Yes, I am tired now.",
+          "zh": "是的，我現在有點想睡覺了。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "No, let's run in the park!",
+          "zh": "不，我們去公園跑步吧！",
+          "is_correct": false,
+          "hint": "到了晚上要睡覺，身體會感到 tired（疲倦）需要休息喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I have three books.",
+          "zh": "我有三本書。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你準備好睡覺了：「Yes, I am tired now.」"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_bedtime_cozy",
+      "character_line": {
+        "en": "Have sweet dreams tonight!",
+        "zh": "今晚做個甜甜的好夢喔！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Good night, Benny!",
+          "zh": "晚安，Benny！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "Good morning, Benny!",
+          "zh": "早安，Benny！",
+          "is_correct": false,
+          "hint": "準備睡覺時要說「Good night（晚安）」喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I want an apple.",
+          "zh": "我想要一顆蘋果。",
+          "is_correct": false,
+          "hint": "跟好朋友 Benny 互道晚安吧！"
+        }
+      ]
+    }
+  ]
+}

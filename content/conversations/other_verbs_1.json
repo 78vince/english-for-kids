@@ -1,0 +1,209 @@
+{
+  "id": "conv.other_verbs_1.01",
+  "topic": "other_verbs_1",
+  "title": "Move and Play with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Action Buddy"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_bounce_clap",
+      "image": "other_verbs_1_scene_1.jpg",
+      "description": "Benny Bouncing a Red Ball and Clapping Hands Cheerfully"
+    },
+    {
+      "scene_id": "scene_brush_wash",
+      "image": "other_verbs_1_scene_2.jpg",
+      "description": "Brushing Teeth and Washing Face Clean at the Morning Mirror"
+    },
+    {
+      "scene_id": "scene_wave_call",
+      "image": "other_verbs_1_scene_3.jpg",
+      "description": "Waving and Calling out to Friends across the Playground"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_bounce_clap",
+      "character_line": {
+        "en": "Bounce bounce! Watch the red ball! Can you clap your hands?",
+        "zh": "彈呀彈！看這顆紅球！你能拍拍你的雙手嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Yes! I can clap my hands and bounce the ball!",
+          "zh": "可以！我可以拍手也能拍彈球！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "The grass is green.",
+          "zh": "草是綠色的。",
+          "is_correct": false,
+          "hint": "動詞拍手是「clap」，拍球是「bounce」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I sleep early.",
+          "zh": "我很早睡。",
+          "is_correct": false,
+          "hint": "跟 Benny 一起開心拍手拍彈球吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_bounce_clap",
+      "character_line": {
+        "en": "You bounce it so well! Catch the ball! Did you catch it?",
+        "zh": "你拍得真好！接住球！你有接住它嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "I caught it with both hands! Yay!",
+          "zh": "我用雙手接住它了！耶！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The tea is warm.",
+          "zh": "茶很溫暖。",
+          "is_correct": false,
+          "hint": "接球是「catch（接住）」，抓緊雙手歡呼吧！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "The pencil is sharp.",
+          "zh": "鉛筆很尖。",
+          "is_correct": false,
+          "hint": "開心地跟 Benny 說你順利接住球了！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_brush_wash",
+      "character_line": {
+        "en": "Morning routine time! What do we do in front of the bathroom mirror?",
+        "zh": "早晨例行作息時間！我們在浴室鏡子前做些什麼？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "I brush my teeth and brush my hair neatly!",
+          "zh": "我刷牙，並且把頭髮梳理得很整齊！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The clock is round.",
+          "zh": "時鐘是圓的。",
+          "is_correct": false,
+          "hint": "刷牙或梳頭髮可以用動詞「brush」喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "I like orange carrots.",
+          "zh": "我喜歡橘色紅蘿蔔。",
+          "is_correct": false,
+          "hint": "告訴 Benny 早上要刷牙梳頭梳理整齊！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_brush_wash",
+      "character_line": {
+        "en": "Sparkling clean! Should we also wash our faces?",
+        "zh": "乾淨得閃閃發光！我們也要洗洗臉嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Yes! Wash face with warm water feels so fresh!",
+          "zh": "要！用溫水洗臉感覺真清爽！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The soup is cold.",
+          "zh": "湯冷掉了。",
+          "is_correct": false,
+          "hint": "洗臉用動詞「wash」，洗得乾乾淨淨喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I have three balls.",
+          "zh": "我有三顆球。",
+          "is_correct": false,
+          "hint": "說說用溫水洗臉有多舒服精神飽滿！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_wave_call",
+      "character_line": {
+        "en": "Look across the school yard! Tom is arriving! How do we greet him?",
+        "zh": "看校園另一頭！湯姆到了！我們要怎麼跟他打招呼？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Wave our hands and call out his name loudly!",
+          "zh": "揮揮我們的手，並大聲呼喚他的名字！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The table has four legs.",
+          "zh": "桌子有四隻腳。",
+          "is_correct": false,
+          "hint": "揮手是「wave」，呼叫是「call」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "It is four o'clock.",
+          "zh": "現在是四點鐘。",
+          "is_correct": false,
+          "hint": "熱情揮手呼喊湯姆的名字吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_wave_call",
+      "character_line": {
+        "en": "He waved back and smiled! Playing active games makes us healthy!",
+        "zh": "他向我們揮手並微笑了！進行戶外活動讓我們好健康！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes! Moving and playing together is the best!",
+          "zh": "沒錯！一起活動一起玩是最棒的！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The pencil is sharp.",
+          "zh": "鉛筆很尖。",
+          "is_correct": false,
+          "hint": "肯定多多活動對健康最好「Moving and playing...」喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I eat sweet bread.",
+          "zh": "我吃甜麵包。",
+          "is_correct": false,
+          "hint": "跟 Benny 一起跑跑跳跳展開快樂的一天！"
+        }
+      ]
+    }
+  ]
+}

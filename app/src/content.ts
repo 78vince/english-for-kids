@@ -5,7 +5,7 @@
 // 之後如果要擴充成 24 個主題，這裡用一個 import.meta.glob 就能自動載入 content/vocab/*.json，
 // 不需要每加一個主題就手動加一行 import。
 
-import type { Badge, ChangelogEntry, Passage, Sentence, Vocab } from "./types";
+import type { Badge, ChangelogEntry, Conversation, Passage, Sentence, Vocab } from "./types";
 // content/badges/badges.json 是「一份清單」而不是像 vocab/sentences 那樣按主題各自一個檔案，
 // 所以不用 import.meta.glob，直接照 tsconfig 的 resolveJsonModule 設定當一般模組匯入即可，
 // 建置時期會被打包進 JS bundle，執行期不需要額外 fetch。
@@ -31,6 +31,12 @@ const passageModules = import.meta.glob("../../content/passages/*.json", {
   eager: true,
   import: "default",
 }) as Record<string, Passage>;
+
+// Stage E 會話練習：每主題單一物件
+const conversationModules = import.meta.glob("../../content/conversations/*.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, Conversation>;
 
 // content/glossary/<topic>.json：補充「短文理解」點字看中文意思要用的額外單字翻譯，
 // 只收「不在該主題 vocab_ids、也不在任何主題 vocab 清單裡」的字（例如短文裡出現的
@@ -64,7 +70,12 @@ function indexSingleByTopicKey<T>(modules: Record<string, T>): Record<string, T>
 const vocabByTopic = indexByTopicKey(vocabModules);
 const sentencesByTopic = indexByTopicKey(sentenceModules);
 const passageByTopic = indexSingleByTopicKey(passageModules);
+const conversationByTopic = indexSingleByTopicKey(conversationModules);
 const glossaryByTopic = indexSingleByTopicKey(glossaryModules);
+
+export function getConversationByTopic(topicFileKey: string): Conversation | undefined {
+  return conversationByTopic[topicFileKey];
+}
 
 // 跨主題的「英文字（小寫）→ 中文意思＋vocab id」查詢表，開場算一次就好——短文理解點字看翻譯時，
 // 不應該只查「目前這個主題」的 vocab，因為短文裡提到的字（例如職業名稱）可能剛好是
@@ -138,18 +149,325 @@ export function listAvailableTopics(): string[] {
  * 的點字翻譯泡泡）只有 vocabId 不是 null 時才畫收藏星星，glossary 查到的字沒有東西
  * 可以收藏，不顯示星星。
  */
+// 常用不規則動詞/名詞詞形映射（過去式、過去分詞、複數等 -> 原型）
+const IRREGULAR_LEMMA_MAP: Record<string, string> = {
+  said: "say",
+  did: "do",
+  ran: "run",
+  went: "go",
+  came: "come",
+  ate: "eat",
+  saw: "see",
+  took: "take",
+  got: "get",
+  made: "make",
+  gave: "give",
+  told: "tell",
+  found: "find",
+  thought: "think",
+  knew: "know",
+  fell: "fall",
+  swam: "swim",
+  flew: "fly",
+  slept: "sleep",
+  wrote: "write",
+  read: "read",
+  spoke: "speak",
+  sang: "sing",
+  built: "build",
+  bought: "buy",
+  brought: "bring",
+  caught: "catch",
+  heard: "hear",
+  sat: "sit",
+  stood: "stand",
+  met: "meet",
+  left: "leave",
+  lost: "lose",
+  won: "win",
+  held: "hold",
+  drove: "drive",
+  rode: "ride",
+  wore: "wear",
+  broke: "break",
+  threw: "throw",
+  grew: "grow",
+  drew: "draw",
+  drank: "drink",
+  feet: "foot",
+  teeth: "tooth",
+  mice: "mouse",
+  children: "child",
+  men: "man",
+  women: "woman",
+};
+
+/** 取得英文單字可能的原型候選列表（依可能性高低排序） */
+function getLemmaCandidates(word: string): string[] {
+  const candidates: string[] = [];
+  const lower = word.toLowerCase();
+
+  // 1. 不規則變化表
+  if (IRREGULAR_LEMMA_MAP[lower]) {
+    candidates.push(IRREGULAR_LEMMA_MAP[lower]);
+  }
+
+  // 2. 動詞進行式 -ing (如 doing -> do, climbing -> climb, dancing -> dance, running -> run)
+  if (lower.endsWith("ing") && lower.length > 4) {
+    const base = lower.slice(0, -3);
+    candidates.push(base); // climbing -> climb
+    candidates.push(base + "e"); // dancing -> dance, making -> make
+    if (base.length > 2 && base[base.length - 1] === base[base.length - 2]) {
+      candidates.push(base.slice(0, -1)); // running -> run
+    }
+  }
+
+  // 3. 過去式 -ed (如 climbed -> climb, liked -> like, stopped -> stop, studied -> study)
+  if (lower.endsWith("ed") && lower.length > 4) {
+    if (lower.endsWith("ied") && lower.length > 4) {
+      candidates.push(lower.slice(0, -3) + "y"); // studied -> study, cried -> cry
+    }
+    const base = lower.slice(0, -2);
+    candidates.push(base); // climbed -> climb, scampered -> scamper
+    candidates.push(lower.slice(0, -1)); // liked -> like, smiled -> smile (-d)
+    if (base.length > 2 && base[base.length - 1] === base[base.length - 2]) {
+      candidates.push(base.slice(0, -1)); // stopped -> stop
+    }
+  }
+
+  // 4. 名詞複數 / 動詞第三人稱單數 -s, -es, -ies (如 squirrels -> squirrel, stories -> story)
+  if (lower.endsWith("s") && !lower.endsWith("ss") && lower.length > 3) {
+    if (lower.endsWith("ies") && lower.length > 4) {
+      candidates.push(lower.slice(0, -3) + "y"); // stories -> story
+    } else if (lower.endsWith("es") && lower.length > 3) {
+      candidates.push(lower.slice(0, -2)); // boxes -> box, watches -> watch
+      candidates.push(lower.slice(0, -1)); // cakes -> cake
+    } else {
+      candidates.push(lower.slice(0, -1)); // squirrels -> squirrel, trees -> tree
+    }
+  }
+
+  return [...new Set(candidates.filter((c) => c !== lower))];
+}
+
+// 常用文法字、會話常用語與繪本故事生字之全域補充詞庫
+const COMMON_CONVERSATIONAL_WORDS: Record<string, string> = {
+  // 文法功能詞
+  the: "這、那（定冠詞）",
+  that: "那個、那樣",
+  this: "這個",
+  these: "這些",
+  those: "那些",
+  did: "做、助動詞（過去式）",
+  say: "說",
+  said: "說（過去式）",
+  doing: "做、正在做",
+  course: "過程、課程（of course 當然）",
+  back: "回來、後面",
+  down: "向下、下來",
+  up: "向上、在上面",
+  away: "離開、遠離",
+  with: "用、和...一起",
+  of: "...的、屬於",
+  for: "為了、給予",
+  at: "在...（地點/時間）",
+  on: "在...上面",
+  in: "在...裡面",
+  to: "到、朝向、向",
+  from: "從...來自",
+  by: "在...旁邊、搭乘",
+  into: "進入...之中",
+  out: "出來、向外",
+  about: "關於、大約",
+  over: "在...之上、翻過",
+  under: "在...之下",
+  again: "再一次、又",
+  so: "如此、這麼、非常",
+  very: "非常、很",
+  too: "也、太",
+  will: "將會、想要",
+  would: "將會、願意",
+  can: "能夠、可以",
+  could: "能、可以（過去式）",
+  should: "應該",
+  must: "必須",
+  may: "可以、也許",
+  might: "可能",
+  just: "只是、剛好",
+  now: "現在",
+  then: "然後、那時",
+  here: "這裡",
+  there: "那裡",
+  where: "哪裡",
+  when: "何時",
+  why: "為什麼",
+  how: "如何、怎樣",
+  what: "什麼",
+  who: "誰",
+  all: "全部、所有",
+  some: "一些",
+  any: "任何",
+  every: "每個、每一",
+  each: "每個",
+  both: "兩者都",
+  other: "其他的",
+  another: "另一個",
+  more: "更多",
+  most: "最多的",
+  much: "許多",
+  many: "許多",
+  little: "小巧的、一點點",
+  few: "很少的",
+  your: "你的、你們的",
+  my: "我的",
+  our: "我們的",
+  their: "他們的",
+  his: "他的",
+  her: "她的",
+  its: "它的",
+
+  // 繪本與會話常見詞彙
+  fantastic: "極好的、太棒了",
+  practice: "練習",
+  single: "單一的、每一個",
+  path: "小徑、道路",
+  squirrel: "松鼠",
+  pine: "松樹",
+  scamper: "蹦跳竄跑、奔馳",
+  scampered: "蹦跳竄跑（過去式）",
+  climb: "爬、攀爬",
+  climbed: "爬、攀爬（過去式）",
+  playful: "頑皮的、調皮活潑的",
+  garden: "花園、庭院",
+  look: "看、瞧",
+  run: "跑步、奔跑",
+  ran: "跑步（過去式）",
+  fast: "快速的",
+  hard: "認真地、辛勤地、硬的",
+  day: "天、日子",
+  tree: "樹木",
+  english: "英文、英語",
+  tall: "高的",
+  come: "來、過來",
+  play: "玩耍、遊玩",
+  sorry: "不好意思、抱歉",
+  please: "請",
+  thank: "感謝",
+  thanks: "謝謝",
+  welcome: "受歡迎的、歡迎",
+  hello: "哈囉、你好",
+  hi: "嗨",
+  bye: "再見",
+  goodbye: "再見",
+  friend: "朋友",
+  class: "班級、課堂",
+  school: "學校",
+  home: "家",
+  story: "故事",
+  book: "書籍",
+  smile: "微笑",
+  laugh: "大笑",
+  happy: "快樂的",
+  nice: "美好的、親切的",
+  great: "很棒的、巨大的",
+  good: "好的",
+  fun: "好玩的、樂趣",
+  love: "喜愛、愛",
+  like: "喜歡、如同",
+  hear: "聽見",
+  listen: "聆聽",
+  see: "看見",
+  watch: "觀看",
+  speak: "說話",
+  talk: "聊天、交談",
+  read: "閱讀",
+  write: "書寫",
+  draw: "繪畫",
+  sing: "唱歌",
+  dance: "跳舞",
+  jump: "跳躍",
+  walk: "走路",
+  swim: "游泳",
+  fly: "飛翔",
+  ride: "騎乘",
+  drive: "開車",
+  eat: "吃",
+  drink: "喝",
+  sleep: "睡覺",
+  wake: "醒來",
+  wear: "穿著",
+  open: "打開",
+  close: "關閉",
+  clean: "乾淨的",
+  wash: "清洗",
+  brush: "刷洗",
+  count: "數數",
+  guess: "猜猜看",
+  choose: "選擇",
+  check: "檢查",
+  learn: "學習",
+  help: "幫忙",
+  ready: "準備好了",
+  sure: "當然、確定的",
+  okay: "好的、可以",
+  ok: "好的、可以",
+  yes: "是的",
+  no: "不、沒有",
+  well: "好、安好",
+};
+
+/**
+ * 查某個英文字（大小寫不拘）的中文意思與 vocabId：
+ * 查詢順序：
+ *   1. 優先查「這個主題自己」的 vocab 清單（精確比對）
+ *   2. 退回「跨主題攤平表」globalVocabByEnglish（精確比對）
+ *   3. 退回「這個主題自己」的補充詞彙表（content/glossary/<topic>.json）
+ *   4. 智慧字幹還原（Lemmatization）：將時態/屈折變化形還原後，重新比對步驟 1~3
+ *   5. 全域常見文法詞與會話詞庫（COMMON_CONVERSATIONAL_WORDS）
+ * 都查不到回傳 null（呼叫端可進行發音兜底，顯示英文本身與發音按鈕）。
+ */
 export function lookupPassageWordZh(
   topicFileKey: string,
   word: string
 ): { zh: string; vocabId: string | null } | null {
   const key = word.toLowerCase();
+
+  // 1. 優先查「這個主題自己」的 vocab 清單
   const ownVocab = vocabByTopic[topicFileKey]?.find((v) => v.en.toLowerCase() === key);
   if (ownVocab) return { zh: ownVocab.zh, vocabId: ownVocab.id };
+
+  // 2. 退回跨主題全域表
   const fromVocab = globalVocabByEnglish[key];
   if (fromVocab) return { zh: fromVocab.zh, vocabId: fromVocab.vocabId };
+
+  // 3. 退回該主題自己的補充詞彙表
   const glossary = glossaryByTopic[topicFileKey];
   const zh = glossary?.[key];
-  return zh ? { zh, vocabId: null } : null;
+  if (zh) return { zh, vocabId: null };
+
+  // 4. 智慧字幹還原（Lemmatization / Stemming）
+  const candidates = getLemmaCandidates(key);
+  for (const cand of candidates) {
+    const ownCand = vocabByTopic[topicFileKey]?.find((v) => v.en.toLowerCase() === cand);
+    if (ownCand) return { zh: ownCand.zh, vocabId: ownCand.id };
+
+    const fromGlobCand = globalVocabByEnglish[cand];
+    if (fromGlobCand) return { zh: fromGlobCand.zh, vocabId: fromGlobCand.vocabId };
+
+    const candZh = glossary?.[cand];
+    if (candZh) return { zh: candZh, vocabId: null };
+  }
+
+  // 5. 全域常見文法詞與會話生字表
+  const commonZh = COMMON_CONVERSATIONAL_WORDS[key];
+  if (commonZh) return { zh: commonZh, vocabId: null };
+
+  for (const cand of candidates) {
+    const candCommonZh = COMMON_CONVERSATIONAL_WORDS[cand];
+    if (candCommonZh) return { zh: candCommonZh, vocabId: null };
+  }
+
+  return null;
 }
 
 const BADGES = badgesData as Badge[];

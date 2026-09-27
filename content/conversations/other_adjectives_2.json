@@ -1,0 +1,209 @@
+{
+  "id": "conv.other_adjectives_2.01",
+  "topic": "other_adjectives_2",
+  "title": "Brave and Kind with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Kindness Hero"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_kindness_drive",
+      "image": "other_adjectives_2_scene_1.jpg",
+      "description": "Donating Warm Blankets and Toys to the Neighborhood Drive"
+    },
+    {
+      "scene_id": "scene_brave_scooters",
+      "image": "other_adjectives_2_scene_2.jpg",
+      "description": "Brave Kid and Benny Wearing Helmets Safely on Scooters"
+    },
+    {
+      "scene_id": "scene_simple_picnic",
+      "image": "other_adjectives_2_scene_3.jpg",
+      "description": "Enjoying a Simple Sweet Picnic on the Sunny Grassland"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_kindness_drive",
+      "character_line": {
+        "en": "Our town is collecting toys for families who need help! What can we share?",
+        "zh": "我們鎮上正在為需要幫助的家庭募集玩具！我們可以分享什麼？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "We can give warm blankets and share kind love!",
+          "zh": "我們可以捐贈溫暖毛毯，分享親切的愛心！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "The frog is green.",
+          "zh": "青蛙是綠色的。",
+          "is_correct": false,
+          "hint": "親切善良是「kind」，熱心助人傳遞愛心喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I sleep early.",
+          "zh": "我很早睡。",
+          "is_correct": false,
+          "hint": "表達樂意伸出援手幫助需要的家庭！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_kindness_drive",
+      "character_line": {
+        "en": "Helping others is so heartwarming! Does giving make our hearts rich in joy?",
+        "zh": "幫助別人真令人心頭一暖！付出是不是讓心靈充滿富足的喜悅？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Yes! Being kind makes everyone rich in happiness!",
+          "zh": "是的！心懷善意讓大家都在幸福中變得富足！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The clock is round.",
+          "zh": "時鐘是圓的。",
+          "is_correct": false,
+          "hint": "心靈富足用形容詞「rich（豐富、富有的）」喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I have two pens.",
+          "zh": "我有兩支筆。",
+          "is_correct": false,
+          "hint": "贊同付出愛心帶來無比的快樂與幸福！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_brave_scooters",
+      "character_line": {
+        "en": "Look at that gentle scooter slope in the park! Are you ready to try?",
+        "zh": "看公園裡那個平緩的滑板車小斜坡！你準備好嘗試了嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "I am brave! I wear my helmet and ride safely!",
+          "zh": "我很勇敢！我戴好安全帽，而且騎得很安全！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The soup is warm.",
+          "zh": "湯很溫暖。",
+          "is_correct": false,
+          "hint": "勇敢是「brave」，安全是「safe」喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "Today is Monday.",
+          "zh": "今天是星期一。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你很勇敢，而且會注意安全！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_brave_scooters",
+      "character_line": {
+        "en": "Wearing helmets keeps our heads safe! Safety comes first, right?",
+        "zh": "戴安全帽能保護頭部安全！安全第一對不對？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Yes! Staying safe lets us have the best fun!",
+          "zh": "沒錯！保持安全能讓我們玩得最開心！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The tree is tall.",
+          "zh": "樹很高。",
+          "is_correct": false,
+          "hint": "保持安全可以用「Staying safe」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I like cold tea.",
+          "zh": "我喜歡冰茶。",
+          "is_correct": false,
+          "hint": "安全才能玩得開心又放心！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_simple_picnic",
+      "character_line": {
+        "en": "We don't need fancy things! Just bread, water, and sunshine on the grass!",
+        "zh": "我們不需要華麗鋪張的東西！草地上只有麵包、水和陽光！"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "A simple picnic with you is my favorite thing!",
+          "zh": "跟你一起度過簡單樸實的野餐是我最喜歡的事！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The bus is turning.",
+          "zh": "公車正在轉彎。",
+          "is_correct": false,
+          "hint": "簡單樸素用形容詞「simple」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "It is four dollars.",
+          "zh": "這是四元。",
+          "is_correct": false,
+          "hint": "告訴 Benny 簡單的幸福就是最棒的陪伴！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_simple_picnic",
+      "character_line": {
+        "en": "Being kind, brave, and enjoying simple joys makes every day golden!",
+        "zh": "保持善良、勇敢，並享受簡單的喜悅，讓每一天都金光閃閃！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "I agree! Kindness and courage make our world bright!",
+          "zh": "我贊同！善良與勇氣讓我們的世界無比明亮！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The desk is wooden.",
+          "zh": "書桌是木製的。",
+          "is_correct": false,
+          "hint": "贊同善良與勇氣帶來美好「Kindness and courage...」喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I eat five carrots.",
+          "zh": "我吃五根紅蘿蔔。",
+          "is_correct": false,
+          "hint": "跟 Benny 一起約定做個善良又勇敢的好孩子！"
+        }
+      ]
+    }
+  ]
+}

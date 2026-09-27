@@ -2,8 +2,8 @@
 // 開場先登入（本機端選「誰在玩」，見 profile.ts），再選主題，再進題型選單，
 // 串了四種文字型題型的完整流程：
 //   Stage A   單字配對      matchingGame.ts   (content/vocab/{topic}.json)
-//   Stage B-1 句子排序      orderingGame.ts   (content/sentences/{topic}.json, stage B)
-//   Stage B-2 句子填空      fillBlankGame.ts  (同上，挖空 vocab_ids 對應的字)
+//   Stage B-1 句子填空      fillBlankGame.ts  (同上，挖空 vocab_ids 對應的字)
+//   Stage B-2 句子排序      orderingGame.ts   (content/sentences/{topic}.json, stage B)
 //   Stage C   短文理解選擇  choiceGame.ts     (content/passages/{topic}.json)
 // 對應 docs/content-plan-gept-kids.md 3.3 的關卡設計（單字 → 短句 → 短文）。
 // 目前有完整內容（單字＋句子＋短文都是 published）的主題：Family、Colors、Animals & insects。
@@ -12,6 +12,7 @@ import "./style.css";
 import {
   CHANGELOG,
   getAllBadges,
+  getConversationByTopic,
   getPassageByTopic,
   getSentencesByTopic,
   getVocabByTopic,
@@ -23,7 +24,10 @@ import { FillBlankGame } from "./fillBlankGame";
 import { ChoiceGame, type ChoiceOptionState } from "./choiceGame";
 import { buildCapstoneQuestions } from "./capstoneQuestions";
 import { FlashcardGame, type FlashcardQuizOptionState } from "./flashcardGame";
+import { ConversationGame } from "./conversationGame";
+import { getSceneImageUrl } from "./sceneImages";
 import {
+  speakDialogueLine,
   speakEnglish,
   speakPassage,
   stopSpeaking,
@@ -278,6 +282,7 @@ type Screen =
   | "fillBlank"
   | "choice"
   | "capstone"
+  | "conversation"
   | "stats"
   | "badges"
   | "favorites"
@@ -305,6 +310,8 @@ let choiceGame: ChoiceGame | null = null;
 // Stage D 綜合關卡：沿用 ChoiceGame 同一套單選題引擎（見 capstoneQuestions.ts 的說明），
 // 只是題目來源換成混合單字/短句/短文出的清單，不是某一篇短文自己的 questions[]。
 let capstoneGame: ChoiceGame | null = null;
+// Stage E 會話練習：角色互動 10~12 句會話，3 選 1 回答，情境插畫轉場
+let conversationGame: ConversationGame | null = null;
 
 // 成效追蹤只要在「這一輪剛好完成的那一刻」寫一次 localStorage 就好，不能每次 render 都寫——
 // render() 每點一下畫面就會呼叫，isRoundComplete 之後會維持 true 好一段時間，
@@ -315,6 +322,7 @@ let orderingRecorded = false;
 let fillBlankRecorded = false;
 let choiceRecorded = false;
 let capstoneRecorded = false;
+let conversationRecorded = false;
 
 // Stage C 短文理解：點短文裡的字看中文意思——目前正在顯示提示泡泡的那個字的 key
 // （用「第幾個字」當 key，同一個字在短文裡出現多次時才不會互相搞混），沒有點任何字就是 null。
@@ -477,6 +485,7 @@ function goToTopicStage(topic: TopicConfig, stageKey: StageKeyForBadges): void {
   else if (stageKey === "ordering") goToOrdering();
   else if (stageKey === "fillBlank") goToFillBlank();
   else if (stageKey === "capstone") goToCapstone();
+  else if (stageKey === "conversation") goToConversation();
   else goToChoice();
 }
 
@@ -697,6 +706,34 @@ function goToCapstone(): void {
   window.scrollTo(0, 0); // 換到全新畫面（Stage D 綜合關卡）
 }
 
+function goToConversation(): void {
+  const conv = getConversationByTopic(currentTopic!.fileKey);
+  if (!conv) return;
+  stopSpeaking();
+  screen = "conversation";
+  conversationGame = new ConversationGame(conv);
+  conversationGame.onCorrect = () => {
+    playCorrectSound();
+    recordQuestionAnswered(activeProfile!.id, "conversation", true, CORRECT_STREAK_THRESHOLD);
+  };
+  conversationGame.onWrong = () => {
+    playWrongSound();
+    recordQuestionAnswered(activeProfile!.id, "conversation", false, CORRECT_STREAK_THRESHOLD);
+  };
+  conversationRecorded = false;
+  stageStartedAt = Date.now();
+  render();
+  window.scrollTo(0, 0); // 換到全新畫面（Stage E 會話練習）
+
+  // 自動播放開場第一句 Benny 男童音
+  const firstTurn = conv.turns[0];
+  if (firstTurn) {
+    setTimeout(() => {
+      speakDialogueLine(firstTurn.character_line.en, { persona: "boy" });
+    }, 400);
+  }
+}
+
 function restartEverything(): void {
   orderingGame = null;
   fillBlankGame = null;
@@ -843,7 +880,7 @@ function optionButton(
  * 這裡用 --text-h3），內容只放「題型範圍當標題」＋進度文字，不放頭像／招呼語，
  * 一眼就能跟首頁/目錄頁的橫幅區分開來，同時清楚知道現在在哪個題型裡。
  */
-function stageHeader(title: string, progressText: string): void {
+function stageHeader(title: string, progressText: string, extraActions: HTMLElement[] = []): void {
   const header = document.createElement("header");
   header.className = "stage-banner";
 
@@ -868,13 +905,20 @@ function stageHeader(title: string, progressText: string): void {
   slowToggleBtn.type = "button";
   slowToggleBtn.className = "slow-speech-toggle-btn" + (isSlowSpeechEnabled() ? " active" : "");
   slowToggleBtn.setAttribute("aria-pressed", String(isSlowSpeechEnabled()));
-  slowToggleBtn.textContent = isSlowSpeechEnabled() ? "🐢 慢速中" : "🐢 慢速";
+  slowToggleBtn.innerHTML = `${TURTLE_ICON(18)}<span>${isSlowSpeechEnabled() ? "慢速中" : "慢速"}</span>`;
   slowToggleBtn.setAttribute("aria-label", "切換慢速發音");
   slowToggleBtn.addEventListener("click", () => {
     setSlowSpeechEnabled(!isSlowSpeechEnabled());
     render(); // 重新渲染目前畫面，讓按鈕文字／active 樣式立刻反映新狀態
   });
   actions.appendChild(slowToggleBtn);
+
+  // 「單字總覽」的練習模式主開關／說明按鈕就是透過這裡塞進來的，跟慢速發音、
+  // 返回選單同一排——使用者反映原本另外做一列工具列，清單一長就要捲回頂端才
+  // 能再切換，移進題型橫幅後任何時候都看得到、按得到，不用捲動。
+  for (const el of extraActions) {
+    actions.appendChild(el);
+  }
 
   const backBtn = document.createElement("button");
   backBtn.className = "back-btn";
@@ -1542,16 +1586,16 @@ function renderMenu(): void {
       onSelect: goToMatching,
     },
     {
-      label: "Stage B-1　句子排序",
-      description: `${playableSentences.length} 句短句，點字塊組成正確順序`,
-      stageKey: "ordering",
-      onSelect: goToOrdering,
-    },
-    {
-      label: "Stage B-2　句子填空",
+      label: "Stage B-1　句子填空",
       description: `同一批短句，挖空一個字，選字作答`,
       stageKey: "fillBlank",
       onSelect: goToFillBlank,
+    },
+    {
+      label: "Stage B-2　句子排序",
+      description: `${playableSentences.length} 句短句，點字塊組成正確順序`,
+      stageKey: "ordering",
+      onSelect: goToOrdering,
     },
     {
       label: "Stage C　短文理解",
@@ -1561,11 +1605,21 @@ function renderMenu(): void {
     },
     {
       label: "Stage D　綜合關卡",
-      description: `混合單字、短句、短文的最終測驗，過關就算這個主題單元完成`,
+      description: `混合單字、短句、短文的最終測驗，過關再加上 Stage E 才算這個主題單元完成`,
       stageKey: "capstone",
       onSelect: goToCapstone,
     },
   ];
+
+  const topicConversation = getConversationByTopic(currentTopic.fileKey);
+  if (topicConversation) {
+    items.push({
+      label: "Stage E　會話練習",
+      description: `與 ${topicConversation.character.name} 互動對話（共 ${topicConversation.turns.length * 2} 句），完成後這個主題單元才算全部通關`,
+      stageKey: "conversation",
+      onSelect: goToConversation,
+    });
+  }
 
   const menu = document.createElement("div");
   menu.className = "menu-list";
@@ -1627,9 +1681,86 @@ function buildFavoriteStarButton(profileId: string, vocabId: string): HTMLButton
   return btn;
 }
 
+// 扁平單色圖示共用 viewBox／線條設定——沿用全站既有的 SVG 圖示慣例（見 NAV_ICON_VIEWBOX：
+// viewBox 24x24、stroke="currentColor"、無填色），不用 emoji。「眼睛／劃掉的眼睛」給
+// 「練習模式」主開關跟每則例句自己的「顯示這句」小按鈕共用：睜眼＝目前看得清楚／關閉
+// 練習模式，閉眼（劃掉）＝目前是模糊的／練習模式開啟中。「烏龜」取代原本的 🐢 emoji，
+// 給「慢速發音」開關用。「i」圓圈是既有 NAV_ICONS.about 那顆說明圖示的同一個設計，
+// 這裡只是換成可自訂大小的版本，給「練習模式」旁邊的說明小按鈕用。
+const FLAT_ICON_VIEWBOX = `viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"`;
+const EYE_OPEN_ICON = (size: number) =>
+  `<svg ${FLAT_ICON_VIEWBOX} width="${size}" height="${size}"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>`;
+const EYE_OFF_ICON = (size: number) =>
+  `<svg ${FLAT_ICON_VIEWBOX} width="${size}" height="${size}"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.6 21.6 0 0 1 5.06-5.94"/><path d="M9.9 4.24A10.94 10.94 0 0 1 12 5c7 0 11 7 11 7a21.6 21.6 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+const TURTLE_ICON = (size: number) =>
+  `<svg ${FLAT_ICON_VIEWBOX} width="${size}" height="${size}"><ellipse cx="10" cy="12" rx="7" ry="5"/><circle cx="19" cy="11" r="2"/><line x1="3" y1="13" x2="1" y2="14.5"/><line x1="6" y1="17" x2="6" y2="19.3"/><line x1="9.5" y1="17.3" x2="9.5" y2="19.6"/><line x1="13" y1="17.3" x2="13" y2="19.6"/><line x1="16" y1="17" x2="16" y2="19.3"/></svg>`;
+const INFO_ICON = (size: number) =>
+  `<svg ${FLAT_ICON_VIEWBOX} width="${size}" height="${size}"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="7.5" x2="12" y2="7.5"/></svg>`;
+
+/** 「練習模式」說明泡泡目前開著的那一個（手機長按開啟的那一顆），模組層級只留一份
+ * 參照，搭配下面一次性註冊的全域 touchstart 監聽器來處理「點畫面其他地方要關閉」——
+ * 跟 activeBadgeTooltipCode 是同一種寫法，但這裡刻意不呼叫 render()：開關泡泡純粹是
+ * 本地 DOM class 切換，不需要整頁重繪（也才不會把已展開的例句收合、捲動位置跳掉）。 */
+let openPracticeInfoTooltip: HTMLElement | null = null;
+
+/** 「練習模式」按鈕旁邊的說明小圖示＋泡泡：桌面滑鼠移過去（CSS :hover）或鍵盤 Tab
+ * 移過去（CSS :focus-within）就會顯示，不需要 JS；手機沒有 hover，改成「長按」
+ * （超過 450ms 還沒放開）才顯示——短按或滑動（通常是想捲動畫面）不會誤觸跳出泡泡。 */
+function buildPracticeModeInfoTooltip(): HTMLSpanElement {
+  const wrap = document.createElement("span");
+  wrap.className = "practice-mode-info";
+
+  const infoBtn = document.createElement("button");
+  infoBtn.type = "button";
+  infoBtn.className = "practice-mode-info-btn";
+  infoBtn.innerHTML = INFO_ICON(16);
+  infoBtn.setAttribute("aria-label", "練習模式說明");
+
+  const bubble = document.createElement("span");
+  bubble.className = "practice-mode-info-bubble";
+  bubble.setAttribute("role", "tooltip");
+  bubble.textContent = "英文例句會先模糊，點單句旁的眼睛圖示可個別顯示核對。";
+
+  wrap.appendChild(infoBtn);
+  wrap.appendChild(bubble);
+
+  let longPressTimer: number | undefined;
+  const cancelLongPress = () => {
+    if (longPressTimer !== undefined) {
+      window.clearTimeout(longPressTimer);
+      longPressTimer = undefined;
+    }
+  };
+  infoBtn.addEventListener(
+    "touchstart",
+    () => {
+      longPressTimer = window.setTimeout(() => {
+        wrap.classList.add("practice-mode-info--open");
+        openPracticeInfoTooltip = wrap;
+      }, 450);
+    },
+    { passive: true }
+  );
+  infoBtn.addEventListener("touchend", cancelLongPress);
+  infoBtn.addEventListener("touchmove", cancelLongPress);
+  infoBtn.addEventListener("touchcancel", cancelLongPress);
+
+  return wrap;
+}
+
 /** 例句區塊（英文＋專屬播放鍵＋中文翻譯）——字卡暖身跟單字總覽／收藏清單共用同一份
- * DOM 結構，避免兩處各寫一次幾乎一樣的內容。沿用 .flashcard-example 那組既有樣式。 */
-function buildExampleSentenceBlock(example: { en: string; zh: string }): HTMLDivElement {
+ * DOM 結構，避免兩處各寫一次幾乎一樣的內容。沿用 .flashcard-example 那組既有樣式。
+ *
+ * withPracticeToggle 只有「單字總覽」會傳 true：這則例句會多一顆「顯示這句」的小圖示鈕，
+ * 屬於練習模式（見 renderVocabOverview() 的主開關）。收藏清單／字卡暖身呼叫時不傳這個參數，
+ * 完全不會出現這顆按鈕、例句永遠清楚顯示，行為維持跟這個功能出現以前一樣。
+ * 模糊/清楚全部交給 CSS class 處理（.practice-mode-on 在外層清單容器、.example-revealed
+ * 在單一例句自己身上），這裡的按鈕只負責 toggle exampleBox 的 class，完全不呼叫 render()，
+ * 所以切換的時候不會影響其他已展開的例句、也不會把清單捲回頂端。 */
+function buildExampleSentenceBlock(
+  example: { en: string; zh: string },
+  withPracticeToggle: boolean = false
+): HTMLDivElement {
   const exampleBox = document.createElement("div");
   exampleBox.className = "flashcard-example";
 
@@ -1646,6 +1777,23 @@ function buildExampleSentenceBlock(example: { en: string; zh: string }): HTMLDiv
   replayExampleBtn.setAttribute("aria-label", "重播例句發音");
   replayExampleBtn.addEventListener("click", () => speakEnglish(example.en));
   exampleRow.appendChild(replayExampleBtn);
+
+  if (withPracticeToggle) {
+    const revealBtn = document.createElement("button");
+    revealBtn.type = "button";
+    revealBtn.className = "example-practice-toggle-btn";
+    revealBtn.innerHTML = EYE_OPEN_ICON(16);
+    revealBtn.setAttribute("aria-label", "顯示這句英文");
+    revealBtn.setAttribute("aria-pressed", "false");
+    revealBtn.addEventListener("click", () => {
+      const revealed = exampleBox.classList.toggle("example-revealed");
+      revealBtn.innerHTML = revealed ? EYE_OFF_ICON(16) : EYE_OPEN_ICON(16);
+      revealBtn.setAttribute("aria-label", revealed ? "模糊這句英文" : "顯示這句英文");
+      revealBtn.setAttribute("aria-pressed", String(revealed));
+    });
+    exampleRow.appendChild(revealBtn);
+  }
+
   exampleBox.appendChild(exampleRow);
 
   const exampleZh = document.createElement("p");
@@ -1658,8 +1806,9 @@ function buildExampleSentenceBlock(example: { en: string; zh: string }): HTMLDiv
 
 /** 「單字總覽」跟「收藏清單」共用的一列單字：英文／詞性／中文＋播放發音按鈕＋收藏星星，
  * 加上可展開的例句面板（有 example_sentence 才會顯示展開鈕），
- * 抽成共用函式避免兩個畫面各寫一份幾乎一樣的 DOM 結構。 */
-function buildVocabOverviewRow(vocab: Vocab): HTMLDivElement {
+ * 抽成共用函式避免兩個畫面各寫一份幾乎一樣的 DOM 結構。
+ * withPracticeToggle 只有「單字總覽」會傳 true，往下傳給 buildExampleSentenceBlock()。 */
+function buildVocabOverviewRow(vocab: Vocab, withPracticeToggle: boolean = false): HTMLDivElement {
   const row = document.createElement("div");
   row.className = "vocab-overview-row";
 
@@ -1701,7 +1850,7 @@ function buildVocabOverviewRow(vocab: Vocab): HTMLDivElement {
     toggleBtn.textContent = "例句 ▾";
     toggleBtn.setAttribute("aria-label", `顯示 ${vocab.en} 的例句`);
 
-    const examplePanel = buildExampleSentenceBlock(example);
+    const examplePanel = buildExampleSentenceBlock(example, withPracticeToggle);
     examplePanel.hidden = true;
 
     toggleBtn.addEventListener("click", () => {
@@ -1718,15 +1867,64 @@ function buildVocabOverviewRow(vocab: Vocab): HTMLDivElement {
   return row;
 }
 
+const VOCAB_OVERVIEW_PRACTICE_MODE_STORAGE_KEY = "englishForKids.settings.vocabOverviewPracticeMode.v1";
+
+/** 「單字總覽」練習模式主開關——裝置層級設定，預設關閉（例句一律清楚顯示，
+ * 跟這個功能出現以前一樣）。開啟後每則例句預設變模糊，各自有顆小按鈕可以單獨顯示。 */
+function readVocabOverviewPracticeMode(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    return window.localStorage.getItem(VOCAB_OVERVIEW_PRACTICE_MODE_STORAGE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function setVocabOverviewPracticeMode(enabled: boolean): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(VOCAB_OVERVIEW_PRACTICE_MODE_STORAGE_KEY, enabled ? "1" : "0");
+  } catch {
+    // 忽略，跟其餘模組一致的容錯方式
+  }
+}
+
 /** 單字總覽：主題內的入口，列出 getVocabByTopic() 的全部單字，純瀏覽用途，
  * 不是 Stage，不記錄任何成效資料。 */
 function renderVocabOverview(): void {
-  stageHeader(`${currentTopic.label} — 單字總覽`, `共 ${playableVocab.length} 個單字，點星星收藏喜歡的字`);
+  const practiceMode = readVocabOverviewPracticeMode();
 
   const list = document.createElement("div");
-  list.className = "vocab-overview-list";
+  list.className = "vocab-overview-list" + (practiceMode ? " practice-mode-on" : "");
+
+  const toggleBtn = document.createElement("button");
+  toggleBtn.type = "button";
+  toggleBtn.className = "slow-speech-toggle-btn" + (practiceMode ? " active" : "");
+  toggleBtn.setAttribute("aria-pressed", String(practiceMode));
+  toggleBtn.innerHTML = `${practiceMode ? EYE_OFF_ICON(18) : EYE_OPEN_ICON(18)}<span>練習模式</span>`;
+  toggleBtn.setAttribute("aria-label", "切換例句練習模式（英文模糊/顯示）");
+  toggleBtn.addEventListener("click", () => {
+    const next = !list.classList.contains("practice-mode-on");
+    setVocabOverviewPracticeMode(next);
+    // 只切換外層清單容器的一個 class，模糊/清楚跟每則例句自己的顯示鈕全部交給 CSS
+    // 選擇器處理（見 style.css），不呼叫 render()，已展開的例句、捲動位置都不受影響。
+    list.classList.toggle("practice-mode-on", next);
+    toggleBtn.classList.toggle("active", next);
+    toggleBtn.setAttribute("aria-pressed", String(next));
+    toggleBtn.innerHTML = `${next ? EYE_OFF_ICON(18) : EYE_OPEN_ICON(18)}<span>練習模式</span>`;
+  });
+
+  // 練習模式主開關跟旁邊的說明按鈕都直接塞進題型橫幅（stageHeader() 的 extraActions），
+  // 跟「🐢 慢速」「← 返回選單」排在同一列，任何時候都看得到、按得到，不用像原本
+  // 獨立工具列那樣捲回頂端才能切換。
+  stageHeader(
+    `${currentTopic.label} — 單字總覽`,
+    `共 ${playableVocab.length} 個單字，點星星收藏喜歡的字`,
+    [toggleBtn, buildPracticeModeInfoTooltip()]
+  );
+
   for (const vocab of playableVocab) {
-    list.appendChild(buildVocabOverviewRow(vocab));
+    list.appendChild(buildVocabOverviewRow(vocab, true));
   }
   app!.appendChild(list);
 }
@@ -1816,14 +2014,22 @@ interface StatsRow {
   stageKey: StageKey;
 }
 
-const STAGE_ROWS: StatsRow[] = [
+const BASE_STAGE_ROWS: StatsRow[] = [
   { label: "字卡暖身　單字記憶", stageKey: "flashcards" },
   { label: "Stage A　單字配對", stageKey: "matching" },
-  { label: "Stage B-1　句子排序", stageKey: "ordering" },
-  { label: "Stage B-2　句子填空", stageKey: "fillBlank" },
+  { label: "Stage B-1　句子填空", stageKey: "fillBlank" },
+  { label: "Stage B-2　句子排序", stageKey: "ordering" },
   { label: "Stage C　短文理解", stageKey: "choice" },
   { label: "Stage D　綜合關卡", stageKey: "capstone" },
 ];
+
+function getStageRowsForTopic(topicFileKey: string): StatsRow[] {
+  const rows = [...BASE_STAGE_ROWS];
+  if (getConversationByTopic(topicFileKey)) {
+    rows.push({ label: "Stage E　會話練習", stageKey: "conversation" });
+  }
+  return rows;
+}
 
 // 挑戰紀錄的主題卡：收合狀態右側的展開箭頭（純視覺提示，實際點擊範圍是整張卡片）。
 const STATS_CHEVRON_ICON = `<svg ${NAV_ICON_VIEWBOX}><polyline points="6 9 12 15 18 9"/></svg>`;
@@ -1837,12 +2043,13 @@ function renderStats(): void {
   app!.appendChild(header);
 
   // 攤平成「每個主題 × 每種題型」的清單，只用來算最上面那排整體總覽數字
-  // （3 個統計卡不變，底下的卡片清單改成每個主題一張，見下面的 for 迴圈）。
-  const entries = availableTopics.flatMap((summary) =>
-    STAGE_ROWS.map((row) => ({
+  // （包含 Stage E 會話練習，依主題實際具備的題型動態彙整）。
+  const entries = availableTopics.flatMap((summary) => {
+    const rows = getStageRowsForTopic(summary.topic.fileKey);
+    return rows.map((row) => ({
       progress: getStageProgress(activeProfile!.id, summary.topic.fileKey, row.stageKey),
-    }))
-  );
+    }));
+  });
 
   const playedCount = entries.filter((e) => e.progress !== null).length;
   const totalCompleted = entries.reduce((sum, e) => sum + (e.progress?.timesCompleted ?? 0), 0);
@@ -1878,8 +2085,9 @@ function renderStats(): void {
   for (const summary of availableTopics) {
     const topicFileKey = summary.topic.fileKey;
     const isExpanded = expandedStatsTopics.has(topicFileKey);
+    const stageRows = getStageRowsForTopic(topicFileKey);
 
-    const stageEntries = STAGE_ROWS.map((row) => ({
+    const stageEntries = stageRows.map((row) => ({
       row,
       progress: getStageProgress(activeProfile!.id, topicFileKey, row.stageKey),
     }));
@@ -1894,7 +2102,7 @@ function renderStats(): void {
     // 外層卡片的分級規則跟內層單一題型不一樣（見 topicProgressTier() 的說明），
     // "not-started" 沿用現有中性樣式，不加 modifier class（跟 .menu-item 那次不同，
     // 這裡不需要額外修正文字顏色——.stats-card-detail--muted 本來就是正確的灰色）。
-    const topicTier = topicProgressTier(topicPlayedCount, STAGE_ROWS.length, topicAverageAccuracy);
+    const topicTier = topicProgressTier(topicPlayedCount, stageRows.length, topicAverageAccuracy);
 
     const card = document.createElement("div");
     card.className =
@@ -1921,7 +2129,7 @@ function renderStats(): void {
     briefEl.className = "stats-card-detail stats-card-detail--muted";
     briefEl.textContent =
       topicPlayedCount > 0
-        ? `${topicTier === "mastered" ? "⭐ " : ""}已挑戰 ${topicPlayedCount} / ${STAGE_ROWS.length} 種題型・平均正確率 ${topicAverageAccuracy}%`
+        ? `${topicTier === "mastered" ? "⭐ " : ""}已挑戰 ${topicPlayedCount} / ${stageRows.length} 種題型・平均正確率 ${topicAverageAccuracy}%`
         : "尚未挑戰過";
     summaryText.appendChild(briefEl);
     summaryRow.appendChild(summaryText);
@@ -2023,7 +2231,8 @@ function formatDateTime(input: string | Date): string {
 function getLastPlayedDate(profileId: string): Date | null {
   const timestamps: number[] = [];
   for (const summary of availableTopics) {
-    for (const row of STAGE_ROWS) {
+    const stageRows = getStageRowsForTopic(summary.topic.fileKey);
+    for (const row of stageRows) {
       const progress = getStageProgress(profileId, summary.topic.fileKey, row.stageKey);
       if (progress) {
         const t = new Date(progress.lastPlayedAt).getTime();
@@ -2311,6 +2520,24 @@ function renderAbout(): void {
     p.textContent = text;
     app!.appendChild(p);
   }
+
+  // 語音比較實驗室入口（獨立工具頁）
+  const voiceLabSection = document.createElement("div");
+  voiceLabSection.className = "voice-lab-entry-card";
+  voiceLabSection.style.cssText =
+    "margin: 1.5rem 0; padding: 1.25rem; background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: 12px; text-align: left;";
+  voiceLabSection.innerHTML = `
+    <h3 style="margin: 0 0 0.5rem; font-size: 1.1rem; color: #1e40af; display: flex; align-items: center; gap: 0.5rem;">
+      <span>🎙️ 語音比較實驗室 (Voice Lab)</span>
+    </h3>
+    <p style="margin: 0 0 0.75rem; font-size: 0.9rem; color: #374151; line-height: 1.5;">
+      想了解您的裝置與瀏覽器支援哪些高品質發音嗎？在獨立的語音實驗室中，您可以個別試聽白名單語音（含男女聲與平台標註）、微調音調與語速，並透過 Benny 雙人對話模擬器比對音量平衡。
+    </p>
+    <a href="./voice-lab.html" style="display: inline-block; text-decoration: none; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; background: #2563eb; color: white; border: none; font-size: 0.9rem; cursor: pointer;">
+      進入語音比較實驗室 ↗
+    </a>
+  `;
+  app!.appendChild(voiceLabSection);
 
   // 「更新紀錄」：給使用者看的簡短更新說明，跟 HANDOFF.md（開發交接用、技術細節很多）
   // 完全分開。資料來源 content/changelog.json 本身已經由新到舊排列（見 CHANGELOG 的說明），
@@ -2806,8 +3033,8 @@ function renderMatching(): void {
 
     const nextStageBtn = document.createElement("button");
     nextStageBtn.className = "primary-btn";
-    nextStageBtn.textContent = "前往 Stage B-1：句子排序 →";
-    nextStageBtn.addEventListener("click", goToOrdering);
+    nextStageBtn.textContent = "前往 Stage B-1：句子填空 →";
+    nextStageBtn.addEventListener("click", goToFillBlank);
     footer.appendChild(nextStageBtn);
   } else if (game.isBatchComplete) {
     const nextBtn = document.createElement("button");
@@ -2825,13 +3052,13 @@ function renderMatching(): void {
   app!.appendChild(footer);
 }
 
-// ---- Stage B-1：句子排序 ----
+// ---- Stage B-2：句子排序 ----
 
 function renderOrdering(): void {
   const game = orderingGame!;
 
   stageHeader(
-    `${currentTopic.label} — Stage B-1 句子排序`,
+    `${currentTopic.label} — Stage B-2 句子排序`,
     `第 ${Math.min(game.currentSentenceNumber, game.totalSentences)} / ${game.totalSentences} 句　答對 ${game.correctCount}　答錯 ${game.wrongCount}`
   );
 
@@ -2952,20 +3179,20 @@ function renderOrdering(): void {
       game.skippedCount > 0 ? `，另外跳過了 ${game.skippedCount} 句` : "";
     footer.innerHTML = `
       <p class="done">
-        🎉 Stage B-1 句子排序全部跑完了！<br />
+        🎉 Stage B-2 句子排序全部跑完了！<br />
         正確率 ${accuracy}%（答對 ${game.correctCount} 次／答錯 ${game.wrongCount} 次）${skippedNote}
       </p>
     `;
     const restartBtn = document.createElement("button");
     restartBtn.className = "secondary-btn";
-    restartBtn.textContent = "重玩 Stage B-1";
+    restartBtn.textContent = "重玩 Stage B-2";
     restartBtn.addEventListener("click", restartOrdering);
     footer.appendChild(restartBtn);
 
     const nextStageBtn = document.createElement("button");
     nextStageBtn.className = "primary-btn";
-    nextStageBtn.textContent = "前往 Stage B-2：句子填空 →";
-    nextStageBtn.addEventListener("click", goToFillBlank);
+    nextStageBtn.textContent = "前往 Stage C：短文理解 →";
+    nextStageBtn.addEventListener("click", goToChoice);
     footer.appendChild(nextStageBtn);
   } else if (game.feedback === "correct") {
     const msg = document.createElement("p");
@@ -2984,13 +3211,13 @@ function renderOrdering(): void {
   app!.appendChild(footer);
 }
 
-// ---- Stage B-2：句子填空 ----
+// ---- Stage B-1：句子填空 ----
 
 function renderFillBlank(): void {
   const game = fillBlankGame!;
 
   stageHeader(
-    `${currentTopic.label} — Stage B-2 句子填空`,
+    `${currentTopic.label} — Stage B-1 句子填空`,
     `第 ${Math.min(game.currentQuestionNumber, game.totalQuestions)} / ${game.totalQuestions} 題　答對 ${game.correctCount}　答錯 ${game.wrongCount}`
   );
 
@@ -3040,20 +3267,20 @@ function renderFillBlank(): void {
     const accuracy = total > 0 ? Math.round((game.correctCount / total) * 100) : 0;
     footer.innerHTML = `
       <p class="done">
-        🎉 Stage B-2 句子填空全部跑完了！<br />
+        🎉 Stage B-1 句子填空全部跑完了！<br />
         正確率 ${accuracy}%（答對 ${game.correctCount} 次／答錯 ${game.wrongCount} 次）
       </p>
     `;
     const restartBtn = document.createElement("button");
     restartBtn.className = "secondary-btn";
-    restartBtn.textContent = "重玩 Stage B-2";
+    restartBtn.textContent = "重玩 Stage B-1";
     restartBtn.addEventListener("click", restartFillBlank);
     footer.appendChild(restartBtn);
 
     const nextStageBtn = document.createElement("button");
     nextStageBtn.className = "primary-btn";
-    nextStageBtn.textContent = "前往 Stage C：短文理解 →";
-    nextStageBtn.addEventListener("click", goToChoice);
+    nextStageBtn.textContent = "前往 Stage B-2：句子排序 →";
+    nextStageBtn.addEventListener("click", goToOrdering);
     footer.appendChild(nextStageBtn);
   } else if (game.feedback === "correct") {
     const msg = document.createElement("p");
@@ -3098,31 +3325,67 @@ function buildInteractivePassage(text: string, topicFileKey: string): HTMLParagr
     }
 
     const lookup = lookupPassageWordZh(topicFileKey, token);
-    if (!lookup) {
-      p.appendChild(document.createTextNode(token));
-      return;
-    }
 
     const wordSpan = document.createElement("span");
     wordSpan.className = "passage-word" + (activePassageWordKey === index ? " passage-word--active" : "");
     wordSpan.textContent = token;
-    wordSpan.addEventListener("click", () => {
-      activePassageWordKey = activePassageWordKey === index ? null : index;
+    wordSpan.title = "點擊聽發音與看翻譯";
+    wordSpan.addEventListener("click", (e) => {
+      e.stopPropagation();
+      stopPassageReadingIfAny();
+      const willBeActive = activePassageWordKey !== index;
+      activePassageWordKey = willBeActive ? index : null;
+      if (willBeActive) {
+        speakEnglish(token);
+      }
       render();
     });
 
     if (activePassageWordKey === index) {
       const tooltip = document.createElement("span");
       tooltip.className = "passage-word-tooltip";
+      tooltip.addEventListener("click", (e) => e.stopPropagation());
+
       const tooltipText = document.createElement("span");
-      tooltipText.textContent = lookup.zh;
+      tooltipText.className = "passage-word-tooltip-zh";
+      tooltipText.textContent = lookup?.zh ?? token;
       tooltip.appendChild(tooltipText);
+
+      // 🔊 重播發音按鈕
+      const audioBtn = document.createElement("button");
+      audioBtn.type = "button";
+      audioBtn.className = "passage-word-audio-btn";
+      audioBtn.setAttribute("aria-label", `播放 ${token} 的發音`);
+      audioBtn.title = "再聽一次發音";
+      audioBtn.textContent = "🔊";
+      audioBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        stopPassageReadingIfAny();
+        speakEnglish(token);
+      });
+      tooltip.appendChild(audioBtn);
+
       // 只有查得到真正 vocab.id 的字才能收藏（退回 glossary 補充詞彙表查到的字沒有
       // 對應的 vocab.id，沒有東西可以收藏，不顯示星星）。
-      if (lookup.vocabId) {
+      if (lookup?.vocabId) {
         tooltip.appendChild(buildFavoriteStarButton(activeProfile!.id, lookup.vocabId));
       }
       wordSpan.appendChild(tooltip);
+
+      // 邊界校正：避免泡泡超出螢幕左右邊緣
+      requestAnimationFrame(() => {
+        const tipRect = tooltip.getBoundingClientRect();
+        const minPadding = 12;
+        if (tipRect.left < minPadding) {
+          const shift = Math.round(minPadding - tipRect.left);
+          tooltip.style.left = `calc(50% + ${shift}px)`;
+          tooltip.style.setProperty("--arrow-left", `calc(50% - ${shift}px)`);
+        } else if (tipRect.right > window.innerWidth - minPadding) {
+          const shift = Math.round(tipRect.right - (window.innerWidth - minPadding));
+          tooltip.style.left = `calc(50% - ${shift}px)`;
+          tooltip.style.setProperty("--arrow-left", `calc(50% + ${shift}px)`);
+        }
+      });
     }
 
     p.appendChild(wordSpan);
@@ -3343,8 +3606,17 @@ function renderCapstone(): void {
         Stage D 正確率 ${accuracy}%（答對 ${game.correctCount} 次／答錯 ${game.wrongCount} 次）
       </p>
     `;
+    const hasConversation = !!getConversationByTopic(currentTopic.fileKey);
+    if (hasConversation) {
+      const convBtn = document.createElement("button");
+      convBtn.className = "primary-btn primary-btn--reward";
+      convBtn.textContent = "💬 進入 Stage E 會話練習 →";
+      convBtn.addEventListener("click", goToConversation);
+      footer.appendChild(convBtn);
+    }
+
     const restartBtn = document.createElement("button");
-    restartBtn.className = "primary-btn primary-btn--reward";
+    restartBtn.className = hasConversation ? "secondary-btn" : "primary-btn primary-btn--reward";
     restartBtn.textContent = "從頭再玩一次（Stage A）";
     restartBtn.addEventListener("click", restartEverything);
     footer.appendChild(restartBtn);
@@ -3382,6 +3654,379 @@ function renderCapstone(): void {
   }
 
   app!.appendChild(footer);
+}
+
+// ---- Stage E：會話練習（Conversation Practice）畫面渲染 ----
+function renderConversation(): void {
+  const game = conversationGame!;
+  const conv = game.conversation;
+
+  stageHeader(
+    `${currentTopic.label} — Stage E 會話練習`,
+    `第 ${game.currentTurnNumber} / ${game.totalTurns} 回合　與 ${conv.character.name} 互動對話中`
+  );
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "conversation-wrapper";
+
+  // 左欄：情境圖 + 答題選項
+  const leftCol = document.createElement("div");
+  leftCol.className = "conversation-left-col";
+
+  // 1. 情境插畫舞台（若圖片尚未生成，以優雅的灰色情境佔位區塊展示）
+  const stageBox = document.createElement("div");
+  stageBox.className = "scene-stage";
+
+  const img = document.createElement("img");
+  img.className = "scene-stage-img";
+
+  const placeholder = document.createElement("div");
+  placeholder.className = "scene-stage-placeholder";
+  placeholder.innerHTML = `
+    <div class="scene-placeholder-icon">🖼️</div>
+    <div class="scene-placeholder-desc"></div>
+    <div class="scene-placeholder-tag">情境插畫排程生成中 🎨</div>
+  `;
+
+  stageBox.appendChild(img);
+  stageBox.appendChild(placeholder);
+
+  const badge = document.createElement("div");
+  badge.className = "scene-stage-badge";
+  stageBox.appendChild(badge);
+
+  const applySceneDisplay = (scene: typeof game.currentScene) => {
+    const url = getSceneImageUrl(scene.image);
+    badge.innerHTML = `<span>🎨</span> <span>${scene.description}</span>`;
+    if (url) {
+      img.src = url;
+      img.alt = scene.description;
+      img.style.display = "block";
+      placeholder.style.display = "none";
+    } else {
+      img.removeAttribute("src");
+      img.style.display = "none";
+      const descEl = placeholder.querySelector(".scene-placeholder-desc");
+      if (descEl) descEl.textContent = scene.description;
+      placeholder.style.display = "flex";
+    }
+  };
+
+  applySceneDisplay(game.currentScene);
+  leftCol.appendChild(stageBox);
+
+  // 2. 答題控制區
+  const controls = document.createElement("div");
+  controls.className = "conversation-controls";
+
+  const promptTitle = document.createElement("div");
+  promptTitle.className = "conversation-prompt-title";
+  promptTitle.innerHTML = `<span>💬</span> 請選擇你最想回答的話（三選一）：`;
+  controls.appendChild(promptTitle);
+
+  const hintBox = document.createElement("div");
+  hintBox.className = "conversation-hint-box";
+  hintBox.style.display = game.currentHint ? "flex" : "none";
+  hintBox.innerHTML = `<span>💡</span> <span class="hint-text">${game.currentHint ?? ""}</span>`;
+  controls.appendChild(hintBox);
+
+  const optionsList = document.createElement("div");
+  optionsList.className = "conversation-options-list";
+  controls.appendChild(optionsList);
+
+  leftCol.appendChild(controls);
+  wrapper.appendChild(leftCol);
+
+  // 右欄：聊天室
+  const rightCol = document.createElement("div");
+  rightCol.className = "conversation-right-col";
+
+  const chatStream = document.createElement("div");
+  chatStream.className = "chat-stream";
+
+  function closeAllChatWordTooltips(): void {
+    document.querySelectorAll(".chat-word-tooltip").forEach((el) => el.remove());
+    document.querySelectorAll(".chat-word--active").forEach((el) => el.classList.remove("chat-word--active"));
+  }
+
+  function createChatRow(msg: { speaker: "character" | "user"; en: string; zh: string; avatar?: string; name?: string }) {
+    const row = document.createElement("div");
+    row.className = `chat-row chat-row--${msg.speaker}`;
+
+    if (msg.speaker === "character") {
+      const avatar = document.createElement("div");
+      avatar.className = "chat-avatar";
+      avatar.textContent = msg.avatar || "🐻";
+      row.appendChild(avatar);
+    }
+
+    const bubbleWrap = document.createElement("div");
+    bubbleWrap.className = "chat-bubble-wrap";
+
+    const speakerLabel = document.createElement("div");
+    speakerLabel.className = "chat-speaker";
+    speakerLabel.textContent = msg.speaker === "character" ? msg.name || "Friend" : "You";
+    bubbleWrap.appendChild(speakerLabel);
+
+    const bubble = document.createElement("div");
+    bubble.className = "chat-bubble";
+
+    const enText = document.createElement("div");
+    enText.className = "chat-text-en";
+
+    // 將英文句子切分為可互動的單字 tokens（保留標點與空格），查得到中文意思者做成可點擊查詢
+    const tokens = msg.en.match(/[A-Za-z']+|[^A-Za-z']+/g) ?? [];
+    tokens.forEach((token) => {
+      const isWord = /^[A-Za-z']+$/.test(token);
+      if (!isWord) {
+        enText.appendChild(document.createTextNode(token));
+        return;
+      }
+
+      const lookup = lookupPassageWordZh(currentTopic!.fileKey, token);
+
+      const wordSpan = document.createElement("span");
+      wordSpan.className = "chat-word";
+      wordSpan.textContent = token;
+      wordSpan.title = "點擊聽發音與看翻譯";
+
+      wordSpan.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const wasActive = wordSpan.classList.contains("chat-word--active");
+        closeAllChatWordTooltips();
+        if (wasActive) return;
+
+        wordSpan.classList.add("chat-word--active");
+
+        // 自動播放單字獨立發音
+        speakDialogueLine(token, { persona: msg.speaker === "character" ? "boy" : "girl" });
+
+        const tooltip = document.createElement("span");
+        tooltip.className = "chat-word-tooltip";
+        tooltip.addEventListener("click", (ev) => ev.stopPropagation());
+
+        const zhSpan = document.createElement("span");
+        zhSpan.className = "chat-word-tooltip-zh";
+        zhSpan.textContent = lookup?.zh ?? token;
+        tooltip.appendChild(zhSpan);
+
+        const wordAudioBtn = document.createElement("button");
+        wordAudioBtn.type = "button";
+        wordAudioBtn.className = "chat-word-audio-btn";
+        wordAudioBtn.title = "再聽一次單字發音";
+        wordAudioBtn.textContent = "🔊";
+        wordAudioBtn.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          speakDialogueLine(token, { persona: msg.speaker === "character" ? "boy" : "girl" });
+        });
+        tooltip.appendChild(wordAudioBtn);
+
+        if (lookup?.vocabId) {
+          tooltip.appendChild(buildFavoriteStarButton(activeProfile!.id, lookup.vocabId));
+        }
+
+        wordSpan.appendChild(tooltip);
+
+        // 智能偵測：若上方空間不足，將泡泡改為朝下翻轉展開
+        const streamRect = chatStream.getBoundingClientRect();
+        const wordRect = wordSpan.getBoundingClientRect();
+        const tipRect = tooltip.getBoundingClientRect();
+
+        const spaceAbove = wordRect.top - streamRect.top;
+        if (spaceAbove < tipRect.height + 14) {
+          tooltip.classList.add("chat-word-tooltip--below");
+        }
+
+        // 左右邊緣自動校正，防止超出 chatStream 左側或右側邊界
+        const updatedTipRect = tooltip.getBoundingClientRect();
+        if (updatedTipRect.left < streamRect.left + 10) {
+          const shift = Math.round((streamRect.left + 10) - updatedTipRect.left);
+          tooltip.style.left = `calc(50% + ${shift}px)`;
+          tooltip.style.setProperty("--arrow-left", `calc(50% - ${shift}px)`);
+        } else if (updatedTipRect.right > streamRect.right - 10) {
+          const shift = Math.round(updatedTipRect.right - (streamRect.right - 10));
+          tooltip.style.left = `calc(50% - ${shift}px)`;
+          tooltip.style.setProperty("--arrow-left", `calc(50% + ${shift}px)`);
+        }
+      });
+
+      enText.appendChild(wordSpan);
+    });
+
+    enText.appendChild(document.createTextNode(" "));
+
+    const audioBtn = document.createElement("button");
+    audioBtn.type = "button";
+    audioBtn.className = "chat-audio-btn";
+    audioBtn.title = "播放整句發音";
+    audioBtn.textContent = "🔊";
+    audioBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      speakDialogueLine(msg.en, { persona: msg.speaker === "character" ? "boy" : "girl" });
+    });
+    enText.appendChild(audioBtn);
+
+    const zhText = document.createElement("div");
+    zhText.className = "chat-text-zh";
+    zhText.textContent = msg.zh;
+
+    bubble.appendChild(enText);
+    bubble.appendChild(zhText);
+    bubbleWrap.appendChild(bubble);
+
+    row.appendChild(bubbleWrap);
+    return row;
+  }
+
+  // 渲染歷史氣泡
+  for (const msg of game.history) {
+    chatStream.appendChild(createChatRow(msg));
+  }
+
+  rightCol.appendChild(chatStream);
+  wrapper.appendChild(rightCol);
+
+  wrapper.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement | null;
+    if (!target?.closest(".chat-word") && !target?.closest(".chat-word-tooltip")) {
+      closeAllChatWordTooltips();
+    }
+  });
+
+  app!.appendChild(wrapper);
+
+  // 渲染選項按鈕
+  function renderButtons() {
+    optionsList.innerHTML = "";
+    for (const optState of game.optionStates) {
+      const optBtn = document.createElement("button");
+      optBtn.type = "button";
+      optBtn.id = `opt-btn-${optState.option.id}`;
+      optBtn.className = `conversation-option-btn conversation-option-btn--${optState.status}`;
+      if (optState.status === "wrong") {
+        optBtn.disabled = true;
+      }
+      optBtn.innerHTML = `
+        <span class="conversation-option-en">${optState.option.en}</span>
+        <span class="conversation-option-zh">${optState.option.zh}</span>
+      `;
+      optBtn.addEventListener("click", () => {
+        closeAllChatWordTooltips();
+        game.choose(optState.option.id);
+      });
+      optionsList.appendChild(optBtn);
+    }
+  }
+  renderButtons();
+
+  // 初始平滑滾動到底部
+  setTimeout(() => {
+    chatStream.scrollTop = chatStream.scrollHeight;
+  }, 30);
+
+  // 接管局部事件（零跳動、零重新刷新滾動！）
+  game.onOptionWrong = (optionId, hint) => {
+    closeAllChatWordTooltips();
+    const btn = document.getElementById(`opt-btn-${optionId}`) as HTMLButtonElement | null;
+    if (btn) {
+      btn.classList.add("conversation-option-btn--wrong");
+      btn.disabled = true;
+    }
+    const hintSpan = hintBox.querySelector(".hint-text");
+    if (hintSpan) hintSpan.textContent = hint;
+    hintBox.style.display = "flex";
+  };
+
+  game.onOptionCorrect = (optState, userMsg, isFinished) => {
+    closeAllChatWordTooltips();
+    hintBox.style.display = "none";
+    const allBtns = optionsList.querySelectorAll<HTMLButtonElement>(".conversation-option-btn");
+    allBtns.forEach((b) => (b.disabled = true));
+    const btn = document.getElementById(`opt-btn-${optState.option.id}`);
+    if (btn) btn.classList.add("conversation-option-btn--correct");
+
+    // 平滑追加使用者氣泡
+    const userRow = createChatRow(userMsg);
+    chatStream.appendChild(userRow);
+    userRow.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+    // 自動播放使用者發言（女孩聲音），等回答語音完全播放完畢 (onEnd) 再推進！
+    speakDialogueLine(userMsg.en, {
+      persona: "girl",
+      onEnd: () => {
+        // 使用者語音播放完畢後，稍微留白 350ms 呼吸感，再推進下一回合
+        setTimeout(() => {
+          if (isFinished) {
+            game.onComplete();
+          } else {
+            game.advanceTurn();
+          }
+        }, 350);
+      },
+    });
+  };
+
+  game.onTurnAdvanced = (_nextTurn, charMsg, nextScene, sceneChanged) => {
+    if (sceneChanged) {
+      img.classList.add("scene-stage-img--fade");
+      placeholder.classList.add("scene-stage-img--fade");
+      setTimeout(() => {
+        applySceneDisplay(nextScene);
+        img.classList.remove("scene-stage-img--fade");
+        placeholder.classList.remove("scene-stage-img--fade");
+      }, 200);
+    }
+
+    // 平滑追加角色氣泡
+    const charRow = createChatRow(charMsg);
+    chatStream.appendChild(charRow);
+    charRow.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+    // 重新載入按鈕
+    renderButtons();
+
+    // 更新標題資訊
+    const headerP = app!.querySelector(".header p, header p");
+    if (headerP) {
+      headerP.textContent = `第 ${game.currentTurnNumber} / ${game.totalTurns} 回合　與 ${conv.character.name} 互動對話中`;
+    }
+
+    // 自動播放 Benny 新台詞（男孩聲音）
+    setTimeout(() => {
+      speakDialogueLine(charMsg.en, { persona: "boy" });
+    }, 250);
+  };
+
+  game.onComplete = () => {
+    render();
+  };
+
+  // 結算畫面
+  if (game.isCompleted) {
+    if (!conversationRecorded) {
+      finalizeRoundCompletion("conversation", game.correctCount, game.wrongCount, false);
+      conversationRecorded = true;
+    }
+    const total = game.correctCount + game.wrongCount;
+    const accuracy = total > 0 ? Math.round((game.correctCount / total) * 100) : 100;
+
+    controls.innerHTML = `
+      <div style="padding: 16px; background: var(--color-success-bg); border: 2px solid var(--color-success-text); border-radius: var(--radius-lg); text-align: center;">
+        <p style="font-size: 16px; font-weight: 700; color: var(--color-success-text); margin: 0 0 12px; line-height: 1.6;">
+          🎉 太棒了！完成了 Stage E 會話練習！<br />
+          共進行了 ${game.totalTurns * 2} 句對話，正確率 ${accuracy}%！
+        </p>
+        <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+          <button type="button" class="primary-btn primary-btn--reward" id="btn-conv-restart">再練一次 💬</button>
+          <button type="button" class="secondary-btn" id="btn-conv-menu">回選單</button>
+        </div>
+      </div>
+    `;
+    const restartBtn = controls.querySelector("#btn-conv-restart");
+    restartBtn?.addEventListener("click", goToConversation);
+    const menuBtn = controls.querySelector("#btn-conv-menu");
+    menuBtn?.addEventListener("click", goToMenu);
+  }
 }
 
 // ---- 成就徽章：資料來源是 content/badges/badges.json（43 個徽章、10 大分類）----
@@ -3468,12 +4113,26 @@ function computeFavoritesAggregate(profileId: string): number {
   return getFavoriteCount(profileId);
 }
 
-/** 算出這個使用者「已經通過 Stage D 綜合關卡」的主題 fileKey 集合——給 OB-03（第一次
- * 通過任一主題的 Stage D）跟 unit_completion（整個單元的主題都要通過 Stage D）共用。 */
-function computeCompletedStageDTopics(profileId: string): Set<string> {
+/** 「完整完成一個主題」現在的定義：Stage D 綜合關卡通過，且如果這個主題已經有
+ * Stage E 會話練習內容，也要一併通過 Stage E。用 getConversationByTopic() 判斷
+ * 「這個主題有沒有 Stage E 內容」是刻意寫成防呆條件——目前全部 43 個主題都已經有
+ * Stage E，但如果未來又新增沒有 Stage E 的暫時性主題，不會因為卡在這裡而讓
+ * 玩家永遠拿不到完成徽章。判斷方式跟 Stage D 完全一致：
+ * getStageProgress(...) !== null 代表通過一次 finalizeRoundCompletion()／
+ * recordStageCompletion()（Stage E 是在 conversationGame 全部回合答完時，透過
+ * finalizeRoundCompletion("conversation", ...) 觸發，跟其餘關卡共用同一套
+ * 記錄機制）。給 OB-03（第一次完整完成任一主題）跟 unit_completion（整個單元的
+ * 主題都要完整完成）共用。 */
+function computeCompletedTopics(profileId: string): Set<string> {
   return new Set(
     availableTopics
-      .filter((summary) => getStageProgress(profileId, summary.topic.fileKey, "capstone") !== null)
+      .filter((summary) => {
+        const stageDDone = getStageProgress(profileId, summary.topic.fileKey, "capstone") !== null;
+        if (!stageDDone) return false;
+        const hasStageE = !!getConversationByTopic(summary.topic.fileKey);
+        if (!hasStageE) return true;
+        return getStageProgress(profileId, summary.topic.fileKey, "conversation") !== null;
+      })
       .map((summary) => summary.topic.fileKey)
   );
 }
@@ -3508,7 +4167,7 @@ function computeBadgeViewState(
   vocabAgg: { vocabKnown: number; totalVocabAvailable: number },
   stats: ReturnType<typeof getBadgeStats>,
   totalDaysPlayed: number,
-  completedStageDTopics: Set<string>,
+  completedTopics: Set<string>,
   unit0MatchingComplete: boolean,
   favoritesCount: number
 ): BadgeViewState {
@@ -3530,7 +4189,7 @@ function computeBadgeViewState(
         return { achieved: unit0MatchingComplete, blockedByMissingFeature: false };
       }
       if (badge.id === "badge.onboarding.first_stage_d") {
-        return { achieved: completedStageDTopics.size > 0, blockedByMissingFeature: false };
+        return { achieved: completedTopics.size > 0, blockedByMissingFeature: false };
       }
       if (badge.id === "badge.onboarding.first_favorite") {
         return { achieved: favoritesCount > 0, blockedByMissingFeature: false };
@@ -3592,7 +4251,7 @@ function computeBadgeViewState(
       }
       const achieved = unitsToCheck.every((unit) =>
         unit.topicFileKeys.every(
-          (fileKey) => availableTopics.some((t) => t.topic.fileKey === fileKey) && completedStageDTopics.has(fileKey)
+          (fileKey) => availableTopics.some((t) => t.topic.fileKey === fileKey) && completedTopics.has(fileKey)
         )
       );
       return { achieved, blockedByMissingFeature: false };
@@ -3616,7 +4275,7 @@ function snapshotBadgeAchievements(profileId: string): BadgeAchievementSnapshot 
   const vocabAgg = computeVocabAggregate(profileId);
   const stats = getBadgeStats(profileId);
   const totalDaysPlayed = getTotalDaysPlayed(profileId);
-  const completedStageDTopics = computeCompletedStageDTopics(profileId);
+  const completedTopics = computeCompletedTopics(profileId);
   const unit0MatchingComplete = computeUnit0MatchingComplete(profileId);
   const favoritesCount = computeFavoritesAggregate(profileId);
   const snapshot: BadgeAchievementSnapshot = new Map();
@@ -3626,7 +4285,7 @@ function snapshotBadgeAchievements(profileId: string): BadgeAchievementSnapshot 
       vocabAgg,
       stats,
       totalDaysPlayed,
-      completedStageDTopics,
+      completedTopics,
       unit0MatchingComplete,
       favoritesCount
     );
@@ -3895,7 +4554,7 @@ function renderBadges(): void {
   const vocabAgg = computeVocabAggregate(profileId);
   const stats = getBadgeStats(profileId);
   const totalDaysPlayed = getTotalDaysPlayed(profileId);
-  const completedStageDTopics = computeCompletedStageDTopics(profileId);
+  const completedTopics = computeCompletedTopics(profileId);
   const unit0MatchingComplete = computeUnit0MatchingComplete(profileId);
   const favoritesCount = computeFavoritesAggregate(profileId);
 
@@ -3925,7 +4584,7 @@ function renderBadges(): void {
         vocabAgg,
         stats,
         totalDaysPlayed,
-        completedStageDTopics,
+        completedTopics,
         unit0MatchingComplete,
         favoritesCount
       );
@@ -3976,6 +4635,7 @@ function render(): void {
   else if (screen === "fillBlank") renderFillBlank();
   else if (screen === "choice") renderChoice();
   else if (screen === "capstone") renderCapstone();
+  else if (screen === "conversation") renderConversation();
   else if (screen === "stats") renderStats();
   else if (screen === "badges") renderBadges();
   else if (screen === "favorites") renderFavorites();
@@ -4022,6 +4682,22 @@ document.addEventListener("click", (event) => {
   activeBadgeTooltipCode = null;
   render();
 });
+
+// 「練習模式」說明泡泡（手機長按開啟，見 buildPracticeModeInfoTooltip()）：點/觸控
+// 畫面其他地方要能關閉。跟上面兩個泡泡用同一種「模組層級狀態 + 一次性全域監聽器」
+// 寫法，但這裡刻意不呼叫 render()——泡泡開關純粹是本地 DOM class 切換，不需要整頁
+// 重繪（也才不會把「單字總覽」已展開的例句收合）。
+document.addEventListener(
+  "touchstart",
+  (event) => {
+    if (openPracticeInfoTooltip === null) return;
+    const target = event.target as HTMLElement | null;
+    if (target?.closest(".practice-mode-info")) return;
+    openPracticeInfoTooltip.classList.remove("practice-mode-info--open");
+    openPracticeInfoTooltip = null;
+  },
+  { passive: true }
+);
 
 // 「回到頂端」按鈕的顯示/隱藏只靠 CSS class 切換，不用每次 render() 重畫都重新綁定
 // 監聽器——render() 每次都會把 #app 砍掉重建，如果把這段放進 render() 或

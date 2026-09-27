@@ -1,0 +1,209 @@
+{
+  "id": "conv.appearance.01",
+  "topic": "appearance",
+  "title": "Looking Good: Faces and Features",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "School Friend"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_bedroom_mirror",
+      "image": "appearance_scene_1.jpg",
+      "description": "Brushing Hair in Front of the Bedroom Mirror"
+    },
+    {
+      "scene_id": "scene_park_animals",
+      "image": "appearance_scene_2.jpg",
+      "description": "Seeing a Big Gentle Dog and a Tiny Fluffy Kitten"
+    },
+    {
+      "scene_id": "scene_photo_album",
+      "image": "appearance_scene_3.jpg",
+      "description": "Comparing Grandfather's Photos from Past and Present"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_bedroom_mirror",
+      "character_line": {
+        "en": "Look in the mirror! Do you have black hair?",
+        "zh": "照照鏡子！你有黑色的頭髮嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Yes, I have black hair.",
+          "zh": "是的，我有黑色的頭髮。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "No, my hair is blue.",
+          "zh": "不，我的頭髮是藍色的。",
+          "is_correct": false,
+          "hint": "看看鏡子裡的自己，頭髮是黑色的喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I have two red shoes.",
+          "zh": "我有兩隻紅鞋子。",
+          "is_correct": false,
+          "hint": "Benny 問的是頭髮（hair）的顏色喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_bedroom_mirror",
+      "character_line": {
+        "en": "Is your hair long or short?",
+        "zh": "你的頭髮是長的還是短的呢？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "My hair is short and neat.",
+          "zh": "我的頭髮短短的，很整齊。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "My car is very fast.",
+          "zh": "我的車子非常快。",
+          "is_correct": false,
+          "hint": "聊的是頭髮長度喔，用「short（短）」來形容吧！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I like sweet bananas.",
+          "zh": "我喜歡甜香蕉。",
+          "is_correct": false,
+          "hint": "跟 Benny 介紹你的新髮型吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_park_animals",
+      "character_line": {
+        "en": "Look at that big dog! Is he tall?",
+        "zh": "看那隻大狗狗！他長得很高大嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Yes, he is big and tall!",
+          "zh": "對啊，他又大又高！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "No, he is super short.",
+          "zh": "不，他超級矮小。",
+          "is_correct": false,
+          "hint": "大狗狗站起來很高大喔，回答「Yes, he is big and tall!」吧！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "It is seven o'clock.",
+          "zh": "現在是七點鐘。",
+          "is_correct": false,
+          "hint": "用「tall（高）」來形容大狗狗吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_park_animals",
+      "character_line": {
+        "en": "And look at that kitten! Isn't it cute?",
+        "zh": "再看看那隻小貓咪！不是很可愛嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Yes, it is so cute and small!",
+          "zh": "對啊，牠好小好可愛喔！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "It is an angry monster.",
+          "zh": "牠是一隻生氣的怪獸。",
+          "is_correct": false,
+          "hint": "毛茸茸的小貓咪很可愛喔，用「cute」來稱讚牠吧！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "Close the window.",
+          "zh": "把窗戶關上。",
+          "is_correct": false,
+          "hint": "回答 Benny「Yes, it is so cute and small!」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_photo_album",
+      "character_line": {
+        "en": "Is your grandfather old?",
+        "zh": "你的爺爺年紀比較大了嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Yes, but he is very healthy.",
+          "zh": "是的，但他身體很健康。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "No, he is a small baby.",
+          "zh": "不，他是一個小嬰兒。",
+          "is_correct": false,
+          "hint": "爺爺年紀雖然比較大（old），但很有活力很健康喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I want a new pencil.",
+          "zh": "我想要一支新鉛筆。",
+          "is_correct": false,
+          "hint": "回答 Benny 關於爺爺的問題吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_photo_album",
+      "character_line": {
+        "en": "You are young and strong!",
+        "zh": "而你現在年輕又有滿滿的活力呢！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Thank you! I am strong!",
+          "zh": "謝謝！我很強壯有活力！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "I am so weak and sad.",
+          "zh": "我很虛弱很難過。",
+          "is_correct": false,
+          "hint": "Benny 在稱讚你有朝氣又強壯（strong），接受稱讚並謝謝他吧！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "Good night, friends.",
+          "zh": "晚安，朋友們。",
+          "is_correct": false,
+          "hint": "開心回答「Thank you! I am strong!」吧！"
+        }
+      ]
+    }
+  ]
+}

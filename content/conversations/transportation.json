@@ -1,0 +1,209 @@
+{
+  "id": "conv.transportation.01",
+  "topic": "transportation",
+  "title": "Wheels on the Move with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "School Friend"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_bus_stop",
+      "image": "transportation_scene_1.jpg",
+      "description": "Waiting for the Yellow School Bus at the Stop"
+    },
+    {
+      "scene_id": "scene_riding_bicycle",
+      "image": "transportation_scene_2.jpg",
+      "description": "Riding a Colorful Bicycle on the Park Trail"
+    },
+    {
+      "scene_id": "scene_trains_airplanes",
+      "image": "transportation_scene_3.jpg",
+      "description": "Watching Fast Trains and High Airplanes on the Hill"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_bus_stop",
+      "character_line": {
+        "en": "Look! Here comes the big yellow school bus!",
+        "zh": "你看！大大的黃色校車開過來囉！"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "The bus is so big and yellow!",
+          "zh": "公車好大、好黃喔！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "The bus is a tiny purple fly.",
+          "zh": "公車是一隻小小的紫色蒼蠅。",
+          "is_correct": false,
+          "hint": "公車是 bus，黃色的校車很大台喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I like strawberry milk.",
+          "zh": "我喜歡草莓牛奶。",
+          "is_correct": false,
+          "hint": "注意看開過來的大公車（bus）喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_bus_stop",
+      "character_line": {
+        "en": "Do you take the bus to school?",
+        "zh": "你平時都是坐公車去上學嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Yes, I ride the bus every morning.",
+          "zh": "對啊，我每天早上都坐公車去學校。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "No, I fly on an angry eagle.",
+          "zh": "不，我都騎生氣的老鷹在天上飛。",
+          "is_correct": false,
+          "hint": "搭乘大眾交通工具可以用「ride the bus」來回答！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "Good night, friends.",
+          "zh": "晚安，朋友們。",
+          "is_correct": false,
+          "hint": "跟 Benny 聊聊你上學是怎麼去的吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_riding_bicycle",
+      "character_line": {
+        "en": "In the park, can you ride a bicycle?",
+        "zh": "在公園裡，你會騎腳踏車嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Yes! I can ride my bicycle fast!",
+          "zh": "會呀！我可以騎著腳踏車前進！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "I ride a wooden soup bowl.",
+          "zh": "我騎木頭熱湯碗。",
+          "is_correct": false,
+          "hint": "腳踏車是 bicycle（或 bike）喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "This is a red pencil.",
+          "zh": "這是一支紅鉛筆。",
+          "is_correct": false,
+          "hint": "回答 Benny「Yes! I can ride my bicycle fast!」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_riding_bicycle",
+      "character_line": {
+        "en": "Remember to wear your safety helmet!",
+        "zh": "騎車時要記得戴好安全帽喔！"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "I always wear my helmet. Safety first!",
+          "zh": "我一定會戴安全帽。安全第一！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "I put a pizza on my head.",
+          "zh": "我把披薩戴在頭上當帽子。",
+          "is_correct": false,
+          "hint": "保護頭部的安全帽叫 helmet 喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "It is twelve o'clock.",
+          "zh": "現在是十二點整。",
+          "is_correct": false,
+          "hint": "戴上安全帽（helmet）快樂又安全！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_trains_airplanes",
+      "character_line": {
+        "en": "Choo-choo! Do you hear the fast train?",
+        "zh": "嘟嘟——！你有聽見快速開過的火車聲嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Yes! The train is moving so fast!",
+          "zh": "有啊！火車跑得好快喔！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The train is a slow little turtle.",
+          "zh": "火車是一隻慢吞吞的小烏龜。",
+          "is_correct": false,
+          "hint": "在軌道上奔馳的火車是 train 喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I have four green apples.",
+          "zh": "我有四顆青蘋果。",
+          "is_correct": false,
+          "hint": "看火車（train）快速奔馳的模樣吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_trains_airplanes",
+      "character_line": {
+        "en": "Look up! An airplane is in the sky!",
+        "zh": "抬頭看！天空上有一架大飛機耶！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Wow! The airplane flies so high!",
+          "zh": "哇！飛機飛得好高好遠喔！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The airplane is swimming in the bathtub.",
+          "zh": "飛機正在浴缸裡面游泳。",
+          "is_correct": false,
+          "hint": "在天空中飛翔的是飛機（airplane）喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "Good morning, teacher.",
+          "zh": "早安，老師。",
+          "is_correct": false,
+          "hint": "跟 Benny 一起看高高飛行的 airplane 吧！"
+        }
+      ]
+    }
+  ]
+}

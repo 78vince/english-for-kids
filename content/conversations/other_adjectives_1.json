@@ -1,0 +1,209 @@
+{
+  "id": "conv.other_adjectives_1.01",
+  "topic": "other_adjectives_1",
+  "title": "Comparing Qualities with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Word Detective"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_clean_dirty_boots",
+      "image": "other_adjectives_1_scene_1.jpg",
+      "description": "Comparing Clean White Sneakers with Muddy Dirty Boots"
+    },
+    {
+      "scene_id": "scene_easy_puzzle",
+      "image": "other_adjectives_1_scene_2.jpg",
+      "description": "Solving an Easy Jigsaw Puzzle with a Bright Smile"
+    },
+    {
+      "scene_id": "scene_another_cookie",
+      "image": "other_adjectives_1_scene_3.jpg",
+      "description": "Asking for Another Yummy Cookie from the Glass Jar"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_clean_dirty_boots",
+      "character_line": {
+        "en": "Look at these two pairs of shoes by the porch! How do they look?",
+        "zh": "看門廊邊這兩雙鞋子！它們看起來怎麼樣？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "These sneakers are clean, but those boots are dirty!",
+          "zh": "這雙球鞋很乾淨，但那雙靴子很髒！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I sleep at ten.",
+          "zh": "我十點睡覺。",
+          "is_correct": false,
+          "hint": "比較乾淨「clean」與髒「dirty」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "She is my cousin.",
+          "zh": "她是我的堂妹。",
+          "is_correct": false,
+          "hint": "用「clean」和「dirty」形容兩雙鞋子！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_clean_dirty_boots",
+      "character_line": {
+        "en": "The boots have mud from the rain! What should we do before entering?",
+        "zh": "靴子上沾滿了下雨時的泥巴！進屋前我們該怎麼做？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Wipe off the mud and make them clean again!",
+          "zh": "把泥巴擦乾淨，讓它們重新變乾淨！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The sky is blue.",
+          "zh": "天空是藍色的。",
+          "is_correct": false,
+          "hint": "保持家裡整潔，把髒靴子弄乾淨「clean」喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I have three balls.",
+          "zh": "我有三顆球。",
+          "is_correct": false,
+          "hint": "擦拭掉泥土，保持乾淨整齊！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_easy_puzzle",
+      "character_line": {
+        "en": "You finished that four-piece wooden animal puzzle so fast! Was it hard?",
+        "zh": "你這麼快就拼完四片木質動物拼圖！它很難嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "No, it was very easy and fun for me!",
+          "zh": "不會，對我來說非常簡單又有趣！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The soup is cold.",
+          "zh": "湯冷掉了。",
+          "is_correct": false,
+          "hint": "形容不困難、容易可以用「easy（簡單的）」喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "Today is Friday.",
+          "zh": "今天是星期五。",
+          "is_correct": false,
+          "hint": "告訴 Benny 拼圖非常簡單好玩「very easy」！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_easy_puzzle",
+      "character_line": {
+        "en": "Easy peasy! Should we try a different puzzle with ten pieces?",
+        "zh": "小菜一碟！那我們要不要挑戰一個十片不同的拼圖？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Yes! A different puzzle will be a cool challenge!",
+          "zh": "好啊！不同難度的拼圖會是個酷炫的挑戰！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The table is brown.",
+          "zh": "桌子是棕色的。",
+          "is_correct": false,
+          "hint": "表示不一樣或不同的可以用「different」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I eat green peas.",
+          "zh": "我吃青豆。",
+          "is_correct": false,
+          "hint": "欣然接受挑戰試試不同的拼圖吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_another_cookie",
+      "character_line": {
+        "en": "Snack time! That crunchy chocolate cookie was so tasty! Are you still hungry?",
+        "zh": "點心時間！剛才香脆的巧克力餅乾真美味！你還會餓嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "May I please have another cookie from the jar?",
+          "zh": "我可以再從罐子裡拿另一片餅乾嗎？",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The river is wide.",
+          "zh": "河流很寬廣。",
+          "is_correct": false,
+          "hint": "表示「再一個、另一個」可以用「another」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "It is eight o'clock.",
+          "zh": "現在是八點鐘。",
+          "is_correct": false,
+          "hint": "有禮貌地詢問可否再拿一片「another cookie」！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_another_cookie",
+      "character_line": {
+        "en": "Here you go, one for you and one for me! Sharing makes food taste sweeter!",
+        "zh": "拿去吧，一片給你、一片給我！分享讓食物更甜美！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Thank you, Benny! Sharing with friends is sweet!",
+          "zh": "謝謝你，Benny！跟朋友分享真甜美！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The pen is sharp.",
+          "zh": "筆很尖。",
+          "is_correct": false,
+          "hint": "接過餅乾跟 Benny 說聲「Thank you」喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I like cold water.",
+          "zh": "我喜歡冰水。",
+          "is_correct": false,
+          "hint": "享受分享美味餅乾的溫馨時刻！"
+        }
+      ]
+    }
+  ]
+}

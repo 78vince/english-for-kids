@@ -1,0 +1,209 @@
+{
+  "id": "conv.school.01",
+  "topic": "school",
+  "title": "A Fun Day at School with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "School Friend"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_classroom",
+      "image": "school_scene_1.jpg",
+      "description": "Welcoming Morning in the Sunny Classroom"
+    },
+    {
+      "scene_id": "scene_library",
+      "image": "school_scene_2.jpg",
+      "description": "Reading Storybooks in the Quiet Library"
+    },
+    {
+      "scene_id": "scene_playground",
+      "image": "school_scene_3.jpg",
+      "description": "Playing on the Playground Swing at Recess"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_classroom",
+      "character_line": {
+        "en": "Good morning! Welcome to our classroom!",
+        "zh": "早安！歡迎來到我們的教室！"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Good morning, Benny!",
+          "zh": "早安，Benny！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I am a yellow chair.",
+          "zh": "我是一張黃色的椅子。",
+          "is_correct": false,
+          "hint": "跟朋友互道早安，可以說「Good morning」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "It is cold outside.",
+          "zh": "外面很冷。",
+          "is_correct": false,
+          "hint": "回應 Benny 的熱情問候，跟他道一聲早安吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_classroom",
+      "character_line": {
+        "en": "Look at the blackboard! What do you have today?",
+        "zh": "看黑板！你今天書包裡帶了什麼文具呢？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "I have a pen and a pencil.",
+          "zh": "我有一支原子筆和鉛筆。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "I sleep on my bed.",
+          "zh": "我在我的床上睡覺。",
+          "is_correct": false,
+          "hint": "說出你帶到學校的文具，比如 pen 或 pencil 喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "No, thank you.",
+          "zh": "不，謝謝你。",
+          "is_correct": false,
+          "hint": "跟 Benny 分享你的鉛筆盒裡有哪些好用文具吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_library",
+      "character_line": {
+        "en": "The library is quiet. Do you like reading books?",
+        "zh": "圖書館好安靜喔。你喜歡讀書嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Yes, I like reading books!",
+          "zh": "是的，我好喜歡讀書！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "I run very fast.",
+          "zh": "我跑得非常快。",
+          "is_correct": false,
+          "hint": "在圖書館裡，用「I like reading books」分享愛看書的喜悅！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "Goodbye, see you tomorrow.",
+          "zh": "再見，明天見。",
+          "is_correct": false,
+          "hint": "回答 Benny 你喜不喜歡閱讀有趣的繪本喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_library",
+      "character_line": {
+        "en": "Can I borrow your picture book, please?",
+        "zh": "請問我可以借看你的繪本嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Sure! Here you are.",
+          "zh": "當然！拿去吧。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "My nose is small.",
+          "zh": "我的鼻子小小的。",
+          "is_correct": false,
+          "hint": "當同學禮貌借書時，說「Sure! Here you are.」表達樂意分享！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I eat breakfast now.",
+          "zh": "我現在吃早餐。",
+          "is_correct": false,
+          "hint": "跟 Benny 說「Sure!」把書借給他一起看吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_playground",
+      "character_line": {
+        "en": "Ding-dong! Recess time! Let us go to the playground!",
+        "zh": "噹噹噹！下課了！我們去遊樂場玩吧！"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Great! Let us play on the swing!",
+          "zh": "太棒了！我們去盪鞦韆吧！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "I brush my teeth.",
+          "zh": "我刷牙。",
+          "is_correct": false,
+          "hint": "下課時間到遊樂場玩，可以用「Let us play」提議去玩器材喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "Close the wooden door.",
+          "zh": "關上木門。",
+          "is_correct": false,
+          "hint": "開心地和 Benny 一起去遊樂場活動身體吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_playground",
+      "character_line": {
+        "en": "Playing with you at school is so fun!",
+        "zh": "在學校跟你一起玩真的好開心喔！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "I have fun with you too!",
+          "zh": "我也跟你玩得很開心！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "One, two, three, four.",
+          "zh": "一、二、三、四。",
+          "is_correct": false,
+          "hint": "跟好朋友表達「I have fun with you too!」的快樂！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "This is my blue jacket.",
+          "zh": "這是我的藍色夾克。",
+          "is_correct": false,
+          "hint": "回應 Benny 的友誼，分享共同度過的歡樂時光！"
+        }
+      ]
+    }
+  ]
+}

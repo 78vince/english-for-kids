@@ -1,0 +1,209 @@
+{
+  "id": "conv.wh_words_frequency.01",
+  "topic": "wh_words_frequency",
+  "title": "Curious Questions with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Question Master"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_mystery_box",
+      "image": "wh_words_frequency_scene_1.jpg",
+      "description": "Benny Asking What and Who with a Mystery Box in the Classroom"
+    },
+    {
+      "scene_id": "scene_clock_map",
+      "image": "wh_words_frequency_scene_2.jpg",
+      "description": "Benny Checking the Clock and Map Asking When and Where"
+    },
+    {
+      "scene_id": "scene_habit_chart",
+      "image": "wh_words_frequency_scene_3.jpg",
+      "description": "Answering Always and Often with Daily Habit Charts"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_mystery_box",
+      "character_line": {
+        "en": "Look at this colorful mystery box! What is inside?",
+        "zh": "看這個彩色的神秘箱子！裡面是什麼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "It is a cute wooden toy train!",
+          "zh": "是一列可愛的木質玩具小火車！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I sleep at nine.",
+          "zh": "我九點睡覺。",
+          "is_correct": false,
+          "hint": "回答「What（什麼東西）」用箱子裡的小火車喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "She is my aunt.",
+          "zh": "她是我的阿姨。",
+          "is_correct": false,
+          "hint": "告訴 Benny 裡面有一列玩具火車喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_mystery_box",
+      "character_line": {
+        "en": "A toy train! Who brought this wonderful gift?",
+        "zh": "玩具火車！是誰帶來這份美好的禮物呢？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Miss Lin brought it for our class!",
+          "zh": "是林老師帶給我們全班的！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The river is deep.",
+          "zh": "河流很深。",
+          "is_correct": false,
+          "hint": "回答「Who（誰）」說出是林老師帶來的喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "It is twelve dollars.",
+          "zh": "這是十二元。",
+          "is_correct": false,
+          "hint": "告訴 Benny 是哪一位老師帶來的吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_clock_map",
+      "character_line": {
+        "en": "Look at the map on the wall! Where are we going today?",
+        "zh": "看牆上的地圖！我們今天要去哪裡呢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "We are going to the sunny science museum!",
+          "zh": "我們要去陽光明媚的自然科學博物館！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "I wear yellow socks.",
+          "zh": "我穿黃色襪子。",
+          "is_correct": false,
+          "hint": "回答「Where（哪裡）」指出要去科學博物館喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "The pencil is sharp.",
+          "zh": "鉛筆很尖。",
+          "is_correct": false,
+          "hint": "看地圖指出今天參觀的目的地吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_clock_map",
+      "character_line": {
+        "en": "The museum! When does the museum bus arrive?",
+        "zh": "博物館！博物館接駁車什麼時候到達呢？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "It arrives at ten o'clock sharp!",
+          "zh": "它會在十點整準時抵達！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The apple is red.",
+          "zh": "蘋果是紅色的。",
+          "is_correct": false,
+          "hint": "回答「When（什麼時候）」要說時間十點鐘喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I have two cats.",
+          "zh": "我有兩隻貓。",
+          "is_correct": false,
+          "hint": "看時鐘告訴 Benny 接駁車到達的時刻吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_habit_chart",
+      "character_line": {
+        "en": "Look at our colorful habit chart! How often do you read books?",
+        "zh": "看我們豐富的習慣表！你多常閱讀繪本呢？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "I always read storybooks before bedtime!",
+          "zh": "我睡前總是會讀故事書！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The chair is wooden.",
+          "zh": "椅子是木頭做的。",
+          "is_correct": false,
+          "hint": "回答頻率可以用「always（總是）」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "It is four o'clock.",
+          "zh": "現在是四點鐘。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你每天睡前都會看書的好習慣！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_habit_chart",
+      "character_line": {
+        "en": "Always reading is wonderful! Do you often practice English?",
+        "zh": "總是閱讀真棒！你常常練習英文嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes! I often practice English with you!",
+          "zh": "對！我常常跟你一起練習英文！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The train runs on track.",
+          "zh": "火車在鐵軌上行駛。",
+          "is_correct": false,
+          "hint": "回答「often（經常）」肯定地跟 Benny 對話喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I eat cold noodles.",
+          "zh": "我吃涼麵。",
+          "is_correct": false,
+          "hint": "開心告訴 Benny 你常常跟他一起學英文！"
+        }
+      ]
+    }
+  ]
+}

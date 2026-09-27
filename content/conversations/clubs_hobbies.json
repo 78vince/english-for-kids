@@ -1,0 +1,209 @@
+{
+  "id": "conv.clubs_hobbies.01",
+  "topic": "clubs_hobbies",
+  "title": "Fun After-School Clubs with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Club Leader"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_music_room",
+      "image": "clubs_hobbies_scene_1.jpg",
+      "description": "Singing and Playing Ukulele in Music Club"
+    },
+    {
+      "scene_id": "scene_chess_club",
+      "image": "clubs_hobbies_scene_2.jpg",
+      "description": "Thinking and Playing Board Games in Chess Club"
+    },
+    {
+      "scene_id": "scene_craft_club",
+      "image": "clubs_hobbies_scene_3.jpg",
+      "description": "Drawing Cute Animals in Craft and Art Club"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_music_room",
+      "character_line": {
+        "en": "After-school clubs are starting! Which club do you like best?",
+        "zh": "放學後的社團活動開始了！你最喜歡哪一個社團呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "I like the music club best!",
+          "zh": "我最喜歡音樂社！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I have five fingers.",
+          "zh": "我有五隻手指頭。",
+          "is_correct": false,
+          "hint": "說出你感興趣的社團，比如「music club」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "The soup is very hot.",
+          "zh": "湯非常燙。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你放學後最想去體驗哪個社團活動！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_music_room",
+      "character_line": {
+        "en": "Listen to the happy music! Can you sing a song with me?",
+        "zh": "聽這個快樂的音樂！你可以跟我合唱一首歌嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Yes, let us sing a happy song together!",
+          "zh": "好啊，我們一起唱一首快樂的歌！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "I kick the soccer ball.",
+          "zh": "我踢足球。",
+          "is_correct": false,
+          "hint": "在音樂社裡，說「let us sing together」一起唱歌！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "My bed is comfortable.",
+          "zh": "我的床很舒服。",
+          "is_correct": false,
+          "hint": "開心地和 Benny 一起合唱動聽的兒歌吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_chess_club",
+      "character_line": {
+        "en": "Welcome to chess club! Do you like playing board games?",
+        "zh": "歡迎來到西洋棋社！你喜歡玩桌上益智遊戲嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Yes, chess is fun and helps us think!",
+          "zh": "是的，下棋很好玩而且幫助我們動腦思考！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "I wear a raincoat today.",
+          "zh": "我今天穿雨衣。",
+          "is_correct": false,
+          "hint": "下棋可以動腦，用「chess is fun and helps us think」回答！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "My name is a pencil.",
+          "zh": "我的名字是一支鉛筆。",
+          "is_correct": false,
+          "hint": "回答 Benny 你喜不喜歡下棋挑戰益智遊戲！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_chess_club",
+      "character_line": {
+        "en": "It is your turn! Which chess piece will you move?",
+        "zh": "輪到你走了！你想要移動哪一顆棋子呢？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "I move the white knight forward!",
+          "zh": "我把白色的騎士往前走！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "I wash my hands with soap.",
+          "zh": "我用肥皂洗手。",
+          "is_correct": false,
+          "hint": "下棋走棋時，可以說「I move the white knight forward」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "The sky is pink.",
+          "zh": "天空是粉紅色的。",
+          "is_correct": false,
+          "hint": "認真思考後，告訴 Benny 你的走法吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_craft_club",
+      "character_line": {
+        "en": "Look at the craft table! What cute animal are you drawing?",
+        "zh": "看手作社的桌子！你正在畫什麼可愛的動物呢？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "I am drawing a cute fluffy bunny!",
+          "zh": "我正在畫一隻毛茸茸的可愛小兔子！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "I have ten toes.",
+          "zh": "我有十根腳趾頭。",
+          "is_correct": false,
+          "hint": "手作社畫小動物，說「I am drawing a cute bunny」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "The door is locked.",
+          "zh": "門鎖上了。",
+          "is_correct": false,
+          "hint": "跟 Benny 分享你正在創作的可愛小動物插圖吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_craft_club",
+      "character_line": {
+        "en": "Having fun hobbies makes every afternoon so special!",
+        "zh": "擁有好玩的興趣嗜好，讓每個下午都好充實特別！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes, I love exploring new hobbies!",
+          "zh": "沒錯，我好喜歡探索新興趣！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "I drink cold water.",
+          "zh": "我喝冷水。",
+          "is_correct": false,
+          "hint": "表達對社團活動的熱愛，說「I love exploring new hobbies!」！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "Goodbye, red car.",
+          "zh": "再見，紅色的車。",
+          "is_correct": false,
+          "hint": "開心地和 Benny 總結今天在社團的豐富收穫吧！"
+        }
+      ]
+    }
+  ]
+}

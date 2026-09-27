@@ -1,0 +1,209 @@
+{
+  "id": "conv.forms_of_address.01",
+  "topic": "forms_of_address",
+  "title": "Polite Greetings and Titles with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Manners Buddy"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_street_neighbors",
+      "image": "forms_of_address_scene_1.jpg",
+      "description": "Waving to Mr. Green and Mrs. White in the Morning Street"
+    },
+    {
+      "scene_id": "scene_library_librarians",
+      "image": "forms_of_address_scene_2.jpg",
+      "description": "Greeting Sir and Ma'am with Polite Smiles in the Library"
+    },
+    {
+      "scene_id": "scene_courtyard_friends",
+      "image": "forms_of_address_scene_3.jpg",
+      "description": "Benny and Cheerful Boys and Girls Playing in the Courtyard"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_street_neighbors",
+      "character_line": {
+        "en": "Look, our friendly neighbor is walking by! How should we greet him?",
+        "zh": "看，我們親切的鄰居正走過來！我們該怎麼跟他打招呼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Good morning, Mr. Green! How are you?",
+          "zh": "早安，格林先生！你好嗎？",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "The apple is sweet.",
+          "zh": "蘋果很香甜。",
+          "is_correct": false,
+          "hint": "對成年男士稱呼「Mr.（先生）」有禮貌地打招呼喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I want to draw stars.",
+          "zh": "我想畫星星。",
+          "is_correct": false,
+          "hint": "叫出鄰居格林先生的名字「Mr. Green」道早安喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_street_neighbors",
+      "character_line": {
+        "en": "And who is that kind lady with the lovely flowers?",
+        "zh": "那捧著美麗花朵的親切女士是誰呢？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "That is Mrs. White! She is so nice!",
+          "zh": "那是懷特太太！她為人非常親切！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The spoon is silver.",
+          "zh": "湯匙是銀色的。",
+          "is_correct": false,
+          "hint": "稱呼已婚女士用「Mrs.（太太/女士）」喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I run very fast.",
+          "zh": "我跑得非常快。",
+          "is_correct": false,
+          "hint": "告訴 Benny 那位拿花的是懷特太太「Mrs. White」喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_library_librarians",
+      "character_line": {
+        "en": "We are at the quiet library desk! What polite title can we use for the librarian?",
+        "zh": "我們來到安靜的圖書館借書櫃台！對男館員可以使用什麼禮貌稱呼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Excuse me, Sir, may I borrow this book?",
+          "zh": "不好意思，先生，我可以借這本書嗎？",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The dog plays with ball.",
+          "zh": "狗狗在玩球。",
+          "is_correct": false,
+          "hint": "在正式場合禮貌尊稱先生可以用「Sir」喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "Today is rainy and cold.",
+          "zh": "今天下雨又很冷。",
+          "is_correct": false,
+          "hint": "很有禮貌地說「Excuse me, Sir」詢問借書喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_library_librarians",
+      "character_line": {
+        "en": "And when the lady librarian helps us find books, how do we thank her?",
+        "zh": "當女館員幫我們找到繪本時，我們要怎麼向她道謝呢？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Thank you very much, Ma'am!",
+          "zh": "非常謝謝您，女士！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The bird has blue wings.",
+          "zh": "鳥兒有藍色的翅膀。",
+          "is_correct": false,
+          "hint": "禮貌尊稱女士可以用「Ma'am」道謝喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I have twenty pencils.",
+          "zh": "我有二十支鉛筆。",
+          "is_correct": false,
+          "hint": "向親切的館員女士道謝，說「Thank you, Ma'am」喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_courtyard_friends",
+      "character_line": {
+        "en": "Here are all our friendly classmates in the courtyard! What are their names?",
+        "zh": "中庭裡有我們好多熱情的同班同學！他們的名字是什麼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "This is Tom, and that is Amy!",
+          "zh": "這是湯姆，那是艾咪！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The cake is delicious.",
+          "zh": "蛋糕好好吃。",
+          "is_correct": false,
+          "hint": "向 Benny 介紹同學的名字「This is Tom...」喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I wear my rain boots.",
+          "zh": "我穿著我的雨靴。",
+          "is_correct": false,
+          "hint": "開心介紹身邊的小夥伴給 Benny 認識吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_courtyard_friends",
+      "character_line": {
+        "en": "Being polite makes everyone happy! Let's always use kind words!",
+        "zh": "有禮貌讓大家都好開心！讓我們常常說親切的好話吧！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Yes! Polite words make the world sweeter!",
+          "zh": "沒錯！有禮貌的話語讓世界更美好！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The fish swims in water.",
+          "zh": "魚兒在水裡游。",
+          "is_correct": false,
+          "hint": "贊同禮貌用語讓大家都很溫暖「Polite words make...」喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "It is nine o'clock.",
+          "zh": "現在是九點鐘。",
+          "is_correct": false,
+          "hint": "跟 Benny 一起約定做個有禮貌的好孩子吧！"
+        }
+      ]
+    }
+  ]
+}

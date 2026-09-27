@@ -1,0 +1,209 @@
+{
+  "id": "conv.clothing_accessories.01",
+  "topic": "clothing_accessories",
+  "title": "Dressing Up for the Day with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "School Friend"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_morning_closet",
+      "image": "clothing_accessories_scene_1.jpg",
+      "description": "Choosing Clothes in Front of the Morning Closet"
+    },
+    {
+      "scene_id": "scene_door_coat_shoes",
+      "image": "clothing_accessories_scene_2.jpg",
+      "description": "Putting on Coat and Shoes by the Front Door"
+    },
+    {
+      "scene_id": "scene_garden_sun_hat",
+      "image": "clothing_accessories_scene_3.jpg",
+      "description": "Wearing Sun Hats in the Garden"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_morning_closet",
+      "character_line": {
+        "en": "What do you want to wear today?",
+        "zh": "你今天想要穿什麼衣服呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "I want to wear a yellow T-shirt.",
+          "zh": "我想穿一件黃色的 T 恤。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I wear a wooden table.",
+          "zh": "我穿一張木頭桌子。",
+          "is_correct": false,
+          "hint": "桌子不能穿在身上喔！T 恤是 T-shirt！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I like sweet bananas.",
+          "zh": "我喜歡甜香蕉。",
+          "is_correct": false,
+          "hint": "回答 Benny 你今天想穿什麼上衣吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_morning_closet",
+      "character_line": {
+        "en": "Do you also need blue pants?",
+        "zh": "你也需要穿藍色的長褲嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Yes! Blue pants match my shirt.",
+          "zh": "對啊！藍色褲子跟我的上衣很搭。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "No, pants are for drinking.",
+          "zh": "不，褲子是用來喝的。",
+          "is_correct": false,
+          "hint": "長褲是 pants，是穿在腿上的喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "It is seven o'clock.",
+          "zh": "現在是七點鐘。",
+          "is_correct": false,
+          "hint": "挑選一條舒服的褲子（pants）吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_door_coat_shoes",
+      "character_line": {
+        "en": "It is breezy outside! Put on your jacket.",
+        "zh": "外面有微風喔！穿上你的夾克外套吧。"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Okay! My jacket keeps me warm.",
+          "zh": "好的！我的夾克外套很保暖。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "I eat my jacket for lunch.",
+          "zh": "我午餐吃我的夾克。",
+          "is_correct": false,
+          "hint": "夾克（jacket）是保暖的外套喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "Good evening, teacher.",
+          "zh": "晚安，老師。",
+          "is_correct": false,
+          "hint": "穿上暖和的 jacket，準備出門囉！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_door_coat_shoes",
+      "character_line": {
+        "en": "Are your shoes tied and comfortable?",
+        "zh": "你的鞋子穿好、綁好鞋帶了嗎？很舒服嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Yes! My shoes are comfortable.",
+          "zh": "穿好了！我的鞋子非常舒服。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "My shoes are flying in space.",
+          "zh": "我的鞋子在太空中飛。",
+          "is_correct": false,
+          "hint": "鞋子是 shoes，穿在腳上走路很舒適喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I have two red apples.",
+          "zh": "我有兩顆紅蘋果。",
+          "is_correct": false,
+          "hint": "跟 Benny 說你的鞋子（shoes）穿好很舒服吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_garden_sun_hat",
+      "character_line": {
+        "en": "The sun is bright. Do you have a hat?",
+        "zh": "太陽好大喔。你有戴帽子嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Yes! Look at my cute sun hat.",
+          "zh": "有啊！你看我的可愛遮陽帽。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "I put soup on my head.",
+          "zh": "我把熱湯放在頭上。",
+          "is_correct": false,
+          "hint": "戴在頭上遮太陽的是帽子（hat）喔！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "This is a bus stop.",
+          "zh": "這是一個公車站。",
+          "is_correct": false,
+          "hint": "展示你可愛的帽子給 Benny 看吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_garden_sun_hat",
+      "character_line": {
+        "en": "You look so ready and cool today!",
+        "zh": "你今天看起來很有精神、整齊又帥氣！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Thank you! You look cool too!",
+          "zh": "謝謝你！你也很帥氣喔！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "I am crying loudly.",
+          "zh": "我正在大聲哭泣。",
+          "is_correct": false,
+          "hint": "接受 Benny 的誇獎，並互相稱讚對方很 cool（帥氣有型）吧！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "Open your backpack.",
+          "zh": "打開你的書包。",
+          "is_correct": false,
+          "hint": "開心回答「Thank you! You look cool too!」吧！"
+        }
+      ]
+    }
+  ]
+}

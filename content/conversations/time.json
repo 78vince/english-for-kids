@@ -1,0 +1,209 @@
+{
+  "id": "conv.time.01",
+  "topic": "time",
+  "title": "Daily Clock Adventures with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Timekeeper Buddy"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_morning_alarm_seven",
+      "image": "time_scene_1.jpg",
+      "description": "Waking up at Seven O'Clock with the Golden Morning Alarm"
+    },
+    {
+      "scene_id": "scene_noon_lunch_twelve_thirty",
+      "image": "time_scene_2.jpg",
+      "description": "Eating Delicious Lunch at Noon Twelve Thirty in the Canteen"
+    },
+    {
+      "scene_id": "scene_night_bedtime_nine",
+      "image": "time_scene_3.jpg",
+      "description": "Bedtime at Nine O'Clock under Gentle Starry Night Sky"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_morning_alarm_seven",
+      "character_line": {
+        "en": "Ring ring! The morning bell is chiming! What time is it now?",
+        "zh": "鈴鈴鈴！早晨鬧鐘響起來了！現在是幾點鐘呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "It is seven o'clock! Time to wake up!",
+          "zh": "現在是七點鐘！該起床囉！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I have two sisters.",
+          "zh": "我有兩個姊妹。",
+          "is_correct": false,
+          "hint": "看看時鐘指在七點，說「It is seven o'clock」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "The bus is yellow.",
+          "zh": "公車是黃色的。",
+          "is_correct": false,
+          "hint": "告訴 Benny 現在七點該起床展開美好的一天囉！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_morning_alarm_seven",
+      "character_line": {
+        "en": "The short hand points to seven and the long hand to twelve! What should we do now?",
+        "zh": "短針指著七、長針指著十二！我們現在該做什麼呢？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "Brush our teeth and eat tasty breakfast!",
+          "zh": "刷刷牙，然後吃美味的早餐！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "The cat is climbing.",
+          "zh": "貓咪正在攀爬。",
+          "is_correct": false,
+          "hint": "早晨七點起床後要刷牙吃美味早餐喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "I have green shoes.",
+          "zh": "我有綠色的鞋子。",
+          "is_correct": false,
+          "hint": "告訴 Benny 七點晨起該做的健康晨光活動吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_noon_lunch_twelve_thirty",
+      "character_line": {
+        "en": "Our tummies are rumbling! What time is lunchtime?",
+        "zh": "我們的肚子咕嚕嚕叫了！午餐時間是幾點呢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "It is half past twelve! Time for lunch!",
+          "zh": "現在是十二點半！該吃午餐了！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "The river is wide.",
+          "zh": "河流很寬廣。",
+          "is_correct": false,
+          "hint": "看看鐘面指在十二點半「half past twelve」吃午餐囉！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "My uncle is tall.",
+          "zh": "我叔叔很高。",
+          "is_correct": false,
+          "hint": "告訴 Benny 十二點半是吃午餐的美味時刻喔！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_noon_lunch_twelve_thirty",
+      "character_line": {
+        "en": "Yum, rice and carrots! How many minutes do we have for recess?",
+        "zh": "好香的米飯和紅蘿蔔！我們下課休息有幾分鐘呢？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "We have thirty minutes to play outside!",
+          "zh": "我們有三十分鐘可以在外面玩！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "The cloud is fluffy.",
+          "zh": "白雲蓬鬆鬆的。",
+          "is_correct": false,
+          "hint": "回答下課休息有三十分鐘「thirty minutes」喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "I want an apple.",
+          "zh": "我想要一顆蘋果。",
+          "is_correct": false,
+          "hint": "算算看下課有幾分鐘可以跟朋友在操場跑跳吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_night_bedtime_nine",
+      "character_line": {
+        "en": "Look out the window, the stars are shining! What time is it?",
+        "zh": "看看窗外，星星閃閃發光！現在是幾點鐘了？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "It is nine o'clock! Time for sweet dreams!",
+          "zh": "現在是九點鐘！該進入甜美夢鄉囉！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "The duck swims fast.",
+          "zh": "鴨子游得很快。",
+          "is_correct": false,
+          "hint": "夜晚九點鐘「nine o'clock」該準時上床睡覺囉！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "I like playing soccer.",
+          "zh": "我喜歡踢足球。",
+          "is_correct": false,
+          "hint": "告訴 Benny 星空出來了，現在九點該睡覺囉！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_night_bedtime_nine",
+      "character_line": {
+        "en": "Good night, little learner! Have wonderful dreams!",
+        "zh": "晚安，親愛的小朋友！祝你有個美好的夢！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Good night, Benny! See you tomorrow!",
+          "zh": "晚安，Benny！明天見！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "The desk is green.",
+          "zh": "書桌是綠色的。",
+          "is_correct": false,
+          "hint": "互道晚安說「Good night, Benny!」明天見喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "I have three balls.",
+          "zh": "我有三顆球。",
+          "is_correct": false,
+          "hint": "溫柔地跟小熊 Benny 說晚安明天再一起玩吧！"
+        }
+      ]
+    }
+  ]
+}

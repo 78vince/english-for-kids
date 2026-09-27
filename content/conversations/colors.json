@@ -1,0 +1,209 @@
+{
+  "id": "conv.colors.01",
+  "topic": "colors",
+  "title": "Colorful Art Class with Benny",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "Art Buddy"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_color_palette",
+      "image": "colors_scene_1.jpg",
+      "description": "Mixing Bright Paints on the Art Palette"
+    },
+    {
+      "scene_id": "scene_landscape_canvas",
+      "image": "colors_scene_2.jpg",
+      "description": "Painting Blue Sky and Green Grass on Canvas"
+    },
+    {
+      "scene_id": "scene_rainbow_picture",
+      "image": "colors_scene_3.jpg",
+      "description": "Admiring a Seven-Colored Rainbow Painting"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_color_palette",
+      "character_line": {
+        "en": "Welcome to art class! What color do you want to use first?",
+        "zh": "歡迎來到美術課！你第一個想用什麼顏色呢？"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "I want to use bright yellow!",
+          "zh": "我想用明亮的黃色！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "I have two sisters.",
+          "zh": "我有兩個姊妹。",
+          "is_correct": false,
+          "hint": "選擇一個你喜歡的顏色，比如「yellow」或「red」喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "My shoes are clean.",
+          "zh": "我的鞋子很乾淨。",
+          "is_correct": false,
+          "hint": "告訴 Benny 你想用哪種繽紛的顏色開始畫畫吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_color_palette",
+      "character_line": {
+        "en": "What happens when we mix red and blue paint?",
+        "zh": "如果我們把紅色跟藍色顏料混在一起會變成什麼？"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "It turns into purple!",
+          "zh": "它會變成紫色！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "I run in the park.",
+          "zh": "我在公園跑步。",
+          "is_correct": false,
+          "hint": "紅色加藍色會變成美麗的「purple」紫色喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "The clock says ten.",
+          "zh": "時鐘指著十點。",
+          "is_correct": false,
+          "hint": "調色盤上的神奇變化，回答調出來的新顏色吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_landscape_canvas",
+      "character_line": {
+        "en": "Let us paint outside scenery! What color is the sunny sky?",
+        "zh": "我們來畫戶外風景吧！晴朗的天空是什麼顏色呢？"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "The sky is bright blue!",
+          "zh": "天空是明亮的藍色！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "I like sweet bread.",
+          "zh": "我喜歡甜麵包。",
+          "is_correct": false,
+          "hint": "晴朗的天空可以用「blue」藍色來形容喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "This is my father.",
+          "zh": "這是我的父親。",
+          "is_correct": false,
+          "hint": "告訴 Benny 白天晴朗天空美麗的顏色吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_landscape_canvas",
+      "character_line": {
+        "en": "And what color should we paint the grass and leaves?",
+        "zh": "那我們應該把草地和樹葉塗成什麼顏色呢？"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "The grass and leaves are green!",
+          "zh": "草地和樹葉是綠色的！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "I wear a winter hat.",
+          "zh": "我戴冬天的帽子。",
+          "is_correct": false,
+          "hint": "植物與草地通常是充滿生機的「green」綠色喔！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "My house has a door.",
+          "zh": "我的房子有一扇門。",
+          "is_correct": false,
+          "hint": "用自然景物的代表色「green」來塗滿草地吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_rainbow_picture",
+      "character_line": {
+        "en": "Can we paint a big rainbow across the top of our picture?",
+        "zh": "我們可以在畫作頂端畫一道大大的彩虹嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Yes! A rainbow has seven colors!",
+          "zh": "好啊！彩虹有七種顏色！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "I brush my teeth.",
+          "zh": "我刷牙。",
+          "is_correct": false,
+          "hint": "用「A rainbow has seven colors!」分享彩虹的特色！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "My school is far away.",
+          "zh": "我的學校很遠。",
+          "is_correct": false,
+          "hint": "興奮地答應 Benny 一起畫出一道美麗的彩虹吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_rainbow_picture",
+      "character_line": {
+        "en": "Our painting looks so beautiful and colorful!",
+        "zh": "我們的畫看起來好漂亮、色彩好豐富喔！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "Thank you! Painting with you is great!",
+          "zh": "謝謝！跟你一起畫畫太棒了！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "I have thirty chairs.",
+          "zh": "我有三十張椅子。",
+          "is_correct": false,
+          "hint": "謝謝 Benny 的稱讚，表達「Painting with you is great!」！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "Close the window now.",
+          "zh": "現在關上窗戶。",
+          "is_correct": false,
+          "hint": "開心分享完成精彩藝術作品的成就感吧！"
+        }
+      ]
+    }
+  ]
+}

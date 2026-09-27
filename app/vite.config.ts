@@ -8,6 +8,9 @@ export default defineConfig({
     fs: {
       allow: [".."],
     },
+    watch: {
+      ignored: ["!**/content/**"],
+    },
   },
   build: {
     outDir: "dist",
@@ -23,5 +26,11 @@ export default defineConfig({
     // （含未來新增的頭像、音效、徽章圖或裝飾圖，只要維持在這個門檻以內就好；如果之後又加了
     // 更大的素材，記得同步調高這個數字，不然又會重演「standalone 版本看不到圖」的問題）。
     assetsInlineLimit: 200000,
+    rollupOptions: {
+      input: {
+        main: "index.html",
+        voiceLab: "voice-lab.html",
+      },
+    },
   },
 });

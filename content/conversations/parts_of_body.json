@@ -1,0 +1,209 @@
+{
+  "id": "conv.parts_of_body.01",
+  "topic": "parts_of_body",
+  "title": "Touch, Move, and Stay Healthy",
+  "character": {
+    "name": "Benny",
+    "avatar": "🐻",
+    "role": "School Friend"
+  },
+  "scenes": [
+    {
+      "scene_id": "scene_gym_game",
+      "image": "parts_of_body_scene_1.jpg",
+      "description": "Playing Simon Says and Touching Features in the Gym"
+    },
+    {
+      "scene_id": "scene_wash_hands",
+      "image": "parts_of_body_scene_2.jpg",
+      "description": "Washing Hands with Soap at the Clean Water Sink"
+    },
+    {
+      "scene_id": "scene_jumping_grass",
+      "image": "parts_of_body_scene_3.jpg",
+      "description": "Jumping and Kicking a Ball on the Green Grass"
+    }
+  ],
+  "turns": [
+    {
+      "turn_id": 1,
+      "scene_id": "scene_gym_game",
+      "character_line": {
+        "en": "Let's play a game! Touch your nose!",
+        "zh": "我們來玩個小遊戲！摸摸你的鼻子！"
+      },
+      "options": [
+        {
+          "id": "opt_1_1",
+          "en": "Here is my nose!",
+          "zh": "我的鼻子在這裡！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_1_2",
+          "en": "This is my foot.",
+          "zh": "這是我的腳。",
+          "is_correct": false,
+          "hint": "Benny 說的是臉上的鼻子（nose）喔！"
+        },
+        {
+          "id": "opt_1_3",
+          "en": "I like blue cars.",
+          "zh": "我喜歡藍色的車子。",
+          "is_correct": false,
+          "hint": "摸摸看臉上的小鼻子，說「Here is my nose!」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "scene_id": "scene_gym_game",
+      "character_line": {
+        "en": "Good job! Now touch your ears!",
+        "zh": "太棒了！現在摸摸你的雙耳！"
+      },
+      "options": [
+        {
+          "id": "opt_2_1",
+          "en": "I have two ears!",
+          "zh": "我有兩隻耳朵！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_2_2",
+          "en": "I have three mouths.",
+          "zh": "我有三個嘴巴。",
+          "is_correct": false,
+          "hint": "我們每個人頭的兩側都有兩隻耳朵（two ears）喔！"
+        },
+        {
+          "id": "opt_2_3",
+          "en": "The sky is green.",
+          "zh": "天空是綠色的。",
+          "is_correct": false,
+          "hint": "摸摸耳朵說「I have two ears!」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "scene_id": "scene_wash_hands",
+      "character_line": {
+        "en": "Time for lunch! Wash your hands.",
+        "zh": "午餐時間到了！洗洗你的雙手吧。"
+      },
+      "options": [
+        {
+          "id": "opt_3_1",
+          "en": "Yes, I wash my hands with soap.",
+          "zh": "好的，我用肥皂洗乾淨雙手。",
+          "is_correct": true
+        },
+        {
+          "id": "opt_3_2",
+          "en": "I wash my shoes with juice.",
+          "zh": "我用果汁洗我的鞋子。",
+          "is_correct": false,
+          "hint": "吃飯前要把手手（hands）洗乾淨喔！"
+        },
+        {
+          "id": "opt_3_3",
+          "en": "Good night, Benny.",
+          "zh": "晚安，Benny。",
+          "is_correct": false,
+          "hint": "回答「Yes, I wash my hands with soap」準備享用午餐吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "scene_id": "scene_wash_hands",
+      "character_line": {
+        "en": "Look, your hands are so clean now!",
+        "zh": "你看，你的雙手現在洗得好乾淨喔！"
+      },
+      "options": [
+        {
+          "id": "opt_4_1",
+          "en": "Clean hands keep me healthy!",
+          "zh": "雙手洗乾淨能讓我保持健康！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_4_2",
+          "en": "My hands are very dirty.",
+          "zh": "我的雙手非常髒。",
+          "is_correct": false,
+          "hint": "剛剛已經洗乾淨手手（clean hands）囉！"
+        },
+        {
+          "id": "opt_4_3",
+          "en": "It is an orange cat.",
+          "zh": "牠是一隻橘色貓咪。",
+          "is_correct": false,
+          "hint": "回答「Clean hands keep me healthy!」保持好習慣吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 5,
+      "scene_id": "scene_jumping_grass",
+      "character_line": {
+        "en": "Can you kick the ball with your feet?",
+        "zh": "你能用雙腳把球踢出去嗎？"
+      },
+      "options": [
+        {
+          "id": "opt_5_1",
+          "en": "Yes, I can kick with my feet!",
+          "zh": "可以，我可以用腳踢球！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_5_2",
+          "en": "I kick with my nose.",
+          "zh": "我用鼻子踢球。",
+          "is_correct": false,
+          "hint": "踢球是用腳（feet）踢喔，不是鼻子啦！"
+        },
+        {
+          "id": "opt_5_3",
+          "en": "He is a doctor.",
+          "zh": "他是一位醫生。",
+          "is_correct": false,
+          "hint": "回答 Benny「Yes, I can kick with my feet!」吧！"
+        }
+      ]
+    },
+    {
+      "turn_id": 6,
+      "scene_id": "scene_jumping_grass",
+      "character_line": {
+        "en": "You are moving and jumping! So healthy!",
+        "zh": "你跳來跳去活動筋骨，好健康好有精神！"
+      },
+      "options": [
+        {
+          "id": "opt_6_1",
+          "en": "I love moving my body!",
+          "zh": "我好喜歡動動我的身體！",
+          "is_correct": true
+        },
+        {
+          "id": "opt_6_2",
+          "en": "I cannot move at all.",
+          "zh": "我完全動不了。",
+          "is_correct": false,
+          "hint": "你剛剛很有活力地在草地上跑跳動動身體（body）喔！"
+        },
+        {
+          "id": "opt_6_3",
+          "en": "Open your book.",
+          "zh": "把你的書打開。",
+          "is_correct": false,
+          "hint": "開心回答「I love moving my body!」享受運動吧！"
+        }
+      ]
+    }
+  ]
+}
