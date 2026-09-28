@@ -165,6 +165,20 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.122 使用者提議「遊戲室」功能，評估可行性並撰寫 handoff（先做 1 款打樣）（2026-09-28）
+
+使用者提議：選單加入「遊戲室」，用學習積分消費玩裡面的小遊戲，遊戲清單可由管理者擴充/移除，每款遊戲消費點數不同。評估後發現關鍵問題：`app/src/points.ts` 的「學習積分」是即時算出來的展示數字（沒有存檔餘額），沒辦法直接拿來扣款消費，而且它是「只會往上加的成就榮譽數字」，被扣減觀感上容易變成負面訊號，跟專案一貫「不用負面文字強調表現不好」的調性衝突。
+
+跟使用者確認後決定：另外做一套獨立的「遊戲代幣」（跟學習積分脫鉤，學習積分維持現狀不動），且第一階段**只做 1 款遊戲打樣**（翻牌配對／Memory Match）驗證整套「賺代幣→花代幣→玩遊戲」機制，之後再決定要不要擴充；代幣不夠時全部遊戲都要代幣才能玩，用鼓勵文案處理（不做「保留免費遊戲」的方向）。
+
+已直接處理（content 端）：新增 `content/games/games.json`（遊戲清單，目前只有 `memory_match` 一筆，20 代幣）跟 `content/schema/game.schema.json`。
+
+寫好 handoff 交給 App 端執行：見 `docs/handoff-prompt-game-room-token-economy.md`，內容涵蓋：
+- 新增 `app/src/gameTokens.ts`（per-profile localStorage 錢包，`earnTokens()`／`spendTokens()`，跟 `points.ts` 完全獨立）。
+- 在 `finalizeRoundCompletion()`（所有題型共同結算點）掛上賺代幣事件，每完成一輪固定賺 5 代幣，不論正確率——刻意簡化，先驗證機制再考慮加權。
+- 新增導覽列「遊戲室」分頁、`renderGameRoom()` 清單畫面（代幣不夠時顯示「再賺 N 個代幣就可以玩囉！」而非「餘額不足」）、`app/src/games/memoryMatchGame.ts`（不依賴 DOM 的翻牌配對遊戲引擎，可獨立驗證）。
+- 明確列出「這次刻意不做的事」：只做這一款遊戲、不做代幣與積分互轉、不做排行榜/分享、不要自行調整賺/花的數字——避免執行時自行延伸擴大範圍。
+
 ### 9.121 App 端執行：新增「語音設定」——讓使用者自己選這台裝置要用哪個語音（2026-09-27）
 
 依 `docs/handoff-prompt-voice-selection-setting.md` 執行，對應 9.120 的請求。

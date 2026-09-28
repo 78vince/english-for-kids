@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Game",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "description",
+    "icon_placeholder",
+    "cost",
+    "status",
+    "order"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z_]+$",
+      "description": "遊戲代號，對應 app 端的遊戲引擎模組（例如 memory_match → memoryMatchGame.ts）"
+    },
+    "name": {
+      "type": "string",
+      "description": "遊戲室清單上顯示的名稱"
+    },
+    "description": {
+      "type": "string",
+      "description": "一句話說明玩法，顯示在遊戲卡片上"
+    },
+    "icon_placeholder": {
+      "type": "string",
+      "description": "暫時用 emoji 當圖示佔位，之後美術定案可換成圖檔路徑"
+    },
+    "cost": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "玩一次需要的遊戲代幣數量"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "coming_soon",
+        "disabled"
+      ],
+      "description": "active=正常上架可玩；coming_soon=清單上顯示但標記「即將推出」不可點擊；disabled=下架不顯示"
+    },
+    "order": {
+      "type": "integer",
+      "description": "遊戲室清單顯示順序，數字小的排前面"
+    }
+  }
+}

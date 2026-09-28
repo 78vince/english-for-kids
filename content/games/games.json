@@ -1,0 +1,11 @@
+[
+  {
+    "id": "memory_match",
+    "name": "翻牌配對",
+    "description": "翻開卡片找出英文單字跟中文意思的配對，考驗記憶力，也是複習單字的好機會。",
+    "icon_placeholder": "🃏",
+    "cost": 20,
+    "status": "active",
+    "order": 1
+  }
+]
