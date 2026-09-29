@@ -165,6 +165,90 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.129 使用者提議翻牌配對改用 iframe 架構，撰寫遷移 handoff（2026-09-29）
+
+使用者問「目前的遊戲是直接寫在網頁中嗎？」，回答確認：全部題型（含翻牌配對）都是純前端 TypeScript class，沒有 iframe、沒有後端。接著問「把遊戲改成 iframe 嵌入，會不會比較靈活，遊戲類型可以更多元？」——評估兩種方向：(A) 嵌外部現成遊戲網站——不建議，廣告/內容不受控/隨時可能失效，且黑盒子沒辦法跟代幣經濟機制串接；(B) 自己做的遊戲改成獨立打包＋iframe＋postMessage 橋接——技術上合理，但跟「遊戲種類變多」沒有直接關係，真正好處是各遊戲可以獨立技術選型、減輕 `main.ts` 主 bundle 過大的問題。使用者選方案 B，並精準指出關鍵設計重點：「遊戲中不需要轉代幣，但如果需要再玩一次扣代幣，可能就會需要橋接」。
+
+寫好完整遷移計畫交給 App 端執行：見 `docs/handoff-prompt-memory-match-iframe-migration.md`。**這是架構重構，不是新功能**——現在已經上線、經過 9.123～9.128 六輪回饋打磨過的翻牌配對，玩法/規則/手感完全不變，只改「哪段程式碼跑在哪裡」。內容涵蓋：
+- 新增 `app/src/gameBridge.ts` 共用訊息型別（`ready`／`requestReplay`／`exitToRoom`／`complete` 四種「遊戲→主站」訊息，`replayApproved`／`replayDenied` 兩種回覆），雙邊都 import 同一份型別避免字串打錯字漏接。
+- `main.ts` 的 `renderMemoryMatch()` 改成顯示 `<iframe>`，遊戲本身的 DOM 渲染/動畫/音效整段搬進新的 `app/src/games/memoryMatchStandalone.ts`（新的 Vite 獨立進入點 `app/games/memory-match.html`，比照 `voice-lab.html` 的既有模式）；`MemoryMatchGame` 引擎完全不動。
+- 「再玩一次」的扣代幣責任完全收斂回主站：iframe 只能送出 `requestReplay` 請求，不能自己呼叫 `spendTokens()`——這是這次重構最容易漏改、也是新驗證腳本 `verify-game-bridge-messages.ts` 要特別守住的地方。
+- 特別提醒：這是重構不是新功能，每個既有的時間常數/動畫時序/音效觸發點都要原封不動搬過去，實機比對「搬家前後」手感有沒有落差比 verify script 通過更重要；也提醒了一個時機點問題——如果近期沒有規劃做第二款新遊戲，也可以考慮等真的要做第二款時再一起遷移，避免現在做一次、以後又要因應新需求調整橋接協定。
+
+### 9.128 App 端執行：放慢卡片交換動畫並在蓋牌前多停留一下（2026-09-28）
+
+使用者玩過 9.127 的三關版本後回饋：第 2、3 關卡片交換位置的動畫太快，希望換完位置後能多看一下再蓋牌開始遊戲。
+
+- `app/src/games/memoryMatchGame.ts`：原本 `SHUFFLE_ANIMATION_MS = 700`（單一個「交換後多久蓋牌」的數字，動畫播放時長跟這個數字綁在一起）拆成兩段：`SHUFFLE_MOVE_DURATION_MS = 900`（卡片滑動到新位置的動畫本身播放時長，從 renderer 原本內嵌寫死的 `0.5s` 拉長並改成 export 常數，供 renderer import 使用，確保引擎的計時跟畫面的 CSS transition 時長永遠對得上）、`SHUFFLE_SETTLE_PAUSE_MS = 700`（動畫播完之後，額外停留讓使用者多看清楚新位置的時間）；`SHUFFLE_ANIMATION_MS`（從觸發交換到真正蓋牌開始遊戲的總延遲）改成兩者相加＝1600ms，比原本的 700ms 慢了一倍多。
+- `renderMemoryMatch()`（`app/src/main.ts`）的 FLIP 動畫改成 import `SHUFFLE_MOVE_DURATION_MS` 動態組字串（`transform ${SHUFFLE_MOVE_DURATION_MS}ms ease`），取代原本寫死的 `"transform 0.5s ease"`，避免以後兩邊數字各自改動、又對不上的問題。
+- 驗證：`tsc --noEmit`、全部 `verify-*.ts`、`npm run build` 都通過（`verify-memory-match-logic.ts` 的建構子測試參數本來就是獨立傳入極短的測試用時長，不受這次正式時長調整影響，重跑確認沒有回歸）；grep 打包後的 `dist/assets/main-*.js` 確認 `900`／`ms ease` 都有進到最終產出。
+- 沒辦法在沙盒裡驗證的部分：動畫放慢後、蓋牌前多停留的實際節奏是否剛好，麻煩用 `demo-standalone.html` 或實機玩第 2、3 關看一次。
+
+### 9.127 App 端執行：翻牌配對新增倒數數字＋三關關卡機制＋再玩一次扣代幣提示（2026-09-28）
+
+使用者再回饋 3 點，其中「三關的關卡流程」牽涉不小的架構決定（連續闖三關才算破關／每次只玩一關輪替難度／改成三個獨立關卡選項），先用 `AskUserQuestion` 確認方向，使用者選擇「連續闖三關才算破關」，照這個方向實作。
+
+- **開局記憶倒數改成大數字顯示**：`MemoryMatchGame`（`app/src/games/memoryMatchGame.ts`）整個重寫，`reveal` 階段從原本單一個 `setTimeout` 改成每秒 tick 一次的 `setInterval`，暴露 `revealSecondsRemaining`（整數秒數）供畫面顯示；`renderMemoryMatch()` 新增 `.memory-match-countdown` 區塊，`reveal` 階段顯示倒數數字（5,4,3,2,1），`shuffling` 階段（見下）改顯示 🔀。
+- **三關關卡機制**：`MemoryMatchGame` 新增 `level`（1~3）與擴充後的 `phase`（新增 `"shuffling"`／`"levelComplete"`），三關共用同一組 3 對配對內容，差別在倒數結束後的行為：
+  - 第 1 關：倒數結束直接進入 `"playing"`（原本行為）。
+  - 第 2 關：倒數結束後進入 `"shuffling"`，隨機挑 2 張卡片互換位置（`shuffleCardCountForLevel(2) === 2`），換完才進 `"playing"`。
+  - 第 3 關：同上但隨機挑 4 張卡片（兩兩一組、共兩次互換，`shuffleCardCountForLevel(3) === 4`），難度更高。
+  過關（該關全部配對完成）觸發 `onLevelComplete(level)`，`phase` 短暫進入 `"levelComplete"`（畫面顯示「過關！準備進入下一關」），`LEVEL_COMPLETE_PAUSE_MS`（正式時長 1400ms）之後自動 `level += 1`、重新洗牌、重新倒數；只有第 3 關過關才是真正的 `phase = "complete"`、觸發 `onComplete()`，`moveCount` 累計整個三關不分關重置。
+  - **交換位置的移動動畫**：新增 `onShuffleStart(swapPairs)` 事件，在陣列真正互換「之前」觸發，讓 `renderMemoryMatch()` 先用 `getBoundingClientRect()` 記錄下涉及卡片目前的畫面座標；接著引擎才真正互換 `cards` 陣列順序並觸發 `onChange()`，`renderMemoryMatch()` 新增 `syncGridOrder()` 把 DOM 節點按新順序重新 `appendChild`（此舉會讓卡片瞬間跳到新位置），再算出新舊座標的位移量、用標準的 FLIP 手法（先瞬間套用位移的 `transform`、下一個 frame 才打開 `transition` 把 `transform` 歸零）讓卡片「滑」到新位置，而不是瞬間跳過去。這一段跟卡片翻面動畫用的是同一種「保留 DOM 節點、只在 class／style 上做文章」的原則（見 9.124 的翻牌動畫根因說明），沒有引入額外動畫函式庫。
+- **「再玩一次」按鈕加上扣代幣提示**：`playAgainBtn` 文字從單純「再玩一次」改成「再玩一次（🪙-N）」（N 是 `content/games/games.json` 裡 `memory_match` 的 `cost`，這裡的 🪙 其實是 `COIN_ICON` 單色圖示，套用既有的 `.game-room-card-cost` 對齊樣式），讓使用者一眼就知道點下去會扣代幣，不會誤以為是免費重玩——扣代幣的實際行為維持 9.126 就定案的「原地重開局、一樣要扣代幣」不變，這次只是把「會扣代幣」這件事講清楚。
+- **驗證**：`verify-memory-match-logic.ts` 整份改寫（3 對配對＝6 張卡片，跟目前正式版一致），建構子新增第 3／4 個參數（`shuffleAnimationMs`／`levelCompletePauseMs`）方便測試指定極短時長；新增 `waitForPhase()`／`matchAllPairs()` 兩個測試輔助函式，涵蓋：開局第 1 關＋`shuffleCardCountForLevel()` 三關數字正確、第 1 關 reveal 結束不經過 shuffling 直接 playing、playing 階段配對成功/失敗（含 onFlip/onMatch/onMismatch/onCoverBack 觸發次數）、過第 1 關觸發 `onLevelComplete(1)` 並自動進入第 2 關重新洗牌、第 2 關倒數結束後正確經過 shuffling 且 `onShuffleStart` 帶對的互換組數、連續破完三關才 `isComplete`／`onComplete` 只在最後一關觸發一次。全部 `verify-*.ts`、`tsc --noEmit`、`npm run build` 都通過；grep 打包後的 `dist/assets/main-*.css` 確認 `memory-match-countdown{...}` 進到最終產出，`dist/assets/main-*.js` grep「再玩一次」「過關！準備進入第」都有出現，確認新流程真的進了 bundle。
+- 沒辦法在沙盒裡驗證的部分：倒數數字視覺呈現、卡片交換位置的 FLIP 移動動畫實際播放起來夠不夠順、三關難度遞增的實際遊玩手感，麻煩用 `demo-standalone.html` 或實機玩一輪確認。
+
+### 9.126 App 端執行：翻牌配對字級／再玩一次流程／3x2 版面（2026-09-28）
+
+使用者玩過 9.125 的 4 欄 12 張版本後，再回饋 4 點。其中「再玩一次」的行為牽涉到 9.122／9.123 就明確定案的「玩遊戲室的遊戲要扣代幣，不能免費重玩」設計，先用 `AskUserQuestion` 跟使用者確認方向（選項：免費重玩／原地重開但一樣扣代幣／維持現況導回遊戲室），使用者選擇「直接重開一局，但一樣要扣代幣」，照這個方向實作。
+
+- **卡牌字級放大**：`.memory-match-card-face`（`app/src/style.css`）字級從 `var(--text-caption)` 改成 `var(--text-body-lg)`，`padding` 也從 `var(--space-1)` 加大到 `var(--space-2)`——這次卡片數變少（見下）本來就有更多空間，字級也一起放大。
+- **「再玩一次」不再把使用者踢出遊戲畫面**：`renderMemoryMatch()`（`app/src/main.ts`）裡 `playAgainBtn` 的點擊事件，原本是呼叫 `goToGameRoom()`（導回遊戲室清單，使用者要重新點「開始遊戲」才能再玩一次）；改成直接在原地處理——找到 `GAMES` 裡 `id === "memory_match"` 的設定拿到 `cost`，呼叫 `spendTokens(activeProfile!.id, cost)`：扣款成功就直接呼叫 `goToMemoryMatch()`（重新抽一組新配對、留在同一個翻牌配對畫面，不會先閃回遊戲室清單再進來）；扣款失敗（代幣不夠）才彈出鼓勵文案的 `window.alert()` 並導回遊戲室（沒代幣本來就沒辦法留在這裡玩，導回遊戲室讓使用者看到目前餘額跟怎麼賺代幣）。維持「重玩要扣代幣，不是免費重玩」這個 9.122 就定案的設計，只是把「扣代幣」跟「重新開局」兩件事的體驗合併成一次點擊，不用先跳走再跳回來。
+- **卡片數與版面再縮減**：`createMemoryMatchGame()` 抽牌數從 6 組（12 張）改成 `shuffled.slice(0, 3)`，3 組配對＝6 張卡片；`.memory-match-grid` 的 `grid-template-columns` 從 `repeat(4, 1fr)` 改成 `repeat(3, 1fr)`，固定 3 欄 x 2 行剛好排滿 6 張卡片，卡片依然是橫式（`aspect-ratio: 4/3`）、寬度撐滿欄位。
+- **驗證**：`tsc --noEmit`、全部 `verify-*.ts`、`npm run build` 都通過（`verify-memory-match-logic.ts` 測的是 `MemoryMatchGame` 這個不依賴卡片數量的遊戲邏輯類別本身，這次沒有改動、重跑確認沒有回歸）；grep 打包後的 `dist/assets/main-*.css` 確認 `memory-match-grid{...repeat(3,1fr)...}` 與新字級 `font-size:var(--text-body-lg)` 真的進到最終產出，`dist/assets/main-*.js` grep「代幣好像不太夠喔」出現兩次（原本開始遊戲確認彈窗一次＋這次新增的再玩一次流程一次），確認新的扣款失敗處理路徑真的有進到 bundle。
+- 沒辦法在沙盒裡驗證的部分：3 欄 2 行版面搭配放大字級實際看起來的比例、「再玩一次」直接原地重開局的操作手感，麻煩用 `demo-standalone.html` 或實機看一次。
+
+### 9.125 App 端執行：翻牌配對版面調整——4 欄 3 行 12 張、橫式卡片（2026-09-28）
+
+使用者玩過 9.124 的 20 張/5 欄版本後回饋版面太滿，改成固定版面。
+
+- `createMemoryMatchGame()`（`app/src/main.ts`）抽牌數從 10 組（20 張）改回 6 組（12 張）。
+- `.memory-match-grid`（`app/src/style.css`）拿掉原本手機 3 欄／平板 4 欄／桌機 5 欄的響應式斷點，改成固定 `grid-template-columns: repeat(4, 1fr)`，4 欄 x 3 行剛好排滿 12 張卡片，所有螢幕寬度都一致。
+- `.memory-match-card` 的 `aspect-ratio` 從直式 `3 / 4` 改成橫式 `4 / 3`，並拿掉先前限制卡片大小的 `max-width: 120px`，改成 `width: 100%` 讓卡片寬度直接撐滿所在欄位——4 欄版面下每張卡片可以放得比原本大。
+- 驗證：`tsc --noEmit`、全部 `verify-*.ts`、`npm run build` 都通過（這次沒有動到遊戲邏輯，`verify-memory-match-logic.ts` 維持 9.124 版本原封不動、重跑確認沒有回歸）；grep 打包後的 `dist/assets/main-*.css` 確認 `memory-match-grid{...repeat(4,1fr)...}` 真的進到最終產出。
+- 沒辦法在沙盒裡驗證的部分：橫式卡片＋4 欄版面實際看起來的比例是否舒適，麻煩用 `demo-standalone.html` 或實機看一次。
+
+### 9.124 App 端執行：遊戲室／翻牌配對五項優化回饋（2026-09-28）
+
+使用者實際玩過 9.123 打樣版本後回饋 5 點，針對代幣圖示、翻牌配對的記憶流程、卡片數量/版面、卡背圖示、翻牌動畫、音效五個方向逐一處理，沒有動到 9.123 已經定案的架構（遊戲代幣獨立於學習積分、只做翻牌配對一款、消費/賺取數字不變）。
+
+- **代幣符號改用單色 icon**：`main.ts` 新增 `COIN_ICON()`（跟既有 `EYE_OPEN_ICON`／`TURTLE_ICON` 同一套 `viewBox="0 0 24 24" stroke="currentColor"` 扁平線條風格），取代 `.game-tokens-hero`、每張遊戲卡片的代幣消費文字、確認彈窗文案裡的 🪙 emoji 共 3 處；確認彈窗文案原本用 `.textContent` 賦值，改用 `.innerHTML` 才能塞進 inline SVG。刻意只換「代幣符號」，遊戲清單卡片本身的 🃏（來自 `content/games/games.json` 的 `icon_placeholder`，屬於遊戲內容資料）沒有動。
+- **開局記憶流程**：`app/src/games/memoryMatchGame.ts` 加上 `phase: "reveal" | "playing" | "complete"` 狀態機。建構子先把全部卡片設成翻開（`isFlipped: true`）、進入 `"reveal"`，`REVEAL_DURATION_MS`（5000ms，先用一個感覺合理的預設值上線，之後看真人試玩回饋再調）後自動整批蓋牌、切到 `"playing"` 並觸發新的 `onCoverBack` 事件；`"reveal"` 期間 `flip()` 直接無視、`"playing"` 期間才是原本的翻兩張判定邏輯。這個階段轉換完全在 game 物件內部用 `setTimeout` 自動處理，`main.ts` 不用額外寫計時器。
+- **卡片數量與版面**：`createMemoryMatchGame()` 從隨機抽 6 組配對改成抽 10 組（20 張卡片）。`style.css` 的 `.memory-match-grid` 改成手機 3 欄、≥481px 4 欄、≥641px（桌機）5 欄，每張卡片加 `max-width: 120px` 讓卡片本身縮小、`grid` 本身用一般的 `repeat(N, 1fr)` 讓瀏覽器依斷點自動換行排列，不用 JS 手動算列數。
+- **卡背圖示**：新增 `CARD_BACK_ICON()`（4 個尖角向外的星芒線條圖案，同樣是單色 SVG），取代原本卡背用的 🃏 emoji；`.memory-match-card-face--back` 的樣式從「針對 emoji 調的 28px 字級」改成「針對 inline svg 寬高 60% 置中」。
+- **翻牌動畫修正（本次回饋裡唯一的 bug 修復，其餘 4 點都是新增/調整功能）**：找到根本原因——`createMemoryMatchGame()`／`renderMemoryMatch()` 舊版把 `game.onChange` 直接指到全站共用的 `render()`，而 `render()` 每次呼叫都會整個清空重建 `#app` 底下的 DOM（這件事在稍早「單字總覽練習模式」那次功能就踩過一次同樣的坑，見 9.116/9.117）。卡片一翻動就整批 DOM 節點重新 new 出來、直接生成在「已經是最終狀態」的樣子，CSS `transition: transform 0.4s ease` 完全沒有「翻轉前」的節點可以拿來做動畫插值，所以看起來像是瞬間切換、沒有動畫。修法：重寫 `renderMemoryMatch()`，改成拿一個 `Map<string, HTMLButtonElement>` 記住每張卡片對應的既有 DOM 節點，`game.onChange` 觸發時只呼叫 `syncCardButton()`（只改 `className`／`disabled`）跟 `syncFooter()`（只重建底部這一小塊），不再呼叫全站的 `render()`——卡片按鈕節點本身從頭到尾是同一個 DOM 元素，CSS `rotateY()` 轉場現在有正確的起訖狀態可以播放。
+- **五種音效**：新增 `card-flip.wav`（翻牌，短促上揚音）／`card-cover.wav`（蓋牌，柔和下降音）兩個新合成音檔，比照既有 `correct.wav` 等音效的產生方式（`wave`／`struct`／`math` 標準函式庫合成，不是真人錄音）；`sound.ts` 新增 `playCardFlipSound()`／`playCardCoverSound()`。`memoryMatchGame.ts` 新增 `onFlip`（使用者主動翻牌時觸發，開局記憶階段自動翻開不算）／`onCoverBack`（蓋牌時觸發，開局結束整批蓋牌、配對失敗恢復蓋牌都算）／`onMatch`／`onMismatch` 四個事件掛勾，`renderMemoryMatch()` 分別接上翻牌音、蓋牌音，並重用既有的 `playCorrectSound()`／`playWrongSound()`／`playRoundCompleteSound()` 當作「答對／答錯／過關」音效（這三個音效全站其他題型本來就在用，維持音效辨識度的一致性，沒有另外做新音檔）。
+- **驗證**：`verify-memory-match-logic.ts` 整份改寫，改用建構子第二參數（很短的測試用 `revealDurationMs`）避免每次測試真的等 5 秒，涵蓋新的 5 個情境：建構子後處於 `reveal` 階段且全部翻開、`reveal` 階段 `flip()` 無視＋時間到自動蓋牌並觸發 `onCoverBack`、`playing` 階段配對成功且 `onFlip`/`onMatch` 正確觸發次數、配對失敗觸發 `onMismatch` 並延遲恢復觸發 `onCoverBack`＋判定期間第三次 `flip()` 忽略、全部配對完成 `onComplete()` 剛好觸發一次。`verify-game-tokens-logic.ts` 沒有改動（跟這次改的遊戲邏輯無關，重跑確認沒有回歸）。全部 `verify-*.ts`、`tsc --noEmit`、`npm run build` 都通過；有 grep 打包後的 `dist/assets/main-*.css` 確認 `memory-match-grid`／`game-tokens-value` 等新樣式進到最終產出，`dist/assets/main-*.js` 確認新音效是用 `data:audio/wav;base64` inline 進去（跟既有音效同一套機制，不是額外的網路請求），SVG 圖示（例如 `<circle cx="12" cy="12" r="9"/>`）也確認有進到 bundle。
+- **沒辦法在沙盒裡驗證的部分**：翻牌動畫實際播放起來的手感（理論上已修正根因，但沒有瀏覽器可以真的看動畫跑起來）、5 欄版面在不同裝置寬度下換行是否美觀、5 個音效實際播放的音量平衡與辨識度，麻煩用 `demo-standalone.html` 或實機測試確認。
+
+### 9.123 App 端執行：「遊戲室」入口＋遊戲代幣消費機制（翻牌配對打樣）（2026-09-28）
+
+依 `docs/handoff-prompt-game-room-token-economy.md` 執行，對應 9.122 的請求，只做翻牌配對這一款打樣，沒有自行延伸擴充其他遊戲。
+
+- **型別與內容讀取**：`app/src/types.ts` 新增 `GameConfig` 介面（對應 `content/schema/game.schema.json`），`app/src/content.ts` 比照 `badges.json`／`changelog.json` 的既有匯入方式，新增 `export const GAMES: GameConfig[]` 讀取 `content/games/games.json`。
+- **`app/src/gameTokens.ts`**（新檔）：per-profile localStorage 錢包，跟 `points.ts` 的「學習積分」完全獨立（學習積分維持現狀不動，繼續當即時算出來的成就展示數字）。`getTokenBalance()`／`earnTokens()`／`spendTokens()` 三個核心函式，`spendTokens()` 餘額不夠時回傳 `false` 且不扣款、不會出現負數。`TOKENS_EARNED_PER_ROUND = 5`。
+- **`finalizeRoundCompletion()`**（`app/src/main.ts`，所有題型共同結算點）掛上 `earnTokens(profileId, TOKENS_EARNED_PER_ROUND)`，每完成一輪任何題型（不限主題、不限題型、不看正確率）就賺 5 個代幣。刻意的設計決定：玩遊戲室的遊戲本身不會再賺代幣，代幣只從「認真學習」這個方向賺，避免變成「玩遊戲刷代幣、代幣又拿去玩更多遊戲」的沒意義迴圈。
+- **導覽列新增「遊戲室」分頁**：`NavKey`／`Screen` 型別、`NAV_ICONS.gameRoom`（骰子圖案，單色線條風格）、`NAV_ITEMS`（插在「收藏清單」跟「個人檔案」之間）、`renderScreen()` 路由分派，都比照既有其他分頁的接法。
+- **`renderGameRoom()`**：`.game-tokens-hero` 顯示目前代幣餘額（金幣色系 `--color-accent-yellow`，刻意跟個人檔案頁「學習積分」的品牌深藍區隔開，避免使用者把兩個數字看成同一件事），下面列出 `GAMES`（依 `order` 排序、篩掉 `status === "disabled"`）每一款的卡片：`active` 且代幣足夠顯示「開始遊戲」；`coming_soon` 顯示「即將推出」且禁用；代幣不夠顯示「再賺 N 個代幣就可以玩囉！」（鼓勵文案，全站沒有出現「餘額不足」「點數不夠」這類字眼），按鈕也用溫和中性色（`--color-tier-locked-bg`）而不是警示紅色。
+- **「開始遊戲」確認彈窗**（`appendGameRoomConfirmModal()`）：沿用 `.modal-overlay`／`.modal-card` 既有視覺外觀，但用獨立的 `gameRoomConfirmGame` 狀態＋專屬的 `closeGameRoomConfirm()`，不跟個人檔案頁的 `profileDetailModal`／`closeProfileDetailModal()` 共用，避免語意混淆。確認後才真的呼叫 `spendTokens()`，扣款成功才 `goToMemoryMatch()`；`spendTokens()` 回傳 `false`（理論上不該發生，因為按鈕在餘額不夠時已經是 disabled 狀態）時一樣用鼓勵文案的 `window.alert()` 處理，不假設扣款一定成功。
+- **`app/src/games/memoryMatchGame.ts`**（新檔）：`MemoryMatchGame` class，不依賴 DOM，跟 `matchingGame.ts`／`orderingGame.ts` 同一套模式。建構子把傳入的 `{en, zh}[]` 配對拆成兩倍卡片數、洗牌；`flip()` 一次翻兩張，配對成功留在檯面（`isMatched`），失敗延遲 800ms 後兩張都翻回去；判定期間（已翻開兩張還沒判定完成）的第三次 `flip()` 呼叫會被忽略。`renderMemoryMatch()`（`main.ts`）不綁定任何 `currentTopic`，改由 `createMemoryMatchGame()` 從 `availableTopics` 攤平所有主題的 published vocab 隨機抽 6 組配對開新局；畫面用 `.game-header--with-back`（沿用 `renderMenu()` 的既有寫法）搭配「← 返回遊戲室」按鈕，而不是 `stageHeader()`（那是給題型畫面在慢速朗讀＋返回題型選單用的，翻牌配對不播放語音、也不屬於任何主題，用 `stageHeader()` 不合適）。完成畫面比照其餘題型的 `.game-footer`／`.done` 樣式，純鼓勵文案「太厲害了，全部配對成功！」，「再玩一次」導回遊戲室重新走一次扣代幣流程（不是免費重玩），完全不呼叫 `finalizeRoundCompletion()`——這個遊戲不記錄進度、不影響任何徽章或積分。
+- **CSS**：新增 `.game-tokens-hero`／`.game-room-list`／`.game-room-card`／`.game-room-card-cost`／`.game-room-play-btn`／`.game-room-play-btn--locked`（溫和中性色，不用警示紅）、`.memory-match-grid`（手機 3 欄、桌機 4 欄）／`.memory-match-card`（CSS `rotateY()` 3D 翻牌動畫，沒有另外引入動畫函式庫）。
+- **驗證**：新增 `verify-game-tokens-logic.ts`（5 個測試：初始餘額 0、`earnTokens()` 累加、`spendTokens()` 足夠/不足兩種情況、跨 profile 互相獨立、`finalizeRoundCompletion()` 原始碼靜態比對確認真的接上 `earnTokens()`）與 `verify-memory-match-logic.ts`（4 個測試：建構子正確拆卡＋pairId 恰好各兩張、配對成功兩張變 `isMatched`、配對失敗延遲後恢復且判定期間第三次 `flip()` 被忽略、全部配對完成觸發 `onComplete()`）。另外因為 `NavKey` 型別多了 `"gameRoom"`，既有 `verify-about-page.ts` 裡一段對 `NavKey` 型別字串的精確靜態比對斷言需要同步更新（純粹是既有測試斷言字串要跟上新型別定義，不是行為變更）。全部 verify 腳本、`tsc --noEmit`、`npm run build` 都通過，grep 打包後的 `dist/assets/main-*.js`／`*.css` 確認「遊戲室」「翻牌配對」`game-room-list`／`memory-match-grid`／`gameTokens` 都真的進到最終產出。
+- 這次刻意不做（照 handoff 明確列出的範圍界線，沒有自行延伸）：只做翻牌配對一款、不做代幣與學習積分互轉、不做遊戲室排行榜/分享、沒有調整 `TOKENS_EARNED_PER_ROUND`（5）或翻牌配對消費（20，來自 `content/games/games.json`）這兩個數字的手感。
+- 沒有動到會話練習（voiceLab／conversationGame）相關檔案，也沒有執行任何 git 操作；`content/games/games.json`／`content/schema/game.schema.json` 已經是 content 端事先建立好、已追蹤進 git 的檔案，這次沒有修改它們。
+- **沒辦法在沙盒裡驗證的部分**：翻牌動畫的實際視覺效果（3D `rotateY()` 翻轉手感）、手機版格線排列是否真的舒適、確認彈窗跟遊戲代幣顯示的實際配色觀感，麻煩用 `demo-standalone.html` 或實機看一次。
+
 ### 9.122 使用者提議「遊戲室」功能，評估可行性並撰寫 handoff（先做 1 款打樣）（2026-09-28）
 
 使用者提議：選單加入「遊戲室」，用學習積分消費玩裡面的小遊戲，遊戲清單可由管理者擴充/移除，每款遊戲消費點數不同。評估後發現關鍵問題：`app/src/points.ts` 的「學習積分」是即時算出來的展示數字（沒有存檔餘額），沒辦法直接拿來扣款消費，而且它是「只會往上加的成就榮譽數字」，被扣減觀感上容易變成負面訊號，跟專案一貫「不用負面文字強調表現不好」的調性衝突。
