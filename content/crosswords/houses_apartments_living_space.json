@@ -1,0 +1,16 @@
+{
+  "id": "crossword.houses_apartments.living_space",
+  "topicFileKey": "houses_apartments",
+  "title": "居家空間",
+  "hintZh": "單字包括：床、地板、屋頂、門、沙發、房間喔！",
+  "gridWidth": 5,
+  "gridHeight": 5,
+  "words": [
+    { "vocabId": "voc.houses_apartments.016", "en": "BED", "zh": "床", "row": 0, "col": 0, "direction": "down" },
+    { "vocabId": "voc.houses_apartments.011", "en": "FLOOR", "zh": "地板", "row": 0, "col": 1, "direction": "down" },
+    { "vocabId": "voc.houses_apartments.012", "en": "ROOF", "zh": "屋頂", "row": 0, "col": 2, "direction": "down" },
+    { "vocabId": "voc.houses_apartments.008", "en": "DOOR", "zh": "門", "row": 2, "col": 0, "direction": "across" },
+    { "vocabId": "voc.houses_apartments.017", "en": "SOFA", "zh": "沙發", "row": 3, "col": 0, "direction": "across" },
+    { "vocabId": "voc.houses_apartments.003", "en": "ROOM", "zh": "房間", "row": 4, "col": 1, "direction": "across" }
+  ]
+}

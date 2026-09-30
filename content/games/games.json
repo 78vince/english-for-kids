@@ -7,5 +7,14 @@
     "cost": 20,
     "status": "active",
     "order": 1
+  },
+  {
+    "id": "crossword",
+    "name": "填字遊戲",
+    "description": "拖曳字母填滿空格，找出隱藏在網格裡的英文單字。",
+    "icon_placeholder": "🧩",
+    "cost": 25,
+    "status": "coming_soon",
+    "order": 2
   }
 ]

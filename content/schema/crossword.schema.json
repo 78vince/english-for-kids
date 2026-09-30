@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Crossword",
+  "type": "object",
+  "required": [
+    "id",
+    "topicFileKey",
+    "title",
+    "hintZh",
+    "gridWidth",
+    "gridHeight",
+    "words"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^crossword\\.[a-z_]+\\.[a-z_]+$"
+    },
+    "topicFileKey": {
+      "type": "string",
+      "description": "這組填字關卡的單字來源主題（對應 content/vocab/<topicFileKey>.json）"
+    },
+    "title": {
+      "type": "string",
+      "description": "關卡標題，顯示在題目區上方"
+    },
+    "hintZh": {
+      "type": "string",
+      "description": "底部提示文字，列出這關包含哪幾個中文單字（純文字提示，不是逐字逐格的個別線索）"
+    },
+    "gridWidth": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "gridHeight": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "words": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "required": ["vocabId", "en", "zh", "row", "col", "direction"],
+        "properties": {
+          "vocabId": {
+            "type": "string",
+            "description": "對應 content/vocab/<topicFileKey>.json 裡的單字 id，維持跟其他遊戲一樣可以回溯到單一內容來源"
+          },
+          "en": {
+            "type": "string",
+            "pattern": "^[A-Z]+$",
+            "description": "全大寫英文單字，跟網格排版座標配合"
+          },
+          "zh": { "type": "string" },
+          "row": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "單字第一個字母所在的列（0 為最上面），跟其餘單字的座標系統一致，交疊處的字母必須完全相同才是合法排版"
+          },
+          "col": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "單字第一個字母所在的欄（0 為最左邊）"
+          },
+          "direction": {
+            "type": "string",
+            "enum": ["across", "down"]
+          }
+        }
+      }
+    }
+  }
+}

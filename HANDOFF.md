@@ -165,6 +165,26 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.135 使用者提議遊戲室第二款遊戲：填字遊戲（Crossword），撰寫企劃與 handoff（2026-09-30）
+
+使用者參考截圖提出填字遊戲企劃：題目區網格交疊排列、字母拖曳區、答對留下答錯彈回、關卡機制、最高紀錄、粉色系視覺＋裝飾插圖。評估後確認「即時依使用者個人學習進度動態生成填字網格」不可行（字母交疊排版需要運氣好的單字組合，學過的字太少/太分散可能湊不出網格），改用「以主題為單位、預先排版好的固定關卡」，跟使用者確認後採用此方向。用 `AskUserQuestion` 確認兩個關鍵決定：關卡數量（選擇先做 1 個主題打樣）、最高紀錄呈現方式（選擇用 1-3 顆星）。
+
+已直接完成的內容工作：
+- `content/schema/crossword.schema.json`：填字關卡資料格式。
+- `content/crosswords/houses_apartments_living_space.json`：第一個打樣關卡「居家空間」（houses_apartments 主題），6 個真實既有單字（BED／FLOOR／ROOF／DOOR／SOFA／ROOM）排成 5×5 網格——排版是我寫一支回溯演算法離線算出來的，並用程式驗證過所有交疊格字母一致無衝突，App 端不用自己處理排版邏輯。
+- `content/games/games.json` 新增 `crossword` 一筆，`status` 先設 `"coming_soon"`（避免引擎還沒做完就被使用者點到空畫面），代幣消費 25。
+
+寫好 handoff 交給 App 端執行：見 `docs/handoff-prompt-crossword-game.md`。第二款遊戲從一開始就採用翻牌配對剛遷移好的「獨立 iframe＋`gameBridge.ts`」架構，不用事後再遷移一次。內容涵蓋：拖曳判定邏輯（比對格子正確字母，答對固定/答錯彈回）、比照翻牌配對「一局三關、空格比例遞增（40%→65%→85-90%）」的關卡設計、星等評分（三關錯誤次數加總，0-2次三星/3-5次二星/6+次一星）、建議新增共用的 `gameHighScores.ts` 模組（趁第二款遊戲的機會把最高紀錄存取邏輯抽成共用，供未來遊戲沿用）、特別提醒手機觸控拖曳相容性（不要依賴原生 HTML5 Drag and Drop API，建議用 pointer event 自己實作）、完成後記得把 `games.json` 的 `crossword` 狀態改回 `"active"`。
+
+### 9.134 App 端執行：修正 Voice Lab「返回學習主站」連結（絕對路徑→相對路徑）（2026-09-30）
+
+依 `docs/handoff-prompt-voicelab-back-link-bug.md` 執行，對應 9.133 的回報。
+
+- **`app/src/voiceLab.ts` 第 212 行**：`<a href="/" ...>` 改成 `<a href="index.html" ...>`，用相對於目前頁面（`voice-lab.html`）的檔名，跟打包後跟 `index.html` 同一層目錄的實際情況一致，也跟 `vite.config.ts` 既有的 `base: "./"` 相對路徑輸出慣例對齊。跟 handoff 建議一致，沒有用 `href="./"`（指名 `index.html` 比較明確，不會在不同目錄層級情境下猜錯）。
+- **新增 `app/scripts/verify-voice-lab-back-link.ts`**：用正規表示式抓出 `voiceLab.ts` 裡 `class="lab-back-btn"` 那個 `<a>` 標籤的 `href` 屬性值，斷言① 不是 `"/"`、不是以 `http` 開頭的絕對路徑，② 剛好等於 `"index.html"`。單獨開一支新檔案而不是塞進既有的 `verify-app-icon-manifest.ts`，因為這兩者檢查的對象（manifest 路徑欄位 vs. 頁面內連結）沒有直接關聯，分開比較好找、以後這個回歸點要單獨停用/調整也不會互相干擾。
+- **驗證**：`tsc --noEmit`、全部 `verify-*.ts`（含新增的這支）、`npm run build` 都通過；`npm run build` 之後 grep 確認 `dist/assets/voiceLab-*.js` 打包出來的字串是 `href="index.html" class="lab-back-btn"`，不是 `href="/"`。這個修法本身很單純（純字串路徑，不是動態計算的邏輯），沒有需要另外用瀏覽器模擬子路徑部署情境的必要；真正的「點下去到底能不能回首頁」還是要等正式站更新後在手機/電腦上實測一次，或用 `npx serve dist` 之類的方式在本機模擬（沙盒沒有瀏覽器沒辦法自己點）。
+- 沒有動到其他檔案（`index.html`／`main.ts`／`vite.config.ts` 都不需要改），也沒有執行任何 git 操作。
+
 ### 9.133 使用者回報：Voice Lab「返回學習主站」連結失效，撰寫 handoff（2026-09-30）
 
 使用者在正式站回報：進入語音比較實驗室後沒辦法返回平台首頁。排查發現 `app/src/voiceLab.ts` 第 212 行的返回連結寫死 `href="/"`（絕對路徑），會導到網域根目錄 `https://78vince.github.io/`，不是專案子路徑 `https://78vince.github.io/english-for-kids/`——正式站是部署在 GitHub Pages 專案子路徑，`vite.config.ts` 本來就有 `base: "./"` 的既有慣例（註解寫明是為了 GitHub Pages 子路徑），`voiceLab.ts` 這個連結沒有遵守，是單純的疏漏。
