@@ -165,6 +165,17 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.153 App 端執行：修正首頁主題卡片漏算 Stage E 會話練習（2026-09-30）
+
+依 `docs/handoff-prompt-topic-card-stage-count-missing-conversation.md`（對應 9.152）執行。
+
+- **修法完全照 handoff 給的方案**：`app/src/main.ts` 的 `ALL_STAGE_KEYS` 常數補上 `"conversation"`（從 6 個題型變成 7 個），註解「四種題型」／「六種題型」的過時文字一併改成正確的「七種題型」。分母 `ALL_STAGE_KEYS.length` 本來就是動態算的，卡片渲染邏輯（`buildTopicCard`）完全不用改，補完常數畫面就會自動變成「X / 7」。
+- **grep 確認影響範圍**：`ALL_STAGE_KEYS` 在整個 `app/src` 底下只有 `main.ts` 這一處定義、`countChallengedStages()` 這一個函式用到，跟 handoff 描述的影響範圍一致，沒有漏掉其他引用點。
+- **新增 `app/scripts/verify-topic-card-stage-count.ts`**（照 handoff 建議做的防呆，這是第二次發生「新增題型忘了同步這個清單」的狀況）：讀 `progress.ts` 的 `StageKey` 型別定義跟 `main.ts` 的 `ALL_STAGE_KEYS` 常數兩邊的原始碼字串，逐一比對成員是否完全一致（數量、內容都要對得上），不一致就直接讓驗證失敗並印出具體缺了哪個題型；另外確認卡片文案／進度條的分母寫法確實是 `ALL_STAGE_KEYS.length`（動態算）而不是寫死的數字。`main.ts` 因為用了 `import.meta.glob` 沒辦法直接 import 執行，這裡比照 `verify-menu-progress-tier.ts` 等既有腳本的做法，直接讀原始碼字串做正規表示式比對。
+- **驗證**：`tsc --noEmit`、全部既有 `verify-*.ts`（含新增的 `verify-topic-card-stage-count.ts`，測試 1／2／3 皆通過：`StageKey` 型別跟 `ALL_STAGE_KEYS` 都正確涵蓋 7 種題型且完全一致、卡片渲染邏輯確認用動態分母）都通過；`npm run build` 通過，grep 打包後的 `dist/assets/main-*.js` 確認「種題型已挑戰過」字串跟 `"conversation"` 都有進到 bundle；重新用 `build-content-review.mjs`／`build-dashboard.mjs`／`build-standalone-demo.mjs` 重新產生示範頁面並複製到專案根目錄。
+- **沒辦法在沙盒裡驗證的部分**：實際畫面上「X / 7 種題型已挑戰過」的文字跟進度條視覺效果，需要使用者實機選一個已經玩過全部 7 種題型（含 Stage E）的主題確認顯示「7 / 7」、選一個還沒玩 Stage E 的主題確認顯示「6 / 7」。
+- 沒有執行任何 git 操作。
+
 ### 9.152 使用者回報：首頁主題卡片「X / 6 種題型已挑戰過」漏算 Stage E，撰寫 handoff（2026-09-30）
 
 使用者截圖回報首頁主題卡片顯示「6 / 6 種題型已挑戰過」，但主題其實已經有 7 種題型（字卡暖身＋Stage A～D＋Stage E 會話練習）。

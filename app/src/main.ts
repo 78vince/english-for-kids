@@ -1219,8 +1219,12 @@ function renderAddProfileConfirm(): void {
 
 // ---- 選擇主題：先選一個主題，才知道要玩哪一份 vocab/sentences/passage ----
 
-/** 統計某個主題四種題型裡，有幾種已經挑戰過（timesCompleted > 0），當作選主題畫面上的小提示。 */
-const ALL_STAGE_KEYS: StageKey[] = ["flashcards", "matching", "ordering", "fillBlank", "choice", "capstone"];
+/** 統計某個主題七種題型裡，有幾種已經挑戰過（timesCompleted > 0），當作選主題畫面上的小提示。
+ * 2026-09-30 使用者回饋：首頁卡片寫「6 / 6 種題型已挑戰過」，但主題其實有 7 種（字卡暖身、
+ * Stage A～D 四種＋Stage E 會話練習）——這個陣列在新增 Stage E 會話練習時忘了同步補上
+ * "conversation"，導致分子分母都少算一項。`StageKey` 型別（progress.ts）跟
+ * `computeCompletedTopics()` 都早就正確把 "conversation" 算進去了，只有這裡漏掉。 */
+const ALL_STAGE_KEYS: StageKey[] = ["flashcards", "matching", "ordering", "fillBlank", "choice", "capstone", "conversation"];
 
 function countChallengedStages(profileId: string, fileKey: string): number {
   return ALL_STAGE_KEYS.filter((k) => getStageProgress(profileId, fileKey, k) !== null).length;
