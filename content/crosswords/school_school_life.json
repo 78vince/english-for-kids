@@ -1,0 +1,58 @@
+{
+  "id": "crossword.school.school_life",
+  "topicFileKey": "school",
+  "title": "學校生活",
+  "hintZh": "單字包括：尺、圖書館、學生、書桌、鉛筆、學校喔！",
+  "gridWidth": 6,
+  "gridHeight": 10,
+  "words": [
+    {
+      "vocabId": "voc.school.009",
+      "en": "RULER",
+      "zh": "尺",
+      "row": 5,
+      "col": 1,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.school.015",
+      "en": "LIBRARY",
+      "zh": "圖書館",
+      "row": 0,
+      "col": 5,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.school.003",
+      "en": "STUDENT",
+      "zh": "學生",
+      "row": 3,
+      "col": 2,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.school.011",
+      "en": "DESK",
+      "zh": "書桌",
+      "row": 3,
+      "col": 0,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.school.006",
+      "en": "PENCIL",
+      "zh": "鉛筆",
+      "row": 8,
+      "col": 0,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.school.001",
+      "en": "SCHOOL",
+      "zh": "學校",
+      "row": 0,
+      "col": 0,
+      "direction": "across"
+    }
+  ]
+}

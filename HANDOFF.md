@@ -165,6 +165,62 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.144 填字遊戲第二批內容——新增 7 個主題題庫（2026-09-30）
+
+使用者詢問「填字遊戲，我們會需要製作多少主題題庫？」，說明目前模型是「一個主題一份題庫，關卡難度靠同一份單字表的挖空比例調整（40%／65%／85-90%）」，並建議先做第二批 5-8 個生活常用單字量較多的主題，而不是一次把全部約 30 個可行主題做完。使用者確認：**「5-8 個主題、開始生成下一批題庫」**。
+
+- **選題**：family（我的家人）、food_drink（食物與飲料）、school（學校生活）、animals_insects（動物朋友）、clothing_accessories（穿搭配件）、transportation（交通工具）、parts_of_body（身體部位），共 7 個主題，皆確認對應 vocab 檔全部單字 `status: "published"`（15～31 字不等）。
+- **產生方式**：沿用 9.135／9.137 的離線排版產生器（Python，非 App 執行期運算），這次針對 9.137 App 端實機測試抓出的 bug 類別（相鄰但不相關的字母無意間排成看得懂的字串，例如「BFR」「ELO」）額外強化，新增三項強制檢查，任何一項沒過就整份重算：
+  1. `check_connected()`——所有單字要透過共用格子彼此連通成一個整體，不能有孤立單字。
+  2. `has_same_direction_overlap()`——**這次新抓到的一類 bug**：兩個「同方向」（都橫排或都直排）的單字，不能有任何格子重疊。原因：`school` 主題原本想放 PEN 跟 PENCIL、`parts_of_body` 主題原本想放 EYE 跟 EYEBROW，這兩組短字剛好是長字的字首，排版演算法只檢查「重疊格子字母要一致」（沒問題，因為前幾個字母真的一樣），結果讓 PEN 整個字完全疊在 PENCIL 的前 3 格、EYE 整個字完全疊在 EYEBROW 的前 3 格——變成畫面上兩個「不同的單字」占用完全相同的格子範圍，邏輯上說不通。修法：兩個候選字若同方向且有任何格子交集，直接判定排版不合法，重新排版；`school` 排除 PEN、`parts_of_body` 排除 EYEBROW，各自保留另一個字（PENCIL／EYE）。
+  3. `check_no_accidental_fragments()`——對應 9.137 的「BFR/ELO」bug 類別，逐一檢查網格裡每一段「橫向或縱向連續 ≥2 格的填字區塊」是否剛好對應「某一個宣告的單字」，不容許不小心排出的無意義字母片段。
+- **7 份最終題庫**（皆已通過上述三項檢查＋原有的字母衝突檢查，零衝突、全連通、無同方向重疊、無意外片段）：
+  - `content/crosswords/family_my_family.json`：GROW／DAUGHTER／AUNT／SISTER／COUSIN／FATHER，8×6 網格
+  - `content/crosswords/food_drink_food_and_drink.json`：WATER／APPLE／BREAD／BANANA／CAKE／EGG，9×5 網格
+  - `content/crosswords/school_school_life.json`：RULER／LIBRARY／STUDENT／DESK／PENCIL／SCHOOL，5×10 網格（PEN 因故排除，理由見上）
+  - `content/crosswords/animals_insects_animal_friends.json`：SNAKE／MICE／HORSE／BEE／DOG／CAT，5×7 網格
+  - `content/crosswords/clothing_accessories_outfit.json`：PANTS／HAT／SKIRT／WEAR／COAT／SHOES，9×5 網格
+  - `content/crosswords/transportation_vehicles.json`：TAXI／TRUCK／SHIP／BIKE／CAR／BUS，7×6 網格
+  - `content/crosswords/parts_of_body_body_parts.json`：EYE／HEAD／ARM／MOUTH／LEG／FEET，5×5 網格（EYEBROW 因故排除，理由見上）
+- **`hintZh` 文案清理**：組成提示句時發現部分單字的 `zh` 欄位（直接取自對應 `content/vocab/*.json`，該欄位本身給單字卡／總覽頁用途沒有問題）帶有給學習用的附註，直接接進「單字包括：...」的提示句會很拗口，例如 FATHER 是「爸爸（= dad; daddy）」、MICE 是「老鼠（複數）」、WEAR 是「穿、戴（狀態）」、FEET 是「腳（複數，foot 的不規則複數）」。這些附註只在各主題 `vocab.json` 裡保留（維持原本用途與可追溯性，未改動），**只有這 7 份題庫檔案自己的 `hintZh` 組成句**做了簡化：有頓號「、」的取第一個念法，結尾有「（...）」附註的整段去掉（例如「爸爸（= dad; daddy）」→「爸爸」、「老鼠（複數）」→「老鼠」、「穿、戴（狀態）」→「穿」、「腳（複數，foot 的不規則複數）」→「腳」），每個單字項目自己的 `zh` 欄位（`words[].zh`，題庫 JSON 內部）維持跟來源 vocab 一致未改動。
+- **確認不需要 App 端任何程式改動**：讀了 `app/src/content.ts` 確認 `content/crosswords/*.json` 是用 `import.meta.glob("../../content/crosswords/*.json", { eager: true, import: "default" })` 全部讀進 `CROSSWORDS` 陣列（跟 vocab／sentences 同一套模式，程式碼註解也寫明新增檔案不用改程式），且填字遊戲在遊戲室選單裡是「扁平的單一入口」（`content/games/games.json` 只有一個 `crossword` 項目，用 `status` 決定要不要顯示），不是像 Stage E 會話練習那樣「每個主題各自判斷是否有內容才顯示選項」——所以這批新增的 7 份題庫檔案上傳之後即可自動被讀到、自動可玩，不需要另外寫 handoff 給 App 端。
+- **驗證**：對 8 份題庫檔案（含既有的 `houses_apartments_living_space.json`）逐一重跑「字母衝突、連通性、同方向重疊、意外片段」四項程式化檢查，全部通過（皆為直接讀取最終寫入磁碟的 JSON 檔案驗證，不是只驗證產生時的記憶體內資料）。
+- **後續**：待使用者決定是否繼續往全部約 30 個可行主題擴充（排除單元七 11 個文法類主題），或維持目前規模；若繼續，沿用同一套產生器與三項檢查即可。
+
+### 9.143 App 端執行：修正填字遊戲網格仍超出畫面＋紅框改成整字一框（2026-09-30）
+
+使用者截圖回報兩件事：一、9.142 修完之後畫面還是超出範圍；二、答對後的紅框是「每個字母各自一框」，希望改成「整個單字一個框」。
+
+- **問題一根因（9.142 沒修乾淨的地方）**：`crosswordStandalone.css` 的 `.crossword-grid` 設了 `gap: 4px`（格子之間的間距），但 `crosswordStandalone.ts` 算網格容器的 `width`／`height` 時，只用了「格子邊長 × 格數」，沒有把 `gap × (格數-1)` 這段額外空間也算進去——容器實際需要的高度比程式算出來的還多，最後一列格子因此超出容器自己宣告的高度，被 `.crossword-board` 的 `overflow:hidden` 切掉一截。`fitGridToViewport()` 反推「目前格子邊長」時也是同樣的漏算，導致整套縮放邏輯從一開始量測的基準就是錯的。修法：新增 `GRID_GAP_PX = 4` 常數（跟 CSS 那份數字對齊維護），拆出 `applyGridSize(cellPx)` 統一負責設定 `grid-template-columns／rows` 跟容器 `width／height`（兩者都正確加上 gap 那一段），`fitGridToViewport()` 反推目前格子邊長時也同步扣掉 gap 佔用的高度，這樣量測跟設定用的是同一套正確公式，不會再有落差。順便補上「寬度也要顧到」：新增量測 `board` 實際可用寬度（扣掉左右 padding），如果目前格子邊長讓網格總寬度超出可用寬度（例如小尺寸手機），先縮小寬度方向，再處理高度是否超出可視範圍，避免只顧到某一個方向。
+- **問題二**：原本的做法是讓單字裡每一格各自套用 `.crossword-cell--word-complete` 這個 class，各自畫一圈紅框，相鄰格子的框疊在一起雖然外觀像一個大框，但因為是「每格各自的框」，格子邊界之間還是會看到多餘的疊線。改法：不再幫個別格子加樣式，改成新增 `renderWordCompleteBoxes()`，用「格子邊長＋間距」精算出整個單字（不管幾個字母、橫向或縱向）在網格裡的實際像素範圍，額外畫一個絕對定位的 `.crossword-word-complete-box` 覆蓋在那個範圍上面（`pointer-events:none` 不擋拖曳判定，`box-sizing:border-box` 確保框線畫在算好的範圍「裡面」不會位移）——這樣不管單字幾個字母，視覺上都是一個乾淨的框，格子內部完全沒有多餘的線。這個函式在初次渲染格子後呼叫一次，`fitGridToViewport()` 縮放格子尺寸之後也會重新呼叫一次（因為紅框的像素座標跟著格子邊長變動，縮放後如果不重算，紅框位置會對不齊新的格子位置）。
+- **驗證**：`tsc --noEmit`、全部既有 `verify-*.ts` 都通過；額外寫了一段獨立的 Node 腳本驗算 gap 相關的像素公式（`width = cellPx×gridWidth + gap×(gridWidth-1)`，用這個公式算出的高度反推回 cellPx 要能還原成原本的數字），確認往返運算沒有誤差；`npm run build` 通過，grep 打包後的 `dist/assets/crossword-*.js`／`*.css` 確認新的 `crossword-word-complete-box` class 名稱有進到 bundle、舊的 `crossword-cell--word-complete`（每格各自一框那版）已經完全清除、`getComputedStyle`（量測 board 寬度用到的 API）有進到 bundle；重新用 `build-content-review.mjs`／`build-dashboard.mjs`／`build-standalone-demo.mjs` 重新產生示範頁面並複製到專案根目錄。
+- **沒辦法在沙盒裡驗證的部分**：這是這一項排版尺寸問題第三輪修正了，每一輪都只能靠程式碼審查跟公式推導抓根因，沒有瀏覽器沒辦法實際看到渲染結果，這次改用「明確 px 數字＋正確的 gap 公式」取代先前依賴 CSS 自動運算比例的寫法，理論上更可靠，但最終還是要使用者實機重新試玩一次確認：答題區真的完整顯示不用捲動、答對後的紅框是一個乾淨的框圍住整個單字（不是每個字母各自一框）。如果這輪還是沒修好，麻煩下次回報時盡量附上「這台裝置的螢幕尺寸／瀏覽器種類」，方便判斷是不是特定螢幕比例才會出現的邊界情況。
+- 沒有執行任何 git 操作。
+
+### 9.142 App 端執行：修正 9.141 的修法把答題區切掉一截的問題（2026-09-30）
+
+使用者截圖回報：9.141 修完「需要捲動」的問題後，畫面變成更糟——FLOOR 那一列格子被硬生生切成一半，下半部完全看不到，字母區反而正常顯示在被切開的格子下方，紅框標記處剛好就是 `.crossword-board` 的下邊界。
+
+**根因**：9.141 用 CSS `aspect-ratio` 搭配 `max-height:58vh` 想讓瀏覽器自動縮放整個網格（設計理念是模仿圖片 `object-fit: contain` 那種「兩個方向都不超框、自動抓最大合適尺寸」的效果）。但這個技巧只有瀏覽器對「替換元素」（img、video 這類本身有固有比例、渲染引擎知道怎麼整體縮放的元素）才會完整套用；一般 `<div>` 搭配 CSS Grid 排版，`aspect-ratio` 只會用來算「還沒填的那個維度該多大」，並不會回頭去校正另一個已經定案的維度，所以最終算出來的容器尺寸（寬 420px、高被 `max-height` 夾到某個值）其實已經破壞了原本要求的長寬比；更嚴重的是 `.crossword-cell` 自己也另外寫了一份 `aspect-ratio:1/1`，CSS Grid／Flexbox 規範裡「格子最小尺寸預設等於它自己想要的大小」（`min-size:auto`）這條規則，讓每個格子拒絕縮小到比它認定的正方形更小的尺寸，於是格子們撐出來的實際總高度還是超過容器被夾住的高度，超出的部分被 `.crossword-board` 的 `overflow:hidden` 直接切掉——比原本「需要捲動至少還看得到全部內容」的體驗更差（內容直接消失）。
+
+- **修法：完全改用 JS 明確計算像素尺寸，不再依賴 CSS `aspect-ratio` 這類讓瀏覽器自動運算比例的相對寫法。** `crosswordStandalone.ts` 的 `render()` 一開始先用「保守預設格子邊長」（依這一關的欄數換算，夾在 24px～84px 之間）直接把 `grid-template-columns`／`grid-template-rows`／`width`／`height` 全部設成明確的 px 數字（不是 `1fr` 或 `%`），格子的正方形完全是靠這組明確的 px 軌道尺寸保證，不再靠任何一層 `aspect-ratio`。等整頁（標題、進度文字、網格、字母區、提示文字、頁尾按鈕）全部排版完成、`syncProgress()`／`syncFooter()` 都跑完之後，新增的 `fitGridToViewport()` 會量測 `document.documentElement.scrollHeight`（整頁實際高度）有沒有超過 `window.innerHeight`（這個 iframe 頁面自己的可視高度——iframe 是獨立的瀏覽情境，這裡量到的是 iframe 本身的視窗高度，不是外層 App 頁面的），超出的話直接反推「網格要縮小多少 px」，重新寫回明確的 `grid-template-columns`／`rows`／`width`／`height`（保留 16px 安全邊界避免四捨五入誤差、24px 最小格子尺寸下限避免縮到看不清楚字母／點不準），確保縮完之後整頁高度剛好落在可視範圍內。
+- `crosswordStandalone.css` 同步移除 `.crossword-grid` 的 `aspect-ratio: 1/1`、`max-height: 58vh`、`max-width: 420px`（這些通通交給 JS 算好的明確 px 數字取代，不再需要任何比例／相對尺寸規則）；`.crossword-cell` 也移除 `aspect-ratio: 1/1`，改成明確寫 `min-width: 0; min-height: 0;`——確保格子一定會乖乖縮到 grid 軌道給的實際尺寸，不會再有自己的「最小尺寸主張」跟 `fitGridToViewport()` 算出來的縮小結果打架。
+- **驗證**：`tsc --noEmit`、全部既有 `verify-*.ts` 都通過；`npm run build` 通過，grep 打包後的 `dist/assets/crossword-*.js` 確認 `scrollHeight`／`innerHeight`（`fitGridToViewport()` 用到的量測 API，函式本身名稱在 minify 後會被改掉，所以改用這兩個不會被改名的瀏覽器原生 API 字串來確認邏輯有進到 bundle）都有進到最終產出，grep `dist/assets/crossword-*.css` 確認 `aspect-ratio`／`max-height:58vh` 這兩個造成問題的寫法都已經完全移除；重新用 `build-content-review.mjs`／`build-dashboard.mjs`／`build-standalone-demo.mjs` 重新產生示範頁面並複製到專案根目錄。
+- **沒辦法在沙盒裡驗證的部分**：這次改法依賴 `document.documentElement.scrollHeight` 跟 `window.innerHeight` 這兩個瀏覽器 API 在真實 iframe 環境裡量出來的數字是否準確反映「使用者看到的可視範圍」——不同手機瀏覽器（尤其 iOS Safari 的網址列/工具列會動態顯示/隱藏，影響 `innerHeight` 的即時數值）算出來的縮放結果可能有落差，這點沒辦法在沒有瀏覽器的沙盒裡確認，需要使用者實機重新試玩一次，確認這次真的不用捲動、格子也沒有被切掉一截。
+- 沒有執行任何 git 操作。
+
+### 9.141 App 端執行：修正填字遊戲網格超出畫面需要捲動的問題（2026-09-30）
+
+使用者截圖回報：9.139 把居家空間關卡改成 5 欄×8 列（窄長形狀）之後，遊戲畫面裡的格子超出可視範圍，要往下捲動才看得到剩下的格子跟字母區。
+
+**根因**：`crosswordStandalone.css` 的 `.crossword-grid` 從一開始（9.136）就寫死 `aspect-ratio: 1 / 1`，隱含假設「排版一定是正方形」——在舊排版（5×5、9×6 這種寬高比較接近的形狀）底下沒被注意到，但 9.139 改成 5×8 這種明顯窄長的排版後，這個寫死的正方形比例硬把一個「該是長方形」的網格塞進正方形的框，換算下來 8 列格子疊起來的實際高度遠超過容器原本設定的 420px 寬度（也就是原本假設的高度），超出的部分只能靠捲動看到。
+
+- **修正**：`crosswordStandalone.ts` 的 `render()` 改成依照這一關實際的 `crossword.gridWidth`／`gridHeight` 動態設定 `grid.style.aspectRatio = \`${gridWidth} / ${gridHeight}\`;`，不再假設一定是正方形；`crosswordStandalone.css` 的 `.crossword-grid` 額外補上 `max-height: 58vh`（CSS 的 `aspect-ratio` 搭配同時存在的 `max-width` 跟 `max-height`，瀏覽器會自動算出「兩個方向都不超框」的最大尺寸，效果類似圖片的 `object-fit: contain`），這樣不管之後 content 端排出正方形、長方形還是窄長形的關卡，整個網格都會自動縮放到完整顯示在遊戲畫面裡，不用使用者捲動；`.crossword-cell` 本身也還留著 `aspect-ratio: 1/1`，因為現在網格整體比例已經跟實際欄數/列數一致，格子計算出來的寬高本來就會剛好相等，這個保險不會造成衝突。
+- **執行時順便發現的插曲**：修正過程中重新跑 `tsc --noEmit` 一度出現 `main.ts` 找不到 `BUBBLE_POP_ICON`／`renderBubblePop` 沒被使用等錯誤——這是另一個並行處理中的「戳泡泡」（Bubble Pop）功能正在同時編輯 `main.ts` 造成的暫時性不一致狀態，跟這次要修的填字遊戲問題無關；等了一下該功能的編輯完成後重跑 `tsc --noEmit` 就恢復正常，這裡沒有對 `main.ts`／戳泡泡相關程式碼做任何實質修改，純粹是巧合撞見別人施工中的暫時狀態。
+- **驗證**：`tsc --noEmit`、全部既有 `verify-*.ts` 都通過（含戳泡泡新增的驗證腳本，這批不是這次修正的內容，但因為同一輪 build 跑過一起確認沒有互相影響）；`npm run build` 通過，grep 打包後的 `dist/assets/crossword-*.js` 確認 `aspectRatio` 這個 inline style 屬性設定有進到 bundle、`dist/assets/crossword-*.css` 確認 `max-height:58vh` 有進到最終產出；重新用 `build-content-review.mjs`／`build-dashboard.mjs`／`build-standalone-demo.mjs` 重新產生示範頁面並複製到專案根目錄。
+- **沒辦法在沙盒裡驗證的部分**：`aspect-ratio` 搭配 `max-width`／`max-height` 這種「雙向自動縮放取最小值」的排版行為，雖然是標準 CSS 規格的既有支援（不是實驗性功能），但實際在手機瀏覽器上縮放出來的字級/觸控熱區大小是否還夠大、`58vh` 這個高度上限數字在不同手機螢幕比例下觀感如何，仍建議使用者實機重新試玩一次確認，不需要再捲動看到完整網格。
+- 沒有執行任何 git 操作。
+
 ### 9.140 使用者提議 Stage E 會話練習新增「練習模式」（模糊中文），撰寫 handoff（2026-09-30）
 
 使用者希望 Stage E 會話練習新增「練習模式」，打開後把中文翻譯模糊。用 `AskUserQuestion` 確認範圍：只模糊聊天記錄裡已說過的台詞中文，還是連這一輪答題選項的中文也一起模糊——使用者選擇**兩者都要**（進階挑戰模式）。

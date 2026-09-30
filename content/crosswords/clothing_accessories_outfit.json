@@ -1,0 +1,58 @@
+{
+  "id": "crossword.clothing_accessories.outfit",
+  "topicFileKey": "clothing_accessories",
+  "title": "穿搭配件",
+  "hintZh": "單字包括：褲子、帽子、裙子、穿、外套、鞋子喔！",
+  "gridWidth": 5,
+  "gridHeight": 9,
+  "words": [
+    {
+      "vocabId": "voc.clothing_accessories.002",
+      "en": "PANTS",
+      "zh": "褲子",
+      "row": 2,
+      "col": 0,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.clothing_accessories.007",
+      "en": "HAT",
+      "zh": "帽子",
+      "row": 0,
+      "col": 3,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.clothing_accessories.004",
+      "en": "SKIRT",
+      "zh": "裙子",
+      "row": 2,
+      "col": 4,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.clothing_accessories.017",
+      "en": "WEAR",
+      "zh": "穿、戴（狀態）",
+      "row": 0,
+      "col": 1,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.clothing_accessories.008",
+      "en": "COAT",
+      "zh": "外套",
+      "row": 6,
+      "col": 1,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.clothing_accessories.005",
+      "en": "SHOES",
+      "zh": "鞋子",
+      "row": 4,
+      "col": 2,
+      "direction": "down"
+    }
+  ]
+}

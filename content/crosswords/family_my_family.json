@@ -1,0 +1,58 @@
+{
+  "id": "crossword.family.my_family",
+  "topicFileKey": "family",
+  "title": "我的家人",
+  "hintZh": "單字包括：成長、女兒、阿姨、姐姐、堂（表）兄弟姊妹、爸爸喔！",
+  "gridWidth": 6,
+  "gridHeight": 8,
+  "words": [
+    {
+      "vocabId": "voc.family.013",
+      "en": "GROW",
+      "zh": "成長、長大",
+      "row": 7,
+      "col": 2,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.family.006",
+      "en": "DAUGHTER",
+      "zh": "女兒",
+      "row": 0,
+      "col": 3,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.family.001",
+      "en": "AUNT",
+      "zh": "阿姨、姑姑、伯母、舅媽",
+      "row": 2,
+      "col": 2,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.family.019",
+      "en": "SISTER",
+      "zh": "姐姐、妹妹",
+      "row": 5,
+      "col": 0,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.family.003",
+      "en": "COUSIN",
+      "zh": "堂（表）兄弟姊妹",
+      "row": 2,
+      "col": 0,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.family.008",
+      "en": "FATHER",
+      "zh": "爸爸（= dad; daddy）",
+      "row": 0,
+      "col": 5,
+      "direction": "down"
+    }
+  ]
+}

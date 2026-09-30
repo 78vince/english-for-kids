@@ -1,0 +1,58 @@
+{
+  "id": "crossword.transportation.vehicles",
+  "topicFileKey": "transportation",
+  "title": "交通工具",
+  "hintZh": "單字包括：計程車、卡車、大船、腳踏車、汽車、公車喔！",
+  "gridWidth": 6,
+  "gridHeight": 7,
+  "words": [
+    {
+      "vocabId": "voc.transportation.005",
+      "en": "TAXI",
+      "zh": "計程車",
+      "row": 2,
+      "col": 2,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.transportation.006",
+      "en": "TRUCK",
+      "zh": "卡車",
+      "row": 2,
+      "col": 2,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.transportation.009",
+      "en": "SHIP",
+      "zh": "大船",
+      "row": 0,
+      "col": 5,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.transportation.004",
+      "en": "BIKE",
+      "zh": "腳踏車",
+      "row": 6,
+      "col": 0,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.transportation.001",
+      "en": "CAR",
+      "zh": "汽車",
+      "row": 3,
+      "col": 0,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.transportation.002",
+      "en": "BUS",
+      "zh": "公車",
+      "row": 0,
+      "col": 3,
+      "direction": "across"
+    }
+  ]
+}

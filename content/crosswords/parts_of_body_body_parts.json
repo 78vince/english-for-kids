@@ -1,0 +1,58 @@
+{
+  "id": "crossword.parts_of_body.body_parts",
+  "topicFileKey": "parts_of_body",
+  "title": "身體部位",
+  "hintZh": "單字包括：眼睛、頭、手臂、嘴巴、腿、腳喔！",
+  "gridWidth": 5,
+  "gridHeight": 7,
+  "words": [
+    {
+      "vocabId": "voc.parts_of_body.003",
+      "en": "EYE",
+      "zh": "眼睛",
+      "row": 1,
+      "col": 0,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.parts_of_body.001",
+      "en": "HEAD",
+      "zh": "頭",
+      "row": 0,
+      "col": 2,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.parts_of_body.009",
+      "en": "ARM",
+      "zh": "手臂",
+      "row": 2,
+      "col": 2,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.parts_of_body.006",
+      "en": "MOUTH",
+      "zh": "嘴巴",
+      "row": 2,
+      "col": 4,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.parts_of_body.010",
+      "en": "LEG",
+      "zh": "腿",
+      "row": 0,
+      "col": 0,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.parts_of_body.020",
+      "en": "FEET",
+      "zh": "腳（複數，foot 的不規則複數）",
+      "row": 5,
+      "col": 1,
+      "direction": "across"
+    }
+  ]
+}

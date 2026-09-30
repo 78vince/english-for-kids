@@ -1,0 +1,58 @@
+{
+  "id": "crossword.food_drink.food_and_drink",
+  "topicFileKey": "food_drink",
+  "title": "食物與飲料",
+  "hintZh": "單字包括：水、蘋果、麵包、香蕉、蛋糕、蛋喔！",
+  "gridWidth": 5,
+  "gridHeight": 9,
+  "words": [
+    {
+      "vocabId": "voc.food_drink.008",
+      "en": "WATER",
+      "zh": "水",
+      "row": 4,
+      "col": 0,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.food_drink.001",
+      "en": "APPLE",
+      "zh": "蘋果",
+      "row": 0,
+      "col": 3,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.food_drink.003",
+      "en": "BREAD",
+      "zh": "麵包",
+      "row": 0,
+      "col": 0,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.food_drink.002",
+      "en": "BANANA",
+      "zh": "香蕉",
+      "row": 3,
+      "col": 1,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.food_drink.013",
+      "en": "CAKE",
+      "zh": "蛋糕",
+      "row": 6,
+      "col": 0,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.food_drink.006",
+      "en": "EGG",
+      "zh": "蛋",
+      "row": 6,
+      "col": 3,
+      "direction": "down"
+    }
+  ]
+}

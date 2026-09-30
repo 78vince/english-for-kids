@@ -1,0 +1,58 @@
+{
+  "id": "crossword.animals_insects.animal_friends",
+  "topicFileKey": "animals_insects",
+  "title": "動物朋友",
+  "hintZh": "單字包括：蛇、老鼠、馬、蜜蜂、狗、貓喔！",
+  "gridWidth": 7,
+  "gridHeight": 5,
+  "words": [
+    {
+      "vocabId": "voc.animals_insects.026",
+      "en": "SNAKE",
+      "zh": "蛇",
+      "row": 3,
+      "col": 2,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.animals_insects.018",
+      "en": "MICE",
+      "zh": "老鼠（複數）",
+      "row": 0,
+      "col": 6,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.animals_insects.015",
+      "en": "HORSE",
+      "zh": "馬",
+      "row": 0,
+      "col": 2,
+      "direction": "down"
+    },
+    {
+      "vocabId": "voc.animals_insects.003",
+      "en": "BEE",
+      "zh": "蜜蜂",
+      "row": 4,
+      "col": 0,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.animals_insects.009",
+      "en": "DOG",
+      "zh": "狗",
+      "row": 1,
+      "col": 1,
+      "direction": "across"
+    },
+    {
+      "vocabId": "voc.animals_insects.006",
+      "en": "CAT",
+      "zh": "貓",
+      "row": 2,
+      "col": 4,
+      "direction": "down"
+    }
+  ]
+}
