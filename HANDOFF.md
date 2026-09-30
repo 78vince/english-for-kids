@@ -165,6 +165,54 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.138 使用者提議遊戲室第三款遊戲：戳泡泡（Bubble Pop，顏色主題），撰寫企劃與 handoff（2026-09-30）
+
+使用者提出企劃：泡泡裡有字母，依中文顏色提示依序點破拼出正確單字，答錯的泡泡往隨機方向飄移（不消失、可再點），要規劃關卡機制，視覺走天空白雲插畫風格。開始處理前先重新驗證了 9.136/9.137 調整過的填字遊戲網格（9×6、只留一個交疊點）——確認這是刻意設計，用來避免像舊版 5×5 排法那樣出現「BFR」「ELO」這類無意義相鄰字母片段（見 9.137 問題 5 排查），不是疏漏，不需要處理。
+
+已直接完成的內容工作：
+- `content/games/games.json` 新增 `bubble_pop` 一筆，`status` 先設 `"coming_soon"`。
+- `docs/image-prompt-bubble-pop-background.md`：天空＋白雲插畫背景的圖片生成提示詞，風格比照既有情境插畫但换成純氛圍背景（無角色、無敘事），特別提醒構圖中下段要留白低對比,避免蓋掉之後疊加的泡泡跟文字。
+
+寫好完整實作 handoff 交給 App 端：見 `docs/handoff-prompt-bubble-pop-game.md`。第三款遊戲一樣直接沿用前兩款已經確立的「獨立 iframe＋`gameBridge.ts`」架構。內容涵蓋：
+- 單字範圍明確列出 `content/vocab/colors.json` 裡 14 個純顏色詞的 vocabId 對照表（排除 light／dark／bright／colorful 等修飾詞跟畫筆/剪刀等美術用品詞彙，這個檔案雖然檔名是 colors 但因為先前主題擴充已經混雜了非顏色詞彙）。
+- 提示詞顯示邏輯：`zh` 欄位要去掉結尾的「的」字才乾淨顯示。
+- 依序拼字判定邏輯（`popBubble()`：比對「目前該拼的字母」，對了才消掉累加進度，錯了觸發飄移事件但不移除泡泡）。
+- 比照前兩款「一局三關」節奏的關卡設計：字母數＋干擾泡泡數隨關卡遞增（3-4字/+4 → 5字/+6 → 6字/+8）。
+- 明確提醒：不要把難度值/干擾字母數這些數字自己調整手感，也不要把 light/dark/bright/colorful 這些非純顏色詞混進答案範圍。
+
+### 9.137 App 端執行：修正填字遊戲實機試玩回報的 7 個 bug（2026-09-30）
+
+使用者在真機（手機）實際試玩 9.136 剛上線的填字遊戲後，用 6 張截圖＋1 張參考圖回報 7 個問題。逐一排查與修正如下：
+
+- **問題 1／2／3／4／6（拖曳不流暢、卡頓、答錯/放手時字母跑到畫面左下角、答對後格子裡字母沒有置中對齊、換關卡時上一關的字母沒清除）——這五個表面症狀其實是同一個根本原因**：`crosswordStandalone.ts` 原本的 `makeTileDraggable()` 在 `pointerdown` 時把字母磚 `document.body.appendChild(tileEl)` 重新掛到 `<body>` 底下（這樣拖曳時磚才能疊在所有元素最上層、不被格子或其他 UI 擋住），但 `render()` 每次重繪只會清空 `#crossword-app` 這個容器的 `innerHTML`，磚被重新掛到 `<body>` 之後就徹底脫離了 `render()` 管得到的 DOM 樹——舊的磚元素變成永遠不會被清掉的孤兒節點，留在畫面上原本 `document.body.appendChild` 當下的座標（螢幕左下角，因為 `position:fixed` 預設定位點沒設 `left/top` 時瀏覽器行為造成的視覺結果剛好落在那個角落），這就是使用者看到「字母跑到左下角」的直接原因；換關卡時舊磚元素同樣沒被清掉，就變成「多餘字母殘留」（問題 6）；而拖曳中途的重新掛載／樣式切換造成的 reflow，加上孤兒節點越積越多，就是「不流暢、容易卡頓」的原因（問題 1）。
+  - **修正方式**：完全移除 `document.body.appendChild()` 這一步，拖曳中的磚**保持留在原本的 `tray` 容器裡**，單純用 `position: fixed` 讓它脫離正常文件流、視覺上浮在最上層跟著指標移動（`position: fixed` 本身就足以達到「蓋在所有元素上面」的效果，不需要真的搬動 DOM 節點）；放開手指或點擊落點判斷完之後，`bounceBack()` 只需要把 `position/left/top/width/height` 這幾個 inline style 重設回空字串（`""`），磚就會因為還在原本的 flex 容器（`tray`）裡，自動彈回它在字母區裡原本該在的排列位置——不需要手動記錄/還原 `originParent`／`originNextSibling` 再重新插入。這樣一來 `render()` 的 `app.innerHTML = ""` 清空邏輯就能正常清到這個元素（因為它從頭到尾都沒有離開過被管理的 DOM 子樹），問題 1/2/4/6 一次解決。
+  - 問題 3（答對後格子裡字母沒有置中、排列不整齊）也是同一個修正順便解決：舊寫法答對瞬間磚還頂著 `position:fixed`／`left/top` 這些拖曳中殘留的 inline style 沒有重設乾淨就被視為「放到格子裡」，`game.onChange()` 觸發整段重繪時雖然會重新生成格子內容的 DOM，但殘留的孤兒磚元素本身還飄在畫面上沒被清掉、視覺上疊加在新格子旁邊造成「沒有置中、排列不整齊」的錯覺；拿掉重新掛載＋確實重設 inline style 之後，格子內容完全由 `render()` 重新產生的標準排版負責置中，不會再有殘留元素干擾。
+- **問題 5（題目區橫向出現無意義單字或非答案單字，例如 "BFR"／"ELO" 這種片段）——這是 content 端排版設計的問題，不是程式邏輯的 bug**：`crosswordGame.ts` 原本只驗證「交疊處字母一致」，沒有驗證「網格裡任何一段連續格子（不管橫向還是縱向）本身是不是剛好對應到某個宣告的單字」，導致舊版 `houses_apartments_living_space.json`（5×5、18 格）裡有些不相關單字的格子剛好緊鄰排在同一列/同一欄、彼此之間沒有刻意留空隔開，畫面上讀出來就會冒出一段沒人設計過的字母序列。
+  - **修正方式**：完全重新設計 `content/crosswords/houses_apartments_living_space.json` 的座標排版，改成 9×6 網格、23 個格子，6 個單字（BED／DOOR／FLOOR／ROOF／SOFA／ROOM）之間只保留**唯一一個刻意設計的交疊點**（BED 跟 DOOR 在 `(0,2)` 交疊，字母都是 `D`），其餘單字之間都用空白緩衝格隔開，逐格手動驗證過橫向/縱向每一段連續格子都恰好對應唯一一個宣告單字，不會出現任何意外相鄰片段。
+  - **同時在 `app/scripts/verify-crossword-content.ts` 新增一項防倒退檢查**（避免以後 content 端再不小心排出無意義片段却沒人發現）：掃過網格裡填滿的每一格，分別依「列」跟「欄」分組、找出每一段「連續（座標差 1）、長度 ≥ 2」的格子區間，逐一比對這段區間是不是剛好等於 `words[]` 裡某個宣告單字的起點座標＋方向＋長度；只要有任何一段連續格子沒有對應到剛好一個宣告單字，就直接讓驗證腳本失敗並印出是哪一列/哪一欄、哪個座標區間出的問題，方便之後 content 端排版時提早在離線階段抓到，不用等使用者實機試玩才發現。
+- **問題 7（「居家空間」改成「提示：居家空間」，移除前置 icon，移除場上的裝飾 icon）**：`crosswordStandalone.ts` 內層標題（iframe 裡遊戲本體自己的標題，不是外層帶返回鍵的「填字遊戲」頁首，那個沒有改動）從 `<h1>${CROSSWORD_ICON(...)}${crossword.title}</h1>` 改成純文字 `<h1>提示：${crossword.title}</h1>`，移除 `CROSSWORD_ICON` 的 import 跟使用；同時整段移除 9.136 那版刻意加上的雲朵／亮片星星裝飾插圖（`DECOR_CLOUD`／`DECOR_SPARKLE` 常數、`render()` 裡建立/掛載這兩個裝飾 div 的程式碼，以及 `crosswordStandalone.css` 裡對應的 `.crossword-decor`／`.crossword-decor--tl`／`.crossword-decor--br` 樣式規則），照使用者要求场上完全不留任何裝飾 icon。
+- **驗證**：`tsc --noEmit`、全部既有 `verify-*.ts`（含這次擴充過的 `verify-crossword-content.ts`）都通過；`npm run build` 通過，清空 `dist/` 重新完整建置一次後 grep 打包後的 `dist/assets/crossword-*.js`／`*.css` 確認：`document.body.appendChild` 字串已經不存在、`提示：` 字串有進到 bundle、`crossword-decor` 字串（CSS class 名稱）已經完全清除；重新用 `build-content-review.mjs`／`build-dashboard.mjs`／`build-standalone-demo.mjs` 重新產生 `content-review.html`／`dashboard.html`／`demo-standalone.html` 並複製最新版到專案根目錄。
+- **沒辦法在沙盒裡驗證的部分**：拖曳修正之後實際手感是否真的流暢不卡頓、彈回動畫在真機上的視覺效果、格子置中排列在不同螢幕寬度下是否整齊，這些都需要使用者在真機上重新試玩一次才能確認——這次修正的根本原因（DOM 孤兒節點）只能靠程式碼審查跟邏輯推理找出來，沒有任何既有 verify script 能自動抓到這類純粹跟真實瀏覽器互動相關的 bug，這點跟先前每一款遊戲上線時的既有限制一致。新版排版（9×6、23 格、唯一一個交疊點）已經逐格手動驗證過，理論上不會再出現無意義字母片段，但畫面實際排版效果（例如兩個獨立單字之間的留白間距看起來會不會太空曠）同樣建議實機確認一次。
+- 沒有執行任何 git 操作。
+
+### 9.136 App 端執行：遊戲室第二款遊戲——填字遊戲（Crossword）（2026-09-30）
+
+依 `docs/handoff-prompt-crossword-game.md` 執行，對應 9.135 的企劃。從一開始就照翻牌配對剛遷移好的「獨立 iframe＋`gameBridge.ts`」架構做，不用事後遷移。
+
+- **`app/src/games/crosswordGame.ts`**（新檔，純邏輯引擎，不碰 DOM）：`buildCells()` 把 `Crossword.words` 依座標鋪成網格、算出每格正確字母，交疊處字母不一致直接丟例外（content 端的 `verify-crossword-content.ts` 已經離線把關過，這裡是執行期最後一道保險）。`blankCountForLevel(level, totalCells)` 依 40%／65%／87.5% 三段比例算這一關要挖空幾格，第 3 關額外夾在「總格數 − 2」以內，確保至少留 2 格已知字母當提示錨點（不會出現完全裸猜的情況）。`dropLetter(row, col, tileId)` 判斷對錯：答對固定進格子、從字母區移除、觸發 `onCorrectDrop()`；答錯只累計 `mistakeCount`＋觸發 `onWrongDrop()`，刻意**不**觸發 `onChange()`——讓 renderer 可以自己播放「彈回字母區」的動畫，不會被整段重繪打斷（跟 `memoryMatchGame.ts` 的 `onMismatch` 不觸發整段重繪是同樣的理由）。三關全破時用 `starsForMistakes(mistakeCount)` 把「三關加總的錯誤次數」換算成 1-3 顆星（0-2 次三星／3-5 次二星／6+ 次一星，門檻先照 handoff 給的預設值）。過關/進下一關的節奏比照 `memoryMatchGame.ts` 的 `phase` 狀態機設計思路（這裡簡化成 `playing`／`levelComplete`／`complete` 三態，沒有翻牌配對的「開局記憶倒數」，因為填字遊戲的已知格從一開始就看得到，不需要「先看再蓋牌」這一段）。
+- **`app/src/games/crosswordStandalone.ts`＋`app/games/crossword.html`＋`app/src/games/crosswordStandalone.css`**（新檔）：`vite.config.ts` 的 `rollupOptions.input` 新增 `crossword: "games/crossword.html"`。拖曳互動**刻意不用原生 HTML5 Drag and Drop API**（手機瀏覽器支援度不好，這個 App 主要使用情境是手機），改用 `pointerdown`／`pointermove`／`pointerup` 手動實作：`pointerdown` 把字母磚切成 `position:fixed` 跟著手指/滑鼠移動，`pointerup` 時暫時把磚本身 `display:none` 再用 `document.elementFromPoint()` 判斷底下是哪個格子（不這樣做的話量到的會是磚自己，因為磚目前疊在手指正下方），交給 `game.dropLetter()` 判斷對錯；答對交給 `game.onChange` 整段重繪（不像翻牌配對需要 FLIP 動畫維持既有 DOM 節點，correct drop 之後直接重畫一次最簡單可靠），答錯或沒放到有效格子上就把磚彈回字母區原本位置＋一個小小的 CSS `scale` 彈跳動畫（`crossword-tile--bounce`），不用懲罰性音效或文字。視覺走粉色系（`--color-crossword-pink-*` 系列，從 design tokens 既有的 `--color-accent-pink` 延伸出更深/更淺版本，只有這個遊戲用得到，不影響主站或翻牌配對），跟翻牌配對「每款遊戲有自己視覺風格」的既有結論一致。
+- **裝飾插圖的設計決定（沒有照 handoff 字面上「沿用居家空間情境插畫」做）**：handoff 提到裝飾小插圖可以呼應「居家空間」主題（檯燈、書、窗簾），但 `crosswordStandalone.ts` 這支渲染程式碼是**填字遊戲整個遊戲殼的共用外觀**——之後 content 端擴充其他主題的填字關卡（例如換成食物或動物主題）時會直接沿用同一套殼，不會因為主題換了還要跟著換裝飾美術素材。所以這裡選用跟任何主題內容都不衝突的柔和造型（雲朵、亮片星星）當裝飾，而不是寫死居家空間專屬的檯燈/書本圖案，避免把通用元件綁死在單一主題的美術素材上。這是刻意偏離 handoff 字面建議的地方，在此說明理由，供之後回頭調整參考。
+- **`app/src/gameHighScores.ts`**（新檔，遊戲室共用「最高紀錄」模組）：完全照 handoff 給的介面做——`getBestStars(profileId, gameId)`／`recordStars(profileId, gameId, stars)`，per-profile 存在 localStorage，只有新星等比現有紀錄高才會真的更新。`main.ts` 的 `renderGameRoom()` 卡片新增這一排星星（`.game-room-card-stars`，沒玩過/0 顆星就不渲染這個 div），翻牌配對沒有主動呼叫 `recordStars()`，`getBestStars()` 對它一律回傳 0，不用另外判斷遊戲種類。
+- **`gameBridge.ts` 的 `"complete"` 訊息新增選填 `stars` 欄位**：只有像填字遊戲這種有最高紀錄機制的遊戲才會帶這個欄位，`crosswordStandalone.ts` 破關時把 `starsForMistakes()` 算出來的星等透過這個欄位送給 parent；`main.ts` 的 `handleGameBridgeMessage()` 收到帶 `stars` 的 `"complete"` 訊息才呼叫 `recordStars()` 存檔——跟代幣扣款走同一套「持久化狀態只存在 parent」的架構原則，iframe 完全不知道 profile／localStorage 這些概念存在。翻牌配對的 `"complete"` 訊息維持不帶 `stars`（`undefined`），不會走進這個新分支。
+- **`main.ts` 的 `handleGameBridgeMessage()` 從寫死 `"memory_match"` 改成通用查詢**：新增 `currentGameId()`，用目前的 `screen` 狀態（`"memoryMatch"` / `"crossword"`）判斷是哪一款遊戲，`requestReplay` 分支改成用這個函式查對應的代幣成本——這是第二款遊戲上線後必須做的通用化，不然填字遊戲「再玩一次」會照翻牌配對的代幣數字扣款（20 而不是 25）。新增 `goToCrossword()`（比照 `goToMemoryMatch()`）、`renderCrossword()`（比照 `renderMemoryMatch()` 的 iframe 掛載殼）、`Screen` 型別新增 `"crossword"`、`appendGameRoomConfirmModal()` 的確認按鈕新增 `else if (game.id === "crossword") goToCrossword();` 分支。
+- **`content/games/games.json` 的 `crossword` 狀態從 `"coming_soon"` 改回 `"active"`**：照 handoff 最後一步的提醒（這是最容易忘記的一步）。沙盒沒有瀏覽器沒辦法真的做手機觸控／滑鼠拖曳的實機測試，這點跟前面每一款遊戲上線時的既有限制一樣——選擇先照established 慣例翻成 active、驗證腳本／build 都過，再麻煩使用者實機驗證，而不是留在 `coming_soon` 卡住使用者看不到新遊戲；如果實機試玩發現拖曳互動有問題，這筆狀態隨時可以改回 `coming_soon` 補救。
+- **新增 `app/scripts/verify-crossword-logic.ts`**（比照 `verify-memory-match-logic.ts`）：用一個 5 格的小型固定測試關卡（CAT／CAR 在 (0,0) 交疊）跑 7 項測試——交疊網格正確組出、`blankCountForLevel()` 三關比例遞增且第 3 關正確夾在留 2 格已知以內、`starsForMistakes()` 門檻邊界值、字母區磚的數量/種類剛好對應空格需求、答錯正確累計 `mistakeCount` 不移除磚不觸發整段重繪、答對正確固定進格子並觸發過關轉場、連續闖三關才算 `isComplete` 且星等依三關加總錯誤次數正確換算、交疊處字母不一致的排版資料會讓建構子丟例外。重跑 10 次左右確認隨機挖空的結果不會讓測試變成不穩定（flaky）。
+- **新增 `app/scripts/verify-crossword-content.ts`**：讀取 `content/crosswords/*.json`，驗證基本欄位形狀符合 `crossword.schema.json`、每個單字的 `vocabId` 都能在對應主題的 `content/vocab/<topicFileKey>.json` 找到且英文/中文一致、重新排版驗證交疊處字母全部一致（跟 `crosswordGame.ts` 執行期做的是同一種檢查，這裡離線先把關）。**發現一個 handoff 文字敘述跟實際排版對不上的小地方**：handoff 說「6 個單字共 15 個字母格」，但實際照座標展開 `houses_apartments_living_space.json` 的排版是 **18 個格子**（24 個字母扣掉 6 個交疊格），純粹是企劃文字裡的估算誤差，不影響排版本身的正確性（已用程式驗證交疊處字母全部一致），不需要回頭改 content，這裡記錄一下差異方便日後對照。
+- **`verify-game-bridge-messages.ts` 比照擴充**：新增對 `crosswordStandalone.ts` 的同源保護／不直接扣款／不直接存最高紀錄／`requestReplay` 正確 postMessage 等檢查（原本只查翻牌配對一支檔案，改成迴圈跑兩支獨立遊戲檔案）；新增檢查 `main.ts` 的 `requestReplay` 分支已經用 `currentGameId()` 取代寫死 `"memory_match"`；新增檢查 5：`crosswordStandalone.ts` 的 `"complete"` 訊息帶 `stars`、`main.ts` 收到會呼叫 `recordStars()`。
+- **驗證**：`tsc --noEmit`、全部 `verify-*.ts`（含兩支新增的）、`npm run build` 都通過；`npm run build` 之後確認 `dist/games/crossword.html` 正常產生、grep 打包後的 `dist/assets/main-*.js` 確認「填字遊戲」字串跟 `game-room-card-stars` 都有進到 bundle，grep `dist/assets/crossword-*.js` 確認 `crossword-tile` 拖曳相關字串有進到 iframe 專屬 bundle。
+- **沒辦法在沙盒裡驗證的部分（拖曳互動、觸控相容性一定要實機測）**：手機觸控拖曳字母磚是否流暢、滑鼠拖曳（電腦）是否正常、答錯彈回動畫有沒有卡頓、粉色系視覺跟兩個裝飾插圖（雲朵/亮片）在不同裝置寬度下排版正不正常、格子/字母磚在小螢幕上的觸控熱區夠不夠大、三關的整體節奏（尤其第 3 關幾乎全空格的難度）玩起來手感如何。麻煩用 `npm run dev` 本機開發伺服器或部署後的正式站，分別用手機觸控跟電腦滑鼠各玩一輪確認。`demo-standalone.html` 這次一樣沒辦法用來測填字遊戲本身（沿用翻牌配對那次的 `MutationObserver` patch，`.game-iframe` 元素在單檔展示版本會被換成說明文字），只能測其餘功能。
+- 沒有執行任何 git 操作。
+
 ### 9.135 使用者提議遊戲室第二款遊戲：填字遊戲（Crossword），撰寫企劃與 handoff（2026-09-30）
 
 使用者參考截圖提出填字遊戲企劃：題目區網格交疊排列、字母拖曳區、答對留下答錯彈回、關卡機制、最高紀錄、粉色系視覺＋裝飾插圖。評估後確認「即時依使用者個人學習進度動態生成填字網格」不可行（字母交疊排版需要運氣好的單字組合，學過的字太少/太分散可能湊不出網格），改用「以主題為單位、預先排版好的固定關卡」，跟使用者確認後採用此方向。用 `AskUserQuestion` 確認兩個關鍵決定：關卡數量（選擇先做 1 個主題打樣）、最高紀錄呈現方式（選擇用 1-3 顆星）。

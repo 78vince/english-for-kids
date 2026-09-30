@@ -14,7 +14,16 @@
     "description": "拖曳字母填滿空格，找出隱藏在網格裡的英文單字。",
     "icon_placeholder": "🧩",
     "cost": 25,
-    "status": "coming_soon",
+    "status": "active",
     "order": 2
+  },
+  {
+    "id": "bubble_pop",
+    "name": "戳泡泡",
+    "description": "照著中文提示，依序點破拼出正確顏色單字的泡泡。",
+    "icon_placeholder": "🫧",
+    "cost": 20,
+    "status": "coming_soon",
+    "order": 3
   }
 ]
