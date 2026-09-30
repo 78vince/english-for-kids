@@ -165,6 +165,15 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.152 使用者回報：首頁主題卡片「X / 6 種題型已挑戰過」漏算 Stage E，撰寫 handoff（2026-09-30）
+
+使用者截圖回報首頁主題卡片顯示「6 / 6 種題型已挑戰過」，但主題其實已經有 7 種題型（字卡暖身＋Stage A～D＋Stage E 會話練習）。
+
+- **根因**：`main.ts` 第 1223 行的 `ALL_STAGE_KEYS` 常數只列了原本 6 種（`flashcards／matching／ordering／fillBlank／choice／capstone`），新增 Stage E 時忘了同步補上 `"conversation"`——但 `StageKey` 型別本身（`progress.ts`）早就包含 `"conversation"`，Stage E 也是走跟其餘 6 種完全同一套 `getStageProgress`／`recordStageCompletion` 機制，`computeCompletedTopics()` 判斷主題是否完整完成時也已經正確把 Stage E 算進去，**只有這一個常數沒跟上**。
+- **確認影響範圍**：卡片顯示的分母 `ALL_STAGE_KEYS.length` 是動態算的（不是寫死數字），所以修法很單純，只要把 `"conversation"` 加進這個陣列，畫面就會自動變成「X / 7」；grep 確認 `ALL_STAGE_KEYS` 沒有被其他地方引用，不會有連鎖影響。
+- **撰寫 handoff**：`docs/handoff-prompt-topic-card-stage-count-missing-conversation.md`，附上修法（陣列加一項＋更新已經過時的「四種題型」註解），並建議順便加一支 `verify-topic-card-stage-count.ts` 防呆（這是第二次發生「新增題型忘記同步這個常數清單」的狀況，值得留一道檢查）。
+- **後續**：待 App 端執行、確認 build／驗證通過，實機測一個已全破的主題應顯示「7 / 7」。
+
 ### 9.151 App 端執行：遊戲室導覽圖示換掉骰子＋翻牌配對從清單移除後的收尾（2026-09-30）
 
 依 `docs/handoff-prompt-*.md`（對應 9.150 的企劃）執行。
