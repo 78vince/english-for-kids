@@ -44,6 +44,31 @@ ${css}
     <script type="module">
 ${js}
     </script>
+    <script>
+      // 2026-09-29：翻牌配對改成獨立 iframe 頁面（games/memory-match.html）架構之後，
+      // 這支單檔展示版本沒辦法把 iframe 內容也一起塞進來（iframe 是獨立的 Vite 進入點，
+      // 有自己的 JS/CSS bundle，不是這裡inline 的 main.js/main.css 的一部分；iframe 的
+      // src 是相對路徑，單獨打開這個 HTML 檔案時旁邊沒有 dist/games/ 資料夾可以載入）。
+      // 與其讓使用者看到空白或壞掉的 iframe，這裡用 MutationObserver 偵測遊戲室的
+      // .game-iframe 元素一出現就換成一段說明文字，並保留主站真正部署時 iframe 仍會
+      // 正常運作（這段 patch 只存在於這支單檔展示版本，不影響 dist/index.html 本身）。
+      (function () {
+        var patched = false;
+        var observer = new MutationObserver(function () {
+          if (patched) return;
+          var iframe = document.querySelector(".game-iframe");
+          if (!iframe) return;
+          patched = true;
+          var notice = document.createElement("p");
+          notice.className = "hint";
+          notice.style.textAlign = "center";
+          notice.style.marginTop = "24px";
+          notice.textContent = "遊戲室功能在這個單檔展示版本暫不支援，請用正式站測試。";
+          iframe.replaceWith(notice);
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+      })();
+    </script>
   </body>
 </html>
 `;

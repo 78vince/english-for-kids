@@ -5,7 +5,7 @@
 // 之後如果要擴充成 24 個主題，這裡用一個 import.meta.glob 就能自動載入 content/vocab/*.json，
 // 不需要每加一個主題就手動加一行 import。
 
-import type { Badge, ChangelogEntry, Conversation, Passage, Sentence, Vocab } from "./types";
+import type { Badge, ChangelogEntry, Conversation, Crossword, GameConfig, Passage, Sentence, Vocab } from "./types";
 // content/badges/badges.json 是「一份清單」而不是像 vocab/sentences 那樣按主題各自一個檔案，
 // 所以不用 import.meta.glob，直接照 tsconfig 的 resolveJsonModule 設定當一般模組匯入即可，
 // 建置時期會被打包進 JS bundle，執行期不需要額外 fetch。
@@ -13,6 +13,8 @@ import badgesData from "../../content/badges/badges.json";
 // content/changelog.json 跟 badges.json 一樣是單一清單檔案，比照同樣的匯入方式。
 // 這份資料本身已經由新到舊排列，畫面端不用另外排序，直接照陣列順序取前幾則渲染即可。
 import changelogData from "../../content/changelog.json";
+// content/games/games.json：「遊戲室」上架清單，一樣是單一清單檔案，比照同樣的匯入方式。
+import gamesData from "../../content/games/games.json";
 
 const vocabModules = import.meta.glob("../../content/vocab/*.json", {
   eager: true,
@@ -45,6 +47,14 @@ const glossaryModules = import.meta.glob("../../content/glossary/*.json", {
   eager: true,
   import: "default",
 }) as Record<string, Record<string, string>>;
+
+// content/crosswords/*.json：遊戲室「填字遊戲」的關卡資料，一個檔案是一個關卡（不是
+// 按主題分，一個主題之後可能有好幾個關卡），比照 vocab/sentences 用 import.meta.glob
+// 自動載入，之後 content 端要擴充新主題/新關卡，直接加檔案即可，不用改這裡的程式碼。
+const crosswordModules = import.meta.glob("../../content/crosswords/*.json", {
+  eager: true,
+  import: "default",
+}) as Record<string, Crossword>;
 
 function topicKeyFromPath(path: string): string {
   const file = path.split("/").pop() ?? "";
@@ -128,6 +138,99 @@ export function getPassageByTopic(topicFileKey: string): Passage {
 
 export function listAvailableTopics(): string[] {
   return Object.keys(vocabByTopic);
+}
+
+export interface TopicConfig {
+  fileKey: string;
+  label: string;
+}
+
+// 目前規劃的主題清單（對應 content/vocab|sentences|passages/{fileKey}.json）。
+// 之後要再擴充主題，只要 content/ 底下三份檔案都準備好、都是 published 狀態，
+// 在這裡加一行就好，不用再動下面的邏輯。
+// 2026-09-29：從 main.ts 移到這裡（連同下面的 TopicContent／loadTopicContent），
+// 讓「翻牌配對」獨立 iframe 頁面（memoryMatchStandalone.ts）跟 main.ts 可以共用同一份
+// 主題清單跟同一套「主題內容是否齊全」判斷邏輯——避免兩邊各寫一份、之後主題清單一改
+// 卻忘記同步更新其中一邊，導致遊戲室抽到的單字池跟主站學習範圍偷偷對不齊。
+export const TOPICS: TopicConfig[] = [
+  { fileKey: "greetings", label: "Greetings 問候與禮貌用語" },
+  { fileKey: "pronouns", label: "Pronouns 代名詞" },
+  { fileKey: "family", label: "Family 家庭" },
+  { fileKey: "people", label: "People 人" },
+  { fileKey: "appearance", label: "Appearance 外觀特徵" },
+  { fileKey: "emotions", label: "Emotions 情緒" },
+  { fileKey: "personality_traits", label: "Personality Traits 性格特質" },
+  { fileKey: "parts_of_body", label: "Parts of Body 身體部位" },
+  { fileKey: "colors", label: "Art 美術" },
+  { fileKey: "school", label: "School 學校" },
+  { fileKey: "numbers", label: "Math 數學" },
+  { fileKey: "science", label: "Science 自然科學" },
+  { fileKey: "pe_sports", label: "PE / Sports 體育課" },
+  { fileKey: "clubs_hobbies", label: "Clubs & Hobbies 社團活動" },
+  { fileKey: "animals_insects", label: "Animals & Insects 動物與昆蟲" },
+  { fileKey: "food_drink", label: "Food & Drink 食物與飲料" },
+  { fileKey: "clothing_accessories", label: "Clothing & Accessories 衣服與配件" },
+  { fileKey: "houses_apartments", label: "Houses & Apartments 房子與公寓" },
+  { fileKey: "tableware", label: "Kitchen & Dining 廚房與餐具" },
+  { fileKey: "bathroom", label: "Bathroom 浴室" },
+  { fileKey: "transportation", label: "Transportation 交通工具" },
+  { fileKey: "weather_nature", label: "Weather 天氣" },
+  { fileKey: "geographical_terms", label: "Geographical Terms 地理名詞" },
+  { fileKey: "places_directions", label: "Places & Directions 地點與方位" },
+  { fileKey: "occupations", label: "Occupations 職業" },
+  { fileKey: "money", label: "Money 金錢" },
+  { fileKey: "health", label: "Health 健康" },
+  { fileKey: "forms_of_address", label: "Forms of Address 稱謂" },
+  { fileKey: "time", label: "Time 時間" },
+  { fileKey: "calendar", label: "Calendar 日曆" },
+  { fileKey: "holidays_festivals", label: "Holidays & Festivals 節日" },
+  { fileKey: "sizes_measurements", label: "Sizes & Measurements 尺寸與量測" },
+  { fileKey: "advanced_pronouns", label: "Advanced Pronouns 代名詞總複習" },
+  { fileKey: "wh_words_frequency", label: "Wh-Words & Frequency 疑問詞與頻率副詞" },
+  { fileKey: "articles_determiners", label: "Articles & Determiners 冠詞與限定詞" },
+  { fileKey: "sentence_connectors", label: "Sentence Connectors 造句小幫手" },
+  { fileKey: "prepositions", label: "Prepositions 介系詞" },
+  { fileKey: "other_nouns", label: "Other Nouns 其他常用名詞" },
+  { fileKey: "other_verbs_1", label: "Other Verbs I 其他常用動詞 I" },
+  { fileKey: "other_verbs_2", label: "Other Verbs II 其他常用動詞 II" },
+  { fileKey: "other_adjectives_1", label: "Other Adjectives I 其他常用形容詞 I" },
+  { fileKey: "other_adjectives_2", label: "Other Adjectives II 其他常用形容詞 II" },
+  { fileKey: "other_adverbs_responses", label: "Other Adverbs & Responses 其他副詞與應答詞" },
+];
+
+export interface TopicContent {
+  vocab: Vocab[];
+  sentences: Sentence[];
+  passage: Passage;
+}
+
+/** 讀取＋過濾某個主題可以練習的內容；只要單字／句子／短文其中之一不齊全就回傳 null（不丟例外），
+ * 讓呼叫端可以決定要跳過這個主題還是提示使用者，不會讓整個 App 崩掉。 */
+export function loadTopicContent(topic: TopicConfig): TopicContent | null {
+  const vocab: Vocab[] = getVocabByTopic(topic.fileKey).filter((v) => v.status === "published");
+  const sentences: Sentence[] = getSentencesByTopic(topic.fileKey).filter(
+    (s) => s.topic === topic.fileKey && s.stage === "B" && s.status === "published"
+  );
+  const passage: Passage = getPassageByTopic(topic.fileKey);
+  if (vocab.length === 0 || sentences.length === 0 || passage.status !== "published") {
+    return null;
+  }
+  return { vocab, sentences, passage };
+}
+
+/** 遊戲室「翻牌配對」用：從全部主題（只算內容齊全、TOPICS 有登記的主題，跟主站學習
+ * 範圍完全一致，不會多算或少算）的 published 單字裡隨機抽 count 組英文/中文配對。
+ * 2026-09-29 新增，抽成這裡一個共用函式，是因為這段抽卡邏輯原本只有 main.ts 的
+ * createMemoryMatchGame() 在用；翻牌配對改成獨立 iframe 頁面（memoryMatchStandalone.ts）
+ * 之後，兩邊都需要一樣的抽卡池，寫成共用函式才不會兩邊各寫一份、之後容易對不齊。 */
+export function pickRandomVocabPairs(count: number): { en: string; zh: string }[] {
+  const pool: Vocab[] = TOPICS.flatMap((topic) => loadTopicContent(topic)?.vocab ?? []);
+  const shuffled = [...pool];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled.slice(0, count).map((v) => ({ en: v.en, zh: v.zh }));
 }
 
 /**
@@ -480,3 +583,17 @@ export function getAllBadges(): Badge[] {
 // content/changelog.json（給使用者看的簡短更新紀錄）本身已經由新到舊排列，這裡不用
 // 另外排序，直接原樣匯出給 renderAbout() 取前 5 則使用。
 export const CHANGELOG: ChangelogEntry[] = changelogData;
+
+// content/games/games.json（「遊戲室」上架清單）：畫面端自己依 order 排序、依 status
+// 篩選要不要顯示，這裡不預先處理，原樣匯出即可（跟 CHANGELOG 不同，這份清單沒有
+// 「已經照顯示順序排好」的既定假設）。
+export const GAMES: GameConfig[] = gamesData as GameConfig[];
+
+// 全部填字關卡（值的順序不保證，呼叫端要自己篩選/排序）。目前只有 1 個打樣關卡
+// （crossword.houses_apartments.living_space），之後 content 端擴充更多主題/關卡時，
+// 這裡不用改，新檔案會自動被 import.meta.glob 抓進來。
+export const CROSSWORDS: Crossword[] = Object.values(crosswordModules);
+
+export function getCrosswordById(id: string): Crossword | undefined {
+  return CROSSWORDS.find((c) => c.id === id);
+}

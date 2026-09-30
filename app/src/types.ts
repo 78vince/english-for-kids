@@ -120,6 +120,21 @@ export interface ChangelogEntry {
   items: string[];
 }
 
+// 對應 content/schema/game.schema.json —— 「遊戲室」上架遊戲的正式資料格式
+// （見 content/games/games.json）。這份清單只能控制「上架哪幾款、消費多少代幣、
+// 排列順序、顯示文字」，沒辦法無中生有生出遊戲玩法——每一款遊戲的實際互動邏輯都要
+// 另外寫一支對應的引擎模組（id 對應到模組檔名，例如 memory_match →
+// app/src/games/memoryMatchGame.ts），不是改這份 JSON 就能長出新遊戲。
+export interface GameConfig {
+  id: string; // 對應 app 端遊戲引擎模組，例如 "memory_match" → memoryMatchGame.ts
+  name: string;
+  description: string;
+  icon_placeholder: string; // 暫時用 emoji 當圖示佔位
+  cost: number; // 玩一次需要的遊戲代幣數量
+  status: "active" | "coming_soon" | "disabled";
+  order: number; // 遊戲室清單顯示順序，數字小的排前面
+}
+
 // 對應 content/schema/conversation.schema.json —— Stage E 會話練習的資料型別
 export interface ConversationCharacter {
   name: string;
@@ -158,4 +173,27 @@ export interface Conversation {
   character: ConversationCharacter;
   scenes: ConversationScene[];
   turns: ConversationTurn[];
+}
+
+// 對應 content/schema/crossword.schema.json —— 遊戲室第二款遊戲「填字遊戲」的關卡資料。
+// 網格排版（row／col／direction 交疊處字母必須一致）是 content 端離線用回溯演算法算好的，
+// App 端只要照這份資料把每個單字鋪到網格上即可，不用自己處理排版邏輯（見
+// docs/handoff-prompt-crossword-game.md 的背景說明）。
+export interface CrosswordWordDef {
+  vocabId: string;
+  en: string; // 全大寫英文單字
+  zh: string;
+  row: number; // 這個單字第一個字母所在的列（0 為最上面）
+  col: number; // 這個單字第一個字母所在的欄（0 為最左邊）
+  direction: "across" | "down";
+}
+
+export interface Crossword {
+  id: string;
+  topicFileKey: string;
+  title: string;
+  hintZh: string; // 底部整段提示文字（不是逐字逐格的個別線索）
+  gridWidth: number;
+  gridHeight: number;
+  words: CrosswordWordDef[];
 }

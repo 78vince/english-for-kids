@@ -1,0 +1,201 @@
+/* 翻牌配對獨立 iframe 頁面（games/memory-match.html）自己的樣式。2026-09-29 架構升級：
+   遊戲從「跟主站共用 style.css」改成獨立打包，這裡直接 @import 跟主站 style.css 同一份
+   design tokens 檔案（顏色／字級／圓角……），確保視覺跟主站保持一致，不會走鐘、也不用
+   兩邊各維護一份色票。相對路徑比 style.css 多一層（style.css 在 app/src/，這份在
+   app/src/games/），所以多一個 ../。 */
+@import "../../../assets/design-tokens/design-tokens.v2-daily-play.css";
+
+/* style.css 自己的 :root 裡還有幾個「由 tokens 衍生出來的輔助色」，這個獨立頁面只用得到
+   其中一個（--color-primary-700-hover，給 .primary-btn:hover 用）。這裡只複製這一個，
+   不整份搬過來——這幾行是 style.css 那份 :root 的子集，如果以後 style.css 那邊改了這個
+   衍生色的算法，這裡要記得同步。 */
+:root {
+  --color-primary-700-hover: #003b78;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+}
+
+#memory-match-app {
+  width: 100%;
+  padding: var(--space-4);
+}
+
+/* ---- 跟主站 style.css 共用的通用元件樣式：header／back-btn／footer／按鈕。
+   這個獨立頁面裡用不到 back-btn（返回遊戲室的按鈕留在 parent 層級），但 header/h1
+   的排版還是沿用同一套，保持視覺一致。 ---- */
+.game-header h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  font-weight: 700;
+  color: var(--color-primary-700);
+  margin: 0 0 4px;
+}
+
+.progress {
+  color: var(--color-ink-muted);
+  font-size: var(--text-caption);
+  margin-top: 0;
+}
+
+.game-footer {
+  margin-top: var(--space-6);
+  text-align: center;
+}
+
+.hint {
+  color: var(--color-ink-muted);
+}
+
+.done {
+  font-family: var(--font-display);
+  font-size: var(--text-body-lg);
+  line-height: 1.6;
+  color: var(--color-ink);
+}
+
+.primary-btn {
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  border-radius: var(--radius-pill);
+  border: none;
+  background: var(--color-primary-500);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.primary-btn:hover {
+  background: var(--color-primary-700-hover);
+}
+
+.secondary-btn {
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-primary-100);
+  background: var(--color-surface);
+  color: var(--color-primary-700);
+  cursor: pointer;
+  margin-right: var(--space-3);
+  transition: border-color 0.15s ease;
+}
+
+.secondary-btn:hover {
+  border-color: var(--color-primary-500);
+}
+
+/* 「再玩一次（🪙-N）」按鈕文字裡的代幣圖示對齊——跟主站 style.css 的
+   .game-room-card-cost 是同一份規則，這個獨立頁面沒有 import 到那個 class，這裡複製
+   一份小小的 inline-flex 對齊規則。 */
+.game-room-card-cost {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: var(--color-primary-700);
+}
+
+.game-room-card-cost svg {
+  flex: 0 0 auto;
+}
+
+/* ---- 翻牌配對（Memory Match）本體樣式：6 張卡片（3 組配對），固定 3 欄 x 2 行，
+   卡片橫式（長寬比比直式卡片更扁）、寬度直接填滿欄位。翻牌動畫用 CSS 3D transform，
+   不引入額外動畫函式庫。跟主站 style.css 在搬過來之前的版本逐行相同，一個時間常數／
+   一個 class 名稱都沒有改，只是換了檔案放。 ---- */
+.memory-match-countdown {
+  margin-top: var(--space-4);
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: calc(var(--text-display) * 1.6);
+  font-weight: 700;
+  color: var(--color-primary-700);
+  line-height: 1;
+}
+
+.memory-match-grid {
+  margin-top: var(--space-5);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.memory-match-card {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  cursor: pointer;
+  perspective: 600px;
+  padding: 0;
+  width: 100%;
+}
+
+.memory-match-card:disabled {
+  cursor: default;
+}
+
+.memory-match-card-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  backface-visibility: hidden;
+  transition: transform 0.4s ease;
+  font-size: var(--text-body-lg);
+  font-weight: 600;
+  padding: var(--space-2);
+  text-align: center;
+  line-height: 1.15;
+  overflow: hidden;
+}
+
+.memory-match-card-face--back {
+  background: var(--color-primary-700);
+  color: #fff;
+  transform: rotateY(0deg);
+}
+
+.memory-match-card-face--back svg {
+  width: 60%;
+  height: 60%;
+}
+
+.memory-match-card-face--front {
+  background: var(--color-surface);
+  border: 2px solid var(--color-primary-100);
+  color: var(--color-ink);
+  transform: rotateY(-180deg);
+}
+
+.memory-match-card--flipped .memory-match-card-face--back {
+  transform: rotateY(180deg);
+}
+
+.memory-match-card--flipped .memory-match-card-face--front {
+  transform: rotateY(0deg);
+}
+
+.memory-match-card--matched .memory-match-card-face--front {
+  background: var(--color-success-tint);
+  border-color: var(--color-success);
+}

@@ -70,7 +70,7 @@ const styleCss = readFileSync(new URL("../src/style.css", import.meta.url), "utf
 {
   assert(mainTs.includes('| "about";'), 'Screen 型別應該要有 "about" 這個畫面');
   assert(
-    mainTs.includes('type NavKey = "home" | "stats" | "badges" | "favorites" | "profile" | "about";'),
+    mainTs.includes('type NavKey = "home" | "stats" | "badges" | "favorites" | "gameRoom" | "profile" | "about";'),
     'NavKey 型別應該要有 "about"，這樣「關於本站」才能被功能列的 active 高亮邏輯識別'
   );
   assert(mainTs.includes("function goToAbout(): void {"), "main.ts 應該要有 goToAbout() 函式");

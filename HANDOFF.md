@@ -165,6 +165,17 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.151 App 端執行：遊戲室導覽圖示換掉骰子＋翻牌配對從清單移除後的收尾（2026-09-30）
+
+依 `docs/handoff-prompt-*.md`（對應 9.150 的企劃）執行。
+
+- **確認 content 端已經做好的部分**：讀了 `content/games/games.json`，確認只剩 `crossword`（order 1）／`bubble_pop`（order 2）兩筆，`cost` 都是 `5`，`memory_match` 已經整筆移除——這部分不需要任何 App 端程式改動，`content.ts` 本來就是動態讀取這份清單產生遊戲室選單。
+- **`app/src/main.ts` 的 `NAV_ICONS.gameRoom`**：把骰子圖案（正方形＋五個實心小圓點）換成掌上型遊戲搖桿圖案（圓角矩形機身＋十字方向鍵兩條線段＋右上兩顆實心小圓點當按鈕），完全照 handoff 給的 SVG 字串替換，`NAV_ICON_VIEWBOX` 沒有變動，顏色切換靠既有的 `currentColor` CSS 機制自動處理，不用額外調整。
+- **翻牌配對遺留檔案維持不動**：`app/games/memory-match.html`／`app/src/games/memoryMatchStandalone.ts`／`memoryMatchGame.ts`／`vite.config.ts` 的 `memory-match` 進入點／`verify-memory-match-logic.ts` 全部保留，照 handoff 的建議先不清——`games.json` 已經沒有這筆資料，沒有任何入口會載入到這些檔案，純粹是死程式碼、不影響運作，之後確定要永久移除再一次清乾淨即可。
+- **驗證**：`tsc --noEmit`、全部既有 `verify-*.ts`（含 `verify-memory-match-logic.ts`，確認 handoff 說的「腳本本身跑起來還是會過」屬實，跑的是獨立於 `games.json` 的引擎邏輯，跟遊戲室選單清單無關）都通過；`npm run build` 通過（`memory-match` 進入點也還是正常建置出 `dist/`，維持死程式碼但可建置的狀態）；grep 打包後的 `dist/assets/gameBridge-*.js`（`content.ts` 的 `GAMES` 陣列實際被打進這個共用 chunk，不是 `main-*.js`，這點跟原本預期的檔名不太一樣，值得記錄：Vite 依模組相依關係決定 chunk 歸屬，不會照直覺分到看起來最相關的檔名）確認 `crossword`／`bubble_pop` 兩筆的 `cost:5`、`order:1`／`order:2` 都正確、且陣列裡完全沒有 `id:"memory_match"` 這筆（`main-*.js` 裡還找得到 `"memory_match"` 字串，但那是 `currentGameId()` 這個函式裡的字面字串、不是資料，屬於前面提到的死程式碼，不影響選單顯示）；grep `dist/assets/main-*.js` 確認新的搖桿 SVG 路徑（`rx="4.5"` 那組屬性）有進到 bundle、舊骰子圖案的五點特徵（`cx="12" cy="12" r="1"`）已經完全消失；同步 grep 過重新產生的 `demo-standalone.html` 得到一致結果。重新用 `build-content-review.mjs`／`build-dashboard.mjs`／`build-standalone-demo.mjs` 重新產生示範頁面並複製到專案根目錄。
+- **沒辦法在沙盒裡驗證的部分**：搖桿圖示在三種互動狀態（未選取／滑過／選取中）下實際的顏色切換效果、圖示新形狀會不會跟旁邊「遊戲室」文字擠在一起——理論上 `currentColor` 機制跟 `NAV_ICON_VIEWBOX` 尺寸都沒有變動，不應該有問題，但建議使用者實機或 `npm run dev` 看一眼確認；遊戲室選單畫面確認只剩兩個項目、費用都顯示 5 代幣，也建議實機點開看一次。
+- 沒有執行任何 git 操作。
+
 ### 9.150 使用者提議：移除翻牌配對、剩餘兩款遊戲代幣統一改 5、遊戲室圖示換掉骰子（2026-09-30）
 
 使用者三項要求：一、移除「翻牌配對」遊戲；二、剩餘兩款遊戲（填字遊戲、戳泡泡）的代幣費用均改為 5 代幣；三、遊戲室導覽圖示不要用骰子，尋找替代。

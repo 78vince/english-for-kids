@@ -11,13 +11,20 @@
 import "./style.css";
 import {
   CHANGELOG,
+  GAMES,
   getAllBadges,
   getConversationByTopic,
-  getPassageByTopic,
-  getSentencesByTopic,
   getVocabByTopic,
   lookupPassageWordZh,
+  TOPICS,
+  loadTopicContent,
+  type TopicConfig,
+  type TopicContent,
 } from "./content";
+import { GAME_BRIDGE_CHANNEL, type GameToParentMessage, type ParentToGameMessage } from "./gameBridge";
+import { earnTokens, getTokenBalance, spendTokens, TOKENS_EARNED_PER_ROUND } from "./gameTokens";
+import { getBestStars, recordStars } from "./gameHighScores";
+import { FLAT_ICON_VIEWBOX, COIN_ICON, CARD_BACK_ICON, CROSSWORD_ICON, BUBBLE_POP_ICON, STAR_EMPTY_ICON, STAR_FILLED_ICON } from "./games/gameIcons";
 import { MatchingGame, type MatchCard } from "./matchingGame";
 import { OrderingGame, type OrderingToken } from "./orderingGame";
 import { FillBlankGame } from "./fillBlankGame";
@@ -63,7 +70,13 @@ import aboutBannerUrl from "./assets/about-banner.jpg";
 import { recordPlayToday, getPlayStreak, getTotalDaysPlayed } from "./playLog";
 import { addPlayTime, getTotalPlayTimeMs, formatPlayTimeLines } from "./playTime";
 import { isFavorite, toggleFavorite, getFavoriteVocabIds, getFavoriteCount } from "./favorites";
-import { playCorrectSound, playWrongSound, playRoundCompleteSound, playFavoriteSound, playUnfavoriteSound } from "./sound";
+import {
+  playCorrectSound,
+  playWrongSound,
+  playRoundCompleteSound,
+  playFavoriteSound,
+  playUnfavoriteSound,
+} from "./sound";
 import {
   recordQuestionAnswered,
   recordRoundCompletion,
@@ -72,7 +85,7 @@ import {
   getBadgeStats,
   type StageKeyForBadges,
 } from "./badgeStats";
-import type { Badge, Passage, Sentence, Vocab } from "./types";
+import type { Badge, GameConfig, Passage, Sentence, Vocab } from "./types";
 // 全站頁尾要顯示的版本號，直接讀 package.json 的 version 欄位（tsconfig.json 已經開了
 // resolveJsonModule，Vite 本身也原生支援 JSON import），不在這裡另外寫死一份版本字串，
 // 避免以後 package.json 升版了、頁尾卻忘記同步更新。
@@ -83,59 +96,9 @@ if (!app) {
   throw new Error("找不到 #app 掛載點");
 }
 
-interface TopicConfig {
-  fileKey: string;
-  label: string;
-}
-
-// 目前規劃的主題清單（對應 content/vocab|sentences|passages/{fileKey}.json）。
-// 之後要再擴充主題，只要 content/ 底下三份檔案都準備好、都是 published 狀態，
-// 在這裡加一行就好，不用再動下面的邏輯。
-const TOPICS: TopicConfig[] = [
-  { fileKey: "greetings", label: "Greetings 問候與禮貌用語" },
-  { fileKey: "pronouns", label: "Pronouns 代名詞" },
-  { fileKey: "family", label: "Family 家庭" },
-  { fileKey: "people", label: "People 人" },
-  { fileKey: "appearance", label: "Appearance 外觀特徵" },
-  { fileKey: "emotions", label: "Emotions 情緒" },
-  { fileKey: "personality_traits", label: "Personality Traits 性格特質" },
-  { fileKey: "parts_of_body", label: "Parts of Body 身體部位" },
-  { fileKey: "colors", label: "Art 美術" },
-  { fileKey: "school", label: "School 學校" },
-  { fileKey: "numbers", label: "Math 數學" },
-  { fileKey: "science", label: "Science 自然科學" },
-  { fileKey: "pe_sports", label: "PE / Sports 體育課" },
-  { fileKey: "clubs_hobbies", label: "Clubs & Hobbies 社團活動" },
-  { fileKey: "animals_insects", label: "Animals & Insects 動物與昆蟲" },
-  { fileKey: "food_drink", label: "Food & Drink 食物與飲料" },
-  { fileKey: "clothing_accessories", label: "Clothing & Accessories 衣服與配件" },
-  { fileKey: "houses_apartments", label: "Houses & Apartments 房子與公寓" },
-  { fileKey: "tableware", label: "Kitchen & Dining 廚房與餐具" },
-  { fileKey: "bathroom", label: "Bathroom 浴室" },
-  { fileKey: "transportation", label: "Transportation 交通工具" },
-  { fileKey: "weather_nature", label: "Weather 天氣" },
-  { fileKey: "geographical_terms", label: "Geographical Terms 地理名詞" },
-  { fileKey: "places_directions", label: "Places & Directions 地點與方位" },
-  { fileKey: "occupations", label: "Occupations 職業" },
-  { fileKey: "money", label: "Money 金錢" },
-  { fileKey: "health", label: "Health 健康" },
-  { fileKey: "forms_of_address", label: "Forms of Address 稱謂" },
-  { fileKey: "time", label: "Time 時間" },
-  { fileKey: "calendar", label: "Calendar 日曆" },
-  { fileKey: "holidays_festivals", label: "Holidays & Festivals 節日" },
-  { fileKey: "sizes_measurements", label: "Sizes & Measurements 尺寸與量測" },
-  { fileKey: "advanced_pronouns", label: "Advanced Pronouns 代名詞總複習" },
-  { fileKey: "wh_words_frequency", label: "Wh-Words & Frequency 疑問詞與頻率副詞" },
-  { fileKey: "articles_determiners", label: "Articles & Determiners 冠詞與限定詞" },
-  { fileKey: "sentence_connectors", label: "Sentence Connectors 造句小幫手" },
-  { fileKey: "prepositions", label: "Prepositions 介系詞" },
-  { fileKey: "other_nouns", label: "Other Nouns 其他常用名詞" },
-  { fileKey: "other_verbs_1", label: "Other Verbs I 其他常用動詞 I" },
-  { fileKey: "other_verbs_2", label: "Other Verbs II 其他常用動詞 II" },
-  { fileKey: "other_adjectives_1", label: "Other Adjectives I 其他常用形容詞 I" },
-  { fileKey: "other_adjectives_2", label: "Other Adjectives II 其他常用形容詞 II" },
-  { fileKey: "other_adverbs_responses", label: "Other Adverbs & Responses 其他副詞與應答詞" },
-];
+// TopicConfig／TOPICS／TopicContent／loadTopicContent() 2026-09-29 搬到 content.ts
+// 去了（翻牌配對改成獨立 iframe 頁面架構升級的一部分），這裡改成從那邊 import——
+// 這幾個名字在這支檔案裡的用法完全沒變，只是換了個 import 來源。
 
 /**
  * 0～6 共 7 個單元分類（docs/content-plan.md 3.1 節），首頁依這個分組呈現主題卡片。
@@ -231,26 +194,6 @@ function syncStreakBadgesNow(profileId: string): void {
   syncDailyStreakBadges(profileId, getPlayStreak(profileId), STREAK_BADGE_THRESHOLDS);
 }
 
-interface TopicContent {
-  vocab: Vocab[];
-  sentences: Sentence[];
-  passage: Passage;
-}
-
-/** 讀取＋過濾某個主題可以練習的內容；只要單字／句子／短文其中之一不齊全就回傳 null（不丟例外），
- * 讓呼叫端可以決定要跳過這個主題還是提示使用者，不會讓整個 App 崩掉。 */
-function loadTopicContent(topic: TopicConfig): TopicContent | null {
-  const vocab: Vocab[] = getVocabByTopic(topic.fileKey).filter((v) => v.status === "published");
-  const sentences: Sentence[] = getSentencesByTopic(topic.fileKey).filter(
-    (s) => s.topic === topic.fileKey && s.stage === "B" && s.status === "published"
-  );
-  const passage: Passage = getPassageByTopic(topic.fileKey);
-  if (vocab.length === 0 || sentences.length === 0 || passage.status !== "published") {
-    return null;
-  }
-  return { vocab, sentences, passage };
-}
-
 interface TopicSummary {
   topic: TopicConfig;
   vocabCount: number;
@@ -292,7 +235,11 @@ type Screen =
   | "badges"
   | "favorites"
   | "profileDetail"
-  | "about";
+  | "about"
+  | "gameRoom"
+  | "memoryMatch"
+  | "crossword"
+  | "bubblePop";
 // 預設開場先登入（選使用者），再選主題，再進題型選單，方便一次看到四種題型的入口，
 // 不用照順序破關才能檢視——這是給內容/題型確認用的導覽方式，跟正式產品
 // 「照 Stage A→B→C→D 順序解鎖」的關卡邏輯是分開的概念：兩者並存，選單只是額外
@@ -317,6 +264,16 @@ let choiceGame: ChoiceGame | null = null;
 let capstoneGame: ChoiceGame | null = null;
 // Stage E 會話練習：角色互動 10~12 句會話，3 選 1 回答，情境插畫轉場
 let conversationGame: ConversationGame | null = null;
+
+// 2026-09-29：翻牌配對改成獨立 iframe 頁面架構之後，遊戲本身的狀態（MemoryMatchGame
+// 實例、第幾關、洗牌結果……）完全交給 games/memory-match.html 那支獨立頁面自己管理，
+// main.ts 不再需要在這裡存一份遊戲實例——這裡原本的 memoryMatchGame 變數／
+// createMemoryMatchGame() 函式都已經搬到 memoryMatchStandalone.ts 裡（抽卡邏輯進一步
+// 抽成 content.ts 的 pickRandomVocabPairs()，main.ts／iframe 兩邊共用同一份）。
+
+// 遊戲室清單畫面：點「開始遊戲」先跳確認彈窗，避免不小心誤觸就扣款，這裡記著目前
+// 正在詢問「要不要玩」的是哪一款遊戲，沒有彈窗就是 null。
+let gameRoomConfirmGame: GameConfig | null = null;
 
 // 成效追蹤只要在「這一輪剛好完成的那一刻」寫一次 localStorage 就好，不能每次 render 都寫——
 // render() 每點一下畫面就會呼叫，isRoundComplete 之後會維持 true 好一段時間，
@@ -544,6 +501,45 @@ function goToFavorites(): void {
   screen = "favorites";
   render();
   window.scrollTo(0, 0); // 換到全新畫面（收藏清單）
+}
+
+/** 遊戲室：全站導覽列的入口，跟主題平行的功能——列出用遊戲代幣可以玩的小遊戲清單。 */
+function goToGameRoom(): void {
+  stopPassageReadingIfAny();
+  gameRoomConfirmGame = null; // 每次重新進入都清掉可能殘留的確認彈窗狀態
+  screen = "gameRoom";
+  render();
+  window.scrollTo(0, 0); // 換到全新畫面（遊戲室）
+}
+
+/** 翻牌配對（遊戲室第一款打樣遊戲）：切到 iframe 畫面，實際開新局的邏輯在
+ * memoryMatchStandalone.ts（iframe 頁面載入時自己抽新的一組配對、從第 1 關開始）。
+ * 呼叫端（confirmAndPlayGame()）要先確認扣款成功才會呼叫這個函式。 */
+function goToMemoryMatch(): void {
+  stopPassageReadingIfAny();
+  screen = "memoryMatch";
+  render();
+  window.scrollTo(0, 0); // 換到全新畫面（翻牌配對）
+}
+
+/** 填字遊戲（遊戲室第二款遊戲）：切到 iframe 畫面，實際開新局的邏輯在
+ * crosswordStandalone.ts（iframe 頁面載入時自己抽一個關卡、從第 1 關開始）。
+ * 呼叫端（confirmAndPlayGame()）要先確認扣款成功才會呼叫這個函式。 */
+function goToCrossword(): void {
+  stopPassageReadingIfAny();
+  screen = "crossword";
+  render();
+  window.scrollTo(0, 0); // 換到全新畫面（填字遊戲）
+}
+
+/** 戳泡泡（遊戲室第三款遊戲）：切到 iframe 畫面，實際開新局的邏輯在
+ * bubblePopStandalone.ts（iframe 頁面載入時從第 1 關開始）。
+ * 呼叫端（confirmAndPlayGame()）要先確認扣款成功才會呼叫這個函式。 */
+function goToBubblePop(): void {
+  stopPassageReadingIfAny();
+  screen = "bubblePop";
+  render();
+  window.scrollTo(0, 0); // 換到全新畫面（戳泡泡）
 }
 
 // 「修改名稱」小視窗的表單草稿——進入視窗時才從 activeProfile 帶入目前的值，
@@ -1232,7 +1228,7 @@ function countChallengedStages(profileId: string, fileKey: string): number {
 
 // ---- 全站品牌橫幅＋功能列（v2「每天玩一點」改版共用外殼） ----
 
-type NavKey = "home" | "stats" | "badges" | "favorites" | "profile" | "about";
+type NavKey = "home" | "stats" | "badges" | "favorites" | "gameRoom" | "profile" | "about";
 
 interface NavItemConfig {
   key: NavKey;
@@ -1252,6 +1248,10 @@ const NAV_ICONS = {
   stats: `<svg ${NAV_ICON_VIEWBOX}><line x1="6" y1="20" x2="6" y2="14"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="10"/></svg>`,
   badges: `<svg ${NAV_ICON_VIEWBOX}><circle cx="12" cy="8" r="6"/><polyline points="8.2 13.5 7 22 12 19 17 22 15.8 13.5"/></svg>`,
   favorites: `<svg ${NAV_ICON_VIEWBOX}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  // 遊戲室：2026-09-30 使用者要求換掉骰子（避免跟「賭博」聯想），改成掌上型遊戲搖桿
+  // 圖案（機身＋十字方向鍵＋兩顆按鈕），跟其餘導覽圖示同一套單色線條風格；按鈕小圓點
+  // 沿用骰子圖案原本「實心填色小圓點表示細節」的畫法，只是排成搖桿按鈕的斜對角。
+  gameRoom: `<svg ${NAV_ICON_VIEWBOX}><rect x="3" y="8" width="18" height="9" rx="4.5"/><line x1="7.5" y1="10.5" x2="7.5" y2="14.5"/><line x1="5.5" y1="12.5" x2="9.5" y2="12.5"/><circle cx="15.5" cy="11.5" r="1" fill="currentColor" stroke="none"/><circle cx="17.5" cy="13.5" r="1" fill="currentColor" stroke="none"/></svg>`,
   profile: `<svg ${NAV_ICON_VIEWBOX}><circle cx="12" cy="7.5" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></svg>`,
   about: `<svg ${NAV_ICON_VIEWBOX}><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="7.5" x2="12" y2="7.5"/></svg>`,
   logout: `<svg ${NAV_ICON_VIEWBOX}><path d="M9 21H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3"/><polyline points="15 17 20 12 15 7"/><line x1="20" y1="12" x2="9" y2="12"/></svg>`,
@@ -1262,6 +1262,7 @@ const NAV_ITEMS: NavItemConfig[] = [
   { key: "stats", icon: NAV_ICONS.stats, label: "挑戰紀錄", onSelect: goToStats },
   { key: "badges", icon: NAV_ICONS.badges, label: "成就徽章", onSelect: goToBadges },
   { key: "favorites", icon: NAV_ICONS.favorites, label: "收藏清單", onSelect: goToFavorites },
+  { key: "gameRoom", icon: NAV_ICONS.gameRoom, label: "遊戲室", onSelect: goToGameRoom },
   { key: "profile", icon: NAV_ICONS.profile, label: "個人檔案", onSelect: goToProfileDetail },
   { key: "about", icon: NAV_ICONS.about, label: "關於本站", onSelect: goToAbout },
 ];
@@ -1703,7 +1704,6 @@ function buildFavoriteStarButton(profileId: string, vocabId: string): HTMLButton
 // 練習模式，閉眼（劃掉）＝目前是模糊的／練習模式開啟中。「烏龜」取代原本的 🐢 emoji，
 // 給「慢速發音」開關用。「i」圓圈是既有 NAV_ICONS.about 那顆說明圖示的同一個設計，
 // 這裡只是換成可自訂大小的版本，給「練習模式」旁邊的說明小按鈕用。
-const FLAT_ICON_VIEWBOX = `viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"`;
 const EYE_OPEN_ICON = (size: number) =>
   `<svg ${FLAT_ICON_VIEWBOX} width="${size}" height="${size}"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>`;
 const EYE_OFF_ICON = (size: number) =>
@@ -1712,6 +1712,8 @@ const TURTLE_ICON = (size: number) =>
   `<svg ${FLAT_ICON_VIEWBOX} width="${size}" height="${size}"><ellipse cx="10" cy="12" rx="7" ry="5"/><circle cx="19" cy="11" r="2"/><line x1="3" y1="13" x2="1" y2="14.5"/><line x1="6" y1="17" x2="6" y2="19.3"/><line x1="9.5" y1="17.3" x2="9.5" y2="19.6"/><line x1="13" y1="17.3" x2="13" y2="19.6"/><line x1="16" y1="17" x2="16" y2="19.3"/></svg>`;
 const INFO_ICON = (size: number) =>
   `<svg ${FLAT_ICON_VIEWBOX} width="${size}" height="${size}"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="7.5" x2="12" y2="7.5"/></svg>`;
+// COIN_ICON／CARD_BACK_ICON 2026-09-29 搬到 games/gameIcons.ts 去了（翻牌配對改成獨立
+// iframe 頁面架構升級的一部分，見檔案開頭 import），這裡不再各自定義一份。
 
 /** 「練習模式」說明泡泡目前開著的那一個（手機長按開啟的那一顆），模組層級只留一份
  * 參照，搭配下面一次性註冊的全域 touchstart 監聽器來處理「點畫面其他地方要關閉」——
@@ -2021,6 +2023,348 @@ function sortFavoriteVocabs(vocabs: Vocab[], mode: FavoritesSortMode): Vocab[] {
   }
   return [...vocabs].reverse();
 }
+
+// ---- 遊戲室：跟主題平行的功能，用認真學習賺來的遊戲代幣玩小遊戲放鬆一下。
+// 第一階段只做 1 款打樣（翻牌配對），架構上刻意不預先做成「隨便改 games.json 就能
+// 長出新遊戲」——每一款遊戲的實際互動邏輯都要另外寫一支對應的引擎模組，
+// games.json 只負責控制上架哪幾款、消費多少代幣、排列順序、顯示文字。 ----
+
+function renderGameRoom(): void {
+  appendShell("gameRoom");
+
+  const header = document.createElement("header");
+  header.className = "game-header";
+  header.innerHTML = `<h1>遊戲室</h1><p class="progress">認真學習就能賺代幣，來玩點小遊戲放鬆一下吧！</p>`;
+  app!.appendChild(header);
+
+  const profileId = activeProfile!.id;
+  const balance = getTokenBalance(profileId);
+
+  const tokenHero = document.createElement("div");
+  tokenHero.className = "game-tokens-hero";
+  tokenHero.innerHTML = `
+    <span class="game-tokens-value">${COIN_ICON(28)} ${balance}</span>
+    <span class="game-tokens-label">遊戲代幣</span>
+  `;
+  app!.appendChild(tokenHero);
+
+  const list = document.createElement("div");
+  list.className = "game-room-list";
+
+  const visibleGames = [...GAMES].filter((g) => g.status !== "disabled").sort((a, b) => a.order - b.order);
+  for (const game of visibleGames) {
+    const card = document.createElement("div");
+    card.className = "game-room-card";
+
+    const comingSoon = game.status === "coming_soon";
+    const affordable = balance >= game.cost;
+
+    // 「最高紀錄」星等（gameHighScores.ts）：沒玩過（0 顆星）就不顯示這一排，避免清單
+    // 一開始就滿版空心星星、看起來像「還沒達成」的扣分感；只要玩過一次（不管幾顆星）
+    // 就會顯示。2026-09-30 填字遊戲上線時順便做的共用機制，翻牌配對沒有主動記錄星等，
+    // getBestStars() 對它一律回傳 0，這裡不用另外判斷遊戲種類。
+    // 2026-09-30 使用者要求把星等從 1-3 顆改成 1-5 顆——這裡只是單純把畫幾顆星的陣列
+    // 從 [1,2,3] 改成 [1,2,3,4,5]，實際的星等數字上限／換算門檻改在 crosswordGame.ts
+    // 的 starsForMistakes() 跟 gameHighScores.ts 的 clamp（0-5）那邊。
+    const bestStars = getBestStars(profileId, game.id);
+    const starsHtml =
+      bestStars > 0
+        ? `<div class="game-room-card-stars">${[1, 2, 3, 4, 5]
+            .map((i) => (i <= bestStars ? STAR_FILLED_ICON(16) : STAR_EMPTY_ICON(16)))
+            .join("")}</div>`
+        : "";
+
+    card.innerHTML = `
+      <div class="game-room-card-icon">${game.icon_placeholder}</div>
+      <div class="game-room-card-body">
+        <h3>${game.name}</h3>
+        <p>${game.description}</p>
+        <span class="game-room-card-cost">${COIN_ICON(16)} ${game.cost} 代幣</span>
+        ${starsHtml}
+      </div>
+    `;
+
+    const actionBtn = document.createElement("button");
+    actionBtn.type = "button";
+    actionBtn.className = "game-room-play-btn";
+
+    if (comingSoon) {
+      actionBtn.textContent = "即將推出";
+      actionBtn.disabled = true;
+    } else if (affordable) {
+      actionBtn.textContent = "開始遊戲";
+      actionBtn.addEventListener("click", () => {
+        gameRoomConfirmGame = game;
+        render();
+      });
+    } else {
+      // 代幣不夠：用鼓勵文案處理，不能出現「餘額不足」「點數不夠」這種商業感/責備感的字眼。
+      const missing = game.cost - balance;
+      actionBtn.textContent = `再賺 ${missing} 個代幣就可以玩囉！`;
+      actionBtn.className += " game-room-play-btn--locked";
+      actionBtn.disabled = true;
+    }
+
+    card.appendChild(actionBtn);
+    list.appendChild(card);
+  }
+
+  if (visibleGames.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "hint";
+    empty.textContent = "目前還沒有上架的遊戲，敬請期待！";
+    app!.appendChild(empty);
+  } else {
+    app!.appendChild(list);
+  }
+
+  if (gameRoomConfirmGame) {
+    appendGameRoomConfirmModal(gameRoomConfirmGame);
+  }
+}
+
+function closeGameRoomConfirm(): void {
+  gameRoomConfirmGame = null;
+  unlockBodyScroll();
+  render();
+}
+
+/** 點「開始遊戲」的確認彈窗：避免不小心誤觸就扣款，跟專案裡其餘會扣資源/不可逆操作
+ * 的既有 .modal-overlay／.modal-card 彈窗外觀一致（沿用同一套 CSS class，但這裡的
+ * 關閉/確認邏輯是這個彈窗自己的一組狀態，不跟 profileDetailModal 共用，避免語意混淆）。
+ * 理論上按鈕在餘額不夠時已經是 disabled 狀態、不會走到這裡，但 spendTokens() 回傳
+ * false 的情況還是要處理，不能假設扣款一定成功。 */
+function appendGameRoomConfirmModal(game: GameConfig): void {
+  lockBodyScroll();
+
+  const overlay = document.createElement("div");
+  overlay.className = "modal-overlay";
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeGameRoomConfirm();
+  });
+
+  const card = document.createElement("div");
+  card.className = "modal-card";
+
+  const cardHeader = document.createElement("div");
+  cardHeader.className = "modal-card-header";
+  const titleEl = document.createElement("h3");
+  titleEl.textContent = `要玩「${game.name}」嗎？`;
+  cardHeader.appendChild(titleEl);
+  const closeBtn = document.createElement("button");
+  closeBtn.type = "button";
+  closeBtn.className = "modal-close-btn";
+  closeBtn.textContent = "✕";
+  closeBtn.setAttribute("aria-label", "關閉");
+  closeBtn.addEventListener("click", closeGameRoomConfirm);
+  cardHeader.appendChild(closeBtn);
+  card.appendChild(cardHeader);
+
+  const bodyText = document.createElement("p");
+  bodyText.className = "modal-text";
+  bodyText.innerHTML = `會花費 ${COIN_ICON(16)} ${game.cost} 個遊戲代幣，確定要開始嗎？`;
+  card.appendChild(bodyText);
+
+  const confirmBtn = document.createElement("button");
+  confirmBtn.type = "button";
+  confirmBtn.className = "primary-btn";
+  confirmBtn.textContent = "開始遊戲";
+  confirmBtn.addEventListener("click", () => {
+    const success = spendTokens(activeProfile!.id, game.cost);
+    gameRoomConfirmGame = null;
+    unlockBodyScroll();
+    if (!success) {
+      // 理論上不該發生（按鈕在餘額不夠時已經 disabled），保險起見還是處理扣款失敗的情況，
+      // 一樣用鼓勵文案，不用「扣款失敗」這種技術字眼。
+      render();
+      window.alert("代幣好像不太夠喔，再多學一點點就可以囉！");
+      return;
+    }
+    if (game.id === "memory_match") {
+      goToMemoryMatch();
+    } else if (game.id === "crossword") {
+      goToCrossword();
+    } else if (game.id === "bubble_pop") {
+      goToBubblePop();
+    } else {
+      render();
+    }
+  });
+  card.appendChild(confirmBtn);
+
+  const cancelBtn = document.createElement("button");
+  cancelBtn.type = "button";
+  cancelBtn.className = "secondary-btn";
+  cancelBtn.textContent = "取消";
+  cancelBtn.addEventListener("click", closeGameRoomConfirm);
+  card.appendChild(cancelBtn);
+
+  overlay.appendChild(card);
+  app!.appendChild(overlay);
+}
+
+/** 翻牌配對畫面：2026-09-29 架構升級，改成把遊戲整個打包成獨立頁面
+ * （games/memory-match.html，進入點是 memoryMatchStandalone.ts），用 <iframe> 嵌進來，
+ * 不再由 main.ts 自己 new MemoryMatchGame()、自己處理 DOM／FLIP 動畫／音效掛勾——這些
+ * 全部原封不動搬進 memoryMatchStandalone.ts 裡（規則、時間常數、事件觸發順序都沒有改，
+ * 只是換了執行的地方）。這裡只剩下：標題／返回按鈕（留在 parent 層級，不用跟遊戲溝通）、
+ * 掛載 iframe、以及跟 iframe 用 postMessage 溝通「再玩一次」這唯一需要代幣判斷的動作
+ * （見 handleGameBridgeMessage()、gameBridge.ts 的協定說明）。 */
+function renderMemoryMatch(): void {
+  appendShell("gameRoom");
+
+  const header = document.createElement("header");
+  header.className = "game-header game-header--with-back";
+
+  const textWrap = document.createElement("div");
+  const titleEl = document.createElement("h1");
+  titleEl.innerHTML = `${CARD_BACK_ICON(24)} 翻牌配對`;
+  textWrap.appendChild(titleEl);
+  header.appendChild(textWrap);
+
+  const backBtn = document.createElement("button");
+  backBtn.type = "button";
+  backBtn.className = "back-btn";
+  backBtn.textContent = "← 返回遊戲室";
+  backBtn.addEventListener("click", goToGameRoom);
+  header.appendChild(backBtn);
+
+  app!.appendChild(header);
+
+  // iframe 內容套版完成前先隱藏（見 handleGameBridgeMessage() 收到 "ready" 訊息時移除
+  // 這個 class），避免使用者看到 iframe 還沒套好版就先閃一下空白。
+  const iframe = document.createElement("iframe");
+  iframe.className = "game-iframe game-iframe--loading";
+  iframe.src = "games/memory-match.html";
+  iframe.title = "翻牌配對";
+  app!.appendChild(iframe);
+}
+
+/** 填字遊戲畫面（遊戲室第二款遊戲）：一開始就照獨立 iframe 頁面架構做（見
+ * docs/handoff-prompt-crossword-game.md），跟 renderMemoryMatch() 是同一套殼——標題／
+ * 返回按鈕留在 parent 層級，掛載 iframe，實際遊戲邏輯/畫面/拖曳互動全部在
+ * crosswordStandalone.ts 裡，這裡不用碰。 */
+function renderCrossword(): void {
+  appendShell("gameRoom");
+
+  const header = document.createElement("header");
+  header.className = "game-header game-header--with-back";
+
+  const textWrap = document.createElement("div");
+  const titleEl = document.createElement("h1");
+  titleEl.innerHTML = `${CROSSWORD_ICON(24)} 填字遊戲`;
+  textWrap.appendChild(titleEl);
+  header.appendChild(textWrap);
+
+  const backBtn = document.createElement("button");
+  backBtn.type = "button";
+  backBtn.className = "back-btn";
+  backBtn.textContent = "← 返回遊戲室";
+  backBtn.addEventListener("click", goToGameRoom);
+  header.appendChild(backBtn);
+
+  app!.appendChild(header);
+
+  const iframe = document.createElement("iframe");
+  iframe.className = "game-iframe game-iframe--loading";
+  iframe.src = "games/crossword.html";
+  iframe.title = "填字遊戲";
+  app!.appendChild(iframe);
+}
+
+/** 戳泡泡畫面（遊戲室第三款遊戲）：比照 renderCrossword()，獨立 iframe 頁面。 */
+function renderBubblePop(): void {
+  appendShell("gameRoom");
+
+  const header = document.createElement("header");
+  header.className = "game-header game-header--with-back";
+
+  const textWrap = document.createElement("div");
+  const titleEl = document.createElement("h1");
+  titleEl.innerHTML = `${BUBBLE_POP_ICON(24)} 戳泡泡`;
+  textWrap.appendChild(titleEl);
+  header.appendChild(textWrap);
+
+  const backBtn = document.createElement("button");
+  backBtn.type = "button";
+  backBtn.className = "back-btn";
+  backBtn.textContent = "← 返回遊戲室";
+  backBtn.addEventListener("click", goToGameRoom);
+  header.appendChild(backBtn);
+
+  app!.appendChild(header);
+
+  const iframe = document.createElement("iframe");
+  iframe.className = "game-iframe game-iframe--loading";
+  iframe.src = "games/bubble-pop.html";
+  iframe.title = "戳泡泡";
+  app!.appendChild(iframe);
+}
+
+/** 目前畫面對應的遊戲 id——generic 化 handleGameBridgeMessage() 用，同一時間只會有一個
+ * 遊戲 iframe 顯示在畫面上，用 screen 狀態就能判斷是哪一款，不用另外維護一個變數。
+ * 2026-09-30 填字遊戲上線時把原本寫死 "memory_match" 的部分改成這樣，之後每加一款
+ * 新遊戲，這裡加一行 else if 就好。 */
+function currentGameId(): string | null {
+  if (screen === "memoryMatch") return "memory_match";
+  if (screen === "crossword") return "crossword";
+  if (screen === "bubblePop") return "bubble_pop";
+  return null;
+}
+
+/** main.ts 跟各獨立遊戲頁面（memoryMatchStandalone.ts／crosswordStandalone.ts）之間的
+ * postMessage 橋接處理——固定掛在 window 上（模組載入時掛一次，見檔案最下方的呼叫），
+ * 不隨每次進入/離開遊戲室畫面重新註冊/移除：handleGameBridgeMessage 是同一個具名函式
+ * 參照，瀏覽器對同一個函式參照重複呼叫 addEventListener 本來就是不會疊加的 no-op，
+ * 所以掛一次是安全的；而且函式一開頭就檢查 event.origin／channel，不是這個遊戲室橋接
+ * 的訊息一律直接忽略，不會誤處理到其他來源。這樣比「每次進畫面掛一次、離開時記得移除」
+ * 更不容易漏接或重複處理（漏移除的話重玩一次代幣就會被扣兩次），是刻意的簡化。 */
+function handleGameBridgeMessage(event: MessageEvent): void {
+  if (event.origin !== window.location.origin) return; // 同源保護，忽略其他來源的訊息
+  const data = event.data as GameToParentMessage | undefined;
+  if (data?.channel !== GAME_BRIDGE_CHANNEL) return;
+
+  const iframe = document.querySelector<HTMLIFrameElement>(".game-iframe");
+
+  if (data.type === "ready") {
+    iframe?.classList.remove("game-iframe--loading");
+  } else if (data.type === "exitToRoom") {
+    goToGameRoom();
+  } else if (data.type === "requestReplay") {
+    const gameId = currentGameId();
+    const config = GAMES.find((g) => g.id === gameId);
+    const cost = config?.cost ?? 0;
+    const success = spendTokens(activeProfile!.id, cost);
+    if (success) {
+      iframe?.contentWindow?.postMessage(
+        { channel: GAME_BRIDGE_CHANNEL, type: "replayApproved" } satisfies ParentToGameMessage,
+        window.location.origin
+      );
+    } else {
+      // 理論上不該發生（iframe 裡的按鈕沒有代幣資訊，但正常情況下使用者能看到自己的
+      // 餘額，不太會在不夠的時候還硬點），保險起見還是處理扣款失敗的情況，一樣用鼓勵
+      // 文案，不用「代幣不足」這種技術字眼。
+      window.alert("代幣好像不太夠喔，再多學一點點就可以囉！");
+      iframe?.contentWindow?.postMessage(
+        { channel: GAME_BRIDGE_CHANNEL, type: "replayDenied" } satisfies ParentToGameMessage,
+        window.location.origin
+      );
+      goToGameRoom();
+    }
+  } else if (data.type === "complete" && typeof data.stars === "number") {
+    // 只有像填字遊戲這種有「最高紀錄」機制的遊戲，"complete" 訊息才會帶 stars 欄位——
+    // iframe 完全不知道 profile／localStorage 這些概念，只負責把算好的星等數字送出來，
+    // 存檔責任收斂在 parent 這邊（跟代幣扣款走同一套架構原則）。翻牌配對沒有這個機制，
+    // 送 "complete" 時不會帶 stars，不會走進這個分支。
+    const gameId = currentGameId();
+    if (gameId) {
+      recordStars(activeProfile!.id, gameId, data.stars);
+    }
+  }
+  // "complete" 沒有帶 stars 的情況（例如翻牌配對）純粹告知用途，這次不掛任何邏輯
+  // （見 gameBridge.ts 的協定說明），不用寫 case。
+}
+window.addEventListener("message", handleGameBridgeMessage);
 
 // ---- 挑戰紀錄：跨「所有主題」彙整 progress.ts 存的資料，一次看全部進度
 // （原本只看目前選的那個主題，v2 改版後跟功能列的其他頁面一樣是全站總覽）----
@@ -3760,18 +4104,67 @@ function renderCapstone(): void {
   app!.appendChild(footer);
 }
 
+const CONVERSATION_PRACTICE_MODE_STORAGE_KEY = "englishForKids.settings.conversationPracticeMode.v1";
+
+/** Stage E 會話練習「練習模式」——裝置層級設定，預設關閉（false）。打開後聊天記錄裡的
+ * 中文翻譯跟這一回合答題選項的中文都會模糊，逼使用者先靠英文／發音理解，需要時才點開看。 */
+function readConversationPracticeMode(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    return window.localStorage.getItem(CONVERSATION_PRACTICE_MODE_STORAGE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function setConversationPracticeMode(enabled: boolean): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(CONVERSATION_PRACTICE_MODE_STORAGE_KEY, enabled ? "1" : "0");
+  } catch {
+    // 忽略，跟其餘模組一致的容錯方式
+  }
+}
+
 // ---- Stage E：會話練習（Conversation Practice）畫面渲染 ----
 function renderConversation(): void {
   const game = conversationGame!;
   const conv = game.conversation;
 
+  const practiceModeOn = readConversationPracticeMode();
+
+  // 練習模式只靠外層 .conversation-wrapper 上的 practice-mode-on class 決定要不要模糊
+  // （見 style.css），關閉時完全不會加上任何模糊相關 class，畫面跟以前一模一樣。
+  const wrapper = document.createElement("div");
+  wrapper.className = "conversation-wrapper" + (practiceModeOn ? " practice-mode-on" : "");
+
+  // 主開關比照「單字總覽」練習模式（9.117）：放進題型橫幅、只切換 class 不呼叫 render()，
+  // 避免對話進行中（語音播放、回合推進中）整個畫面重建、聊天記錄捲動位置跑掉。
+  const practiceModeBtn = document.createElement("button");
+  practiceModeBtn.type = "button";
+  const syncPracticeModeBtn = (on: boolean) => {
+    practiceModeBtn.className = "slow-speech-toggle-btn" + (on ? " active" : "");
+    practiceModeBtn.setAttribute("aria-pressed", String(on));
+    practiceModeBtn.innerHTML = `${on ? EYE_OFF_ICON(18) : EYE_OPEN_ICON(18)}<span>練習模式</span>`;
+  };
+  syncPracticeModeBtn(practiceModeOn);
+  practiceModeBtn.setAttribute("aria-label", "切換會話練習模式（中文翻譯模糊/顯示）");
+  practiceModeBtn.title = "打開後，聊天記錄跟答題選項的中文會先模糊，點一下才會顯示";
+  practiceModeBtn.addEventListener("click", () => {
+    const next = !wrapper.classList.contains("practice-mode-on");
+    setConversationPracticeMode(next);
+    // 重新開啟時，之前個別點開過的中文全部重新蓋回去
+    wrapper.querySelectorAll(".chat-text-zh--revealed").forEach((el) => el.classList.remove("chat-text-zh--revealed"));
+    wrapper.querySelectorAll(".options-zh-revealed").forEach((el) => el.classList.remove("options-zh-revealed"));
+    wrapper.classList.toggle("practice-mode-on", next);
+    syncPracticeModeBtn(next);
+  });
+
   stageHeader(
     `${currentTopic.label} — Stage E 會話練習`,
-    `第 ${game.currentTurnNumber} / ${game.totalTurns} 回合　與 ${conv.character.name} 互動對話中`
+    `第 ${game.currentTurnNumber} / ${game.totalTurns} 回合　與 ${conv.character.name} 互動對話中`,
+    [practiceModeBtn]
   );
-
-  const wrapper = document.createElement("div");
-  wrapper.className = "conversation-wrapper";
 
   // 左欄：情境圖 + 答題選項
   const leftCol = document.createElement("div");
@@ -3973,6 +4366,13 @@ function renderConversation(): void {
     const zhText = document.createElement("div");
     zhText.className = "chat-text-zh";
     zhText.textContent = msg.zh;
+    // 練習模式下每句中文各自點開：純 class 切換，不呼叫 render()（聊天記錄不重繪、
+    // 捲動位置不跑掉）；練習模式關閉時點擊不做任何事。
+    zhText.addEventListener("click", (e) => {
+      if (!wrapper.classList.contains("practice-mode-on")) return;
+      e.stopPropagation();
+      zhText.classList.toggle("chat-text-zh--revealed");
+    });
 
     bubble.appendChild(enText);
     bubble.appendChild(zhText);
@@ -4002,6 +4402,19 @@ function renderConversation(): void {
   // 渲染選項按鈕
   function renderButtons() {
     optionsList.innerHTML = "";
+    optionsList.classList.remove("options-zh-revealed"); // 每產生新一輪選項，中文重新蓋回去
+
+    // 「看中文」按鈕：只在練習模式下由 CSS 顯示，一次讓這一輪三個選項的中文一起出現；
+    // 純 class 切換，不呼叫 render()。
+    const revealZhBtn = document.createElement("button");
+    revealZhBtn.type = "button";
+    revealZhBtn.className = "conversation-reveal-zh-btn";
+    revealZhBtn.innerHTML = `${EYE_OPEN_ICON(16)}<span>看中文</span>`;
+    revealZhBtn.addEventListener("click", () => {
+      optionsList.classList.add("options-zh-revealed");
+    });
+    optionsList.appendChild(revealZhBtn);
+
     for (const optState of game.optionStates) {
       const optBtn = document.createElement("button");
       optBtn.type = "button";
@@ -4439,6 +4852,7 @@ function finalizeRoundCompletion(
   recordElapsedPlayTime();
   recordRoundCompletion(profileId, { wrongCount, hintUsed });
   syncStreakBadgesNow(profileId);
+  earnTokens(profileId, TOKENS_EARNED_PER_ROUND); // 每完成一輪任何題型就賺遊戲代幣（見 gameTokens.ts 說明）
 
   const after = snapshotBadgeAchievements(profileId);
   const newly = diffNewlyAchievedBadges(before, after);
@@ -4745,6 +5159,10 @@ function render(): void {
   else if (screen === "favorites") renderFavorites();
   else if (screen === "profileDetail") renderProfileDetail();
   else if (screen === "about") renderAbout();
+  else if (screen === "gameRoom") renderGameRoom();
+  else if (screen === "memoryMatch") renderMemoryMatch();
+  else if (screen === "crossword") renderCrossword();
+  else if (screen === "bubblePop") renderBubblePop();
 
   // 「獲得新徽章」的 pop 疊在最上層——不管目前是哪個畫面，只要有待顯示的新達成
   // 徽章就跳出來，跟「變更頭像／修改名稱」的小視窗一樣是 position:fixed 的

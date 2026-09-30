@@ -10,6 +10,8 @@ import wrongSoundUrl from "./assets/sfx/wrong.wav?url";
 import roundCompleteSoundUrl from "./assets/sfx/round-complete.wav?url";
 import favoriteSoundUrl from "./assets/sfx/favorite.wav?url";
 import unfavoriteSoundUrl from "./assets/sfx/unfavorite.wav?url";
+import cardFlipSoundUrl from "./assets/sfx/card-flip.wav?url";
+import cardCoverSoundUrl from "./assets/sfx/card-cover.wav?url";
 
 function playSound(url: string, volume: number): void {
   try {
@@ -51,4 +53,18 @@ export function playFavoriteSound(): void {
  * 不是「答錯」，音效不該帶警示或負面的感覺。 */
 export function playUnfavoriteSound(): void {
   playSound(unfavoriteSoundUrl, 0.24);
+}
+
+/** 遊戲室「翻牌配對」翻開一張卡片時播放：短促清脆的上揚「嗒」聲，模擬翻牌的輕快感，
+ * 音量刻意比 playCorrectSound() 小很多——這個音效會在短時間內密集觸發（每次點卡片
+ * 都會播），不能疊加起來太吵。 */
+export function playCardFlipSound(): void {
+  playSound(cardFlipSoundUrl, 0.16);
+}
+
+/** 遊戲室「翻牌配對」卡片蓋回去時播放（配對失敗的兩張蓋回去、或記憶時間結束全部蓋牌）：
+ * 柔和的下降音，音域中低但不像 playWrongSound() 那麼低沉警示——蓋牌是遊戲正常流程的
+ * 一部分，不是「答錯」的負面回饋，兩者要聽起來不一樣。 */
+export function playCardCoverSound(): void {
+  playSound(cardCoverSoundUrl, 0.16);
 }

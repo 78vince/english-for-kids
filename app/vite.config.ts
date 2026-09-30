@@ -30,6 +30,15 @@ export default defineConfig({
       input: {
         main: "index.html",
         voiceLab: "voice-lab.html",
+        // 遊戲室各獨立遊戲的進入點都放在 games/ 資料夾集中管理（見
+        // docs/handoff-prompt-memory-match-iframe-migration.md），這是第一款：
+        // 翻牌配對。之後每加一款新遊戲，這裡加一行就好。
+        memoryMatch: "games/memory-match.html",
+        // 第二款：填字遊戲（見 docs/handoff-prompt-crossword-game.md），從一開始就照
+        // 這個「獨立 iframe 頁面」架構做，不用像翻牌配對一樣事後遷移。
+        crossword: "games/crossword.html",
+        // 第三款：戳泡泡（見 docs/handoff-prompt-bubble-pop-game.md）
+        bubblePop: "games/bubble-pop.html",
       },
     },
   },

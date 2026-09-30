@@ -1,0 +1,305 @@
+/* 填字遊戲獨立 iframe 頁面（games/crossword.html）自己的樣式。跟翻牌配對
+   （memoryMatchStandalone.css）同一套做法：直接 @import 主站 style.css 同一份 design
+   tokens 檔案，確保色票/字級跟主站一致，只是這個遊戲的視覺主題刻意走粉色系（跟翻牌
+   配對用主站藍色不同，見 handoff 的視覺需求），粉色相關的變數在下面另外定義，
+   不動 design tokens 原始檔案。 */
+@import "../../../assets/design-tokens/design-tokens.v2-daily-play.css";
+
+:root {
+  --color-primary-700-hover: #003b78;
+  color-scheme: light;
+
+  /* 填字遊戲專屬的粉色系衍生色——從 design tokens 既有的 --color-accent-pink
+     (#FFBDEF) 延伸出更深/更淺的版本，只有這個遊戲用得到，不影響主站或翻牌配對。 */
+  --color-crossword-pink-700: #B23E82;
+  --color-crossword-pink-500: #E667B8;
+  --color-crossword-pink-bg: #FFF1FA;
+  --color-crossword-pink-border: #FFD6EF;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  /* 2026-09-30 使用者提供情境背景圖（跟戳泡泡 bubblePopStandalone.css 同一套做法：
+     `background-color` 當圖片還沒載入完成前的保底色、`background-image` 疊上情境
+     插畫、`background-size: cover` 讓圖片依畫面比例縮放鋪滿不變形、`background-repeat:
+     no-repeat` 避免鋪磚重複）。這張圖的積木／拼圖片插畫集中在畫面上半部、下半部是
+     素色留白，所以用 `background-position: top center`（戳泡泡的天空背景插畫元素
+     集中在下半部，用的是 `center bottom`，這裡剛好相反，要依圖片本身的構圖決定，不是
+     照抄同一組數字）；網格／字母區本身是不透明的白色卡片（`.crossword-board` 的
+     `background: var(--color-surface)`），蓋在背景圖上面，不會被這張背景圖影響
+     可讀性，只有頁首/提示文字/頁尾周圍的留白區域看得到背景圖。 */
+  background-color: var(--color-crossword-pink-bg);
+  background-image: url("../assets/games/crossword-letters-bg.jpg");
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+}
+
+#crossword-app {
+  width: 100%;
+  padding: var(--space-4);
+}
+
+/* ---- 跟翻牌配對共用的通用元件樣式：header／progress／footer／按鈕，這裡改用粉色系
+   取代主站的藍色主色，維持跟翻牌配對「每款遊戲有自己視覺風格」的既有結論一致。 ---- */
+.game-header h1 {
+  font-family: var(--font-display);
+  /* 2026-09-30 使用者回饋：「提示：居家空間」這個標題字級太大。design tokens 裡的
+     --text-h3（28px）跟 --text-h2（32px）差距太小，視覺上感覺不出差別，這裡直接改用
+     --text-body-lg（23px），跟下面「第 X / 3 關」說明文字的比例更協調，不會一進畫面
+     就整排大字搶走注意力。 */
+  font-size: var(--text-body-lg, 1.15rem);
+  font-weight: 700;
+  color: var(--color-crossword-pink-700);
+  margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.game-header h1 svg {
+  flex: 0 0 auto;
+}
+
+.progress {
+  color: var(--color-ink-muted);
+  font-size: var(--text-caption);
+  margin-top: 0;
+}
+
+.game-footer {
+  margin-top: var(--space-5);
+  text-align: center;
+}
+
+.hint {
+  color: var(--color-ink-muted);
+}
+
+.done {
+  font-family: var(--font-display);
+  font-size: var(--text-body-lg);
+  line-height: 1.6;
+  color: var(--color-ink);
+}
+
+.primary-btn {
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  border-radius: var(--radius-pill);
+  border: none;
+  background: var(--color-crossword-pink-500);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.primary-btn:hover {
+  background: var(--color-crossword-pink-700);
+}
+
+.secondary-btn {
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-crossword-pink-border);
+  background: var(--color-surface);
+  color: var(--color-crossword-pink-700);
+  cursor: pointer;
+  margin-right: var(--space-3);
+  transition: border-color 0.15s ease;
+}
+
+.secondary-btn:hover {
+  border-color: var(--color-crossword-pink-500);
+}
+
+.game-room-card-cost {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: var(--color-crossword-pink-700);
+}
+
+.game-room-card-cost svg {
+  flex: 0 0 auto;
+}
+
+/* ---- 填字遊戲本體樣式 ---- */
+
+.crossword-board {
+  position: relative;
+  margin-top: var(--space-5);
+  padding: var(--space-5);
+  /* 2026-09-30 使用者回饋：加了背景插畫（見 body 的 background-image）之後，這塊板子
+     原本是不透明白色（--color-surface: #FFFFFF），完全蓋住底下的背景圖，看起來像浮在
+     圖片上面一塊死板的白卡。先改成半透明白色（透明度 0.2），使用者看過之後進一步要求
+     直接改成完全透明（0），這塊板子本身不再帶任何顏色，純粹當版面容器用，背景插畫
+     完全透出來——格子本身（.crossword-cell--given／--blank／--blank.filled）各自都有
+     自己不透明的背景色，不會因為外層板子完全透明就看不清楚字母。同時拿掉原本的
+     box-shadow——完全透明的板子已經沒有「一塊實體卡片」的外觀，繼續保留陰影會顯得
+     不協調（陰影暗示「這是一塊不透明、疊在最上層的實體卡片」，跟現在完全透明融合
+     背景的視覺方向矛盾）。 */
+  background: rgba(255, 255, 255, 0);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.crossword-grid {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  /* 2026-09-30 使用者回饋兩輪：第一輪排版改成 5 欄×8 列（不是正方形）之後，這裡原本
+     寫死 aspect-ratio:1/1，逼著窄長的網格塞進正方形框裡，畫面要往下捲動才看得到剩下
+     的格子；第二輪改成 aspect-ratio 搭配 max-height 想讓瀏覽器自動縮放，結果因為
+     `.crossword-cell` 自己也有 aspect-ratio:1/1，兩層 aspect-ratio 疊在一起在 CSS
+     Grid 的 min-size:auto 規則下會拒絕縮小，反而把內容撐爆、被下面 overflow:hidden
+     硬生生切掉一截（比會捲動還更糟，內容直接不見）。
+     現在寬度／高度、grid-template-columns／rows 全部交給 crosswordStandalone.ts
+     用明確的 px 數字計算（見 fitGridToViewport()：整頁排版完成後量測實際高度，超出
+     iframe 可視高度就把格子邊長縮小），這裡不再需要 width／max-width／aspect-ratio
+     這些相對單位或比例規則，格子本身的正方形是靠 grid-template-columns／rows 給的
+     明確 px 數字保證，不是靠 aspect-ratio。 */
+  margin: 0 auto;
+}
+
+.crossword-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: var(--text-body-lg);
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  /* 不再用 aspect-ratio:1/1——格子的正方形是靠 crosswordStandalone.ts 給
+     grid-template-columns／rows 明確的 px 數字保證（見 .crossword-grid 的說明），
+     這裡如果再疊一層 aspect-ratio，CSS Grid 的 min-size:auto 規則會讓格子拒絕縮到
+     比它「想要」的正方形更小，導致 fitGridToViewport() 算出來的縮小尺寸被無視、
+     內容繼續撐爆容器。min-width/min-height 明確設回 0，確保格子一定會乖乖縮到
+     grid-template-columns／rows 給的軌道大小，不會有自己的最小尺寸主張。 */
+  min-width: 0;
+  min-height: 0;
+  user-select: none;
+}
+
+.crossword-cell--empty {
+  background: transparent;
+}
+
+.crossword-cell--given {
+  background: var(--color-crossword-pink-bg);
+  border: 2px solid var(--color-crossword-pink-border);
+  color: var(--color-crossword-pink-700);
+}
+
+.crossword-cell--blank {
+  background: var(--color-surface);
+  border: 2px dashed var(--color-crossword-pink-border);
+  color: var(--color-crossword-pink-700);
+  /* 拖曳判定用 elementFromPoint()：格子本身不用是 <button>，但要能被 .closest() 選到，
+     這裡用一般 div 加 role 語意即可，不需要額外互動樣式（拖曳中的高亮回饋見下方
+     .crossword-cell--blank 在磚拖過來時的 hover-like 效果留給之後有真人試玩回饋再加，
+     這版先求功能正確）。 */
+}
+
+.crossword-cell--blank.crossword-cell--filled {
+  background: var(--color-success-tint);
+  border: 2px solid var(--color-success);
+  color: var(--color-ink);
+}
+
+/* 2026-09-30 使用者回饋：整個單字答對後，要用紅框把這個單字所有格子圈起來，給小朋友
+   更清楚的「這個字拼對了」回饋（不用等到整關破完才有正向回饋）。
+   2026-09-30 再次回饋：原本的做法是幫單字裡每一格各自加樣式，相鄰格子的框疊在一起
+   雖然外觀像一個大框，但格子之間還是會看到多餘的疊線——改成用一個獨立的絕對定位
+   元素蓋在整個單字的格子範圍上面（見 crosswordStandalone.ts 的 renderWordCompleteBoxes()，
+   用格子邊長＋間距精算出這個單字的實際像素範圍），視覺上是乾淨的「一個框」，不會有
+   格子邊界的疊線。`pointer-events:none` 確保這層框不會擋到底下格子的拖曳判定；
+   `box-sizing:border-box` 確保框線畫在算好的寬高「裡面」，不會因為邊框本身的粗細
+   讓實際佔用的像素範圍比算出來的還大，導致跟相鄰格子的定位對不齊。 */
+.crossword-word-complete-box {
+  position: absolute;
+  box-sizing: border-box;
+  border: 3px solid var(--color-danger, #E53935);
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+}
+
+.crossword-tray {
+  margin-top: var(--space-5);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 56px;
+}
+
+.crossword-tile {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--color-crossword-pink-500);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: var(--text-body-lg);
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+  cursor: grab;
+  touch-action: none; /* 讓 pointer event 自己接管拖曳，不要被瀏覽器內建的捲動/縮放手勢搶走 */
+}
+
+.crossword-tile--dragging {
+  cursor: grabbing;
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+}
+
+/* 答錯彈回字母區時的小小彈跳回饋，不用懲罰性的音效或文字，維持這個 App 一貫不強調
+   挫折感的調性。 */
+@keyframes crossword-tile-bounce {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.15);
+  }
+  60% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.crossword-tile--bounce {
+  animation: crossword-tile-bounce 0.4s ease;
+}
+
+.crossword-hint {
+  margin-top: var(--space-5);
+  text-align: center;
+  color: var(--color-ink-muted);
+  font-size: var(--text-body);
+}
+
+.crossword-stars {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  color: var(--color-crossword-pink-500);
+  margin-bottom: var(--space-3);
+}

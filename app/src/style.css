@@ -1205,6 +1205,182 @@ body {
   border-color: var(--color-primary-700);
 }
 
+/* ---- 遊戲室：跟主題平行的功能。.game-tokens-hero 刻意換成 --color-accent-yellow
+   （金幣色系），跟個人檔案頁的 .learning-points-hero（品牌深藍）明顯區隔開，避免使用者
+   把「學習積分」跟「遊戲代幣」這兩個刻意脫鉤的數字看成同一件事。 ---- */
+.game-tokens-hero {
+  margin-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-6);
+  background: var(--color-accent-yellow);
+  border-radius: var(--radius-lg);
+}
+
+.game-tokens-value {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-size: calc(var(--text-display) * 1.3);
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+/* 代幣圖示：跟 game-tokens-value 的大數字放在同一行，svg 本身沒有文字基線，
+   用 flex 置中對齊即可，不需要額外微調 vertical-align。 */
+.game-tokens-value svg {
+  flex: 0 0 auto;
+}
+
+.game-room-card-cost,
+.modal-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.game-room-card-cost svg,
+.modal-text svg {
+  flex: 0 0 auto;
+}
+
+.game-tokens-label {
+  font-size: var(--text-body-lg);
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.game-room-list {
+  margin-top: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.game-room-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.game-room-card-icon {
+  flex: 0 0 auto;
+  font-size: 48px;
+  line-height: 1;
+}
+
+.game-room-card-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.game-room-card-body h3 {
+  margin: 0 0 var(--space-1);
+  font-family: var(--font-display);
+  font-size: var(--text-body-lg);
+  color: var(--color-ink);
+}
+
+.game-room-card-body p {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-caption);
+  color: var(--color-ink-muted);
+}
+
+.game-room-card-cost {
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: var(--color-primary-700);
+}
+
+/* 遊戲卡片上的「最高紀錄」星等（gameHighScores.ts）——2026-09-30 填字遊戲上線時新增，
+   沒玩過（0 顆星）main.ts 那邊就不會渲染這個 div，這裡不用處理空狀態。 */
+.game-room-card-stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: var(--space-1);
+  color: var(--color-accent-yellow);
+}
+
+.game-room-play-btn {
+  flex: 0 0 auto;
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-display);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: var(--color-primary-700);
+  color: #fff;
+  cursor: pointer;
+}
+
+.game-room-play-btn:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* 代幣不夠時的鎖定狀態：故意用溫和的中性色（不是警示紅色），這不是錯誤，
+   只是還沒存夠——文案本身走鼓勵路線，顏色也不該傳達「你做錯了」的訊號。 */
+.game-room-play-btn--locked {
+  background: var(--color-tier-locked-bg);
+  color: var(--color-ink-muted);
+}
+
+/* 翻牌配對獨立 iframe 頁面（games/memory-match.html）的容器——2026-09-29 架構升級，
+ * 遊戲本身的畫面／動畫全部搬進 iframe 裡執行，這裡只負責「劃出一塊空間放 iframe」。
+ * iframe 內容的高度會隨階段變化（levelComplete／complete 這兩關會多顯示一段文字跟
+ * 按鈕，比 playing 階段高一點），第一版先用固定 min-height 抓現在畫面實際佔用的最高
+ * 高度撐住，不做「子頁面回報高度、父頁面動態調整」這一層（ResizeObserver +
+ * 額外的訊息類型）——這是明顯可以往後放的範圍，等真的發現內容被裁切或跑出內部捲軸，
+ * 再回來加。載入完成前（.game-iframe--loading，main.ts 收到 "ready" 訊息才移除這個
+ * class）先隱藏，避免使用者看到 iframe 還沒套好版就先閃一下空白。 */
+.game-iframe {
+  display: block;
+  width: 100%;
+  border: none;
+  min-height: 820px;
+  background: transparent;
+  margin-top: var(--space-2);
+}
+
+.game-iframe--loading {
+  visibility: hidden;
+}
+
+@media (max-width: 640px) {
+  .game-iframe {
+    min-height: 640px;
+  }
+}
+
+@media (max-width: 640px) {
+  .game-room-card {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .game-room-play-btn {
+    width: 100%;
+  }
+}
+
+/* 翻牌配對本身的 .memory-match-* 樣式（卡片格線／卡片翻面 3D transform／開局記憶倒數
+ * 數字）2026-09-29 搬到 app/src/games/memoryMatchStandalone.css 去了——遊戲改成獨立
+ * iframe 頁面架構升級的一部分，這些樣式只有 games/memory-match.html 這個獨立頁面需要，
+ * 不再屬於主站自己的 style.css。 */
+
 /* 窄螢幕（手機寬度）改上下排列，比照專案裡其他 label/控制項的既有窄螢幕直排寫法
    （例如 .profile-card 在 640px 斷點改 flex-direction: column）。 */
 @media (max-width: 640px) {
@@ -3217,6 +3393,51 @@ body {
   font-size: 13px;
   line-height: 1.35;
   color: var(--color-ink-muted);
+}
+
+/* Stage E「練習模式」：只有外層 .conversation-wrapper 帶 .practice-mode-on 時才模糊，
+   關閉（預設）時下面所有模糊規則都不會命中，畫面跟以前完全一樣。
+   - 聊天記錄：每句 .chat-text-zh 各自點開（.chat-text-zh--revealed）。
+   - 答題選項：這一輪三個選項共用一顆「看中文」鈕，點了在 .conversation-options-list 加
+     .options-zh-revealed，一次全部顯示；下一輪 renderButtons() 會把它拿掉重新蓋回去。 */
+.conversation-wrapper.practice-mode-on .chat-text-zh {
+  filter: blur(5px);
+  user-select: none;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+}
+
+.conversation-wrapper.practice-mode-on .chat-text-zh.chat-text-zh--revealed {
+  filter: none;
+  user-select: text;
+}
+
+.conversation-wrapper.practice-mode-on .conversation-options-list:not(.options-zh-revealed) .conversation-option-zh {
+  filter: blur(5px);
+  user-select: none;
+}
+
+.conversation-reveal-zh-btn {
+  display: none; /* 練習模式關閉、或這一輪已經按過時不出現 */
+  align-self: flex-end;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-ink-muted);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.conversation-reveal-zh-btn:hover {
+  background: var(--color-primary-100);
+  color: var(--color-primary-700);
+}
+
+.conversation-wrapper.practice-mode-on .conversation-options-list:not(.options-zh-revealed) .conversation-reveal-zh-btn {
+  display: inline-flex;
 }
 
 .conversation-option-btn--wrong {

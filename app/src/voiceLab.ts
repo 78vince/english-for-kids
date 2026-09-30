@@ -209,7 +209,7 @@ function renderApp(): void {
             </p>
           </div>
         </div>
-        <a href="/" class="lab-back-btn">← 返回學習主站</a>
+        <a href="index.html" class="lab-back-btn">← 返回學習主站</a>
       </header>
 
       <!-- 雙人會話模擬試聽器 -->
