@@ -55,8 +55,29 @@ echo "=== 目前有這些變更 ==="
 git status --short
 echo ""
 
-if [ -z "$(git status --porcelain)" ]; then
+# 先跟遠端同步一次，才能正確判斷「本機領先幾個 commit」（例如 Claude 在雲端/沙盒
+# 環境已經先 commit 好、但還沒 push 的情況——這時工作目錄本身沒有未 commit 的變更，
+# 但還是有本機 commit 要上傳，不能只看 git status --porcelain 就判斷「不用上傳」）。
+git fetch origin main --quiet 2>/dev/null || true
+ahead=$(git rev-list --count origin/main..HEAD 2>/dev/null || echo 0)
+dirty="$(git status --porcelain)"
+
+if [ -z "$dirty" ] && [ "$ahead" -eq 0 ]; then
   echo "目前沒有任何變更，不用上傳。"
+  read -p "按 Enter 鍵關閉視窗..."
+  exit 0
+fi
+
+if [ -z "$dirty" ] && [ "$ahead" -gt 0 ]; then
+  echo "工作目錄沒有新的變更，但本機已經有 $ahead 個 commit 還沒 push（例如 Claude 在雲端環境"
+  echo "先幫你 commit 好的內容），直接幫你 push 上去，不需要再重新 commit。"
+  echo ""
+  git push
+  echo ""
+  echo "================================================"
+  echo "✅ 完成！GitHub Actions 會自動重新部署正式站，"
+  echo "   大約 1 分鐘後重新整理 https://78vince.github.io/english-for-kids/ 確認就可以了。"
+  echo "================================================"
   read -p "按 Enter 鍵關閉視窗..."
   exit 0
 fi
