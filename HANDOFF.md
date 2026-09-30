@@ -165,6 +165,68 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.150 使用者提議：移除翻牌配對、剩餘兩款遊戲代幣統一改 5、遊戲室圖示換掉骰子（2026-09-30）
+
+使用者三項要求：一、移除「翻牌配對」遊戲；二、剩餘兩款遊戲（填字遊戲、戳泡泡）的代幣費用均改為 5 代幣；三、遊戲室導覽圖示不要用骰子，尋找替代。
+
+- **content 端直接處理（第 1、2 項）**：`content/games/games.json` 移除 `memory_match` 項目、`crossword`／`bubble_pop` 的 `cost` 都改成 `5`、`order` 重新編號成 1／2。因為遊戲室選單本來就是照 `GAMES` 這份清單動態產生（`content.ts` 用 `import.meta.glob`／直接 import 讀取，main.ts 用 `status !== "disabled"` 過濾），這部分**不需要任何 App 端程式改動**，重新 build／部署後選單就會同步更新。
+- **撰寫 handoff（第 3 項）**：`docs/handoff-prompt-gameroom-icon-and-memory-match-removal.md`——`NAV_ICONS.gameRoom`（`main.ts` 第 1251-1252 行）目前是骰子圖案（正方形＋5 點），改成掌上型遊戲搖桿造型（圓角矩形機身＋十字方向鍵＋兩顆實心按鈕點），沿用同一套單色線條 SVG 風格（`NAV_ICON_VIEWBOX`），並備註如果搖桿造型不滿意，備選是拼圖片形狀。
+- **翻牌配對相關程式碼未清除**：iframe 架構遷移時新增的 `app/games/memory-match.html`／`memoryMatchStandalone.ts`／`memoryMatchGame.ts`／`vite.config.ts` 的對應 rollup input／`verify-memory-match-logic.ts` 都還留著，變成沒有入口的死程式碼，不影響運作。在 handoff 裡明確標註這是「非急件、可自行評估要不要清」，先不動，保留之後想把遊戲加回來的彈性。
+- **後續**：待 App 端執行圖示替換、確認 build／驗證通過，並實機確認遊戲室選單只剩兩款、費用顯示正確。
+
+### 9.149 App 端執行：填字盤面透明度從 0.2 改成完全透明（2026-09-30）
+
+使用者看過 9.148 的半透明（0.2）效果後，要求直接改成完全透明（0）。
+
+- **修法**：`crosswordStandalone.css` 的 `.crossword-board` 背景從 `rgba(255, 255, 255, 0.2)` 改成 `rgba(255, 255, 255, 0)`，板子本身不再帶任何顏色，純粹當版面容器（負責 padding／置中格子跟字母區）用，背景插畫完全透出來。格子本身（`.crossword-cell--given`／`--blank`／`--blank.filled`）各自都有自己不透明的背景色，不會因為外層板子完全透明就看不清楚字母。
+- **驗證**：`tsc --noEmit`、`verify-crossword-content.ts`／`verify-crossword-logic.ts` 都通過；`npm run build` 通過，grep 打包後的 `dist/assets/crossword-*.css` 確認 `.crossword-board` 規則本身已經是 `background:#fff0`（`rgba(255,255,255,0)` 的簡寫，完全透明）；重新用 `build-content-review.mjs`／`build-dashboard.mjs`／`build-standalone-demo.mjs` 重新產生示範頁面並複製到專案根目錄。
+- **沒辦法在沙盒裡驗證的部分**：完全透明之後，格子跟字母區之間的留白（padding／gap）會直接看到背景插畫，這樣的視覺效果（尤其在插畫細節比較多的區域）好不好看，需要使用者實機看一次確認；如果覺得完全透明太雜亂，可以回頭調整成介於 0～0.2 之間的數字。
+- 沒有執行任何 git 操作。
+
+### 9.148 App 端執行：填字盤面改半透明＋拿掉陰影（2026-09-30）
+
+使用者看到 9.147 加上背景插畫後的畫面，回報填字盤面（`.crossword-board`，格子跟字母區外面那塊白色底板）擋住了背景插畫，要求把透明度設為 0.2，並且拿掉陰影。
+
+- **修法**：`crosswordStandalone.css` 的 `.crossword-board` 背景從不透明的 `var(--color-surface)`（`#FFFFFF`）改成半透明的 `rgba(255, 255, 255, 0.2)`，讓背景插畫可以透出來；同時移除原本的 `box-shadow: var(--shadow-sm)`——半透明的板子已經不是一塊「浮在最上層的實體卡片」外觀，繼續保留陰影會顯得不協調（陰影原本的用意是暗示卡片是不透明、疊在背景上方的實體，跟現在半透明融合背景的視覺方向矛盾），拿掉之後畫面更乾淨。
+- **格子本身的可讀性不受影響**：填字格子（`.crossword-cell--given`／`--blank`／`--blank.filled` 這幾個狀態）本身各自都有自己不透明的背景色，只有 `.crossword-board` 的 padding／格子間空隙那些留白區域會透出背景插畫，不會讓已經寫好的字母看不清楚。
+- **驗證**：`tsc --noEmit`、`verify-crossword-content.ts`／`verify-crossword-logic.ts` 都通過；`npm run build` 通過，grep 打包後的 `dist/assets/crossword-*.css` 確認 `.crossword-board` 規則本身已經是 `background:#fff3`（`rgba(255,255,255,0.2)` 的簡寫）且沒有 `box-shadow`，同時確認其餘元件（按鈕、拖曳中的字母磚）原本各自的陰影沒有被誤刪；重新用 `build-content-review.mjs`／`build-dashboard.mjs`／`build-standalone-demo.mjs` 重新產生示範頁面並複製到專案根目錄。
+- **沒辦法在沙盒裡驗證的部分**：0.2 這個透明度數字實際疊在背景插畫上，格子跟字母區周圍留白的視覺效果好不好看（會不會讓背景圖案透過來太明顯反而分散注意力），需要使用者實機看一次確認；如果 0.2 太透或太不透，直接調整 `.crossword-board` 的 `rgba(255, 255, 255, X)` 這個數字即可。
+- 沒有執行任何 git 操作。
+
+### 9.147 App 端執行：填字遊戲加入背景插畫（2026-09-30）
+
+使用者提供情境背景圖 `app/src/assets/games/crossword-letters-bg.jpg`（積木／拼圖片水彩插畫，元素集中在畫面上半部，下半部是素色米黃留白），要求加到填字遊戲畫面。
+
+- **做法比照戳泡泡（`bubblePopStandalone.css`）已經確立的背景圖慣例**：`background-color` 當保底色（圖片還沒載入完成前，或極端狀況載入失敗時的備用底色，沿用原本的 `--color-crossword-pink-bg`）、`background-image` 疊上插畫、`background-size: cover` 讓圖片依畫面比例縮放鋪滿不變形、`background-repeat: no-repeat` 避免鋪磚重複——這四行都直接照抄戳泡泡那份寫法。
+- **`background-position` 沒有照抄戳泡泡的 `center bottom`，改成 `top center`**：戳泡泡的天空背景插畫元素（雲朵等）集中在畫面下半部，所以用 `center bottom` 讓下半部的內容對齊可視範圍下緣；這次使用者給的填字遊戲背景圖插畫元素（積木、拼圖片）明顯集中在上半部，下半部是素色留白，所以改用 `top center`，讓有插畫細節的部分對齊可視範圍上緣——這個屬性要依每張圖片本身的構圖個別判斷，不是同一套遊戲就該套用同一組數字。
+- **沒有動到版面結構或格子／字母區的任何樣式**：填字盤面（`.crossword-board`）本身是不透明的白色卡片蓋在背景圖上面，不會被這張背景圖影響到格子內容的可讀性，只有頁首標題、提示文字、頁尾按鈕周圍的留白區域看得到背景圖，維持這個遊戲原本「粉色系主題＋插畫點綴」的視覺方向不變。
+- **驗證**：`tsc --noEmit` 通過；`npm run build` 通過，確認 `dist/assets/` 底下有產生對應的 hashed 檔名圖片（`crossword-letters-bg-*.jpg`），grep 打包後的 `dist/assets/crossword-*.css` 確認 `background-image`／`background-position:top center` 等規則都正確帶著這個 hashed 檔名進到最終產出；`verify-crossword-content.ts`／`verify-crossword-logic.ts`（跟這次改動直接相關的兩支腳本）都重新跑過確認通過。**戳泡泡功能同一時間有另一個並行處理在施工中，這次跑全部 `verify-*.ts` 迴圈時 `verify-bubble-pop-logic.ts` 短暫出現「關卡總數應為 3」的失敗**——這是那個並行處理當下還沒寫完的暫時性狀態，跟這次的填字遊戲背景圖改動無關，這裡沒有去動戳泡泡的任何程式碼或測試，純粹是巧合同時間施工撞見的暫態，記錄下來避免之後有人誤以為是這次改動造成的。
+- **沒辦法在沙盒裡驗證的部分**：這張背景圖實際在手機小螢幕上跟粉色系文字（`--color-crossword-pink-700` 等）疊在一起的對比度／可讀性，以及 `top center` 這個定位在不同螢幕長寬比下插畫元素會不會被裁切到看不出形狀，都需要使用者實機看一次確認。`app/demo-standalone.html` 這次一樣沒辦法用來看這張背景圖的實際效果（沿用既有限制，`.game-iframe` 在單檔展示版本會被換成說明文字，見先前 HANDOFF 記錄）。
+- 沒有執行任何 git 操作。
+
+### 9.146 App 端執行：填字遊戲星等從 1-3 顆改成 1-5 顆（2026-09-30）
+
+使用者要求把填字遊戲的星等評鑑從 1-3 顆星改成 1-5 顆星。
+
+- **門檻重新設計**：`crosswordGame.ts` 的 `starsForMistakes()` 從原本的 3 段門檻（0-2 次錯誤=3★／3-5 次=2★／6 次以上=1★）改成 5 段：0 次=5★、1-2 次=4★、3-4 次=3★、5-7 次=2★、8 次以上=1★——維持「答錯越少、星等越高」的既有精神，只是把級距切得更細，讓「完全不錯」跟「錯 1-2 次」不再被歸在同一顆星裡，區分度更高一些。這幾個門檻數字是這次直接設計採用的（沒有另外詢問使用者要哪個確切門檻），之後如果覺得太嚴或太鬆，直接回頭調整 `starsForMistakes()` 裡的數字即可，不影響其他程式邏輯。
+- **同步調整的地方**：`gameHighScores.ts` 的 `getBestStars()`／`recordStars()` 把「合法星等範圍」的上限從 3 改成 5（`n <= 3` → `n <= 5`、`Math.min(3, ...)` → `Math.min(5, ...)`）；`crosswordStandalone.ts` 的 `starsRow()` 畫星星迴圈的上限從 3 改成 5，圖示尺寸順便從 32px 縮到 26px（5 顆排起來寬度跟原本 3 顆×32px 差不多，不會讓那一排字忽然變寬很多）；`main.ts` 遊戲室卡片顯示最高紀錄星等的地方，畫星星的陣列從 `[1,2,3]` 改成 `[1,2,3,4,5]`。
+- **已知取捨（沒有做資料轉換）**：`gameHighScores.ts` 只改了「星等上限」跟「換算門檻」，沒有針對「已經存在 localStorage 裡、舊制 1-3 顆星時代存下來的紀錄」做資料轉換——例如使用者先前在舊制下拿到滿分「3 顆星」，改版後畫面會顯示成「5 顆星裡的 3 顆」，看起來像沒有拿滿分，但其實是換算基準變了，不是退步。這個 App 是單機／個人使用情境（沒有雲端排行榜或跨裝置同步），影響範圍只有使用者自己這台裝置先前累積的最高紀錄視覺上「感覺變差」，不影響任何功能正確性；星等本身是鼓勵性質的呈現，沒有特別寫一次性資料轉換腳本，之後有需要再補。
+- **驗證**：`tsc --noEmit`、全部既有 `verify-*.ts` 都通過（`verify-crossword-logic.ts` 的測試 3／測試 6 已同步改成新門檻的期望值：測試 3 逐一驗證 5 段門檻的邊界值，測試 6 驗證「三關加總 1 次錯誤」換算出新制下的 4 顆星而不是舊制的 3 顆星）；`npm run build` 通過，grep 打包後的 `dist/assets/main-*.js` 確認 `[1,2,3,4,5]` 這個畫星星用的陣列有進到 bundle。
+- **沒辦法在沙盒裡驗證的部分**：5 顆星排成一排在小螢幕手機上的實際視覺密度（圖示縮小到 26px 之後看起來會不會太擠、觸控/點按沒有互動需求所以應該不影響操作，純粹是視覺密度），建議使用者實機看一次確認排版還過得去。
+- 沒有執行任何 git 操作。
+
+### 9.145 App 端執行：修正填字遊戲答對單字唸成逐字母拼讀（2026-09-30）
+
+使用者截圖回報：交通工具主題答對 CAR 之後，語音唸成「C、A、R」逐字母拼讀，不是唸整個單字「car」。這次回報剛好碰上 9.144 才剛上線的第二批 7 個主題題庫（交通工具是其中之一），順便確認這個 bug 是通用問題、不是特定主題的內容錯誤。
+
+- **根因**：`content/crosswords/*.json` 裡每個單字的 `en` 欄位依 schema 規定一律存成全大寫（例如 `"CAR"`），`crosswordStandalone.ts` 在 9.139 新增「答對整字唸出來」功能時直接把 `word.en`（全大寫字串）送進 `speakEnglish()`——很多瀏覽器的語音合成引擎看到全大寫的短字串會當成縮寫/簡稱處理，逐字母拼讀而不是當一般單字唸出完整發音，跟 `speech.ts` 檔頭本來就記錄過的其他發音問題（"Mia" 被拼讀、句首大寫 "Is" 被唸成 "Ice"）是同一類「引擎誤判」現象，只是這次的觸發條件是「整個字全大寫」。
+- **這個問題其實已經在戳泡泡（Bubble Pop，9.138 提案）遇過並修好了**：`bubblePopStandalone.ts` 第 155 行呼叫 `speakEnglish(word.toLowerCase())`，答題內容同樣來自全大寫的顏色單字，已經用 `.toLowerCase()` 解決——這裡確認填字遊戲漏掉了同一個修法，不是新的未知成因。
+- **修法**：`crosswordStandalone.ts` 觸發答對語音的那一行改成 `speakEnglish(word.en.toLowerCase())`，跟戳泡泡採用同一個修法，維持全站對同一類問題一致的解法（不用另外發明新寫法）。
+- **執行時順便修掉一個無關的建置錯誤**：跑 `tsc --noEmit` 時發現 `bubblePopStandalone.ts` 第 90 行有一個未使用的 `idx` 參數（`targetLetters.forEach((_, idx) => {...})`，`idx` 沒被用到）導致整個專案型別檢查失敗——這是戳泡泡功能開發過程中另一個並行處理留下的小疏漏，跟這次要修的填字遊戲問題無關，但因為 `tsc --noEmit` 是對整個專案做檢查、任何一個檔案有錯就會擋住驗證，這裡順手把這個未使用的參數拿掉（`forEach(() => {...})`），沒有動到戳泡泡功能本身的任何邏輯。
+- **驗證**：`tsc --noEmit`、全部既有 `verify-*.ts`（含 9.144 新增的 7 份題庫內容檢查）都通過；`npm run build` 通過，grep 打包後的 `dist/assets/crossword-*.js` 確認 `toLowerCase` 有進到 bundle；重新用 `build-content-review.mjs`／`build-dashboard.mjs`／`build-standalone-demo.mjs` 重新產生示範頁面並複製到專案根目錄。這個修法是通用的（作用在 `word.en` 這個變數本身，不是針對特定主題寫死），所以 9.144 新增的 7 個主題（含交通工具）跟原本的居家空間主題都會一併修好，不用逐一測試每個主題。
+- **沒辦法在沙盒裡驗證的部分**：`.toLowerCase()` 這個修法在戳泡泡已經是「還沒實機驗證過就先採用」的狀態（跟這裡一樣，沒有喇叭/瀏覽器的沙盒環境沒辦法真的聽出差異），這次填字遊戲比照辦理，理論上原理相通（多數瀏覽器的語音引擎是看「大小寫」而非「詞性」在判斷要不要逐字母拼讀），但實際聽感仍需要使用者實機確認——如果小寫化之後這個引擎還是拼讀，可能要考慮 `speech.ts` 檔頭那個「加句點讓引擎當完整短句處理」的候選方案（比照 "Is." 的既有寫法）。
+- 沒有執行任何 git 操作。
+
 ### 9.144 填字遊戲第二批內容——新增 7 個主題題庫（2026-09-30）
 
 使用者詢問「填字遊戲，我們會需要製作多少主題題庫？」，說明目前模型是「一個主題一份題庫，關卡難度靠同一份單字表的挖空比例調整（40%／65%／85-90%）」，並建議先做第二批 5-8 個生活常用單字量較多的主題，而不是一次把全部約 30 個可行主題做完。使用者確認：**「5-8 個主題、開始生成下一批題庫」**。

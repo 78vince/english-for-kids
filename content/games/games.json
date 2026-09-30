@@ -1,29 +1,20 @@
 [
   {
-    "id": "memory_match",
-    "name": "翻牌配對",
-    "description": "翻開卡片找出英文單字跟中文意思的配對，考驗記憶力，也是複習單字的好機會。",
-    "icon_placeholder": "🃏",
-    "cost": 20,
-    "status": "active",
-    "order": 1
-  },
-  {
     "id": "crossword",
     "name": "填字遊戲",
     "description": "拖曳字母填滿空格，找出隱藏在網格裡的英文單字。",
     "icon_placeholder": "🧩",
-    "cost": 25,
+    "cost": 5,
     "status": "active",
-    "order": 2
+    "order": 1
   },
   {
     "id": "bubble_pop",
     "name": "戳泡泡",
     "description": "照著中文提示，依序點破拼出正確顏色單字的泡泡。",
     "icon_placeholder": "🫧",
-    "cost": 20,
-    "status": "coming_soon",
-    "order": 3
+    "cost": 5,
+    "status": "active",
+    "order": 2
   }
 ]
