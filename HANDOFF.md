@@ -165,6 +165,31 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.157 風格改版 v2：主色／強調色／中性色定案＋抬頭區塊重新設計（2026-10-01）
+
+接續 9.155 設計系統健檢，使用者進一步要求完整風格改版，方向：舒適、柔和降階的中性色調、圓潤和緩、色彩深淺＋留白建立層級。透過 `mcp__visualize`／HTML 對照頁來回三輪確認細節：
+
+- 第一版提案飽和度/明度降太多，使用者回饋「死氣沉沉」，第二版拉回接近原色的鮮豔度，只做微調；主色最終由使用者指定為 `#347FBC`。
+- 使用者額外要求：制定圓角／間距更多細節、依現有排版重新規劃（點名抬頭／頭像區塊過大）、**明確保留主題卡片原本的進度條**（第一版提案誤用獎牌徽章示意，已修正）。
+- 參考使用者另一專案 `project_smart_reading_platform/ref/design-tokens.html` 的文件邏輯（元素→元件→應用三段式），建立同等結構的 `docs/design-tokens.html`：Part 1 基礎元素（色彩／字級／間距／圓角／陰影／斷點／圖示風格）、Part 2 元件規格（按鈕／卡片／彈窗／標籤／導覽列）、Part 3 功能應用（首頁抬頭／主題卡片／遊戲室／成就徽章／Stage E 會話練習，逐一示範 token 實際用法）。
+- **實測現有抬頭區塊高度**：桌面版約 207px，**手機版因頭像被放大到固定 288×288px、文字被 `<br/>` 強制兩行，約佔 620px**，在看到任何學習內容前就吃掉大半手機螢幕——這是這次改版的主要動機，不只是色彩微調。
+- 撰寫正式 handoff `docs/handoff-prompt-style-refresh-v2.md`：token 檔案色彩／圓角更新（新增 `--radius-xs`，`--radius-sm`／`--radius-md` 微調更圓潤）、`style.css` 衍生色依新基礎色重算（含提醒必須同步更新 `crosswordStandalone.css`／`memoryMatchStandalone.css` 複製貼上的 `--color-primary-700-hover`，否則兩款遊戲的 hover 色會停留在舊藍色）、`appendBrandBanner()` 改寫成頭像＋單行問候語同一行的精簡版面（拿掉強制換行與手機版 288px 頭像的特殊覆寫）。
+- 明確記錄「刻意不動」清單：字級數值本身不變、間距數值不變（只補分組說明）、主題卡片進度條不變。
+- 建議執行順序：接在 9.156（設計系統健檢 handoff）之後執行，兩者都動 `.modal-card`／`.nav-item` 附近的 CSS。
+- **後續**：待 App 端依序執行 9.156、9.157 兩份 handoff，實機（含手機寬度）確認抬頭高度大幅縮減、色彩全站套用一致、進度條外觀不變。
+
+### 9.156 App 端執行：設計系統健檢 handoff（token 補齊＋彈窗/卡片手機版）（2026-10-01）
+
+執行 9.155 寫的 `docs/handoff-prompt-design-system-health-check.md`，執行前先讀過 `docs/design-system.md` 了解命名邏輯與斷點慣例。
+
+- **Token 檔案**（`assets/design-tokens/design-tokens.v2-daily-play.css`）：Tint 區塊補上 `--color-accent-orange-tint: #FFF1EB`／`--color-accent-pink-tint: #FFF3FB`，跟既有 primary/success/accent-yellow 三個 tint 同樣手法（原色提亮）；`--nav-item-active-color` 從寫死的 `#FFFFFF` 改成 `var(--color-surface)`（數值不變，只是改用既有中性色 token，避免同一個白色在檔案裡有兩種表示方式）。
+- **`.nav-item`／`.menu-item` 寫死 px 改成對應 token**（純字面替換，視覺不變）：`.nav-item` 的 `gap: 4px`→`var(--space-1)`、`padding: 8px 12px`→`var(--space-2) var(--space-3)`；`.function-nav--compact .nav-item` 的 `padding: 8px 10px`→`var(--space-2)`（10px 捨入到 8px，壓縮態本來就是極窄螢幕才觸發，2px 差異感知不到，不為這一個特例新增 token）；`.menu-item` 的 `gap: 4px`→`var(--space-1)`。
+- **彈窗手機版 `@media (max-width: 640px)` 覆寫**（直接回應使用者「戳泡泡」確認彈窗擁擠的回報）：在 `.modal-close-btn:hover` 後面新增區塊，`.modal-overlay` 內距 `--space-5`→`--space-3`、`.modal-card` 內距 `--space-6`→`--space-4`、圓角降到 `--radius-lg`、`.modal-card-header` 下方留白 `--space-4`→`--space-3`、標題字級 `--text-h3`→`--text-body-lg`、`.modal-close-btn` 從 36px 放大到 44×44px（符合最小點擊熱區建議）、`.modal-text` 字級 `--text-body`→`--text-caption`。因為 `.modal-overlay`／`.modal-card` 是所有彈窗共用的外殼 class，首次進站提醒、換頭像、改名字等彈窗手機版會一併受惠，不用逐一處理。
+- **`.topic-card`／`.menu-item` 手機版內距微調**：同一個 640px 斷點內新增 `.topic-card`／`.menu-item` 的 `padding: var(--space-4)`（原 `--space-5`/24px），只調內距、不動字級（照 handoff 指示先不要一次調太多，欄數本來就靠 `auto-fit` grid 自動收成單欄不用額外處理）。
+- **驗證**：`npx tsc --noEmit` 通過；全部既有 `verify-*.ts`（約 40 支）重跑一次全部通過（純 CSS 改動，沒有任何邏輯驗證腳本受影響）；`rm -rf dist && npm run build` 成功；grep 打包後的 `dist/assets/main-*.css` 確認 `--color-accent-orange-tint`／`--color-accent-pink-tint`／`--nav-item-active-color: var(--color-surface)`／`.nav-item{...padding:var(--space-2) var(--space-3)...}`／`.function-nav--compact .nav-item{padding:var(--space-2);gap:0}`／`@media (max-width:640px)` 內的 `.modal-card{padding:var(--space-4);border-radius:var(--radius-lg)}`／`.modal-close-btn{width:44px;height:44px}`／`.topic-card,.menu-item{padding:var(--space-4)}` 都確實進到最終產出；所有改動都包在 `@media (max-width: 640px)` 裡，桌面寬度（>640px）的規則完全沒有被動到。
+- **本輪刻意不處理**（跟 `docs/design-system.md` 第 6 節一致）：填字遊戲／翻牌配對兩款遊戲缺手機版 CSS（牽涉 TypeScript 動態格子計算，列下一輪）、`style.css` 衍生色集中化、遊戲粉色系改用 `color-mix()`、`--nav-height` 疑似未使用的清理，也沒有新增 handoff 建議的 `verify-design-token-usage.ts`（純 CSS 字面替換風險低，先用既有 `tsc`＋`verify-*` 流程把關，留待下一輪視需要再補）。
+- **後續**：開發沙盒沒有瀏覽器，無法截圖驗證，實機/手機寬度模擬確認彈窗跟卡片視覺效果仍待 `demo-standalone.html` 或 `npm run dev` 人工檢查。
+
 ### 9.155 使用者回報手機版確認彈窗擁擠，進行全站設計系統健檢（2026-10-01）
 
 使用者截圖回報遊戲室確認彈窗（「要玩『戳泡泡』嗎？」）在手機寬度下感覺擁擠，進一步要求「重新檢視全站的設計樣式，並調整 design token 來制定整體視覺以及良好的響應式體驗」。用 AskUserQuestion 確認範圍：使用者選擇**全面檢視視覺＋響應式（完整設計系統健檢）**，不只修這一個彈窗。
