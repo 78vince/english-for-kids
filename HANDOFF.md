@@ -165,6 +165,23 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.158 風格改版 v3：星星分級／代幣圖示／字型系統／按鈕選取狀態／抬頭膠囊圓角（2026-10-01）
+
+使用者提出 9 項更細節的設計要求，逐一處理：
+
+1. **遊戲室用星星分級，不是成就徽章**——釐清：主站學習進度的成就徽章系統維持不變，遊戲室（填字遊戲／戳泡泡）的星星評等這次補上三級配色（1-2 顆「再接再厲」用中性灰、3-4 顆「做得好」用黃色、5 顆「太棒了」用金色漸層反白 chip），現況確認 `starsForMistakes()` 換算邏輯已存在，只是星星渲染目前完全沒有分級配色（`STAR_FILLED_ICON`/`STAR_EMPTY_ICON` 都是 `currentColor`，所有星數同一個顏色）。
+2. **代幣圖示換成圓圈＋字母 K**——確認目前 `COIN_ICON()` 是硬幣造型 SVG（不是 emoji，之前就已經換成 SVG 了），這次改成圓圈底（`--gradient-primary`）＋白色粗體字母 K，呼應吉祥物「羊毛氈字母怪獸 K」。
+3. **新增字型系統**：字級數值不變，補上 `--weight-regular`/`--weight-bold`/`--leading-tight`/`--leading-normal` 角色定義，明確區分 `--font-display`（標題/按鈕/數字）跟 `--font-body`（內文）兩個角色，即使目前是同一套字體，角色分開方便未來調整。
+4. **按鈕 hover／選取狀態**：確認 `.primary-btn`/`.secondary-btn` 的 hover 其實已經存在（不用新增），新增的是 `.is-selected` 共用 class 給未來的分頁/篩選類元件用，這次沒有既有元件需要套用，先定義好備用。
+5. **挑戰紀錄／個人檔案資訊卡、單元完成卡**：確認 `.profile-stat-card` 現況已經是「icon+數字+標籤」的卡片結構，只需要核對 token 數值；**單元完成卡確認目前不存在對應元件**（現況只有純文字跟共用的徽章解鎖彈窗），已在設計文件定義視覺規格，但明確排除在這次 handoff 之外，列為需要額外確認的新功能，避免風格調整的 commit 範圍混進新功能開發。
+6. **首頁抬頭圓角改用 pill**（膠囊形，呼應圓形大頭貼），接續 9.157 的抬頭重新設計，圓角從 `--radius-xl` 升級成全圓角膠囊形，並備註未登入狀態視覺上是否也要套用膠囊圓角，交由實際畫面確認再決定。
+7. **色彩系統補漸層**：新增 `--gradient-primary`/`--gradient-gold`/`--gradient-success` 三組 135deg 漸層 token，統一全站漸層配色跟角度，不要各元件各自亂配。
+8. **`docs/design-tokens.html` 新增點擊色卡複製 token 名稱功能**（純文件工具，不影響實際網站程式碼）。
+9. **導覽列 hover／當前頁面狀態**：確認現況已經存在（`.nav-item:hover`／`.nav-item.active`），這次只是在設計文件正式記錄狀態對照表，沒有程式碼異動。
+- 參考另一個專案的設計文件（`project_smart_reading_platform/ref/design-tokens.html`）格式，`docs/design-tokens.html` 大幅擴充：新增漸層／完整字型系統／星星評等／代幣圖示／按鈕選取狀態／挑戰紀錄個人檔案卡片等章節，並加上點擊複製功能。
+- 撰寫正式 handoff `docs/handoff-prompt-style-refresh-v3.md`，含星星分級/代幣圖示的實際程式碼改法、字型/漸層 token 新增、抬頭膠囊圓角調整，明確排除「單元完成卡」這項新功能。
+- **後續**：待 App 端依序執行 9.156／9.157／9.158 三份 handoff；單元完成卡是否要做列為獨立待確認項目。
+
 ### 9.157 風格改版 v2：主色／強調色／中性色定案＋抬頭區塊重新設計（2026-10-01）
 
 接續 9.155 設計系統健檢，使用者進一步要求完整風格改版，方向：舒適、柔和降階的中性色調、圓潤和緩、色彩深淺＋留白建立層級。透過 `mcp__visualize`／HTML 對照頁來回三輪確認細節：

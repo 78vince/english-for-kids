@@ -13,12 +13,16 @@
     --line:#E6E1D8; --line-soft:#F1EEE7; --mono: ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
     --radius-card:16px;
 
-    --color-primary-700:#347FBC; --color-primary-500:#5B9CD1; --color-primary-100:#DCEAF5;
+    --color-primary-700:#347FBC; --color-primary-500:#5B9CD1; --color-primary-100:#DCEAF5; --color-primary-tint:#EAF2FB;
     --color-accent-orange:#FF9A68; --color-accent-pink:#FFB8E8; --color-accent-yellow:#FFD873;
     --color-success:#7EDBA0; --color-error:#FF7A7A;
     --color-bg:#F7F5F1; --color-surface:#FFFFFF; --color-ink:#2F2E4E; --color-ink-muted:#8B8699; --color-border:#E6E1D8;
     --radius-xs:6px; --radius-sm:12px; --radius-md:18px; --radius-lg:24px; --radius-xl:32px; --radius-pill:999px;
     --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px;
+
+    --gradient-primary: linear-gradient(135deg, var(--color-primary-700), var(--color-primary-500));
+    --gradient-gold: linear-gradient(135deg, #E8C24E, var(--color-accent-yellow));
+    --gradient-success: linear-gradient(135deg, #4FBE82, var(--color-success));
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--page-bg);color:var(--ink);font-family:'Huninn','Noto Sans TC',sans-serif;font-size:14px;line-height:1.6}
@@ -28,13 +32,14 @@
   .topbar-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .brand h1{font-size:17px;margin:0;font-weight:700}
   .brand .sub{font-size:12px;color:var(--ink-sub)}
-  .quick-nav{display:flex;gap:4px;flex-wrap:wrap;max-width:720px}
+  .quick-nav{display:flex;gap:4px;flex-wrap:wrap;max-width:760px}
   .quick-nav a{font-size:11px;color:var(--ink-sub);text-decoration:none;background:#F1EEE7;border-radius:999px;padding:4px 10px}
   .quick-nav a:hover{background:var(--color-primary-100);color:var(--color-primary-700)}
 
   .wrap{max-width:1180px;margin:0 auto;padding:28px 28px 100px}
   .meta-banner{background:#fff;border:1px solid var(--line);border-radius:var(--radius-card);padding:16px 20px;margin-bottom:28px;font-size:12.5px;color:var(--ink-sub)}
   .meta-banner b{color:var(--ink)}
+  .tip{background:#FFF8E9;border-radius:10px;padding:8px 14px;font-size:12px;color:#8A6A2E;margin-bottom:16px;display:inline-block}
 
   section.block{margin-bottom:44px;scroll-margin-top:76px}
   .block h2{font-size:16px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
@@ -43,13 +48,16 @@
   .part-divider{font-size:13px;font-weight:700;color:var(--color-primary-700);text-transform:uppercase;letter-spacing:.06em;margin:56px 0 20px;padding-bottom:8px;border-bottom:2px solid var(--color-primary-100)}
 
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
-  .swatch{background:var(--card-bg);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .swatch{background:var(--card-bg);border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;transition:box-shadow .15s,transform .15s}
+  .swatch:hover{box-shadow:0 4px 14px rgba(0,0,0,.1);transform:translateY(-1px)}
   .swatch .chip{height:60px}
   .swatch .body{padding:10px 12px}
   .swatch .name{font-size:12.5px;font-weight:700;margin:0 0 3px}
   .swatch .hex{font-family:var(--mono);font-size:11px;color:var(--ink-sub);margin:0}
   .swatch .var{font-family:var(--mono);font-size:10px;color:#b7bec8;margin:3px 0 0}
   .swatch .usage{display:inline-block;margin-top:6px;font-size:10.5px;background:var(--color-primary-100);color:var(--color-primary-700);border-radius:6px;padding:1px 6px;font-weight:700}
+  .copy-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(12px);background:var(--ink);color:#fff;font-size:13px;font-weight:700;padding:10px 18px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:200;white-space:nowrap}
+  .copy-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
   .type-row{display:flex;align-items:baseline;gap:18px;padding:12px 0;border-bottom:1px solid var(--line-soft)}
   .type-row:last-child{border-bottom:0}
@@ -75,10 +83,15 @@
   .ref-table th{color:var(--ink-sub);font-weight:700}
   code{font-family:var(--mono);background:#F1EEE7;border-radius:4px;padding:1px 5px;font-size:11px}
 
-  /* ── 元件樣式本體 ── */
-  .btn-primary{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 24px;border-radius:var(--radius-pill);background:var(--color-primary-700);color:#fff;font-weight:700;font-size:15px;border:none}
-  .btn-secondary{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 24px;border-radius:var(--radius-pill);background:#fff;color:var(--color-primary-700);font-weight:700;font-size:15px;border:2px solid var(--color-primary-100)}
-  .btn-destructive{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 24px;border-radius:var(--radius-pill);background:#fff;color:var(--color-error);font-weight:700;font-size:15px;border:2px solid #FFE0DE}
+  .btn-primary{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 24px;border-radius:var(--radius-pill);background:var(--color-primary-700);color:#fff;font-weight:700;font-size:15px;border:none;cursor:pointer;transition:background .15s}
+  .btn-primary:hover{background:#2A6694}
+  .btn-secondary{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 24px;border-radius:var(--radius-pill);background:#fff;color:var(--color-primary-700);font-weight:700;font-size:15px;border:2px solid var(--color-primary-100);cursor:pointer;transition:background .15s,border-color .15s}
+  .btn-secondary:hover{background:var(--color-primary-tint);border-color:var(--color-primary-700)}
+  .btn-destructive{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 24px;border-radius:var(--radius-pill);background:#fff;color:var(--color-error);font-weight:700;font-size:15px;border:2px solid #FFE0DE;cursor:pointer;transition:background .15s}
+  .btn-destructive:hover{background:#FFF1F0}
+  .btn-tab{display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 18px;border-radius:var(--radius-pill);background:#fff;color:var(--ink-sub);font-weight:700;font-size:13px;border:2px solid var(--line);cursor:pointer;transition:all .15s}
+  .btn-tab:hover{border-color:var(--color-primary-500);color:var(--color-primary-700)}
+  .btn-tab.is-selected{background:var(--color-primary-700);border-color:var(--color-primary-700);color:#fff}
 
   .tk-topic-card{background:#fff;border-radius:var(--radius-md);border:1px solid var(--line);padding:var(--space-4);width:220px}
   .tk-topic-card h4{margin:0 0 4px;font-size:17px}
@@ -100,12 +113,13 @@
   .tk-icon-tile{width:56px;height:56px;border-radius:var(--radius-sm);background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
   .tk-icon-tile svg{width:22px;height:22px}
 
-  .tk-banner{border-radius:var(--radius-xl);background:linear-gradient(135deg,var(--color-primary-700),var(--color-primary-500));color:#fff;padding:var(--space-4) var(--space-5);display:flex;align-items:center;gap:var(--space-4)}
+  .tk-banner{border-radius:var(--radius-pill);background:var(--gradient-primary);color:#fff;padding:var(--space-4) var(--space-6);display:flex;align-items:center;gap:var(--space-4)}
   .tk-banner-avatar{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.35);flex:none}
   .tk-banner-text{font-size:19px;font-weight:700}
 
   .tk-nav{display:flex;gap:4px;background:#fff;border-radius:var(--radius-pill);padding:6px;border:1px solid var(--line)}
-  .tk-nav-item{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--radius-md);font-size:13px;font-weight:700;color:var(--ink-sub)}
+  .tk-nav-item{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--radius-md);font-size:13px;font-weight:700;color:var(--ink-sub);cursor:pointer;transition:all .15s}
+  .tk-nav-item:hover{background:var(--color-primary-100);color:var(--color-primary-700)}
   .tk-nav-item.active{background:var(--color-primary-700);color:#fff}
 
   .tk-badge-tier{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px}
@@ -114,161 +128,252 @@
   .tk-chat-bubble.them{background:#fff;border:1px solid var(--line);color:var(--ink)}
   .tk-chat-bubble.me{background:var(--color-primary-700);color:#fff;margin-left:auto}
   .tk-chat-zh{font-size:12px;color:var(--ink-sub);margin-top:2px}
+
+  .tk-token-icon{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--gradient-primary);color:#fff;font-family:'Huninn',sans-serif;font-weight:700;flex:none}
+  .tk-star-row{display:inline-flex;gap:2px}
+  .tk-star{font-size:20px;color:#DCDADF}
+  .tk-star.filled{color:var(--color-accent-yellow)}
+  .tk-star.filled.muted{color:var(--color-ink-muted)}
+  .tk-star-chip{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--radius-pill)}
+
+  .tk-info-card{background:#fff;border-radius:var(--radius-md);padding:var(--space-4);text-align:center;width:130px}
+  .tk-info-card .num{font-size:28px;font-weight:700;color:var(--color-primary-700)}
+  .tk-info-card .lbl{font-size:11px;color:var(--ink-sub);margin-top:2px}
+
+  .tk-unit-card{border-radius:var(--radius-lg);padding:var(--space-5);color:#fff;background:var(--gradient-success);width:260px}
+  .tk-unit-card .tag{font-size:11px;background:rgba(255,255,255,.25);display:inline-block;padding:2px 10px;border-radius:999px;margin-bottom:8px}
+  .tk-unit-card h4{margin:0 0 4px;font-size:18px}
+  .tk-unit-card p{margin:0;font-size:12px;opacity:.9}
 </style>
 </head>
 <body>
 
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="brand"><h1>兒童英語學習平台 Design Tokens</h1><div class="sub">2026-10-01 v1 · 主色 #347FBC 柔和降階版</div></div>
+    <div class="brand"><h1>兒童英語學習平台 Design Tokens</h1><div class="sub">2026-10-01 v2 · 點擊任一色卡可複製 token 名稱</div></div>
     <div class="quick-nav">
       <a href="#sec-1">1 主色</a><a href="#sec-2">2 強調色</a><a href="#sec-3">3 中性色</a><a href="#sec-4">4 徽章色</a>
-      <a href="#sec-5">5 字級</a><a href="#sec-6">6 間距</a><a href="#sec-7">7 圓角</a><a href="#sec-8">8 陰影/斷點</a><a href="#sec-9">9 圖示</a>
-      <a href="#sec-10">10 按鈕</a><a href="#sec-11">11 卡片</a><a href="#sec-12">12 彈窗</a><a href="#sec-13">13 標籤</a><a href="#sec-14">14 導覽列</a>
-      <a href="#sec-15">15 首頁抬頭</a><a href="#sec-16">16 主題卡片</a><a href="#sec-17">17 遊戲室</a><a href="#sec-18">18 成就徽章</a><a href="#sec-19">19 會話練習</a>
+      <a href="#sec-4b">4b 漸層</a><a href="#sec-5">5 字型系統</a><a href="#sec-6">6 間距</a><a href="#sec-7">7 圓角</a><a href="#sec-8">8 陰影/斷點</a><a href="#sec-9">9 圖示</a>
+      <a href="#sec-10">10 按鈕</a><a href="#sec-10b">10b 星星評等</a><a href="#sec-10c">10c 代幣圖示</a><a href="#sec-11">11 卡片</a><a href="#sec-12">12 彈窗</a><a href="#sec-13">13 標籤</a><a href="#sec-14">14 導覽列</a>
+      <a href="#sec-15">15 首頁抬頭</a><a href="#sec-16">16 主題卡片</a><a href="#sec-17">17 遊戲室</a><a href="#sec-18">18 成就徽章</a><a href="#sec-19">19 會話練習</a><a href="#sec-20">20 挑戰紀錄/個人檔案</a>
     </div>
   </div>
 </div>
 
 <div class="wrap">
   <div class="meta-banner">
-    這份文件整理「柔和降階」風格改版確認後的完整 design token，結構分三大部分：<b>一、基礎元素</b>（色彩／字級／間距／圓角／陰影／斷點／圖示風格）、<b>二、元件規格</b>（按鈕／卡片／彈窗／標籤／導覽列，每個元件可重複用在任何頁面）、<b>三、功能應用</b>（把元素跟元件實際組進目前平台的真實畫面：首頁抬頭、主題卡片、遊戲室、成就徽章、Stage E 會話練習）。對應的程式碼修改細節見 <code>docs/handoff-prompt-style-refresh-v2.md</code>。
+    這份文件分三大部分：<b>一、基礎元素</b>（色彩／字型／間距／圓角／陰影／斷點／圖示風格）、<b>二、元件規格</b>（按鈕／星星評等／代幣圖示／卡片／彈窗／標籤／導覽列）、<b>三、功能應用</b>（首頁抬頭、主題卡片、遊戲室、成就徽章、Stage E 會話練習、挑戰紀錄／個人檔案）。<b>點擊任何色卡會把 token 名稱複製到剪貼簿</b>，方便直接貼進程式碼。對應的程式碼修改細節見 <code>docs/handoff-prompt-style-refresh-v2.md</code> 與 <code>docs/handoff-prompt-style-refresh-v3.md</code>。
   </div>
 
   <div class="part-divider">Part 1 · 基礎元素</div>
 
   <section class="block" id="sec-1">
     <h2><span class="idx">1</span>主色 Primary</h2>
-    <p class="desc">使用者指定 <code>#347FBC</code> 當主色，沿用原本「藍色系」的品牌方向，取代原本較深較飽和的 #0052A3。</p>
+    <p class="desc">主色 <code>#347FBC</code>。</p>
     <div class="grid">
-      <div class="swatch"><div class="chip" style="background:#347FBC"></div><div class="body"><p class="name">primary-700</p><p class="hex">#347FBC</p><p class="var">--color-primary-700</p><span class="usage">按鈕／抬頭／連結</span></div></div>
-      <div class="swatch"><div class="chip" style="background:#5B9CD1"></div><div class="body"><p class="name">primary-500</p><p class="hex">#5B9CD1</p><p class="var">--color-primary-500</p><span class="usage">抬頭漸層／hover</span></div></div>
-      <div class="swatch"><div class="chip" style="background:#DCEAF5"></div><div class="body"><p class="name">primary-100</p><p class="hex">#DCEAF5</p><p class="var">--color-primary-100</p><span class="usage">淡底色／nav hover</span></div></div>
-      <div class="swatch"><div class="chip" style="background:#EAF2FB"></div><div class="body"><p class="name">primary-tint</p><p class="hex">#EAF2FB</p><p class="var">--color-primary-tint</p><span class="usage">分級卡片淡底</span></div></div>
+      <div class="swatch" onclick="copyToken('primary-700', this)"><div class="chip" style="background:#347FBC"></div><div class="body"><p class="name">primary-700</p><p class="hex">#347FBC</p><span class="usage">按鈕／抬頭／連結</span></div></div>
+      <div class="swatch" onclick="copyToken('primary-500', this)"><div class="chip" style="background:#5B9CD1"></div><div class="body"><p class="name">primary-500</p><p class="hex">#5B9CD1</p><span class="usage">抬頭漸層／hover</span></div></div>
+      <div class="swatch" onclick="copyToken('primary-100', this)"><div class="chip" style="background:#DCEAF5"></div><div class="body"><p class="name">primary-100</p><p class="hex">#DCEAF5</p><span class="usage">淡底色／nav hover</span></div></div>
+      <div class="swatch" onclick="copyToken('primary-tint', this)"><div class="chip" style="background:#EAF2FB"></div><div class="body"><p class="name">primary-tint</p><p class="hex">#EAF2FB</p><span class="usage">分級卡片淡底</span></div></div>
     </div>
   </section>
 
   <section class="block" id="sec-2">
-    <h2><span class="idx">2</span>強調色 Accent（柔和降階：只微調，不大幅降飽和）</h2>
-    <p class="desc">色相方向不變，飽和度/明度相較原色只做小幅修飾，避免像第一版提案那樣顯得死氣沉沉。</p>
+    <h2><span class="idx">2</span>強調色 Accent</h2>
     <div class="grid">
-      <div class="swatch"><div class="chip" style="background:#FF9A68"></div><div class="body"><p class="name">accent-orange</p><p class="hex">#FF9A68</p><p class="var">--color-accent-orange</p><span class="usage">次要強調／提示</span></div></div>
-      <div class="swatch"><div class="chip" style="background:#FFB8E8"></div><div class="body"><p class="name">accent-pink</p><p class="hex">#FFB8E8</p><p class="var">--color-accent-pink</p><span class="usage">填字遊戲主題色</span></div></div>
-      <div class="swatch"><div class="chip" style="background:#FFD873"></div><div class="body"><p class="name">accent-yellow</p><p class="hex">#FFD873</p><p class="var">--color-accent-yellow</p><span class="usage">分級淡底／提醒</span></div></div>
-      <div class="swatch"><div class="chip" style="background:#7EDBA0"></div><div class="body"><p class="name">success</p><p class="hex">#7EDBA0</p><p class="var">--color-success</p><span class="usage">答對／進度條</span></div></div>
-      <div class="swatch"><div class="chip" style="background:#FF7A7A"></div><div class="body"><p class="name">error</p><p class="hex">#FF7A7A</p><p class="var">--color-error</p><span class="usage">答錯／刪除</span></div></div>
+      <div class="swatch" onclick="copyToken('accent-orange', this)"><div class="chip" style="background:#FF9A68"></div><div class="body"><p class="name">accent-orange</p><p class="hex">#FF9A68</p></div></div>
+      <div class="swatch" onclick="copyToken('accent-pink', this)"><div class="chip" style="background:#FFB8E8"></div><div class="body"><p class="name">accent-pink</p><p class="hex">#FFB8E8</p></div></div>
+      <div class="swatch" onclick="copyToken('accent-yellow', this)"><div class="chip" style="background:#FFD873"></div><div class="body"><p class="name">accent-yellow</p><p class="hex">#FFD873</p></div></div>
+      <div class="swatch" onclick="copyToken('success', this)"><div class="chip" style="background:#7EDBA0"></div><div class="body"><p class="name">success</p><p class="hex">#7EDBA0</p></div></div>
+      <div class="swatch" onclick="copyToken('error', this)"><div class="chip" style="background:#FF7A7A"></div><div class="body"><p class="name">error</p><p class="hex">#FF7A7A</p></div></div>
     </div>
   </section>
 
   <section class="block" id="sec-3">
-    <h2><span class="idx">3</span>中性色 Neutral（背景改暖色調，呼應「舒適」）</h2>
+    <h2><span class="idx">3</span>中性色 Neutral</h2>
     <div class="grid">
-      <div class="swatch"><div class="chip" style="background:#2F2E4E"></div><div class="body"><p class="name">ink</p><p class="hex">#2F2E4E</p><p class="var">--color-ink</p><span class="usage">主要文字</span></div></div>
-      <div class="swatch"><div class="chip" style="background:#8B8699"></div><div class="body"><p class="name">ink-muted</p><p class="hex">#8B8699</p><p class="var">--color-ink-muted</p><span class="usage">次要文字</span></div></div>
-      <div class="swatch"><div class="chip" style="background:#F7F5F1;border-bottom:1px solid #eee"></div><div class="body"><p class="name">bg</p><p class="hex">#F7F5F1</p><p class="var">--color-bg</p><span class="usage">頁面背景</span></div></div>
-      <div class="swatch"><div class="chip" style="background:#FFFFFF;border-bottom:1px solid #eee"></div><div class="body"><p class="name">surface</p><p class="hex">#FFFFFF</p><p class="var">--color-surface</p><span class="usage">卡片／彈窗底</span></div></div>
-      <div class="swatch"><div class="chip" style="background:#E6E1D8"></div><div class="body"><p class="name">border</p><p class="hex">#E6E1D8</p><p class="var">--color-border</p><span class="usage">邊框／分隔線</span></div></div>
+      <div class="swatch" onclick="copyToken('ink', this)"><div class="chip" style="background:#2F2E4E"></div><div class="body"><p class="name">ink</p><p class="hex">#2F2E4E</p></div></div>
+      <div class="swatch" onclick="copyToken('ink-muted', this)"><div class="chip" style="background:#8B8699"></div><div class="body"><p class="name">ink-muted</p><p class="hex">#8B8699</p></div></div>
+      <div class="swatch" onclick="copyToken('bg', this)"><div class="chip" style="background:#F7F5F1;border-bottom:1px solid #eee"></div><div class="body"><p class="name">bg</p><p class="hex">#F7F5F1</p></div></div>
+      <div class="swatch" onclick="copyToken('surface', this)"><div class="chip" style="background:#FFFFFF;border-bottom:1px solid #eee"></div><div class="body"><p class="name">surface</p><p class="hex">#FFFFFF</p></div></div>
+      <div class="swatch" onclick="copyToken('border', this)"><div class="chip" style="background:#E6E1D8"></div><div class="body"><p class="name">border</p><p class="hex">#E6E1D8</p></div></div>
     </div>
   </section>
 
   <section class="block" id="sec-4">
-    <h2><span class="idx">4</span>成就徽章分級色（維持現有，不調整）</h2>
-    <p class="desc">這組色彩使用者沒有要求調整，維持現有定義，僅收錄備查。</p>
+    <h2><span class="idx">4</span>成就徽章分級色（維持現有）</h2>
     <div class="grid">
-      <div class="swatch"><div class="chip" style="background:#B9835A"></div><div class="body"><p class="name">tier-bronze</p><p class="hex">#B9835A</p></div></div>
-      <div class="swatch"><div class="chip" style="background:#A6AEBD"></div><div class="body"><p class="name">tier-silver</p><p class="hex">#A6AEBD</p></div></div>
-      <div class="swatch"><div class="chip" style="background:#E8B84B"></div><div class="body"><p class="name">tier-gold</p><p class="hex">#E8B84B</p></div></div>
-      <div class="swatch"><div class="chip" style="background:#C9CDD4"></div><div class="body"><p class="name">tier-locked</p><p class="hex">#C9CDD4</p></div></div>
+      <div class="swatch" onclick="copyToken('tier-bronze', this)"><div class="chip" style="background:#B9835A"></div><div class="body"><p class="name">tier-bronze</p><p class="hex">#B9835A</p></div></div>
+      <div class="swatch" onclick="copyToken('tier-silver', this)"><div class="chip" style="background:#A6AEBD"></div><div class="body"><p class="name">tier-silver</p><p class="hex">#A6AEBD</p></div></div>
+      <div class="swatch" onclick="copyToken('tier-gold', this)"><div class="chip" style="background:#E8B84B"></div><div class="body"><p class="name">tier-gold</p><p class="hex">#E8B84B</p></div></div>
+      <div class="swatch" onclick="copyToken('tier-locked', this)"><div class="chip" style="background:#C9CDD4"></div><div class="body"><p class="name">tier-locked</p><p class="hex">#C9CDD4</p></div></div>
+    </div>
+  </section>
+
+  <section class="block" id="sec-4b">
+    <h2><span class="idx">4b</span>漸層 Gradient（新增）</h2>
+    <p class="desc">色彩系統補上漸層應用，統一用 135deg 斜角，避免每個元件各自亂配漸層方向/色組。</p>
+    <div class="grid">
+      <div class="swatch" onclick="copyToken('gradient-primary', this)"><div class="chip" style="background:var(--gradient-primary)"></div><div class="body"><p class="name">gradient-primary</p><p class="hex">135deg 主色→primary-500</p><span class="usage">抬頭／代幣圖示</span></div></div>
+      <div class="swatch" onclick="copyToken('gradient-gold', this)"><div class="chip" style="background:var(--gradient-gold)"></div><div class="body"><p class="name">gradient-gold</p><p class="hex">135deg 金黃雙色</p><span class="usage">5 星評等底色</span></div></div>
+      <div class="swatch" onclick="copyToken('gradient-success', this)"><div class="chip" style="background:var(--gradient-success)"></div><div class="body"><p class="name">gradient-success</p><p class="hex">135deg 綠色雙色</p><span class="usage">單元完成慶祝卡</span></div></div>
     </div>
   </section>
 
   <section class="block" id="sec-5">
-    <h2><span class="idx">5</span>字級 Typography（維持現有數值不變）</h2>
-    <p class="desc">這次改版不調整字級數值，只調整「用法」（見第三部分的層級應用範例）。</p>
+    <h2><span class="idx">5</span>字型系統 Typography System（新增完整規劃）</h2>
+    <p class="desc">字級數值不變，這次補齊完整的字型角色／字重／行高規則，避免各元件各自決定。</p>
+    <table class="ref-table">
+      <tr><th>角色</th><th>字體</th><th>用途</th></tr>
+      <tr><td><code>--font-display</code></td><td>Huninn, Noto Sans TC</td><td>標題／按鈕／數字／品牌文字——圓潤童趣，是全站主要識別字體</td></tr>
+      <tr><td><code>--font-body</code></td><td>Huninn, Noto Sans TC</td><td>內文／說明文字——目前跟 display 同一套字體，角色分開定義是為了未來若想替內文換一套更適合長篇閱讀的字體時，不影響標題</td></tr>
+    </table>
+    <table class="ref-table">
+      <tr><th>Token</th><th>值</th><th>用途</th></tr>
+      <tr><td><code>--weight-regular</code></td><td>400</td><td>內文、次要說明</td></tr>
+      <tr><td><code>--weight-bold</code></td><td>700</td><td>標題、按鈕、強調文字——全站目前主要只用這兩階，不新增中間字重</td></tr>
+      <tr><td><code>--leading-tight</code></td><td>1.3</td><td>標題行高（h1~h3）</td></tr>
+      <tr><td><code>--leading-normal</code></td><td>1.6</td><td>內文行高（body／caption）</td></tr>
+    </table>
     <div class="group-block">
-      <div class="type-row"><span class="label">display · 54px</span><span class="sample" style="font-size:40px">Aa 你好</span><span class="usage">首頁大標（少用）</span></div>
-      <div class="type-row"><span class="label">h1 · 42px</span><span class="sample" style="font-size:34px">Aa 你好</span><span class="usage">抬頭問候語（將縮小用法）</span></div>
-      <div class="type-row"><span class="label">h2 · 32px</span><span class="sample" style="font-size:28px">Aa 你好</span><span class="usage">頁面標題</span></div>
-      <div class="type-row"><span class="label">h3 · 28px</span><span class="sample" style="font-size:24px">Aa 你好</span><span class="usage">彈窗標題</span></div>
-      <div class="type-row"><span class="label">body-lg · 23px</span><span class="sample" style="font-size:20px">Aa 你好</span><span class="usage">卡片標題</span></div>
-      <div class="type-row"><span class="label">body · 21px</span><span class="sample" style="font-size:18px">Aa 你好</span><span class="usage">內文</span></div>
-      <div class="type-row"><span class="label">caption · 17px</span><span class="sample" style="font-size:15px;color:var(--ink-sub)">Aa 你好</span><span class="usage">說明文字／次要資訊</span></div>
+      <div class="type-row"><span class="label">display · 54px / 700</span><span class="sample" style="font-size:40px">Aa 你好</span><span class="usage">首頁大標（少用）</span></div>
+      <div class="type-row"><span class="label">h1 · 42px / 700</span><span class="sample" style="font-size:34px">Aa 你好</span><span class="usage">頁面大標題</span></div>
+      <div class="type-row"><span class="label">h2 · 32px / 700</span><span class="sample" style="font-size:28px">Aa 你好</span><span class="usage">頁面標題</span></div>
+      <div class="type-row"><span class="label">h3 · 28px / 700</span><span class="sample" style="font-size:24px">Aa 你好</span><span class="usage">彈窗標題</span></div>
+      <div class="type-row"><span class="label">body-lg · 23px / 700</span><span class="sample" style="font-size:20px">Aa 你好</span><span class="usage">卡片標題</span></div>
+      <div class="type-row"><span class="label">body · 21px / 400</span><span class="sample" style="font-size:18px;font-weight:400">Aa 你好</span><span class="usage">內文</span></div>
+      <div class="type-row"><span class="label">caption · 17px / 400</span><span class="sample" style="font-size:15px;font-weight:400;color:var(--ink-sub)">Aa 你好</span><span class="usage">說明文字／次要資訊</span></div>
     </div>
   </section>
 
   <section class="block" id="sec-6">
-    <h2><span class="idx">6</span>間距 Spacing（數值不變，新增用途分組）</h2>
-    <p class="desc">8 階數值沿用現有，這次補上「什麼情境用哪一階」的分組邏輯，讓層級靠留白更明確，不用每個元件各自決定。</p>
-    <div class="group-block"><div class="group-label">緊密 Tight — 元件內部（圖示跟文字之間）</div>
+    <h2><span class="idx">6</span>間距 Spacing（分組用途）</h2>
+    <div class="group-block"><div class="group-label">緊密 Tight — 元件內部</div>
       <div class="strip-row"><span class="label">space-1 · 4px</span><div class="bar" style="width:4px"></div><span class="usage">icon 跟 label 的 gap</span></div>
       <div class="strip-row"><span class="label">space-2 · 8px</span><div class="bar" style="width:8px"></div><span class="usage">nav-item 內距</span></div>
     </div>
     <div class="group-block"><div class="group-label">舒適 Comfortable — 相關元素之間</div>
-      <div class="strip-row"><span class="label">space-3 · 12px</span><div class="bar" style="width:12px"></div><span class="usage">按鈕內距／表單間距</span></div>
-      <div class="strip-row"><span class="label">space-4 · 16px</span><div class="bar" style="width:16px"></div><span class="usage">卡片內距（手機版）</span></div>
+      <div class="strip-row"><span class="label">space-3 · 12px</span><div class="bar" style="width:12px"></div><span class="usage">按鈕內距</span></div>
+      <div class="strip-row"><span class="label">space-4 · 16px</span><div class="bar" style="width:16px"></div><span class="usage">卡片內距（手機）</span></div>
     </div>
-    <div class="group-block"><div class="group-label">區塊 Section — 卡片內距、標題跟內容</div>
+    <div class="group-block"><div class="group-label">區塊 Section</div>
       <div class="strip-row"><span class="label">space-5 · 24px</span><div class="bar" style="width:24px"></div><span class="usage">卡片內距（桌面）</span></div>
       <div class="strip-row"><span class="label">space-6 · 32px</span><div class="bar" style="width:32px"></div><span class="usage">彈窗內距</span></div>
     </div>
-    <div class="group-block"><div class="group-label">分組 Group — 頁面大區塊之間</div>
+    <div class="group-block"><div class="group-label">分組 Group</div>
       <div class="strip-row"><span class="label">space-7 · 48px</span><div class="bar" style="width:48px"></div><span class="usage">段落之間</span></div>
       <div class="strip-row"><span class="label">space-8 · 64px</span><div class="bar" style="width:64px"></div><span class="usage">頁面大區塊分隔</span></div>
     </div>
   </section>
 
   <section class="block" id="sec-7">
-    <h2><span class="idx">7</span>圓角 Radius（新增 xs，sm/md 微調更圓潤）</h2>
+    <h2><span class="idx">7</span>圓角 Radius</h2>
     <div class="demo-row">
-      <div style="text-align:center"><div class="radius-demo" style="border-radius:6px"></div><div class="strip-row" style="padding:6px 0;justify-content:center"><span class="usage">xs 6px · 小標籤</span></div></div>
-      <div style="text-align:center"><div class="radius-demo" style="border-radius:12px"></div><div class="strip-row" style="padding:6px 0;justify-content:center"><span class="usage">sm 12px · 按鈕/小圖示</span></div></div>
-      <div style="text-align:center"><div class="radius-demo" style="border-radius:18px"></div><div class="strip-row" style="padding:6px 0;justify-content:center"><span class="usage">md 18px · 選單項目</span></div></div>
-      <div style="text-align:center"><div class="radius-demo" style="border-radius:24px"></div><div class="strip-row" style="padding:6px 0;justify-content:center"><span class="usage">lg 24px · 卡片/彈窗</span></div></div>
-      <div style="text-align:center"><div class="radius-demo" style="border-radius:32px"></div><div class="strip-row" style="padding:6px 0;justify-content:center"><span class="usage">xl 32px · 橫幅</span></div></div>
-      <div style="text-align:center"><div class="radius-demo" style="border-radius:999px;width:40px"></div><div class="strip-row" style="padding:6px 0;justify-content:center"><span class="usage">pill · 按鈕/標籤</span></div></div>
+      <div style="text-align:center"><div class="radius-demo" style="border-radius:6px"></div><div class="usage">xs 6px</div></div>
+      <div style="text-align:center"><div class="radius-demo" style="border-radius:12px"></div><div class="usage">sm 12px</div></div>
+      <div style="text-align:center"><div class="radius-demo" style="border-radius:18px"></div><div class="usage">md 18px</div></div>
+      <div style="text-align:center"><div class="radius-demo" style="border-radius:24px"></div><div class="usage">lg 24px</div></div>
+      <div style="text-align:center"><div class="radius-demo" style="border-radius:32px"></div><div class="usage">xl 32px</div></div>
+      <div style="text-align:center"><div class="radius-demo" style="border-radius:999px;width:40px"></div><div class="usage">pill</div></div>
     </div>
   </section>
 
   <section class="block" id="sec-8">
-    <h2><span class="idx">8</span>陰影／斷點（陰影沿用現有色調改用新主色；斷點依 design-system.md 已制定）</h2>
+    <h2><span class="idx">8</span>陰影／斷點</h2>
     <table class="ref-table">
       <tr><th>Token</th><th>值</th><th>用途</th></tr>
       <tr><td><code>--shadow-sm</code></td><td>0 2px 8px rgba(52,127,188,.08)</td><td>輕量卡片</td></tr>
       <tr><td><code>--shadow-md</code></td><td>0 6px 16px rgba(52,127,188,.12)</td><td>一般卡片</td></tr>
       <tr><td><code>--shadow-lg</code></td><td>0 12px 28px rgba(52,127,188,.16)</td><td>彈窗</td></tr>
       <tr><td>斷點 mobile</td><td><code>max-width:640px</code></td><td>主要手機斷點</td></tr>
-      <tr><td>斷點 mobile-compact</td><td><code>max-width:400px</code></td><td>極窄手機/資訊密集格狀版面</td></tr>
+      <tr><td>斷點 mobile-compact</td><td><code>max-width:400px</code></td><td>極窄手機</td></tr>
     </table>
   </section>
 
   <section class="block" id="sec-9">
-    <h2><span class="idx">9</span>輔助圖示風格（新增，跟吉祥物並存）</h2>
-    <p class="desc">單色線條 SVG，stroke=currentColor，stroke-width=2，沿用功能列既有風格，延伸到遊戲室卡片／徽章分類。吉祥物「羊毛氈字母怪獸 K」跟 Huninn 字體不變。</p>
+    <h2><span class="idx">9</span>輔助圖示風格</h2>
     <div class="demo-row">
       <div class="tk-icon-tile" style="color:#347FBC"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 9v10a1 1 0 0 0 1 1h5v-6h2v6h5a1 1 0 0 0 1-1V9"/></svg></div>
       <div class="tk-icon-tile" style="color:#C98257"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><polyline points="8.2 13.5 7 22 12 19 17 22 15.8 13.5"/></svg></div>
       <div class="tk-icon-tile" style="color:#A985A3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="9" rx="4.5"/><line x1="7.5" y1="10.5" x2="7.5" y2="14.5"/><line x1="5.5" y1="12.5" x2="9.5" y2="12.5"/><circle cx="15.5" cy="11.5" r="1" fill="currentColor" stroke="none"/><circle cx="17.5" cy="13.5" r="1" fill="currentColor" stroke="none"/></svg></div>
-      <div class="tk-icon-tile" style="color:#347FBC"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></svg></div>
     </div>
   </section>
 
   <div class="part-divider">Part 2 · 元件規格</div>
 
   <section class="block" id="sec-10">
-    <h2><span class="idx">10</span>按鈕 Buttons</h2>
+    <h2><span class="idx">10</span>按鈕 Buttons（補 hover／選取狀態）</h2>
     <div class="comp-card">
-      <h3><code>.primary-btn</code> / <code>.secondary-btn</code> / <code>.danger-btn</code></h3>
+      <h3>一般按鈕 — 滑鼠移過去試試看</h3>
       <div class="demo-row">
-        <button class="btn-primary">開始遊戲</button>
-        <button class="btn-secondary">取消</button>
+        <button class="btn-primary">主要按鈕</button>
+        <button class="btn-secondary">次要按鈕</button>
         <button class="btn-destructive">刪除</button>
       </div>
       <table class="ref-table">
-        <tr><th>屬性</th><th>值</th></tr>
-        <tr><td>height</td><td><code>40px</code></td></tr>
-        <tr><td>padding</td><td><code>var(--space-3) var(--space-6)</code></td></tr>
-        <tr><td>border-radius</td><td><code>var(--radius-pill)</code></td></tr>
-        <tr><td>font-size／weight</td><td><code>--text-body</code> / 700</td></tr>
+        <tr><th>狀態</th><th>primary</th><th>secondary</th></tr>
+        <tr><td>預設</td><td>background: primary-700</td><td>白底／primary-100 邊框</td></tr>
+        <tr><td>hover</td><td>background 加深一階（#2A6694）</td><td>background: primary-tint／邊框轉 primary-700</td></tr>
+      </table>
+    </div>
+    <div class="comp-card">
+      <h3>「當前頁面／選取中」狀態 — <code>.is-selected</code>（用於 Tab／篩選 Chip 這類多選一元件）</h3>
+      <div class="demo-row">
+        <button class="btn-tab is-selected">全部</button>
+        <button class="btn-tab">草稿</button>
+        <button class="btn-tab">已完成</button>
+      </div>
+      <p class="note">跟一般按鈕的差別：<code>.is-selected</code> 是「這個選項目前被選中」的持續狀態（填字遊戲難度分頁、主題分類 Tab 之類的情境），不是互動當下的 hover/active 回饋，所以用跟 <code>.nav-item.active</code> 一致的「實心主色背景＋白字」視覺語言，讓使用者一眼辨認「目前在哪個分頁」。</p>
+    </div>
+  </section>
+
+  <section class="block" id="sec-10b">
+    <h2><span class="idx">10b</span>遊戲星星評等（新增：遊戲室不用徽章，用星星分級）</h2>
+    <p class="desc">遊戲室（填字遊戲／戳泡泡）破關後的成績用星星表示，不是成就徽章系統——徽章系統只用在主站學習進度（第 18 節）。這裡制定星星本身的分級配色，讓「1-2 顆」「3-4 顆」「5 顆」有視覺差異，不是全部用同一個金色。</p>
+    <div class="comp-card">
+      <h3>分級一：再接再厲（1-2 顆）</h3>
+      <div class="tk-star-chip" style="background:#F1EEE7">
+        <span class="tk-star-row"><span class="tk-star filled muted">★</span><span class="tk-star filled muted">★</span><span class="tk-star">★</span><span class="tk-star">★</span><span class="tk-star">★</span></span>
+        <span style="font-size:12px;color:var(--ink-sub);font-weight:700">再接再厲</span>
+      </div>
+    </div>
+    <div class="comp-card">
+      <h3>分級二：做得好（3-4 顆）</h3>
+      <div class="tk-star-chip" style="background:var(--color-accent-yellow-tint,#FFF8E9)">
+        <span class="tk-star-row"><span class="tk-star filled">★</span><span class="tk-star filled">★</span><span class="tk-star filled">★</span><span class="tk-star filled">★</span><span class="tk-star">★</span></span>
+        <span style="font-size:12px;color:#8A6A2E;font-weight:700">做得好</span>
+      </div>
+    </div>
+    <div class="comp-card">
+      <h3>分級三：太棒了（5 顆滿星）</h3>
+      <div class="tk-star-chip" style="background:var(--gradient-gold);color:#fff">
+        <span class="tk-star-row"><span class="tk-star filled" style="color:#fff">★</span><span class="tk-star filled" style="color:#fff">★</span><span class="tk-star filled" style="color:#fff">★</span><span class="tk-star filled" style="color:#fff">★</span><span class="tk-star filled" style="color:#fff">★</span></span>
+        <span style="font-size:12px;font-weight:700">太棒了！</span>
+      </div>
+      <p class="note">滿星用 <code>--gradient-gold</code> 當底色（整個 chip 反白星星），比單純文字顏色更有慶祝感，但只有滿星才用漸層，1-4 顆維持純色背景，避免每個等級都用漸層反而互相稀釋特殊感。</p>
+    </div>
+  </section>
+
+  <section class="block" id="sec-10c">
+    <h2><span class="idx">10c</span>遊戲代幣圖示（新增：圓圈＋字母 K，取代原本的硬幣 emoji）</h2>
+    <p class="desc">原本用 🪙 emoji 當代幣圖示，這次換成跟吉祥物「羊毛氈字母怪獸 K」呼應的品牌圖示：圓圈底色用 <code>--gradient-primary</code>，中間放白色粗體字母「K」。</p>
+    <div class="comp-card">
+      <div class="demo-row">
+        <div class="tk-token-icon" style="width:20px;height:20px;font-size:12px">K</div>
+        <span style="font-size:12px;color:var(--ink-sub)">20px · 內嵌在文字/標籤裡</span>
+      </div>
+      <div class="demo-row" style="margin-top:10px">
+        <div class="tk-token-icon" style="width:32px;height:32px;font-size:18px">K</div>
+        <span style="font-size:12px;color:var(--ink-sub)">32px · 代幣餘額顯示</span>
+      </div>
+      <div class="demo-row" style="margin-top:10px">
+        <span class="tk-chip" style="background:var(--color-primary-tint);color:var(--color-primary-700)"><span class="tk-token-icon" style="width:16px;height:16px;font-size:10px">K</span>5 代幣</span>
+      </div>
+      <table class="ref-table">
+        <tr><th>尺寸</th><th>用途</th></tr>
+        <tr><td>16px</td><td>遊戲室卡片費用標籤內嵌</td></tr>
+        <tr><td>20px</td><td>確認彈窗內文裡的代幣數字旁</td></tr>
+        <tr><td>32px</td><td>個人檔案／遊戲室頂部的代幣餘額顯示</td></tr>
       </table>
     </div>
   </section>
@@ -276,7 +381,7 @@
   <section class="block" id="sec-11">
     <h2><span class="idx">11</span>卡片 Cards</h2>
     <div class="comp-card">
-      <h3><code>.topic-card</code>（主題卡片，含進度條——維持原本互動不變）</h3>
+      <h3><code>.topic-card</code>（含進度條——維持原本互動不變）</h3>
       <div class="demo-row">
         <div class="tk-topic-card">
           <h4>Family 家庭</h4>
@@ -285,25 +390,22 @@
           <div class="tk-progress-label">6 / 7 種題型已挑戰過</div>
         </div>
       </div>
-      <p class="note">進度條是目前既有、使用者確認要保留的呈現方式，這次只調整卡片圓角（lg→md）跟內距 token，不改動進度條本身的邏輯或樣式。</p>
     </div>
     <div class="comp-card">
       <h3><code>.menu-item</code>（題型選單卡片）</h3>
       <div class="demo-row">
         <div class="tk-menu-item"><div class="label">字卡暖身</div><div class="d">先認識單字再進遊戲</div></div>
-        <div class="tk-menu-item"><div class="label">配對遊戲</div><div class="d">練習單字跟意思配對</div></div>
       </div>
     </div>
   </section>
 
   <section class="block" id="sec-12">
-    <h2><span class="idx">12</span>彈窗 Modal（手機版縮小內距，詳見 handoff）</h2>
+    <h2><span class="idx">12</span>彈窗 Modal</h2>
     <div class="comp-card">
-      <h3><code>.modal-overlay</code> / <code>.modal-card</code></h3>
       <div class="tk-modal-overlay">
         <div class="tk-modal-card">
           <h4>要玩「戳泡泡」嗎？</h4>
-          <p>會花 5 個遊戲代幣，確定要開始嗎？</p>
+          <p>會花 <span class="tk-token-icon" style="width:16px;height:16px;font-size:10px;vertical-align:-2px">K</span> 5 個遊戲代幣，確定要開始嗎？</p>
           <button class="btn-primary" style="width:100%">開始遊戲</button>
         </div>
       </div>
@@ -313,54 +415,51 @@
   <section class="block" id="sec-13">
     <h2><span class="idx">13</span>標籤 Tags / Chips</h2>
     <div class="comp-card">
-      <h3>成就徽章分級 Chip</h3>
       <div class="demo-row">
         <span class="tk-chip" style="background:#F3E7DD;color:#A8744E">銅牌徽章</span>
         <span class="tk-chip" style="background:#EDEEF0;color:#8E95A3">銀牌徽章</span>
         <span class="tk-chip" style="background:#F4E9D4;color:#C9A050">金牌徽章</span>
-      </div>
-    </div>
-    <div class="comp-card">
-      <h3>遊戲代幣費用 Chip</h3>
-      <div class="demo-row">
-        <span class="tk-chip" style="background:var(--color-primary-100);color:var(--color-primary-700)">🪙 5 代幣</span>
+        <span class="tk-chip" style="background:var(--color-primary-tint);color:var(--color-primary-700)"><span class="tk-token-icon" style="width:16px;height:16px;font-size:10px">K</span>5 代幣</span>
       </div>
     </div>
   </section>
 
   <section class="block" id="sec-14">
-    <h2><span class="idx">14</span>導覽列 Nav</h2>
+    <h2><span class="idx">14</span>導覽列 Nav（補 hover／當前頁面互動）</h2>
     <div class="comp-card">
+      <h3>滑鼠移過去／點擊試試看每個項目的狀態</h3>
       <div class="tk-nav">
         <div class="tk-nav-item active">首頁</div>
         <div class="tk-nav-item">挑戰紀錄</div>
         <div class="tk-nav-item">成就徽章</div>
         <div class="tk-nav-item">遊戲室</div>
       </div>
+      <table class="ref-table">
+        <tr><th>狀態</th><th>背景</th><th>文字色</th></tr>
+        <tr><td>預設</td><td>透明</td><td>ink-muted</td></tr>
+        <tr><td>hover</td><td>primary-100</td><td>primary-700</td></tr>
+        <tr><td>當前頁面（.active）</td><td>primary-700 實心</td><td>白色</td></tr>
+      </table>
+      <p class="note">hover 狀態只在滑鼠裝置生效（手機觸控沒有 hover），所以「當前頁面」一定要靠 <code>.active</code> 的實心背景清楚標示，不能只靠 hover 效果讓使用者猜測現在在哪一頁。</p>
     </div>
   </section>
 
   <div class="part-divider">Part 3 · 功能應用</div>
 
   <section class="block" id="sec-15">
-    <h2><span class="idx">15</span>首頁抬頭（重新設計，解決手機版過大問題）</h2>
-    <p class="desc">現有版本手機版頭像會放大到 288×288px，整個抬頭區塊約佔 620px 高。這裡改成頭像縮小＋跟文字同一行，不再整欄堆疊。</p>
+    <h2><span class="idx">15</span>首頁抬頭（圓角改用 pill，呼應圓形大頭貼）</h2>
+    <p class="desc">抬頭外框圓角這次改用 <code>--radius-pill</code>（全圓角膠囊形），而不是 xl（32px）的圓角矩形——因為裡面的大頭貼本來就是正圓形，膠囊形外框跟圓形頭貼的曲線語言一致，視覺上更融合；而不是「方形容器 + 圓形頭貼」兩種形狀語言混雜。</p>
     <div class="comp-card">
       <div class="tk-banner">
         <div class="tk-banner-avatar"></div>
         <div class="tk-banner-text">Hi, 小明！一起玩英語</div>
       </div>
-      <table class="ref-table">
-        <tr><th>屬性</th><th>值</th></tr>
-        <tr><td>padding</td><td><code>var(--space-4) var(--space-5)</code>（原本 40px，降到 16/24px）</td></tr>
-        <tr><td>avatar</td><td><code>56px</code>（原本桌面 72px／手機 288px，手機版不再放大）</td></tr>
-        <tr><td>greeting</td><td>單行文字，拿掉強制換行的 <code>&lt;br/&gt;</code></td></tr>
-      </table>
+      <p class="note">因為容器變成膠囊形，內距的左右（<code>--space-6</code>）要比上下（<code>--space-4</code>）寬一些，不然圓角會把文字「吃」進曲線範圍內，細節見 handoff。</p>
     </div>
   </section>
 
   <section class="block" id="sec-16">
-    <h2><span class="idx">16</span>主題選擇頁面（色彩深淺＋留白分組呈現層級）</h2>
+    <h2><span class="idx">16</span>主題選擇頁面</h2>
     <div class="comp-card">
       <div style="background:var(--color-bg);border-radius:16px;padding:16px">
         <div style="font-size:19px;font-weight:700;color:var(--color-ink);margin-bottom:2px">單元一：我和身邊的人</div>
@@ -370,56 +469,88 @@
             <h4 style="font-size:15px">Family</h4>
             <div class="tk-progress-track"><div class="tk-progress-fill" style="width:100%"></div></div>
           </div>
-          <div class="tk-topic-card" style="width:160px">
-            <h4 style="font-size:15px">People</h4>
-            <div class="tk-progress-track"><div class="tk-progress-fill" style="width:60%;background:var(--color-accent-yellow)"></div></div>
-          </div>
         </div>
       </div>
-      <p class="note">標題用最深文字色＋較大字級，說明文字降一階（顏色跟字級都淺一階），單元區塊跟卡片群組之間用 space-5 的卡片留白分隔，不是單靠字級大小區分層級。</p>
     </div>
   </section>
 
   <section class="block" id="sec-17">
-    <h2><span class="idx">17</span>遊戲室（卡片＋確認彈窗）</h2>
+    <h2><span class="idx">17</span>遊戲室（新代幣圖示＋星星評等實際應用）</h2>
     <div class="comp-card">
       <div class="demo-row">
-        <div class="tk-menu-item" style="width:140px;text-align:center">
+        <div class="tk-menu-item" style="width:150px;text-align:center">
           <div style="font-size:28px;margin-bottom:6px">🧩</div>
           <div class="label" style="font-size:14px">填字遊戲</div>
-          <span class="tk-chip" style="background:var(--color-primary-100);color:var(--color-primary-700);margin-top:6px">🪙 5</span>
-        </div>
-        <div class="tk-menu-item" style="width:140px;text-align:center">
-          <div style="font-size:28px;margin-bottom:6px">🫧</div>
-          <div class="label" style="font-size:14px">戳泡泡</div>
-          <span class="tk-chip" style="background:var(--color-primary-100);color:var(--color-primary-700);margin-top:6px">🪙 5</span>
+          <span class="tk-chip" style="background:var(--color-primary-tint);color:var(--color-primary-700);margin-top:6px"><span class="tk-token-icon" style="width:14px;height:14px;font-size:9px">K</span>5</span>
+          <div style="margin-top:8px"><span class="tk-star-row"><span class="tk-star filled">★</span><span class="tk-star filled">★</span><span class="tk-star filled">★</span><span class="tk-star">★</span><span class="tk-star">★</span></span></div>
         </div>
       </div>
     </div>
   </section>
 
   <section class="block" id="sec-18">
-    <h2><span class="idx">18</span>成就徽章頁面</h2>
+    <h2><span class="idx">18</span>成就徽章頁面（主站學習進度專用，跟遊戲室星星分開）</h2>
     <div class="comp-card">
       <div class="demo-row">
-        <div style="text-align:center"><div class="tk-badge-tier" style="background:#F6E9DF">🥉</div><div class="strip-row" style="padding:4px 0;justify-content:center"><span class="usage">銅牌</span></div></div>
-        <div style="text-align:center"><div class="tk-badge-tier" style="background:#FBF1DA">🥇</div><div class="strip-row" style="padding:4px 0;justify-content:center"><span class="usage">金牌</span></div></div>
-        <div style="text-align:center"><div class="tk-badge-tier" style="background:#F1F2F4">🔒</div><div class="strip-row" style="padding:4px 0;justify-content:center"><span class="usage">未解鎖</span></div></div>
+        <div style="text-align:center"><div class="tk-badge-tier" style="background:#F6E9DF">🥉</div><div class="usage">銅牌</div></div>
+        <div style="text-align:center"><div class="tk-badge-tier" style="background:#FBF1DA">🥇</div><div class="usage">金牌</div></div>
+        <div style="text-align:center"><div class="tk-badge-tier" style="background:#F1F2F4">🔒</div><div class="usage">未解鎖</div></div>
       </div>
     </div>
   </section>
 
   <section class="block" id="sec-19">
-    <h2><span class="idx">19</span>Stage E 會話練習（聊天氣泡層級）</h2>
+    <h2><span class="idx">19</span>Stage E 會話練習</h2>
     <div class="comp-card">
       <div style="max-width:320px">
         <div class="tk-chat-bubble them">Hello! How are you today?<div class="tk-chat-zh">嗨！你今天好嗎？</div></div>
         <div class="tk-chat-bubble me">I'm great, thank you!</div>
       </div>
-      <p class="note">對方訊息用中性白底＋邊框、使用者回覆用主色實心底，靠色彩深淺區分「誰在說話」，中文翻譯用次要文字色降一階呈現，不需要額外圖示或框線。</p>
+    </div>
+  </section>
+
+  <section class="block" id="sec-20">
+    <h2><span class="idx">20</span>挑戰紀錄／個人檔案（新增）</h2>
+    <div class="comp-card">
+      <h3>資訊卡 — 挑戰紀錄頁統計格（<code>.profile-stats-grid</code> 裡每一格）</h3>
+      <div class="demo-row">
+        <div class="tk-info-card"><div class="num">128</div><div class="lbl">已學單字</div></div>
+        <div class="tk-info-card"><div class="num">12</div><div class="lbl">連續天數</div></div>
+        <div class="tk-info-card"><div class="num">7</div><div class="lbl">完成主題</div></div>
+      </div>
+      <table class="ref-table">
+        <tr><th>屬性</th><th>值</th></tr>
+        <tr><td>background</td><td><code>surface</code>（白底）</td></tr>
+        <tr><td>border-radius</td><td><code>--radius-md</code></td></tr>
+        <tr><td>數字</td><td><code>--text-h3</code>／700／<code>primary-700</code></td></tr>
+        <tr><td>標籤</td><td><code>--text-caption</code>／<code>ink-muted</code></td></tr>
+      </table>
+    </div>
+    <div class="comp-card">
+      <h3>單元完成卡 — 慶祝整個單元全破時顯示</h3>
+      <div class="tk-unit-card">
+        <span class="tag">🎉 單元完成</span>
+        <h4>單元一：我和身邊的人</h4>
+        <p>6 個主題全部完成，太厲害了！</p>
+      </div>
+      <p class="note">用 <code>--gradient-success</code> 當底色，跟一般卡片的白底做出明確區隔——這張卡只在「整個單元」（不是單一主題）全部完成時才出現，视觉上要比日常的主題卡片更有慶祝感，所以是全站少數使用漸層背景的卡片之一。</p>
     </div>
   </section>
 
 </div>
+
+<div class="copy-toast" id="copyToast"></div>
+<script>
+function copyToken(name, el){
+  var text = '--color-' + name;
+  if (name.indexOf('gradient') === 0) text = '--' + name;
+  navigator.clipboard.writeText(text).catch(function(){});
+  var toast = document.getElementById('copyToast');
+  toast.textContent = '已複製：' + text;
+  toast.classList.add('show');
+  clearTimeout(window._copyTimer);
+  window._copyTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1500);
+}
+</script>
 </body>
 </html>
