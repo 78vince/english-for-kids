@@ -165,6 +165,27 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.155 使用者回報手機版確認彈窗擁擠，進行全站設計系統健檢（2026-10-01）
+
+使用者截圖回報遊戲室確認彈窗（「要玩『戳泡泡』嗎？」）在手機寬度下感覺擁擠，進一步要求「重新檢視全站的設計樣式，並調整 design token 來制定整體視覺以及良好的響應式體驗」。用 AskUserQuestion 確認範圍：使用者選擇**全面檢視視覺＋響應式（完整設計系統健檢）**，不只修這一個彈窗。
+
+- **盤點現況**：全站 token 定義在 `assets/design-tokens/design-tokens.v2-daily-play.css`，三款遊戲的 Standalone CSS 都正確共用同一份（優點），但斷點慣例混亂（420/480/640/768/899-900px 五種數字散落四個檔案，沒有統一邏輯）；`.nav-item`／`.menu-item` 有幾處間距用寫死 px 而不是對應的 spacing token（數值剛好相等，但沒走 token）；`.modal-overlay`／`.modal-card`（含這次回報的確認彈窗）完全沒有手機版覆寫，是擁擠感的根因；填字遊戲／翻牌配對兩款遊戲完全沒有任何 `@media` 規則（比純視覺擁擠更嚴重，因為是可拖曳/可點擊的互動內容）。
+- **新增固定參考文件** `docs/design-system.md`：整理 token 現況、**新制定的斷點慣例**（主斷點 640px、極窄手機/資訊密集版面才需要的 400px、Voice Lab 雙欄用的獨立 899/900px 門檻維持不變）、間距/字級使用原則（優先用既有 token、不夠用時捨入到最近的既有值而非新增一次性 token、按鈕最小點擊熱區 44px）、手機版響應式現況盤點、已知技術債清單（衍生色集中管理、遊戲粉色系用 `color-mix()` 綁定來源色、`--nav-height` 疑似未使用）。
+- **撰寫 handoff**：`docs/handoff-prompt-design-system-health-check.md`——(1) token 檔案補 `--color-accent-orange-tint`／`--color-accent-pink-tint` 兩個遺漏的淡色 tint；(2) `.nav-item`／`.menu-item` 寫死 px 改回對應 token，壓縮態的 10px 特例捨入到 `--space-2`（8px）而非新增 token；(3) **`.modal-overlay`／`.modal-card` 新增手機版 `@media (max-width: 640px)` 覆寫**（內距減半、標題字級降一階、關閉按鈕放大到 44px 符合最小點擊熱區）——這是直接回應使用者回報的部分，因為是共用外殼，首次進站提醒／改頭像/改名字等其他彈窗會一併受惠；(4) `.topic-card`／`.menu-item` 手機版內距微調。
+- **刻意排除本輪範圍**：兩款遊戲缺手機版 CSS（牽涉 TypeScript 動態格子尺寸計算，需跟遊戲邏輯一起看）、衍生色集中化、遊戲主題色改用 `color-mix()`——都記錄進 `design-system.md`，留給下一輪健檢，避免這次改動範圍失控。
+- **後續**：待 App 端執行 handoff、確認 build／驗證通過，實機（含手機寬度模擬）確認彈窗不再擁擠、桌面版完全不受影響。
+
+### 9.154 App 端執行：填字遊戲手機版題目區太小、字母區太佔空間（2026-10-01）
+
+使用者用真機截圖回報：手機直式畫面下，題目區（網格）明顯太小，下面字母區的方塊佔了太多空間，要求把字母磚縮小、讓題目區可以放大。
+
+- **根因**：`crosswordStandalone.ts` 的 `fitGridToViewport()`（9.141～9.143 建立的機制）是整頁（標題、進度文字、網格、字母區、提示文字、頁尾按鈕）都排版完成後，才量測整頁高度有沒有超出這個 iframe 的可視高度，超出的話把超出的量整個算在網格身上去縮小格子——這表示字母區佔用的高度越多，可以留給網格的高度就越少，網格格子就會被壓得越小。截圖裡的「穿搭配件」關卡排版是 5 欄×9 列（`content/crosswords/clothing_accessories_outfit.json`，8 份題庫裡最窄長的一份），加上原本字母磚是 48px 見方、間距 12px，較難的關卡字母數量多（最多十幾個字母）在窄螢幕手機上會換成 2-3 行，光字母區就可能吃掉一兩百 px 的高度，網格因此被壓到最小下限（24px）。
+- **修法**：單純調整 `crosswordStandalone.css` 的字母區樣式，不用額外動 JS 邏輯——`.crossword-tray` 的 `margin-top` 從 `--space-5`（24px）降到 `--space-4`（16px）、`gap` 從 `--space-3`（12px）降到 `--space-2`（8px）；`.crossword-tile` 的尺寸從 48×48px 縮到 36×36px、字級從 `--text-body-lg`（23px）降到 16px。因為 `fitGridToViewport()` 本來就是「整頁排版完才量測、按超出的量縮小網格」這套機制，字母區縮小、整頁高度自然變矮，同一套邏輯會讓網格不用縮得那麼小（甚至可能完全不用縮），這個改動不需要碰 `fitGridToViewport()` 本身的計算邏輯，純粹靠既有機制自動把省下來的高度反映到網格大小上。
+- **沒有改動的部分**：格子本身的 `.crossword-cell`（含最小尺寸下限 24px）、`fitGridToViewport()` 的計算公式、`GRID_GAP_PX` 常數都維持不變——這次只是調整「字母區要分走多少版面」，不是調整「網格該怎麼縮放」的規則本身。
+- **驗證**：`tsc --noEmit`、`verify-crossword-content.ts`／`verify-crossword-logic.ts`／全部既有 `verify-*.ts` 都通過；`npm run build` 通過，grep 打包後的 `dist/assets/crossword-*.css` 確認 `.crossword-tile` 已經是 `width:36px;height:36px;...font-size:16px`、`.crossword-tray` 已經是 `margin-top:var(--space-4);...gap:var(--space-2)`；重新用 `build-content-review.mjs`／`build-dashboard.mjs`／`build-standalone-demo.mjs` 重新產生示範頁面並複製到專案根目錄。
+- **沒辦法在沙盒裡驗證的部分**：36px 的字母磚在真機上用手指拖曳的手感會不會因為變小而變得比較難精準操作（原本 48px 比較大顆好抓）、縮小後網格實際放大的幅度在這款「穿搭配件」最窄長的關卡上夠不夠明顯，都需要使用者實機重新試玩一次確認；如果 36px 覺得拖曳不好抓，可以回頭把這個數字調大一點（例如 40px），用網格放大的幅度跟拖曳手感兩者間抓一個使用者滿意的平衡點。
+- 沒有執行任何 git 操作。
+
 ### 9.153 App 端執行：修正首頁主題卡片漏算 Stage E 會話練習（2026-09-30）
 
 依 `docs/handoff-prompt-topic-card-stage-count-missing-conversation.md`（對應 9.152）執行。
