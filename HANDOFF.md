@@ -165,6 +165,21 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.161 design-tokens.html 結構調整＋全文內容盤點（2026-10-01）
+
+使用者提出 4 項要求：把 9.160 新補的主題卡移到第 16 節（主題選擇頁面）、原第 16 節內容刪除；成就徽章 icon 改用單色扁平風格；檢視全文是否有重複/不合理之處；檢視學習平台內容是否有需要補進 design token 規範的部分。這次**純粹是文件修正，沒有動到任何 `app/` 程式碼**——盤點後發現需要改的地方，實際上都已經符合規範或已經在之前的 handoff 裡處理過，缺的只是這份參考文件沒記錄到。
+
+1. **主題卡移到第 16 節**：第 16 節原本只畫縮小版（無說明文字／進度文字），現在換成完整版（icon＋名稱＋說明＋進度條＋進度文字），跟第 11 節元件規格、首頁實際畫面一致；第 20 節的重複示意拿掉，改成文字指向第 16 節，不再畫兩次。
+2. **成就徽章 icon 改單色扁平**：原本用 🥉🥇🔒 全彩 emoji，跟全站其他 icon（第 9 節、導覽列、分類標題）的單色線條風格不一致。盤點 `main.ts` 發現**實際程式碼的 `CATEGORY_ICONS`／`BADGE_CATEGORY_DISPLAY`（第 4571-4596 行）本來就已經是 `stroke="currentColor"` 的單色扁平 SVG，不是 emoji**——這份文件的示意圖是唯一不合規範的地方。改成分級色圓底＋白色扁平獎牌 SVG（沿用 `CATEGORY_ICONS` 的獎牌形狀），**不需要任何程式碼異動**。
+3. **全文重複/不合理之處**：
+   - `primary-100` 色卡的「用途」寫著「nav hover」，但導覽列 hover 在上一輪修正已經改用 `primary-tint`，這裡沒跟著更新，屬於文件內部互相矛盾——已修正兩張色卡的用途說明。
+   - 第 11 節主題卡 icon 的說明寫著「跟 `.menu-item`／遊戲室卡片用色塊底托住 icon 是不同視覺語言」，但實際核對 `style.css` 發現 `.menu-item-icon`／`.game-room-card-icon` 本來就沒有色塊底——這句話本身就是錯的，已經修正說明文字，三者其實是一致的「純 icon 無底色」。
+4. **內容盤點：發現兩組 token 完全沒被這份文件記錄到**：
+   - **衍生色**（`success-text`／`success-bg`／`error-text`／`error-bg`／`primary-700-hover`／`reward-hover`，定義在 `app/src/style.css` 自己的 `:root`，不是 token 檔案）：全站廣泛用在錯誤文字、危險按鈕、hover 狀態、答對/答錯卡片等情境，但這份文件完全沒提過。新增第 2b 節補上，數值用改版後（`docs/handoff-prompt-style-refresh-v2.md` 已經規劃好）的新值。
+   - **成就徽章分級色的 `-bg` 淡底變體**（`tier-bronze-bg`／`tier-silver-bg`／`tier-gold-bg`／`tier-locked-bg`）：token 檔案裡本來就有，這份文件第 4 節之前只列實色，沒列淡底版——已補齊，並記錄一個現況：`tier-bronze-bg`／`tier-silver-bg`／`tier-gold-bg` 原本的主要用途（主題卡 icon 色塊底）已經因為「icon 不加底色」的決定而不再使用，暫時變成沒有使用場景的 token（保留定義，不用現在刪），只有 `tier-locked-bg` 還有別的用途（翻牌配對鎖定狀態）繼續在用。
+- 版本標籤更新為 `2026-10-01 v4`。
+- 這次調整不影響任何待執行的 handoff（9.156／9.157／9.158／9.159／9.160 五份累積的程式碼改動內容不變），純粹是參考文件本身的品質修正。
+
 ### 9.160 風格改版 v3 第二次使用者回饋修正：滿星改回漸層金／取消「單元完成卡」改成主題卡／主題卡 icon 拿掉底色（2026-10-01）
 
 使用者看過 9.159 的修正後，再提出 2 點進一步修正：
