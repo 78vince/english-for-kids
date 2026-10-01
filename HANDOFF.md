@@ -165,6 +165,19 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.159 風格改版 v3 使用者回饋修正：星星深色滿星／單元卡對照／抬頭統一內距／導覽列沿用一般按鈕 hover（2026-10-01）
+
+使用者看過 9.158 的 `docs/design-tokens.html` 後提出 4 點修正，已同步更新設計文件與對應的 `docs/handoff-prompt-style-refresh-v3.md`：
+
+1. **遊戲星星評等第三級「太棒了」改用深色**：原規劃是亮色漸層（`--gradient-gold`）反白 chip，使用者回饋改用深棕金色實心底（`#3D2F18`）＋亮金色星星，更有「頒獎」質感，跟 1-4 顆的淡黃色區隔更明確。`--gradient-gold` token 保留在檔案裡，只是這個元件不再使用。
+2. **單元完成卡加入一般狀態做比較**：設計文件第 20 節補上「一般狀態／進行中」卡（白底＋邊框＋`primary-tint` 底色標籤）跟原本的「🎉 單元完成」並排對照，方便一眼看出差異。這張卡仍是全新元件，維持排除在 handoff 實作範圍外，等使用者另外確認要不要做。
+3. **首頁抬頭內距改四邊統一**：原規劃左右內距比上下寬（避免膠囊圓角吃字），使用者回饋要四邊一致，這樣頭像到外框的距離才會上下左右對稱，改成統一用 `--space-4`。
+4. **導覽列 hover 沿用「一般按鈕」設定**：原本導覽列自己配一套 hover（只換背景色），跟一般按鈕（`.secondary-btn:hover`）的配方不一致。修正後兩者統一用同一套配方（背景補 `primary-tint`、邊框跟文字轉 `primary-700`），`.secondary-btn:hover` 本身也同步升級（原本只換邊框，沒有補背景色）。
+
+- `docs/design-tokens.html` 四處對應更新（滿星 chip 改深色、§20 新增對照卡、`.tk-banner` 內距、`.tk-nav-item:hover`／`.tk-nav-item` 新增透明邊框）。
+- `docs/handoff-prompt-style-refresh-v3.md` 同步修正第 1／5／6 節程式碼，新增第 7 節「導覽列 hover 改用一般按鈕配方」（含 `.secondary-btn:hover` 升級＋`.nav-item` 補邊框＋`.nav-item:hover` 改配方三處實際 diff），驗證清單一併更新。
+- 兩份文件都還沒交給 App 端執行，待 9.156／9.157／9.158／9.159 四份 handoff 一起排入 App 端工作。
+
 ### 9.158 風格改版 v3：星星分級／代幣圖示／字型系統／按鈕選取狀態／抬頭膠囊圓角（2026-10-01）
 
 使用者提出 9 項更細節的設計要求，逐一處理：

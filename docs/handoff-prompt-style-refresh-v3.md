@@ -31,18 +31,19 @@ if (bestStars > 0) {
 ```css
 .game-room-card-stars--practice { color: var(--color-ink-muted); }  /* 1-2 顆：再接再厲 */
 .game-room-card-stars--good { color: var(--color-accent-yellow); }  /* 3-4 顆：做得好 */
-.game-room-card-stars--great {                                      /* 5 顆：太棒了，整排反白加漸層底 */
+.game-room-card-stars--great {                 /* 5 顆：太棒了，改用深棕金色實心底＋亮金星星（不是亮色漸層） */
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
   color: #fff;
-  background: var(--gradient-gold);
+  background: #3D2F18;
   padding: 2px var(--space-2);
   border-radius: var(--radius-pill);
 }
+.game-room-card-stars--great .star-icon { color: var(--color-accent-yellow); }  /* 星星本身維持亮金色，只有底色改深 */
 ```
 
-`--gradient-gold` 是這次新增的漸層 token（見第 3 節）。只有滿星（5 顆）用漸層反白 chip，1-4 顆維持純色文字不加背景，避免每個等級都用特效互相稀釋掉滿星的慶祝感——這個設計原則在 `docs/design-tokens.html` 第 10b 節已經說明。
+**修正（2026-10-01 使用者回饋）**：滿星原本規劃用 `--gradient-gold` 亮色漸層反白，使用者看過後要求改用深色——深棕金色（`#3D2F18`）實心底＋亮金色星星，比亮色漸層更有「頒獎」質感，也讓滿星明確比 3-4 顆的淡黃色更隆重。`--gradient-gold` 這個 token 仍然保留在 token 檔案裡（其他地方可能用得到），只是星星評等這個元件改成不用它。1-4 顆維持純色文字不加背景不變。
 
 ## 2. 代幣圖示換成「圓圈＋字母 K」
 
@@ -132,6 +133,8 @@ export function COIN_ICON(size: number): string {
 
 這次 handoff **不包含**實作這張新卡片——先把視覺規格定義好放在設計文件裡，等你確認要不要真的做這個新功能（例如：整個單元完成時，除了現有的徽章解鎖彈窗，另外在挑戰紀錄頁常駐顯示一張這樣的慶祝卡）再另外開一次 handoff，避免這次风格調整的 commit 範圍混進新功能開發。
 
+**補充（2026-10-01 使用者回饋）**：`docs/design-tokens.html` 第 20 節這張示意圖現在同時畫了「一般狀態／進行中」（白底＋邊框＋`primary-tint` 底色的「進行中」標籤）跟原本的「🎉 單元完成」（成功色漸層）兩張卡並排比較，方便直接看出「做到一半」跟「完成」兩種狀態的視覺差異。這純粹是補完設計規格的對照組，不影響上面「這次不實作」的結論——兩張卡都還是新元件，一樣等你確認要不要做才會另開 handoff。
+
 ## 6. 首頁抬頭圓角改用 pill（膠囊形，呼應圓形大頭貼）
 
 接續 `style-refresh-v2.md` 第 3.2 節，`.brand-banner` 的 `border-radius` 從 `var(--radius-xl)` 改成 `var(--radius-pill)`：
@@ -139,7 +142,7 @@ export function COIN_ICON(size: number): string {
 ```css
 .brand-banner {
   margin: 0 0 var(--space-4);
-  padding: var(--space-4) var(--space-6);  /* 左右改用 space-6（32px），比上下的 space-4（16px）寬，避免膠囊圓角把文字吃進曲線 */
+  padding: var(--space-4);                  /* 原規劃左右用 space-6 比上下寬，使用者回饋要求四邊一致，改回統一 space-4（16px） */
   background: var(--gradient-primary);      /* 直接引用新 token，取代原本手寫的 linear-gradient(135deg, ...) */
   color: #fff;
   text-align: left;
@@ -147,14 +150,54 @@ export function COIN_ICON(size: number): string {
 }
 ```
 
-未登入狀態（選擇使用者畫面的 `.brand-banner` 不含 `--user`）文字較長（「每天玩一點英語！」+ slogan 兩行），膠囊圓角在這個情境下如果造成左右留白看起來過度浮誇，可以讓未登入狀態維持 `--radius-xl`、只有已登入狀態（`.brand-banner--user`）改成 `--radius-pill`——這個取捨請實際看過兩種畫面再決定，不是非改不可的硬性規則。
+**修正（2026-10-01 使用者回饋）**：原本規劃左右內距用 `--space-6`（32px）比上下的 `--space-4`（16px）寬，理由是怕膠囊圓角把文字吃進曲線。使用者回饋：「左側 padding，我想要與上下相同，這樣大頭貼距離外匡的間距才會一致」——改成四邊統一 `--space-4`，讓頭像到外框的距離上下左右一致，視覺上更穩定。如果統一間距後膠囊圓角在長文字情境（未登入狀態「每天玩一點英語！」+ slogan 兩行）看起來擁擠，可以讓未登入狀態維持 `--radius-xl`、只有已登入狀態（`.brand-banner--user`）改成 `--radius-pill`——圓角的取捨請實際看過兩種畫面再決定，但內距四邊一致這點已經是使用者明確要求，不是取捨選項。
 
-## 7. 驗證
+## 7. 導覽列 hover 改用「一般按鈕」同一套配方（2026-10-01 新增，使用者回饋）
+
+使用者回饋：「導覽列 Nav 上的按鈕效果，並沒有在按鈕設定上出現，請使用一般按鈕設定」——意思是導覽列目前的 hover 是自己另外配的一套，沒有跟一般按鈕（`.secondary-btn`）共用同一份視覺語言，造成全站「滑鼠移過去」的感覺不一致。
+
+現況核對（`style.css` 第 386-388 行）：
+
+```css
+.nav-item:hover {
+  background: var(--color-primary-100);
+}
+```
+
+目前只換背景色，沒有邊框變化；而 `.secondary-btn`（第 1772-1787 行）本身是「白底＋`primary-100` 邊框＋`primary-700` 文字，hover 時邊框變成 `primary-500`」。兩者字面上的 hover 配方（換背景 vs. 換邊框）確實是兩套不同邏輯，這就是使用者說「沒有用一般按鈕設定」的地方。
+
+**修正方向**：把一般按鈕的 hover 配方（背景補上 `primary-tint` 淺底＋邊框/文字轉為 `primary-700`，`docs/design-tokens.html` 第 10 節已經把這個當成「一般按鈕」的正式規格）同時套用到 `.secondary-btn:hover` 跟 `.nav-item:hover`，讓兩者共用同一份視覺語言：
+
+```css
+/* 1. .secondary-btn:hover 升級成補背景＋邊框一起變色（原本只換邊框） */
+.secondary-btn:hover {
+  background: var(--color-primary-tint);
+  border-color: var(--color-primary-700);
+}
+
+/* 2. .nav-item 補上透明邊框（預留 hover 用，不加邊框 hover 時會因為沒有邊框而跳動） */
+.nav-item {
+  /* ...原有屬性不動，新增一行： */
+  border: 2px solid transparent;
+}
+
+/* 3. .nav-item:hover 改用跟 .secondary-btn:hover 一致的配方 */
+.nav-item:hover {
+  background: var(--color-primary-tint);   /* 原 var(--color-primary-100) */
+  border-color: var(--color-primary-700);  /* 新增 */
+  color: var(--color-primary-700);         /* 新增，原本沒有換文字色 */
+}
+```
+
+`.nav-item.active`（第 390-393 行，實心底＋白字）跟 `.nav-item--logout`（登出單獨配色）維持不動——這兩個是「當前頁面」跟「警示色」的既有邏輯，不屬於這次「一般 hover 要一致」的範圍。手機觸控沒有 hover 狀態，所以「當前頁面」一定要靠 `.active` 的實心背景清楚標示，不能只靠 hover 讓使用者猜測現在在哪一頁——這點本來就成立，這次沒有改變。
+
+## 8. 驗證
 
 - `npm run build` 要過。
 - 全部既有 `verify-*.ts` 重跑一次。
 - 手動測試：
-  - 遊戲室任一遊戲玩到不同星數（1-2／3-4／5 顆），確認星星顏色隨分級變化，滿星時整排星星變成反白＋金色漸層底的膠囊 chip。
+  - 遊戲室任一遊戲玩到不同星數（1-2／3-4／5 顆），確認星星顏色隨分級變化，滿星時整排星星變成深棕金色實心底（`#3D2F18`）＋亮金色星星的膠囊 chip（不是亮色漸層反白）。
   - 代幣圖示（餘額顯示／卡片費用標籤／確認彈窗）全部顯示圓圈＋白色字母 K，不是原本的硬幣圖案，字母置中沒有偏移。
-  - 首頁抬頭圓角變成膠囊形，文字跟頭像沒有被圓角裁切或擠壓。
-  - 按鈕 hover 效果維持原本正常運作（這次沒有改動，純粹確認沒有被其他改動意外影響到）。
+  - 首頁抬頭圓角變成膠囊形，四邊內距看起來一致（頭像到外框上下左右距離相同），文字跟頭像沒有被圓角裁切或擠壓。
+  - 一般按鈕（`.secondary-btn`）hover 時背景補上淺底色、邊框變深（不是只有邊框變色）。
+  - 導覽列任一項目滑鼠移過去時，背景／邊框／文字顏色變化跟一般按鈕 hover 一致；「當前頁面」仍然用實心底＋白字清楚標示，不受 hover 樣式影響。

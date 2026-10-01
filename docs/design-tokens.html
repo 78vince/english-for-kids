@@ -113,13 +113,13 @@
   .tk-icon-tile{width:56px;height:56px;border-radius:var(--radius-sm);background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
   .tk-icon-tile svg{width:22px;height:22px}
 
-  .tk-banner{border-radius:var(--radius-pill);background:var(--gradient-primary);color:#fff;padding:var(--space-4) var(--space-6);display:flex;align-items:center;gap:var(--space-4)}
+  .tk-banner{border-radius:var(--radius-pill);background:var(--gradient-primary);color:#fff;padding:var(--space-4);display:flex;align-items:center;gap:var(--space-4)}
   .tk-banner-avatar{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.35);flex:none}
   .tk-banner-text{font-size:19px;font-weight:700}
 
   .tk-nav{display:flex;gap:4px;background:#fff;border-radius:var(--radius-pill);padding:6px;border:1px solid var(--line)}
-  .tk-nav-item{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--radius-md);font-size:13px;font-weight:700;color:var(--ink-sub);cursor:pointer;transition:all .15s}
-  .tk-nav-item:hover{background:var(--color-primary-100);color:var(--color-primary-700)}
+  .tk-nav-item{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--radius-md);font-size:13px;font-weight:700;color:var(--ink-sub);cursor:pointer;transition:all .15s;border:2px solid transparent}
+  .tk-nav-item:hover{background:var(--color-primary-tint);border-color:var(--color-primary-700);color:var(--color-primary-700)}
   .tk-nav-item.active{background:var(--color-primary-700);color:#fff}
 
   .tk-badge-tier{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px}
@@ -150,7 +150,7 @@
 
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="brand"><h1>兒童英語學習平台 Design Tokens</h1><div class="sub">2026-10-01 v2 · 點擊任一色卡可複製 token 名稱</div></div>
+    <div class="brand"><h1>兒童英語學習平台 Design Tokens</h1><div class="sub">2026-10-01 v3 · 點擊任一色卡可複製 token 名稱</div></div>
     <div class="quick-nav">
       <a href="#sec-1">1 主色</a><a href="#sec-2">2 強調色</a><a href="#sec-3">3 中性色</a><a href="#sec-4">4 徽章色</a>
       <a href="#sec-4b">4b 漸層</a><a href="#sec-5">5 字型系統</a><a href="#sec-6">6 間距</a><a href="#sec-7">7 圓角</a><a href="#sec-8">8 陰影/斷點</a><a href="#sec-9">9 圖示</a>
@@ -345,12 +345,12 @@
       </div>
     </div>
     <div class="comp-card">
-      <h3>分級三：太棒了（5 顆滿星）</h3>
-      <div class="tk-star-chip" style="background:var(--gradient-gold);color:#fff">
-        <span class="tk-star-row"><span class="tk-star filled" style="color:#fff">★</span><span class="tk-star filled" style="color:#fff">★</span><span class="tk-star filled" style="color:#fff">★</span><span class="tk-star filled" style="color:#fff">★</span><span class="tk-star filled" style="color:#fff">★</span></span>
+      <h3>分級三：太棒了（5 顆滿星，改用深色——比亮色漸層更有質感/慎重感）</h3>
+      <div class="tk-star-chip" style="background:#3D2F18;color:#fff">
+        <span class="tk-star-row"><span class="tk-star filled" style="color:var(--color-accent-yellow)">★</span><span class="tk-star filled" style="color:var(--color-accent-yellow)">★</span><span class="tk-star filled" style="color:var(--color-accent-yellow)">★</span><span class="tk-star filled" style="color:var(--color-accent-yellow)">★</span><span class="tk-star filled" style="color:var(--color-accent-yellow)">★</span></span>
         <span style="font-size:12px;font-weight:700">太棒了！</span>
       </div>
-      <p class="note">滿星用 <code>--gradient-gold</code> 當底色（整個 chip 反白星星），比單純文字顏色更有慶祝感，但只有滿星才用漸層，1-4 顆維持純色背景，避免每個等級都用漸層反而互相稀釋特殊感。</p>
+      <p class="note">改成深棕金色（<code>#3D2F18</code>）實心底＋亮金色星星，取代原本的亮色漸層——深色底讓金色星星更跳、更有「頒獎」質感，也讓滿星明確比 3-4 顆的淡黃色更隆重，不是同一個色系的深淺而已。1-4 顆維持純色背景不變。</p>
     </div>
   </section>
 
@@ -425,7 +425,7 @@
   </section>
 
   <section class="block" id="sec-14">
-    <h2><span class="idx">14</span>導覽列 Nav（補 hover／當前頁面互動）</h2>
+    <h2><span class="idx">14</span>導覽列 Nav（hover 改用「一般按鈕」的 hover 設定，不再自己發明一套）</h2>
     <div class="comp-card">
       <h3>滑鼠移過去／點擊試試看每個項目的狀態</h3>
       <div class="tk-nav">
@@ -435,12 +435,12 @@
         <div class="tk-nav-item">遊戲室</div>
       </div>
       <table class="ref-table">
-        <tr><th>狀態</th><th>背景</th><th>文字色</th></tr>
-        <tr><td>預設</td><td>透明</td><td>ink-muted</td></tr>
-        <tr><td>hover</td><td>primary-100</td><td>primary-700</td></tr>
-        <tr><td>當前頁面（.active）</td><td>primary-700 實心</td><td>白色</td></tr>
+        <tr><th>狀態</th><th>背景</th><th>邊框</th><th>文字色</th></tr>
+        <tr><td>預設</td><td>透明</td><td>透明（2px，預留 hover 用）</td><td>ink-muted</td></tr>
+        <tr><td>hover</td><td><code>primary-tint</code></td><td><code>primary-700</code></td><td><code>primary-700</code></td></tr>
+        <tr><td>當前頁面（.active）</td><td><code>primary-700</code> 實心</td><td>—</td><td>白色</td></tr>
       </table>
-      <p class="note">hover 狀態只在滑鼠裝置生效（手機觸控沒有 hover），所以「當前頁面」一定要靠 <code>.active</code> 的實心背景清楚標示，不能只靠 hover 效果讓使用者猜測現在在哪一頁。</p>
+      <p class="note">這次修正：原本 hover 是自己另外配一組「primary-100 底＋primary-700 字」，跟第 10 節「一般按鈕」（<code>.btn-secondary:hover</code>）的 hover 設定（<code>primary-tint</code> 底＋邊框/文字轉 <code>primary-700</code>）不一致。改成直接套用一般按鈕同一套 hover 配方，全站的「滑鼠移過去」視覺語言統一成同一種，不要導覽列自己單獨一套。hover 狀態只在滑鼠裝置生效（手機觸控沒有 hover），所以「當前頁面」一定要靠 <code>.active</code> 的實心背景清楚標示，不能只靠 hover 效果讓使用者猜測現在在哪一頁。</p>
     </div>
   </section>
 
@@ -454,7 +454,7 @@
         <div class="tk-banner-avatar"></div>
         <div class="tk-banner-text">Hi, 小明！一起玩英語</div>
       </div>
-      <p class="note">因為容器變成膠囊形，內距的左右（<code>--space-6</code>）要比上下（<code>--space-4</code>）寬一些，不然圓角會把文字「吃」進曲線範圍內，細節見 handoff。</p>
+      <p class="note">內距四邊統一用 <code>--space-4</code>（16px），左／上／下三個方向到頭像邊緣的距離一致——這樣頭像感覺是「置中內嵌」在膠囊容器裡，不是靠左側貼邊，跟使用者要求的「大頭貼距離外框的間距一致」對齊。</p>
     </div>
   </section>
 
@@ -527,13 +527,20 @@
       </table>
     </div>
     <div class="comp-card">
-      <h3>單元完成卡 — 慶祝整個單元全破時顯示</h3>
-      <div class="tk-unit-card">
-        <span class="tag">🎉 單元完成</span>
-        <h4>單元一：我和身邊的人</h4>
-        <p>6 個主題全部完成，太厲害了！</p>
+      <h3>單元完成卡 — 一般狀態 vs 完成狀態對照</h3>
+      <div class="demo-row">
+        <div class="tk-unit-card" style="background:#fff;border:1px solid var(--line);color:var(--ink)">
+          <span class="tag" style="background:var(--color-primary-tint);color:var(--color-primary-700)">進行中</span>
+          <h4 style="color:var(--ink)">單元一：我和身邊的人</h4>
+          <p style="color:var(--ink-muted);opacity:1">6 個主題，已完成 4 個</p>
+        </div>
+        <div class="tk-unit-card">
+          <span class="tag">🎉 單元完成</span>
+          <h4>單元一：我和身邊的人</h4>
+          <p>6 個主題全部完成，太厲害了！</p>
+        </div>
       </div>
-      <p class="note">用 <code>--gradient-success</code> 當底色，跟一般卡片的白底做出明確區隔——這張卡只在「整個單元」（不是單一主題）全部完成時才出現，视觉上要比日常的主題卡片更有慶祝感，所以是全站少數使用漸層背景的卡片之一。</p>
+      <p class="note">一般狀態（左）：白底＋邊框，跟其餘卡片同一套樣式語言，標籤用淡藍底的「進行中」；完成狀態（右）：整張卡換成 <code>--gradient-success</code> 漸層底，跟日常的白底卡片形成明顯對比，只有「整個單元」（不是單一主題）全部完成時才切換成這個版本——兩者並排比較，才看得出完成狀態是「特殊、值得慶祝」而不是日常都長這樣。</p>
     </div>
   </section>
 
