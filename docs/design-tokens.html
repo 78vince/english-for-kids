@@ -94,6 +94,7 @@
   .btn-tab.is-selected{background:var(--color-primary-700);border-color:var(--color-primary-700);color:#fff}
 
   .tk-topic-card{background:#fff;border-radius:var(--radius-md);border:1px solid var(--line);padding:var(--space-4);width:220px}
+  .tk-topic-icon{font-size:28px;margin-bottom:var(--space-3);line-height:1}
   .tk-topic-card h4{margin:0 0 4px;font-size:17px}
   .tk-topic-card p{margin:0;font-size:12px;color:var(--ink-sub)}
   .tk-progress-track{height:8px;background:#E8EAEC;border-radius:999px;margin:10px 0 6px;overflow:hidden}
@@ -140,10 +141,6 @@
   .tk-info-card .num{font-size:28px;font-weight:700;color:var(--color-primary-700)}
   .tk-info-card .lbl{font-size:11px;color:var(--ink-sub);margin-top:2px}
 
-  .tk-unit-card{border-radius:var(--radius-lg);padding:var(--space-5);color:#fff;background:var(--gradient-success);width:260px}
-  .tk-unit-card .tag{font-size:11px;background:rgba(255,255,255,.25);display:inline-block;padding:2px 10px;border-radius:999px;margin-bottom:8px}
-  .tk-unit-card h4{margin:0 0 4px;font-size:18px}
-  .tk-unit-card p{margin:0;font-size:12px;opacity:.9}
 </style>
 </head>
 <body>
@@ -216,7 +213,7 @@
     <div class="grid">
       <div class="swatch" onclick="copyToken('gradient-primary', this)"><div class="chip" style="background:var(--gradient-primary)"></div><div class="body"><p class="name">gradient-primary</p><p class="hex">135deg 主色→primary-500</p><span class="usage">抬頭／代幣圖示</span></div></div>
       <div class="swatch" onclick="copyToken('gradient-gold', this)"><div class="chip" style="background:var(--gradient-gold)"></div><div class="body"><p class="name">gradient-gold</p><p class="hex">135deg 金黃雙色</p><span class="usage">5 星評等底色</span></div></div>
-      <div class="swatch" onclick="copyToken('gradient-success', this)"><div class="chip" style="background:var(--gradient-success)"></div><div class="body"><p class="name">gradient-success</p><p class="hex">135deg 綠色雙色</p><span class="usage">單元完成慶祝卡</span></div></div>
+      <div class="swatch" onclick="copyToken('gradient-success', this)"><div class="chip" style="background:var(--gradient-success)"></div><div class="body"><p class="name">gradient-success</p><p class="hex">135deg 綠色雙色</p><span class="usage">成功／完成情境的漸層底（例如全對慶祝提示），目前沒有綁定單一元件</span></div></div>
     </div>
   </section>
 
@@ -345,12 +342,12 @@
       </div>
     </div>
     <div class="comp-card">
-      <h3>分級三：太棒了（5 顆滿星，改用深色——比亮色漸層更有質感/慎重感）</h3>
-      <div class="tk-star-chip" style="background:#3D2F18;color:#fff">
-        <span class="tk-star-row"><span class="tk-star filled" style="color:var(--color-accent-yellow)">★</span><span class="tk-star filled" style="color:var(--color-accent-yellow)">★</span><span class="tk-star filled" style="color:var(--color-accent-yellow)">★</span><span class="tk-star filled" style="color:var(--color-accent-yellow)">★</span><span class="tk-star filled" style="color:var(--color-accent-yellow)">★</span></span>
-        <span style="font-size:12px;font-weight:700">太棒了！</span>
+      <h3>分級三：太棒了（5 顆滿星，維持亮色漸層底，只把「太棒了」文字改深色）</h3>
+      <div class="tk-star-chip" style="background:var(--gradient-gold);color:#fff">
+        <span class="tk-star-row"><span class="tk-star filled" style="color:#fff">★</span><span class="tk-star filled" style="color:#fff">★</span><span class="tk-star filled" style="color:#fff">★</span><span class="tk-star filled" style="color:#fff">★</span><span class="tk-star filled" style="color:#fff">★</span></span>
+        <span style="font-size:12px;font-weight:700;color:#3D2F18">太棒了！</span>
       </div>
-      <p class="note">改成深棕金色（<code>#3D2F18</code>）實心底＋亮金色星星，取代原本的亮色漸層——深色底讓金色星星更跳、更有「頒獎」質感，也讓滿星明確比 3-4 顆的淡黃色更隆重，不是同一個色系的深淺而已。1-4 顆維持純色背景不變。</p>
+      <p class="note">修正：改回原本的 <code>--gradient-gold</code> 漸層反白 chip（不是深棕金底），星星本身維持白色；只有「太棒了」這三個字改成深棕金色（<code>#3D2F18</code>），跟漸層底的亮色形成對比，字才看得清楚，同時保留原本「滿星反白慶祝」的視覺語言。1-4 顆維持純色背景不變。</p>
     </div>
   </section>
 
@@ -384,12 +381,14 @@
       <h3><code>.topic-card</code>（含進度條——維持原本互動不變）</h3>
       <div class="demo-row">
         <div class="tk-topic-card">
+          <div class="tk-topic-icon">👪</div>
           <h4>Family 家庭</h4>
           <p>15 個單字．4 句短句．短文「My Family」</p>
           <div class="tk-progress-track"><div class="tk-progress-fill" style="width:85%"></div></div>
           <div class="tk-progress-label">6 / 7 種題型已挑戰過</div>
         </div>
       </div>
+      <p class="note">修正：補回原本就有的 <code>.topic-thumb</code> icon（這份文件之前的示意漏畫了）。icon 本身<b>不加底色</b>，單純是 emoji 直接疊在卡片白底上，跟 <code>.menu-item</code>／遊戲室卡片用色塊底托住 icon 是不同的視覺語言，主題卡片這裡保持單純。</p>
     </div>
     <div class="comp-card">
       <h3><code>.menu-item</code>（題型選單卡片）</h3>
@@ -466,6 +465,7 @@
         <div style="font-size:13px;color:var(--color-ink-muted);margin-bottom:14px">6 個主題．已完成 4 個</div>
         <div class="demo-row">
           <div class="tk-topic-card" style="width:160px">
+            <div class="tk-topic-icon" style="font-size:22px">👪</div>
             <h4 style="font-size:15px">Family</h4>
             <div class="tk-progress-track"><div class="tk-progress-fill" style="width:100%"></div></div>
           </div>
@@ -527,20 +527,17 @@
       </table>
     </div>
     <div class="comp-card">
-      <h3>單元完成卡 — 一般狀態 vs 完成狀態對照</h3>
+      <h3>主題卡（<code>.topic-card</code>）— 挑戰紀錄／個人檔案頁沿用首頁同一套元件</h3>
       <div class="demo-row">
-        <div class="tk-unit-card" style="background:#fff;border:1px solid var(--line);color:var(--ink)">
-          <span class="tag" style="background:var(--color-primary-tint);color:var(--color-primary-700)">進行中</span>
-          <h4 style="color:var(--ink)">單元一：我和身邊的人</h4>
-          <p style="color:var(--ink-muted);opacity:1">6 個主題，已完成 4 個</p>
-        </div>
-        <div class="tk-unit-card">
-          <span class="tag">🎉 單元完成</span>
-          <h4>單元一：我和身邊的人</h4>
-          <p>6 個主題全部完成，太厲害了！</p>
+        <div class="tk-topic-card">
+          <div class="tk-topic-icon">👪</div>
+          <h4>Family 家庭</h4>
+          <p>15 個單字．4 句短句．短文「My Family」</p>
+          <div class="tk-progress-track"><div class="tk-progress-fill" style="width:85%"></div></div>
+          <div class="tk-progress-label">6 / 7 種題型已挑戰過</div>
         </div>
       </div>
-      <p class="note">一般狀態（左）：白底＋邊框，跟其餘卡片同一套樣式語言，標籤用淡藍底的「進行中」；完成狀態（右）：整張卡換成 <code>--gradient-success</code> 漸層底，跟日常的白底卡片形成明顯對比，只有「整個單元」（不是單一主題）全部完成時才切換成這個版本——兩者並排比較，才看得出完成狀態是「特殊、值得慶祝」而不是日常都長這樣。</p>
+      <p class="note">修正：之前這裡畫了一張「單元完成卡」（整個單元全部主題做完時跳出的慶祝卡，含「進行中／🎉 單元完成」標籤），但網站實際上是「單元 → 主題卡」兩層結構（例如單元一：我和身邊的人，底下是 Family／Pets／Appearance 等主題卡），沒有「單元完成」這一層獨立卡片，標籤也不在既有規範裡。這裡改成直接沿用第 11 節同一個 <code>.topic-card</code> 元件（含 icon、進度條），跟首頁主題選擇頁、挑戰紀錄頁用的是同一套樣式，不是另外設計一個新元件。</p>
     </div>
   </section>
 

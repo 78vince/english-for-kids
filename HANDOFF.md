@@ -165,6 +165,19 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.160 風格改版 v3 第二次使用者回饋修正：滿星改回漸層金／取消「單元完成卡」改成主題卡／主題卡 icon 拿掉底色（2026-10-01）
+
+使用者看過 9.159 的修正後，再提出 2 點進一步修正：
+
+1. **滿星改回漸層金，只有文字要深色**：9.159 把滿星「太棒了」改成深棕金色實心底，使用者這次要求改回原本的 `--gradient-gold` 漸層反白 chip，只有「太棒了」這三個字（目前只存在於 `docs/design-tokens.html` 的示意圖，實際 DOM 沒有這段文字）改用深色。程式碼層面（`.game-room-card-stars--great`）等於完全恢復成最早的漸層版本，沒有新增異動。
+2. **「單元完成卡」不是規範項目，應該是主題卡**：釐清網站結構是「單元（例如單元一：我和身邊的人）→ 底下若干主題卡（Family／Pets／Appearance...）」，沒有「整個單元完成」這一層獨立卡片。9.159 在 `docs/design-tokens.html` 第 20 節畫的「單元完成卡」（含「進行中／🎉 單元完成」標籤）整個拿掉，改成直接沿用既有的 `.topic-card` 元件（跟第 11 節／首頁同一個）。這代表原本列為「新功能，待確認」的單元完成卡**不需要再確認、也不會做**。
+   1. **主題卡的 icon 要加回去**：確認 icon 其實一直都存在（`.topic-thumb`，`main.ts` 第 1425 行），只是 `docs/design-tokens.html` 第 11／16 節的示意圖之前漏畫了，這次補上。
+   2. **icon 不要設定底色**：現況每個主題各自的 `.thumb-<topicId>` 修飾 class（`style.css` 第 829-1010 行，約 40 個）都只有一行 `background: ...`，這次要求全部拿掉，讓 icon 直接疊在卡片白底上，不要色塊托底。
+
+- `docs/design-tokens.html`：滿星 chip 改回 `--gradient-gold`＋白色星星＋深色文字；刪除 `.tk-unit-card` CSS 跟第 20 節的單元完成卡示意，改成主題卡示意（含 icon）；第 11／16 節的主題卡示意補上 icon；`gradient-success` 色卡的用途說明改成通用描述（不再綁定「單元完成慶祝卡」）。
+- `docs/handoff-prompt-style-refresh-v3.md`：第 1 節滿星 CSS 改回漸層版本；第 5 節整個改寫——5.2 說明「單元完成卡」是誤會，直接取消；新增 5.3，列出要刪除的 40 個 `.thumb-*` 背景色規則（含確認用的 grep 指令）；驗證清單同步更新（滿星漸層、主題卡 icon 無底色）。
+- 兩份文件已重新一致，仍待排入 App 端執行（9.156／9.157／9.158／9.159／9.160 五份累積的改動，執行時以這份最新版為準，不要照著 9.159 那版做）。
+
 ### 9.159 風格改版 v3 使用者回饋修正：星星深色滿星／單元卡對照／抬頭統一內距／導覽列沿用一般按鈕 hover（2026-10-01）
 
 使用者看過 9.158 的 `docs/design-tokens.html` 後提出 4 點修正，已同步更新設計文件與對應的 `docs/handoff-prompt-style-refresh-v3.md`：
