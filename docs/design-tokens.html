@@ -55,7 +55,7 @@
   .swatch .name{font-size:12.5px;font-weight:700;margin:0 0 3px}
   .swatch .hex{font-family:var(--mono);font-size:11px;color:var(--ink-sub);margin:0}
   .swatch .var{font-family:var(--mono);font-size:10px;color:#b7bec8;margin:3px 0 0}
-  .swatch .usage{display:inline-block;margin-top:6px;font-size:10.5px;background:var(--color-primary-100);color:var(--color-primary-700);border-radius:6px;padding:1px 6px;font-weight:700}
+  .swatch .usage{display:inline-block;margin-top:6px;font-size:10.5px;background:var(--color-primary-tint);color:var(--color-primary-700);border-radius:var(--radius-xs);padding:1px 6px;font-weight:700}
   .copy-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(12px);background:var(--ink);color:#fff;font-size:13px;font-weight:700;padding:10px 18px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:200;white-space:nowrap}
   .copy-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
@@ -149,7 +149,7 @@
   <div class="topbar-inner">
     <div class="brand"><h1>兒童英語學習平台 Design Tokens</h1><div class="sub">2026-10-01 v4 · 點擊任一色卡可複製 token 名稱</div></div>
     <div class="quick-nav">
-      <a href="#sec-1">1 主色</a><a href="#sec-2">2 強調色</a><a href="#sec-2b">2b 衍生色</a><a href="#sec-3">3 中性色</a><a href="#sec-4">4 徽章色</a>
+      <a href="#sec-1">1 主色</a><a href="#sec-2">2 強調色</a><a href="#sec-2b">2b hover 公式</a><a href="#sec-3">3 中性色</a><a href="#sec-4">4 徽章色</a>
       <a href="#sec-4b">4b 漸層</a><a href="#sec-5">5 字型系統</a><a href="#sec-6">6 間距</a><a href="#sec-7">7 圓角</a><a href="#sec-8">8 陰影/斷點</a><a href="#sec-9">9 圖示</a>
       <a href="#sec-10">10 按鈕</a><a href="#sec-10b">10b 星星評等</a><a href="#sec-10c">10c 代幣圖示</a><a href="#sec-11">11 卡片</a><a href="#sec-12">12 彈窗</a><a href="#sec-13">13 標籤</a><a href="#sec-14">14 導覽列</a>
       <a href="#sec-15">15 首頁抬頭</a><a href="#sec-16">16 主題卡片</a><a href="#sec-17">17 遊戲室</a><a href="#sec-18">18 成就徽章</a><a href="#sec-19">19 會話練習</a><a href="#sec-20">20 挑戰紀錄/個人檔案</a>
@@ -159,7 +159,7 @@
 
 <div class="wrap">
   <div class="meta-banner">
-    這份文件分三大部分：<b>一、基礎元素</b>（色彩／字型／間距／圓角／陰影／斷點／圖示風格）、<b>二、元件規格</b>（按鈕／星星評等／代幣圖示／卡片／彈窗／標籤／導覽列）、<b>三、功能應用</b>（首頁抬頭、主題卡片、遊戲室、成就徽章、Stage E 會話練習、挑戰紀錄／個人檔案）。<b>點擊任何色卡會把 token 名稱複製到剪貼簿</b>，方便直接貼進程式碼。對應的程式碼修改細節見 <code>docs/handoff-prompt-style-refresh-v2.md</code> 與 <code>docs/handoff-prompt-style-refresh-v3.md</code>。
+    這份文件分三大部分：<b>一、基礎元素</b>（色彩／字型／間距／圓角／陰影／斷點／圖示風格）、<b>二、元件規格</b>（按鈕／星星評等／代幣圖示／卡片／彈窗／標籤／導覽列）、<b>三、功能應用</b>（首頁抬頭、主題卡片、遊戲室、成就徽章、Stage E 會話練習、挑戰紀錄／個人檔案）。<b>點擊任何色卡會把 token 名稱複製到剪貼簿</b>，方便直接貼進程式碼。每張色卡下方的灰藍底小標籤是這份文件統一的「用途標籤」慣例：背景 <code>primary-tint</code>／文字 <code>primary-700</code>／圓角 <code>radius-xs</code>，直接沿用第 1 節已經定義好的 token 組合，不是另外發明的樣式，純粹用來標示這個色票實際用在哪裡，方便查找時對照——這份文件現在要求<b>每一張色卡下方都要有用途標籤</b>，不留空白。對應的程式碼修改細節見 <code>docs/handoff-prompt-style-refresh-v2.md</code>、<code>docs/handoff-prompt-style-refresh-v3.md</code> 與 <code>docs/handoff-prompt-style-refresh-v4.md</code>。
   </div>
 
   <div class="part-divider">Part 1 · 基礎元素</div>
@@ -176,38 +176,50 @@
   </section>
 
   <section class="block" id="sec-2">
-    <h2><span class="idx">2</span>強調色 Accent</h2>
+    <h2><span class="idx">2</span>強調色 Accent（含淡底 tint，每個色票都有實色＋淡底兩階）</h2>
+    <p class="desc">修正：原本這裡只列 5 個實色，完全沒有淡底 tint 版本，也沒有用途說明。這次補齊——<code>success</code>／<code>error</code> 這兩個「語意色」這次改成<b>直接當文字／邊框色使用</b>（新方案：不再另外手動算一組更深的「-text」衍生色，詳見下方第 2b 節的說明），淡底 tint 則用來當背景。</p>
     <div class="grid">
-      <div class="swatch" onclick="copyToken('accent-orange', this)"><div class="chip" style="background:#FF9A68"></div><div class="body"><p class="name">accent-orange</p><p class="hex">#FF9A68</p></div></div>
-      <div class="swatch" onclick="copyToken('accent-pink', this)"><div class="chip" style="background:#FFB8E8"></div><div class="body"><p class="name">accent-pink</p><p class="hex">#FFB8E8</p></div></div>
-      <div class="swatch" onclick="copyToken('accent-yellow', this)"><div class="chip" style="background:#FFD873"></div><div class="body"><p class="name">accent-yellow</p><p class="hex">#FFD873</p></div></div>
-      <div class="swatch" onclick="copyToken('success', this)"><div class="chip" style="background:#7EDBA0"></div><div class="body"><p class="name">success</p><p class="hex">#7EDBA0</p></div></div>
-      <div class="swatch" onclick="copyToken('error', this)"><div class="chip" style="background:#FF7A7A"></div><div class="body"><p class="name">error</p><p class="hex">#FF7A7A</p></div></div>
+      <div class="swatch" onclick="copyToken('accent-orange', this)"><div class="chip" style="background:#FF9A68"></div><div class="body"><p class="name">accent-orange</p><p class="hex">#FF9A68</p><span class="usage">「獎勵」按鈕背景（.primary-btn--reward）</span></div></div>
+      <div class="swatch" onclick="copyToken('accent-orange-tint', this)"><div class="chip" style="background:#FFF1EB;border-bottom:1px solid #eee"></div><div class="body"><p class="name">accent-orange-tint</p><p class="hex">#FFF1EB</p><span class="usage">目前用量很少，保留備用</span></div></div>
+      <div class="swatch" onclick="copyToken('accent-pink', this)"><div class="chip" style="background:#FFB8E8"></div><div class="body"><p class="name">accent-pink</p><p class="hex">#FFB8E8</p><span class="usage">低頻率使用的強調色（v2 改版後刻意降低使用量）</span></div></div>
+      <div class="swatch" onclick="copyToken('accent-pink-tint', this)"><div class="chip" style="background:#FFF3FB;border-bottom:1px solid #eee"></div><div class="body"><p class="name">accent-pink-tint</p><p class="hex">#FFF3FB</p><span class="usage">低頻率使用，保留備用</span></div></div>
+      <div class="swatch" onclick="copyToken('accent-yellow', this)"><div class="chip" style="background:#FFD873"></div><div class="body"><p class="name">accent-yellow</p><p class="hex">#FFD873</p><span class="usage">收藏星星（已收藏）／3-4 顆星星評等文字</span></div></div>
+      <div class="swatch" onclick="copyToken('accent-yellow-tint', this)"><div class="chip" style="background:#FFF8E6;border-bottom:1px solid #eee"></div><div class="body"><p class="name">accent-yellow-tint</p><p class="hex">#FFF8E6</p><span class="usage">3-4 顆星星評等 chip 淡底色</span></div></div>
+      <div class="swatch" onclick="copyToken('success', this)"><div class="chip" style="background:#7EDBA0"></div><div class="body"><p class="name">success</p><p class="hex">#7EDBA0</p><span class="usage">答對／完成狀態的文字與邊框色（新方案：直接使用，不再另外算深色版）</span></div></div>
+      <div class="swatch" onclick="copyToken('success-tint', this)"><div class="chip" style="background:#EAFBF1;border-bottom:1px solid #eee"></div><div class="body"><p class="name">success-tint</p><p class="hex">#EAFBF1</p><span class="usage">答對狀態淡底色</span></div></div>
+      <div class="swatch" onclick="copyToken('error', this)"><div class="chip" style="background:#FF7A7A"></div><div class="body"><p class="name">error</p><p class="hex">#FF7A7A</p><span class="usage">答錯／警示狀態的文字與邊框色（新方案：直接使用，例如登出、刪除按鈕文字）</span></div></div>
+      <div class="swatch" onclick="copyToken('error-tint', this)"><div class="chip" style="background:#FFEDEC;border-bottom:1px solid #eee"></div><div class="body"><p class="name">error-tint</p><p class="hex">#FFEDEC</p><span class="usage">答錯／警示狀態淡底色（新增，沿用跟其他 tint 一樣的淡化比例算出來，不是另外亂挑的色碼）</span></div></div>
     </div>
   </section>
 
   <section class="block" id="sec-2b">
-    <h2><span class="idx">2b</span>衍生色 Derived Colors（內容盤點發現：全站大量使用，但這份文件之前完全沒記錄）</h2>
-    <p class="desc">這 6 個 token 定義在 <code>app/src/style.css</code> 自己的 <code>:root</code>（不是 <code>design-tokens.v2-daily-play.css</code>），是從主色／成功色／錯誤色／強調橙色「手動算一階更深或更淺」得來的衍生色，用在文字對比、淡底色、按鈕 hover 這幾種情境，使用範圍很廣（錯誤文字、登出按鈕、危險按鈕、hover 狀態...），這次主色／強調色改版後數值要跟著重算（已經寫在 <code>docs/handoff-prompt-style-refresh-v2.md</code> 第 2 節），這裡補上文件記錄，下面是改版後的新值。</p>
-    <div class="grid">
-      <div class="swatch" onclick="copyToken('success-text', this)"><div class="chip" style="background:#2E8C5C"></div><div class="body"><p class="name">success-text</p><p class="hex">#2E8C5C</p><span class="usage">成功文字（白底上要夠深才看得清楚）</span></div></div>
-      <div class="swatch" onclick="copyToken('success-bg', this)"><div class="chip" style="background:#E9F9F0;border-bottom:1px solid #eee"></div><div class="body"><p class="name">success-bg</p><p class="hex">#E9F9F0</p><span class="usage">成功淡底色</span></div></div>
-      <div class="swatch" onclick="copyToken('error-text', this)"><div class="chip" style="background:#C24A45"></div><div class="body"><p class="name">error-text</p><p class="hex">#C24A45</p><span class="usage">錯誤／警示文字（登出、刪除按鈕）</span></div></div>
-      <div class="swatch" onclick="copyToken('error-bg', this)"><div class="chip" style="background:#FFEBE9;border-bottom:1px solid #eee"></div><div class="body"><p class="name">error-bg</p><p class="hex">#FFEBE9</p><span class="usage">錯誤淡底色（危險按鈕 hover）</span></div></div>
-      <div class="swatch" onclick="copyToken('primary-700-hover', this)"><div class="chip" style="background:#2A6694"></div><div class="body"><p class="name">primary-700-hover</p><p class="hex">#2A6694</p><span class="usage">主要按鈕 hover（比 primary-700 再深一階）</span></div></div>
-      <div class="swatch" onclick="copyToken('reward-hover', this)"><div class="chip" style="background:#E8824A"></div><div class="body"><p class="name">reward-hover</p><p class="hex">#E8824A</p><span class="usage">「獎勵」按鈕 hover（比 accent-orange 再深一階）</span></div></div>
+    <h2><span class="idx">2b</span>不再使用「衍生色」——文字／邊框／hover 一律從基礎色票直接取用或用公式即時計算</h2>
+    <p class="desc"><b>修正（使用者回饋）</b>：上一版在這裡列了 6 個手動算出來、單獨存成 token 的「衍生色」（<code>success-text</code>／<code>success-bg</code>／<code>error-text</code>／<code>error-bg</code>／<code>primary-700-hover</code>／<code>reward-hover</code>，定義在 <code>app/src/style.css</code> 自己的 <code>:root</code>，不在正式的 <code>design-tokens.v2-daily-play.css</code> 色票系統裡）——使用者認為這是沒有依據的「亂加」，新方案<b>全部不採用</b>。改成兩條規則，全站統一套用：</p>
+    <table class="ref-table">
+      <tr><th>情境</th><th>新規則</th><th>範例</th></tr>
+      <tr><td>文字／邊框需要語意色（答對、答錯、警示...）</td><td>直接用第 2 節的基礎色票，不再另外算一組更深的版本</td><td>錯誤文字＝<code>var(--color-error)</code>（#FF7A7A），不是另外存一個 <code>error-text</code></td></tr>
+      <tr><td>背景需要淡底色</td><td>直接用第 2 節的 <code>-tint</code> 淡底色票（原本就有／這次補上 <code>error-tint</code>）</td><td>答錯背景＝<code>var(--color-error-tint)</code>，不是另外存一個 <code>error-bg</code></td></tr>
+      <tr><td>按鈕 hover 需要「同一個顏色再深一點」</td><td>不存成新 token，改用 CSS <code>color-mix()</code> 即時從基礎色算出來——公式是「基礎色混 15% 黑」，寫在 CSS 規則裡，不是另外挑一個色碼</td><td><code>background: color-mix(in srgb, var(--color-primary-700) 85%, black 15%)</code></td></tr>
+    </table>
+    <div class="comp-card" style="margin-top:14px">
+      <h3>hover 公式示範（滑鼠移過去看顏色是怎麼從 primary-700／accent-orange 即時算出來的）</h3>
+      <div class="demo-row">
+        <button class="btn-primary" style="background:var(--color-primary-700)" onmouseover="this.style.background='color-mix(in srgb, var(--color-primary-700) 85%, black 15%)'" onmouseout="this.style.background='var(--color-primary-700)'">主要按鈕</button>
+        <button class="btn-primary" style="background:#FF9A68" onmouseover="this.style.background='color-mix(in srgb, #FF9A68 85%, black 15%)'" onmouseout="this.style.background='#FF9A68'">獎勵按鈕</button>
+      </div>
+      <p class="note">這兩顆按鈕 hover 時的深色，瀏覽器是用 <code>color-mix()</code> 當場從 <code>primary-700</code>／<code>accent-orange</code> 算出來的，頁面原始碼裡沒有另外寫死任何新色碼——這就是「有依據」的意思：每一個看到的顏色都能回推到第 1／2 節定義好的基礎色票，不會有查無來源的色碼。</p>
     </div>
-    <p class="note">這幾個衍生色目前還各自手動算色碼，沒有用 CSS <code>color-mix()</code> 之類的函式自動從基礎色算出來——基礎色（主色／強調色／成功色／錯誤色）以後如果再調整，這 6 個衍生值要記得手動重算並同步更新這裡跟 <code>app/src/games/crosswordStandalone.css</code>／<code>memoryMatchStandalone.css</code> 裡複製貼上的那一份（<code>docs/design-system.md</code> 第 5 節列的既有技術債，這份文件沒有要解決那個技術債，只是先把現有的衍生色記錄下來）。</p>
+    <p class="note">取捨：<code>success</code>／<code>error</code> 的基礎色本身偏淺（粉彩風格），直接當文字色在白底上的對比會比原本手動加深過的版本略低；這是使用者這次明確要求的方向（「使用新的色系定義」，不要另外的衍生深色），這裡誠實記錄這個取捨，不是忽略不提。全站約 20 處答對／答錯相關的樣式規則（<code>.card--correct</code>／<code>.answer-area--wrong</code>／<code>.option--correct</code> 等）實際改法列在 <code>docs/handoff-prompt-style-refresh-v4.md</code>。</p>
   </section>
 
   <section class="block" id="sec-3">
     <h2><span class="idx">3</span>中性色 Neutral</h2>
     <div class="grid">
-      <div class="swatch" onclick="copyToken('ink', this)"><div class="chip" style="background:#2F2E4E"></div><div class="body"><p class="name">ink</p><p class="hex">#2F2E4E</p></div></div>
-      <div class="swatch" onclick="copyToken('ink-muted', this)"><div class="chip" style="background:#8B8699"></div><div class="body"><p class="name">ink-muted</p><p class="hex">#8B8699</p></div></div>
-      <div class="swatch" onclick="copyToken('bg', this)"><div class="chip" style="background:#F7F5F1;border-bottom:1px solid #eee"></div><div class="body"><p class="name">bg</p><p class="hex">#F7F5F1</p></div></div>
-      <div class="swatch" onclick="copyToken('surface', this)"><div class="chip" style="background:#FFFFFF;border-bottom:1px solid #eee"></div><div class="body"><p class="name">surface</p><p class="hex">#FFFFFF</p></div></div>
-      <div class="swatch" onclick="copyToken('border', this)"><div class="chip" style="background:#E6E1D8"></div><div class="body"><p class="name">border</p><p class="hex">#E6E1D8</p></div></div>
+      <div class="swatch" onclick="copyToken('ink', this)"><div class="chip" style="background:#2F2E4E"></div><div class="body"><p class="name">ink</p><p class="hex">#2F2E4E</p><span class="usage">預設文字顏色</span></div></div>
+      <div class="swatch" onclick="copyToken('ink-muted', this)"><div class="chip" style="background:#8B8699"></div><div class="body"><p class="name">ink-muted</p><p class="hex">#8B8699</p><span class="usage">次要／說明文字．未選取狀態圖示</span></div></div>
+      <div class="swatch" onclick="copyToken('bg', this)"><div class="chip" style="background:#F7F5F1;border-bottom:1px solid #eee"></div><div class="body"><p class="name">bg</p><p class="hex">#F7F5F1</p><span class="usage">全站頁面背景</span></div></div>
+      <div class="swatch" onclick="copyToken('surface', this)"><div class="chip" style="background:#FFFFFF;border-bottom:1px solid #eee"></div><div class="body"><p class="name">surface</p><p class="hex">#FFFFFF</p><span class="usage">卡片／按鈕／彈窗等容器背景</span></div></div>
+      <div class="swatch" onclick="copyToken('border', this)"><div class="chip" style="background:#E6E1D8"></div><div class="body"><p class="name">border</p><p class="hex">#E6E1D8</p><span class="usage">卡片／輸入框預設邊框</span></div></div>
     </div>
   </section>
 
@@ -215,14 +227,14 @@
     <h2><span class="idx">4</span>成就徽章分級色（維持現有，補上原本漏列的淡底 -bg 變體）</h2>
     <p class="desc">實際 token 檔案（<code>assets/design-tokens/design-tokens.v2-daily-play.css</code>）每個分級色都有實色＋淡底兩個版本，這份文件之前只列了實色，這次補齊。</p>
     <div class="grid">
-      <div class="swatch" onclick="copyToken('tier-bronze', this)"><div class="chip" style="background:#B9835A"></div><div class="body"><p class="name">tier-bronze</p><p class="hex">#B9835A</p></div></div>
-      <div class="swatch" onclick="copyToken('tier-bronze-bg', this)"><div class="chip" style="background:#F6E9DF"></div><div class="body"><p class="name">tier-bronze-bg</p><p class="hex">#F6E9DF</p></div></div>
-      <div class="swatch" onclick="copyToken('tier-silver', this)"><div class="chip" style="background:#A6AEBD"></div><div class="body"><p class="name">tier-silver</p><p class="hex">#A6AEBD</p></div></div>
-      <div class="swatch" onclick="copyToken('tier-silver-bg', this)"><div class="chip" style="background:#EEF0F3"></div><div class="body"><p class="name">tier-silver-bg</p><p class="hex">#EEF0F3</p></div></div>
-      <div class="swatch" onclick="copyToken('tier-gold', this)"><div class="chip" style="background:#E8B84B"></div><div class="body"><p class="name">tier-gold</p><p class="hex">#E8B84B</p></div></div>
-      <div class="swatch" onclick="copyToken('tier-gold-bg', this)"><div class="chip" style="background:#FBF1DA"></div><div class="body"><p class="name">tier-gold-bg</p><p class="hex">#FBF1DA</p></div></div>
-      <div class="swatch" onclick="copyToken('tier-locked', this)"><div class="chip" style="background:#C9CDD4"></div><div class="body"><p class="name">tier-locked</p><p class="hex">#C9CDD4</p></div></div>
-      <div class="swatch" onclick="copyToken('tier-locked-bg', this)"><div class="chip" style="background:#F1F2F4"></div><div class="body"><p class="name">tier-locked-bg</p><p class="hex">#F1F2F4</p></div></div>
+      <div class="swatch" onclick="copyToken('tier-bronze', this)"><div class="chip" style="background:#B9835A"></div><div class="body"><p class="name">tier-bronze</p><p class="hex">#B9835A</p><span class="usage">銅牌徽章分類 icon 圓底</span></div></div>
+      <div class="swatch" onclick="copyToken('tier-bronze-bg', this)"><div class="chip" style="background:#F6E9DF"></div><div class="body"><p class="name">tier-bronze-bg</p><p class="hex">#F6E9DF</p><span class="usage">目前無使用場景（原本的主題卡底色已取消，見下方說明）</span></div></div>
+      <div class="swatch" onclick="copyToken('tier-silver', this)"><div class="chip" style="background:#A6AEBD"></div><div class="body"><p class="name">tier-silver</p><p class="hex">#A6AEBD</p><span class="usage">銀牌徽章分類 icon 圓底</span></div></div>
+      <div class="swatch" onclick="copyToken('tier-silver-bg', this)"><div class="chip" style="background:#EEF0F3"></div><div class="body"><p class="name">tier-silver-bg</p><p class="hex">#EEF0F3</p><span class="usage">目前無使用場景</span></div></div>
+      <div class="swatch" onclick="copyToken('tier-gold', this)"><div class="chip" style="background:#E8B84B"></div><div class="body"><p class="name">tier-gold</p><p class="hex">#E8B84B</p><span class="usage">金牌徽章分類 icon 圓底</span></div></div>
+      <div class="swatch" onclick="copyToken('tier-gold-bg', this)"><div class="chip" style="background:#FBF1DA"></div><div class="body"><p class="name">tier-gold-bg</p><p class="hex">#FBF1DA</p><span class="usage">目前無使用場景</span></div></div>
+      <div class="swatch" onclick="copyToken('tier-locked', this)"><div class="chip" style="background:#C9CDD4"></div><div class="body"><p class="name">tier-locked</p><p class="hex">#C9CDD4</p><span class="usage">未解鎖徽章分類 icon 圓底</span></div></div>
+      <div class="swatch" onclick="copyToken('tier-locked-bg', this)"><div class="chip" style="background:#F1F2F4"></div><div class="body"><p class="name">tier-locked-bg</p><p class="hex">#F1F2F4</p><span class="usage">翻牌配對鎖定狀態底色</span></div></div>
     </div>
     <p class="note">修正（內容盤點發現）：<code>-bg</code> 淡底版本目前在程式碼裡主要用在首頁主題卡片 icon 的色塊底（<code>.thumb-&lt;topicId&gt;</code>），但這次已經決定主題卡 icon 不加底色（第 11／16 節），所以 <code>tier-bronze-bg</code>／<code>tier-silver-bg</code>／<code>tier-gold-bg</code> 這三個 token 之後在站上會暫時沒有使用場景——保留定義沒關係（以後若有新的分級情境可以直接用），只是先記錄這個現況，不用現在刪掉。<code>tier-locked-bg</code> 則還有別的用途（翻牌配對鎖定狀態），會繼續使用。</p>
   </section>

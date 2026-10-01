@@ -165,6 +165,16 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.162 風格改版 v4：拿掉「衍生色」，答對/答錯文字直接用基礎色票，按鈕 hover 改用 color-mix() 公式（2026-10-01）
+
+使用者對 9.161 新補的「衍生色」章節有意見：這 6 個 token（`success-text`／`success-bg`／`error-text`／`error-bg`／`primary-700-hover`／`reward-hover`）是沒有依據的手動色碼，要求新方案全部不採用，並舉例「錯誤文字直接用 error #FF7A7A」。另外要求每張色卡下方都要有用途說明，且質疑色卡下方的灰底標籤樣式是「沒來由亂加」的設定。
+
+1. **拿掉衍生色**：改成兩條規則——文字/邊框語意色直接用基礎色票（`--color-success`／`--color-error`），背景淡底色直接用 `-tint` 淡底色票（新增 `--color-error-tint`，沿用既有 tint 的淡化比例）；按鈕 hover 不再存成新 token，改用 CSS `color-mix()` 公式即時從基礎色算出來（基礎色混 15% 黑）。`docs/design-tokens.html` 第 2 節整合實色＋tint 並列，第 2b 節改寫成說明這個決策跟公式示範（滑鼠移過去可以看 `color-mix()` 即時運算的效果）；誠實記錄一個取捨：`success`／`error` 基礎色本身偏淺，直接當文字色對比會比原本加深過的版本略低，這是使用者明確要求的方向。
+2. **每張色卡補上用途標籤**：盤點後第 2／3／4 節原本有好幾張色卡完全沒寫用途（強調色 5 張、中性色 5 張、徽章分級色 4 張），這次全部補齊，目前全文 30 張色卡都有用途說明。
+3. **定義「用途標籤」本身的樣式依據**：這個標籤（灰藍底／primary-700 字）其實是沿用第 1 節已經定義好的 `primary-tint`／`primary-700`／`radius-xs` 三個既有 token，不是另外發明的新色碼——加了一段說明寫在 meta-banner，把這件事講清楚。
+4. 撰寫正式 `docs/handoff-prompt-style-refresh-v4.md`：列出全站約 19 處要做的機械式 token 取代（`-text`/`-bg` → 基礎色/tint）、2 處按鈕 hover 改 `color-mix()` 公式、新增 `--color-error-tint` 到正式 token 檔案；順便盤點發現 `crosswordStandalone.css` 裡複製的那份 `--color-primary-700-hover` 其實是死碼（完全沒被使用，填字遊戲自己的按鈕 hover 用的是粉色系 token），一併列入清理。
+- 待 App 端依序執行 9.156／9.157／9.158／9.159／9.160／v4 這些累積的程式碼改動。
+
 ### 9.161 design-tokens.html 結構調整＋全文內容盤點（2026-10-01）
 
 使用者提出 4 項要求：把 9.160 新補的主題卡移到第 16 節（主題選擇頁面）、原第 16 節內容刪除；成就徽章 icon 改用單色扁平風格；檢視全文是否有重複/不合理之處；檢視學習平台內容是否有需要補進 design token 規範的部分。這次**純粹是文件修正，沒有動到任何 `app/` 程式碼**——盤點後發現需要改的地方，實際上都已經符合規範或已經在之前的 handoff 裡處理過，缺的只是這份參考文件沒記錄到。
