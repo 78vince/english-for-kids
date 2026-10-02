@@ -165,6 +165,16 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.169 App 端執行：修正 Stage C 完成畫面沒有引導進入 Stage D 的 bug（2026-10-02）
+
+執行 `docs/handoff-prompt-stage-c-missing-capstone-link.md`。
+
+- **根因**：`renderChoice()`（Stage C 完成畫面）當初漏做了 `renderCapstone()`（Stage D 完成畫面）已經有的「導向下一關」按鈕模式，玩家破完 Stage C 只看到「從頭再玩一次」「回選單」兩顆按鈕，得自己回選單才找得到 Stage D。
+- **修法**：`main.ts` 的 `renderChoice()` 完成畫面新增第一顆按鈕「🏆 前往 Stage D 綜合關卡 →」（`primary-btn primary-btn--reward` 橘色，跟 `renderCapstone()` 的「進入 Stage E」按鈕同一套視覺語言），點擊直接呼叫既有的 `goToCapstone()`（原本只有選單的 `goToStage()` 在用，不用額外處理狀態，它會自己用 `currentTopic`／`currentPassage` 組出 Stage D 需要的題目）；原本的「從頭再玩一次」按鈕從 `primary-btn--reward` 降級成 `secondary-btn` 次要按鈕，「回選單」維持不動。
+- **沒有加條件判斷**：照 handoff 確認，目前所有主題都有 Stage D 綜合關卡（跟不是每個主題都有的 Stage E 不同），所以不用像 `renderCapstone()` 判斷 `hasConversation` 那樣加顯示條件，直接顯示即可。
+- **驗證**：`npx tsc --noEmit` 通過；全部既有 `verify-*.ts` 重跑一次全部通過；`rm -rf dist && npm run build` 成功；grep 打包後的 `dist/assets/main-*.js` 確認「前往 Stage D 綜合關卡」字串確實進到最終產出。
+- **後續**：開發沙盒沒有瀏覽器，實機確認任一主題玩到 Stage C 全部完成後畫面確實出現新按鈕排第一顆、點擊後直接進入 Stage D（不用回選單再點一次），仍待人工檢查。
+
 ### 9.168 使用者回報：Stage C 完成畫面沒有引導進入 Stage D，撰寫 handoff（2026-10-02）
 
 使用者截圖回報：完成 Stage C（短文理解）後，畫面只有「從頭再玩一次」「回選單」，沒有引導進入 Stage D 綜合關卡的按鈕。對照 Stage D 自己通過後的畫面（`renderCapstone()`）發現它已經正確示範「有下一關就優先給一顆 reward 配色的導向按鈕」（進入 Stage E 會話練習），確認是 Stage C 完成畫面（`renderChoice()`）本身漏掉了這個模式，不是整套邏輯有問題。撰寫 `docs/handoff-prompt-stage-c-next-stage-cta.md`，補上「🏆 前往 Stage D 綜合關卡 →」按鈕（reward 配色排第一顆，呼叫現成的 `goToCapstone()`），原本的「從頭再玩一次」降級成次要按鈕，跟 Stage D 完成畫面的按鈕排列邏輯一致。待 App 端執行。

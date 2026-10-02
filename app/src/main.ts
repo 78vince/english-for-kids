@@ -3948,10 +3948,17 @@ function renderChoice(): void {
         全部題型加總正確率 ${grandAccuracy}%（答對 ${grandCorrect} 次／共作答 ${grandTotal} 次）
       </p>
     `;
+    const nextStageBtn = document.createElement("button");
+    // Stage A→B-1→B-2→C 都跑完一輪，自然的下一步是 Stage D 綜合關卡，用 reward 配色
+    // （橘色）凸顯這是建議的下一步，比照 renderCapstone() 完成畫面「進入 Stage E」
+    // 按鈕的同一套模式。
+    nextStageBtn.className = "primary-btn primary-btn--reward";
+    nextStageBtn.textContent = "🏆 前往 Stage D 綜合關卡 →";
+    nextStageBtn.addEventListener("click", goToCapstone);
+    footer.appendChild(nextStageBtn);
+
     const restartBtn = document.createElement("button");
-    // 這是整個主題四種題型都跑完一輪的「破關獎勵」時刻，用 reward 配色（橘色）
-    // 特別標出來，跟一般的「下一題／下一關」淺藍色按鈕做出區隔。
-    restartBtn.className = "primary-btn primary-btn--reward";
+    restartBtn.className = "secondary-btn"; // 原本是 primary-btn--reward，降級成次要按鈕
     restartBtn.textContent = "從頭再玩一次（Stage A）";
     restartBtn.addEventListener("click", restartEverything);
     footer.appendChild(restartBtn);
