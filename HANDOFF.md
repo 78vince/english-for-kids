@@ -165,6 +165,21 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.164 App 端執行：風格改版 v3（星星分級／代幣圖示／按鈕選取狀態／抬頭膠囊圓角等）（2026-10-02）
+
+執行 `docs/handoff-prompt-style-refresh-v3.md`（檔案目前最新內容，已整合兩輪使用者回饋，接續 9.163 的 v2 執行完成之後做）。
+
+- **遊戲星星三級配色**：`main.ts` 的 `renderGameRoom()` 新增 `starsTierClass`（1-2 顆 `--practice`／3-4 顆 `--good`／5 顆 `--great`），`style.css` 新增三個對應的 tier class，滿星是 `--gradient-gold` 漸層反白膠囊 chip（照第二次回饋的最終版本，不是中間一度改過的深棕金實心底）。
+- **代幣圖示換成圓圈＋字母 K**：`gameIcons.ts` 的 `COIN_ICON()` 內容整個替換，圓形漸層底（`--color-primary-700`→`--color-primary-500`）＋白色粗體字母 K；垂直置中改用 `dy=".35em"` 而非 handoff 原本建議的 `dominant-baseline="central"`（更保守的寫法，開發沙盒沒有瀏覽器沒辦法實測哪個在舊版瀏覽器表現比較好，照 handoff 註記的備案直接採用）；函式名稱維持 `COIN_ICON` 不變，三個呼叫點（代幣餘額／卡片費用標籤／確認彈窗）不用修改。
+- **字型系統／漸層 token 補齊**：`design-tokens.v2-daily-play.css` 新增 `--weight-regular`／`--weight-bold`／`--leading-tight`／`--leading-normal`／`--gradient-primary`／`--gradient-gold`／`--gradient-success`，純補 token 定義，不強制套用到既有程式碼。
+- **按鈕選取狀態**：`style.css` 新增共用 `.is-selected` class，目前沒有既有元件套用，供之後分頁/篩選類元件使用。
+- **抬頭膠囊圓角**：`.brand-banner` 的 `border-radius` 改 `var(--radius-pill)`、內距四邊統一改 `var(--space-4)`（原規劃左右用 `--space-6` 比上下寬，使用者回饋要一致）、背景改引用 `var(--gradient-primary)` token。未登入狀態（兩行 slogan＋標題）在膠囊圓角下是否會顯得擁擠，沒有瀏覽器沒辦法實測，照 handoff 給的程式碼直接統一套用，如果實機看起來不协調，可以考慮比照 handoff 備案只在 `.brand-banner--user` 用 pill、未登入狀態維持 `--radius-xl`。
+- **導覽列 hover 改用一般按鈕配方**：`.secondary-btn:hover` 升級成「補 `primary-tint` 背景＋邊框轉 `primary-700`」（原本只換邊框）；`.nav-item` 補上 `border: 2px solid transparent` 預留 hover 邊框空間（避免 hover 時因為新增邊框而跳動）、`.nav-item:hover` 改用跟 `.secondary-btn:hover` 一致的配方（新增邊框色＋文字色）。`.nav-item.active`／`.nav-item--logout` 維持不動。
+- **主題卡 icon 拿掉底色**：`style.css` 整批刪除約 40 個 `.thumb-<topicId>` 修飾 class（每個都只有一行 `background`，刪除前用 `grep -A2 '^\.thumb-'` 確認過全部只有這一行屬性），icon 直接疊在卡片白底上；`main.ts` 的 `thumb.className`／`thumb.emoji` 指派邏輯完全不動。
+- **刻意跳過一項、未套用 handoff 的建議修改**：5.1 節「挑戰紀錄／個人檔案資訊卡」要求核對 `.profile-stat-card` 的 `border-radius`／數字字級／數字顏色／標籤字級是否跟 `docs/design-tokens.html` 第 20 節的簡化示意一致。實際核對發現現況（`--radius-lg`、數字用 `--text-display`/54px/`--color-accent-orange`橘色＋icon、標籤用 `--text-body-lg`）明顯比示意圖豐富得多（示意圖只有「數字＋標籤」兩行文字，現況還有獨立圖示跟更大的數字強調），這看起來是刻意設計的「統計數字強調卡」，不是示意圖沒跟上的技術債——貿然套用示意圖的樸素版本（縮小字級、橘色數字改回主色藍）會是明顯的視覺降級，不是單純補 token，所以這次沒有動，留給使用者看過 `demo-standalone.html` 之後決定要不要跟著簡化。
+- **驗證**：`npx tsc --noEmit` 通過；全部既有 `verify-*.ts` 重跑一次全部通過；`rm -rf dist && npm run build` 成功；grep 打包後的產出確認 `.game-room-card-stars--great{...background:var(--gradient-gold)...}`、`.is-selected{...}`、`.nav-item:hover{...border-color:var(--color-primary-700)...}`、`.secondary-btn:hover{...background:var(--color-primary-tint)...}`、`.brand-banner{...border-radius:var(--radius-pill)...}`、`.thumb-greetings` 等舊規則已完全消失、代幣圖示的 `coinGrad`／`>K<` 字串都確實進到最終產出（`COIN_ICON` 被打包進 `gameBridge-*.js` 共用 chunk，不是 `main-*.js`，跟先前文件記錄的 Vite 分包現象一致）。
+- **後續**：緊接著執行 9.162（風格改版 v4）；`.profile-stat-card` 的落差留待使用者決定。
+
 ### 9.163 App 端執行：風格改版 v2（主色 #347FBC 定案＋抬頭區塊重新設計）（2026-10-02）
 
 執行 `docs/handoff-prompt-style-refresh-v2.md`。

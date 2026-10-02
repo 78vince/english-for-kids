@@ -293,13 +293,17 @@ body {
    <br/> 強制兩行招呼語、頭像也不再撐滿文字欄高度——原本手機版抬頭＋功能列
    約佔 620px，在看到任何學習內容之前就先吃掉大半螢幕，這次大幅縮小。 */
 .brand-banner {
-  /* 跟畫面其他內容一樣，維持 #app 本身的留白，不再用負 margin 頂到邊緣。 */
-  margin: 0 0 var(--space-4); /* 原 var(--space-5) */
-  padding: var(--space-4) var(--space-5); /* 原 calc(var(--space-6) + var(--space-2)) var(--space-5)，40px→16/24px */
-  background: linear-gradient(135deg, var(--color-primary-700), var(--color-primary-500));
+  /* 跟畫面其他內容一樣，維持 #app 本身的留白，不再用負 margin 頂到邊緣。
+     2026-10-01 風格改版 v3：內距改成四邊統一 var(--space-4)（原規劃左右用
+     --space-6 比上下寬，使用者回饋「左側 padding 想要與上下相同，這樣大頭貼
+     距離外匡的間距才會一致」，改回統一），圓角改成 var(--radius-pill) 膠囊形
+     呼應圓形大頭貼，背景改引用 --gradient-primary token（取代手寫的 linear-gradient）。 */
+  margin: 0 0 var(--space-4);
+  padding: var(--space-4);
+  background: var(--gradient-primary);
   color: #fff;
   text-align: left; /* 登入／未登入都齊左 */
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-pill);
 }
 
 /* 副標題（Slogan）放在標題上方，未登入畫面用（登入狀態的單行招呼語不需要）。 */
@@ -356,13 +360,13 @@ body {
   font-weight: 700;
   padding: var(--space-2) var(--space-3);
   border-radius: var(--nav-item-radius);
-  border: none;
+  border: 2px solid transparent; /* 2026-10-01 風格改版 v3：預留 hover 用邊框，不加的話 hover 時會因為沒有邊框而跳動 */
   background: none;
   color: var(--nav-item-color);
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 .nav-item-icon {
@@ -377,8 +381,12 @@ body {
   height: 18px;
 }
 
+/* 2026-10-01 風格改版 v3：改用跟 .secondary-btn:hover 一致的配方（淺底＋深邊框＋深字），
+   讓全站「滑鼠移過去」的視覺語言一致（原本只換背景，沒有邊框變化／文字變色）。 */
 .nav-item:hover {
-  background: var(--color-primary-100);
+  background: var(--color-primary-tint);
+  border-color: var(--color-primary-700);
+  color: var(--color-primary-700);
 }
 
 .nav-item.active {
@@ -795,188 +803,10 @@ body {
   margin-bottom: var(--space-3);
 }
 
-.thumb-greetings {
-  background: var(--color-accent-orange);
-}
-
-.thumb-pronouns {
-  background: var(--color-primary-100);
-}
-
-.thumb-family {
-  background: var(--color-accent-pink);
-}
-
-.thumb-colors {
-  background: var(--color-primary-100);
-}
-
-.thumb-animals {
-  background: var(--color-accent-orange);
-}
-
-.thumb-people {
-  background: var(--color-accent-yellow);
-}
-
-/* Personal Characteristics 已拆成三個獨立主題（appearance／emotions／personality_traits），
-   原本的 .thumb-personal-characteristics 顏色（--color-success-bg）分給 emotions 沿用，
-   另外兩個新主題各自配一個色票，不用發明新顏色。 */
-.thumb-appearance {
-  background: var(--color-tier-silver-bg);
-}
-
-.thumb-emotions {
-  background: var(--color-success-bg);
-}
-
-.thumb-personality-traits {
-  background: var(--color-accent-yellow-tint);
-}
-
-.thumb-parts-of-body {
-  background: var(--color-tier-silver-bg);
-}
-
-.thumb-food-drink {
-  background: var(--color-tier-gold-bg);
-}
-
-.thumb-clothing {
-  background: var(--color-accent-pink);
-}
-
-.thumb-houses {
-  background: var(--color-tier-bronze-bg);
-}
-
-.thumb-bathroom {
-  background: var(--color-primary-tint);
-}
-
-.thumb-tableware {
-  background: var(--color-primary-100);
-}
-
-.thumb-transportation {
-  background: var(--color-tier-locked-bg);
-}
-
-.thumb-default {
-  background: var(--color-primary-100);
-}
-
-/* 單元三既有兩個主題（School／Numbers）先前一直沒補專屬縮圖、退回預設值，
-   這次趁擴充單元四／五順手一起補齊。 */
-.thumb-school {
-  background: var(--color-accent-yellow-tint);
-}
-
-.thumb-numbers {
-  background: var(--color-tier-silver-bg);
-}
-
-.thumb-science {
-  background: var(--color-success-tint);
-}
-
-.thumb-advanced-pronouns {
-  background: var(--color-primary-100);
-}
-
-.thumb-wh-words-frequency {
-  background: var(--color-accent-yellow-tint);
-}
-
-.thumb-articles-determiners {
-  background: var(--color-tier-silver-bg);
-}
-
-.thumb-sentence-connectors {
-  background: var(--color-tier-bronze-bg);
-}
-
-.thumb-prepositions {
-  background: var(--color-tier-gold-bg);
-}
-
-.thumb-other-nouns {
-  background: var(--color-accent-pink);
-}
-
-.thumb-other-verbs-1 {
-  background: var(--color-primary-tint);
-}
-
-.thumb-other-verbs-2 {
-  background: var(--color-success-tint);
-}
-
-.thumb-other-adjectives-1 {
-  background: var(--color-accent-yellow);
-}
-
-.thumb-other-adjectives-2 {
-  background: var(--color-tier-locked-bg);
-}
-
-.thumb-other-adverbs-responses {
-  background: var(--color-accent-orange);
-}
-
-.thumb-pe-sports {
-  background: var(--color-success-tint);
-}
-
-.thumb-clubs-hobbies {
-  background: var(--color-accent-pink);
-}
-
-/* 單元四：大自然與動物（animals_insects 沿用既有 .thumb-animals，這裡只補新增的兩個）。 */
-.thumb-weather-nature {
-  background: var(--color-primary-100);
-}
-
-.thumb-geographical-terms {
-  background: var(--color-tier-bronze-bg);
-}
-
-/* 單元五：生活情境 */
-.thumb-places-directions {
-  background: var(--color-accent-orange);
-}
-
-.thumb-occupations {
-  background: var(--color-success-bg);
-}
-
-.thumb-money {
-  background: var(--color-tier-gold-bg);
-}
-
-.thumb-health {
-  background: var(--color-error-bg);
-}
-
-.thumb-forms-of-address {
-  background: var(--color-accent-yellow);
-}
-
-.thumb-time {
-  background: var(--color-tier-gold-bg);
-}
-
-.thumb-calendar {
-  background: var(--color-tier-silver-bg);
-}
-
-.thumb-holidays-festivals {
-  background: var(--color-accent-pink);
-}
-
-.thumb-sizes-measurements {
-  background: var(--color-primary-100);
-}
+/* 2026-10-01 風格改版 v3：原本這裡有約 40 個 .thumb-<topicId> 修飾 class，各自只有
+   一行 background，讓每個主題的 icon 疊在一塊色塊上。使用者這次要求拿掉這些色塊底色，
+   讓 icon 直接疊在卡片白底上（icon 本身、main.ts 的 thumb.className／thumb.emoji
+   指派邏輯完全不變，純粹是這批 CSS 規則整批刪除）。 */
 
 .topic-card h3 {
   font-family: var(--font-display);
@@ -1293,6 +1123,26 @@ body {
   gap: 2px;
   margin-top: var(--space-1);
   color: var(--color-accent-yellow);
+}
+
+/* 2026-10-01 風格改版 v3：星星三級配色——1-2 顆再接再厲／3-4 顆做得好／
+   5 顆太棒了，滿星整排變成漸層金反白膠囊 chip。 */
+.game-room-card-stars--practice {
+  color: var(--color-ink-muted);
+}
+
+.game-room-card-stars--good {
+  color: var(--color-accent-yellow);
+}
+
+.game-room-card-stars--great {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: #fff;
+  background: var(--gradient-gold);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
 }
 
 .game-room-play-btn {
@@ -1751,8 +1601,21 @@ body {
   transition: border-color 0.15s ease;
 }
 
+/* 2026-10-01 風格改版 v3：hover 升級成補背景＋邊框一起變色（原本只換邊框），
+   這套「淺底＋深邊框」的配方同時套用到 .nav-item:hover，讓全站 hover 視覺語言一致。 */
 .secondary-btn:hover {
-  border-color: var(--color-primary-500);
+  background: var(--color-primary-tint);
+  border-color: var(--color-primary-700);
+}
+
+/* 2026-10-01 風格改版 v3：共用的「當前選取中」持續狀態 class（跟 hover 不同，是
+   「這個選項目前被選中」，例如多選一的 Tab 或篩選 Chip）。目前沒有迫切需要套用的
+   地方（.favorites-sort 已經有自己的 active 邏輯），先把共用 class 定義好，之後做
+   新的分頁式元件可以直接套用，不用每次重新發明一套「選取中」樣式。 */
+.is-selected {
+  background: var(--color-primary-700);
+  border-color: var(--color-primary-700);
+  color: #fff;
 }
 
 .play-btn {

@@ -53,6 +53,17 @@
   --text-body: 21px;       /* 原 16px，2026-08-07 再放大一輪 */
   --text-caption: 17px;    /* 原 14px，2026-08-07 再放大一輪 */
 
+  /* ---------- 2026-10-01 風格改版 v3：字重／行高角色定義（數值不變，補上語意化 token）---------- */
+  --weight-regular: 400;
+  --weight-bold: 700;
+  --leading-tight: 1.3;   /* 標題 h1~h3 */
+  --leading-normal: 1.6;  /* 內文 body／caption */
+
+  /* ---------- Gradient（2026-10-01 新增：統一用 135deg，避免各元件自己亂配）---------- */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary-700), var(--color-primary-500));
+  --gradient-gold: linear-gradient(135deg, #E8C24E, var(--color-accent-yellow));
+  --gradient-success: linear-gradient(135deg, #4FBE82, var(--color-success));
+
   /* ---------- Radius（2026-10-01 風格改版 v2：新增 xs，sm/md 微調更圓潤，呼應「圓潤和緩」）---------- */
   --radius-xs: 6px;    /* 新增：小標籤用 */
   --radius-sm: 12px;   /* 原 8px */

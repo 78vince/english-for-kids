@@ -9,8 +9,22 @@
 export const FLAT_ICON_VIEWBOX = `viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"`;
 
 // 遊戲代幣：扁平單色錢幣圖示（圓圈＋中間一個貨幣符號的曲線），取代原本的 🪙 emoji。
-export const COIN_ICON = (size: number) =>
-  `<svg ${FLAT_ICON_VIEWBOX} width="${size}" height="${size}"><circle cx="12" cy="12" r="9"/><path d="M9 15.5c0 1 1.2 1.5 3 1.5s3-.6 3-1.7c0-2.6-6-1.3-6-3.9 0-1.1 1.2-1.7 3-1.7s3 .5 3 1.5"/><line x1="12" y1="6.5" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="17.5"/></svg>`;
+// 遊戲代幣圖示——圓圈＋品牌字母 K，呼應吉祥物「羊毛氈字母怪獸 K」，2026-10-01 風格改版 v3
+// 從硬幣造型改版（函式名稱維持 COIN_ICON 不變，改名字要動到三個呼叫點，沒有必要）。
+export const COIN_ICON = (size: number) => {
+  const fontSize = Math.round(size * 0.58);
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="vertical-align:-2px">
+    <defs>
+      <linearGradient id="coinGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="var(--color-primary-700)"/>
+        <stop offset="100%" stop-color="var(--color-primary-500)"/>
+      </linearGradient>
+    </defs>
+    <circle cx="12" cy="12" r="11" fill="url(#coinGrad)"/>
+    <text x="12" y="12" text-anchor="middle" dy=".35em"
+      font-family="Huninn, sans-serif" font-weight="700" font-size="${fontSize}" fill="#fff">K</text>
+  </svg>`;
+};
 
 // 翻牌配對的卡片背面圖示：扁平星芒/閃亮圖案，取代原本的 🃏 emoji。
 export const CARD_BACK_ICON = (size: number) =>

@@ -2067,10 +2067,19 @@ function renderGameRoom(): void {
     // 2026-09-30 使用者要求把星等從 1-3 顆改成 1-5 顆——這裡只是單純把畫幾顆星的陣列
     // 從 [1,2,3] 改成 [1,2,3,4,5]，實際的星等數字上限／換算門檻改在 crosswordGame.ts
     // 的 starsForMistakes() 跟 gameHighScores.ts 的 clamp（0-5）那邊。
+    // 2026-10-01 風格改版 v3：星星新增三級配色（1-2 顆再接再厲／3-4 顆做得好／
+    // 5 顆太棒了，滿星整排變成漸層金反白膠囊 chip），顏色交給 CSS 的 tier class 處理，
+    // icon 本身維持 currentColor 不用動。
     const bestStars = getBestStars(profileId, game.id);
+    const starsTierClass =
+      bestStars <= 2
+        ? "game-room-card-stars--practice"
+        : bestStars <= 4
+          ? "game-room-card-stars--good"
+          : "game-room-card-stars--great";
     const starsHtml =
       bestStars > 0
-        ? `<div class="game-room-card-stars">${[1, 2, 3, 4, 5]
+        ? `<div class="game-room-card-stars ${starsTierClass}">${[1, 2, 3, 4, 5]
             .map((i) => (i <= bestStars ? STAR_FILLED_ICON(16) : STAR_EMPTY_ICON(16)))
             .join("")}</div>`
         : "";
