@@ -1,23 +1,19 @@
-// 驗證品牌橫幅（appendBrandBanner() 的 .brand-banner--user）在窄螢幕下的響應式修正：
-// 使用者截圖回報名字很長時，頭像圓形圖（.brand-banner-avatar 的 height:100%，跟著文字欄
-// 高度一起撐開）會被文字換行撐出來的高度拉成巨大尺寸，反過來蓋住招呼語文字。
-// 修法（跟使用者確認過）：640px 以下改成上下堆疊佈局，頭像改用固定尺寸（不再跟文字欄
-// 高度綁在一起），標題字級也調小一階減少換行行數。使用者看過第一版（頭像 72px、
-// 文字在上頭像在下）之後又回饋兩點調整：頭像放大 4 倍（72px → 288px）、頭像挪到
-// 文字上面（用 CSS order 調整視覺順序，不改 main.ts 的 DOM 結構）。
-// - @media (max-width: 640px) 斷點存在
-// - .brand-banner--user 在斷點內改成 flex-direction: column
-// - .brand-banner-avatar 在斷點內改用固定的 height／width（不是 100%）＝288px，且置中，
-//   用 order: -1 排到文字欄前面
-// - .brand-banner h1 在斷點內字級變小（不是原本的 --text-h1）
-// - 桌面／平板寬度（斷點外）維持原樣，不受影響
-// 這次調整純 CSS，main.ts 只用來確認 DOM 順序沒有被意外改動。
+// 驗證品牌橫幅（appendBrandBanner() 的 .brand-banner--user）在 2026-10-01 風格改版 v2
+// 重新設計之後的狀態。
 //
-// 2026-08-27 補充：style.css 裡後來又新增了另一個 @media (max-width: 640px) 區塊
-// （.stage-banner 的窄螢幕修正，見 verify-stage-banner-responsive.ts），所以這支腳本
-// 全面改用「鎖定含 .brand-banner.brand-banner--user 規則」的targeted regex 找出屬於
-// 品牌橫幅的那個 640px 區塊，不能再用「檔案裡第一個 @media (max-width: 640px)」這種
-// 天真假設（那樣會抓到錯誤的區塊，或抓不到桌面版預設規則）。
+// 背景：舊版用 <br/> 強制招呼語換成兩行＋頭像 height:100% 跟著文字欄高度撐開，手機寬度下
+// 長名字換行會把文字欄撐高、頭像跟著被拉成巨大圓形蓋住文字（這正是先前 9.x 系列處理過的
+// 回報），當時的修法是另外寫一個 @media (max-width: 640px) 區塊，手機版改上下堆疊＋頭像
+// 放大到 288px。風格改版 v2 直接把抬頭改成「頭像固定 56px＋單行招呼語」，從根源上不再需要
+// 動態撐高的頭像，所以那整段手機版覆寫規則已經被拿掉——桌面／手機表現應該一致。
+// 這支腳本改成驗證新版的狀態：
+// - appendBrandBanner() 已登入狀態只輸出一個 <img class="brand-banner-avatar">
+//   和一個單行 <h1>，不再有 .brand-banner-text／.brand-subtitle（已登入狀態不需要）
+// - .brand-banner-avatar 是固定的 56×56px 圓形（不是 height:100%／width:auto）
+// - .brand-banner.brand-banner--user 用 align-items: center（不是 stretch）
+// - .brand-banner h1 字級用既有的 --text-body-lg token（不是原本巨大的 --text-h1）
+// - 沒有殘留任何針對 .brand-banner--user 的 @media (max-width: 640px) 覆寫區塊
+//   （新設計不需要手機版特殊處理）
 // 用法：npx tsx scripts/verify-brand-banner-responsive.ts
 
 import { readFileSync } from "node:fs";
@@ -29,113 +25,72 @@ function assert(condition: boolean, message: string): void {
 const styleCss = readFileSync(new URL("../src/style.css", import.meta.url), "utf-8");
 const mainTs = readFileSync(new URL("../src/main.ts", import.meta.url), "utf-8");
 
-// 鎖定屬於品牌橫幅的那個 640px 區塊（style.css 裡可能有不只一個同斷點的 @media 區塊，
-// 用內含的 .brand-banner.brand-banner--user 規則當錨點，才不會抓到別的功能新增的區塊）。
-// 注意：`.brand-banner.brand-banner--user {` 這串文字在檔案裡出現兩次——一次是桌面版
-// 預設規則（不在任何 @media 裡面，屬於「v2 全站外殼」區塊），一次才是真正窄螢幕覆寫用的
-// 那個巢狀在 @media 裡的規則。如果只鎖定「@media 開頭之後，隨便隔多遠都算」的寬鬆比對，
-// 遇到桌面版預設規則排在真正目標 @media 區塊「前面」的情況（例如中間插入了其他功能的
-// @media (max-width: 640px) 區塊），會誤抓到桌面版那個、不是巢狀在 @media 裡的規則。
-// 這裡改成要求 `.brand-banner.brand-banner--user {` 必須是「緊接在 @media (max-width: 640px) {
-// 開頭之後的第一條規則」（中間只能有空白/換行），才能鎖定真正的窄螢幕覆寫區塊。
-const brandBannerMediaMatch = styleCss.match(
-  /@media \(max-width: 640px\) \{\s*\.brand-banner\.brand-banner--user \{[^}]*\}[\s\S]*?\n\}\n/
-);
-assert(brandBannerMediaMatch !== null, "應該找得到含 .brand-banner--user 規則的 @media (max-width: 640px) 區塊");
-const brandBannerMediaBlock = brandBannerMediaMatch![0];
-const brandBannerMediaIndex = styleCss.indexOf(brandBannerMediaBlock);
-
-// ---- 測試 1：640px 窄螢幕斷點裡，.brand-banner--user 改成上下堆疊（column）。 ----
+// ---- 測試 1：appendBrandBanner() 已登入狀態是單行招呼語＋頭像在前，不再有
+//      .brand-banner-text／.brand-subtitle／<br/> 這些舊版結構。 ----
 {
+  const fnMatch = mainTs.match(/function appendBrandBanner\(\): void \{[\s\S]*?\n\}\n/);
+  assert(fnMatch !== null, "main.ts 應該找得到 appendBrandBanner() 函式");
+  const fn = fnMatch![0];
+
+  assert(fn.includes('class="brand-banner-avatar"'), "已登入狀態應該要有 .brand-banner-avatar 頭像");
+  assert(/<h1>Hi, \$\{activeProfile\.name\}/.test(fn), "已登入狀態的招呼語應該是單行「Hi, {name}」開頭，不是舊版的 <br/> 兩行版本");
+  assert(!fn.includes("<br"), "已登入狀態的招呼語不應該再用 <br/> 強制換行");
   assert(
-    brandBannerMediaBlock.includes("flex-direction: column;"),
-    "窄螢幕斷點裡 .brand-banner--user 應該改成 flex-direction: column（文字在上、頭像在下）"
+    !/brand-banner-avatar[\s\S]*?brand-banner-text|brand-banner-text[\s\S]*?brand-banner-avatar/.test(fn) ||
+      !fn.includes("brand-banner-text"),
+    "已登入狀態不應該再有 .brand-banner-text 包裹層（新版頭像／文字是平行元素，不用額外包一層）"
   );
 
-  console.log("✅ 測試 1 通過：640px 斷點裡 .brand-banner--user 改成上下堆疊（column）。");
+  const avatarIndex = fn.indexOf('class="brand-banner-avatar"');
+  const h1Index = fn.indexOf("<h1>Hi,");
+  assert(avatarIndex !== -1 && h1Index !== -1 && avatarIndex < h1Index, "頭像應該排在招呼語前面（頭像在左、文字在右）");
+
+  console.log("✅ 測試 1 通過：appendBrandBanner() 已登入狀態改成頭像在前＋單行招呼語，不再有 <br/>／.brand-banner-text 舊結構。");
 }
 
-// ---- 測試 2：窄螢幕斷點裡，.brand-banner-avatar 改用固定尺寸（不是 height:100%），
-//      且置中——這是修掉「頭像跟著文字欄高度一起被拉大」這個根本問題的關鍵。 ----
+// ---- 測試 2：.brand-banner-avatar 改用固定 56×56px，不是 height:100%／width:auto。 ----
 {
-  const mq = brandBannerMediaBlock;
+  const avatarRuleMatch = styleCss.match(/\.brand-banner-avatar \{[^}]*\}/);
+  assert(avatarRuleMatch !== null, "應該找得到 .brand-banner-avatar 規則");
+  const rule = avatarRuleMatch![0];
 
-  assert(mq.includes(".brand-banner-avatar {"), "窄螢幕斷點裡應該要有 .brand-banner-avatar 的覆蓋規則");
-  const avatarRuleInMq = mq.match(/\.brand-banner-avatar \{[^}]*\}/);
-  assert(avatarRuleInMq !== null, "應該找得到窄螢幕斷點裡的 .brand-banner-avatar 規則內容");
-  assert(
-    !avatarRuleInMq![0].includes("height: 100%"),
-    "窄螢幕斷點裡的 .brand-banner-avatar 不應該還是 height: 100%（那正是頭像被拉巨大的根本原因）"
-  );
-  assert(
-    /height:\s*\d+px/.test(avatarRuleInMq![0]) && /width:\s*\d+px/.test(avatarRuleInMq![0]),
-    "窄螢幕斷點裡的 .brand-banner-avatar 應該改用固定的 px 尺寸，不再跟文字欄高度綁在一起"
-  );
-  assert(avatarRuleInMq![0].includes("align-self: center;"), "窄螢幕斷點裡的頭像應該置中（align-self: center）");
+  assert(!rule.includes("height: 100%"), ".brand-banner-avatar 不應該再用 height:100%（舊版跟著文字欄撐開的根因）");
+  assert(rule.includes("width: 56px;") && rule.includes("height: 56px;"), ".brand-banner-avatar 應該改用固定的 56×56px");
 
-  console.log("✅ 測試 2 通過：窄螢幕斷點裡頭像改用固定尺寸並置中，不再跟著文字欄高度撐大。");
+  console.log("✅ 測試 2 通過：.brand-banner-avatar 改用固定 56×56px，不再跟著文字欄高度撐大。");
 }
 
-// ---- 測試 2b：使用者看過 72px 的版本後，回饋「太小了，放大四倍」且「頭像挪到字的
-//      上面」，這裡鎖定這次的具體調整：尺寸真的是 72px 的 4 倍（288px），且用 order: -1
-//      把頭像排到文字欄前面（視覺上頭像在上、文字在下），不是改動 main.ts 的 DOM 順序。 ----
+// ---- 測試 3：.brand-banner.brand-banner--user 用 align-items: center（頭像不撐滿高度）。 ----
 {
-  const avatarRuleInMq = brandBannerMediaBlock.match(/\.brand-banner-avatar \{[^}]*\}/);
-  assert(avatarRuleInMq !== null, "應該找得到窄螢幕斷點裡的 .brand-banner-avatar 規則內容");
+  const userBannerRuleMatch = styleCss.match(/\.brand-banner\.brand-banner--user \{[^}]*\}/);
+  assert(userBannerRuleMatch !== null, "應該找得到 .brand-banner.brand-banner--user 規則");
+  assert(userBannerRuleMatch![0].includes("align-items: center;"), ".brand-banner.brand-banner--user 應該用 align-items: center（原本是 stretch）");
 
-  assert(avatarRuleInMq![0].includes("height: 288px;"), "窄螢幕斷點裡的頭像高度應該是 288px（72px 的 4 倍）");
-  assert(avatarRuleInMq![0].includes("width: 288px;"), "窄螢幕斷點裡的頭像寬度應該是 288px（72px 的 4 倍）");
-  assert(avatarRuleInMq![0].includes("order: -1;"), "窄螢幕斷點裡的頭像應該用 order: -1 排到文字欄前面（視覺上頭像在上）");
-
-  // 確認 main.ts 的 DOM 結構沒有被改動——appendBrandBanner() 還是文字 div 在前、
-  // 頭像 img 在後，視覺上的「頭像在上」完全靠 CSS 的 order 達成，不是改 HTML 順序。
-  assert(
-    mainTs.includes('<div class="brand-banner-text">') &&
-      mainTs.indexOf('<div class="brand-banner-text">') < mainTs.indexOf('<img class="brand-banner-avatar"'),
-    "main.ts 的 appendBrandBanner() 應該維持文字 div 在前、頭像 img 在後的 DOM 順序，視覺排序交給 CSS 的 order 處理"
-  );
-
-  console.log("✅ 測試 2b 通過：窄螢幕斷點裡頭像放大成 288px（4 倍）且用 order: -1 排到文字欄上方，main.ts 的 DOM 順序沒有被改動。");
+  console.log("✅ 測試 3 通過：.brand-banner.brand-banner--user 改用 align-items: center，頭像不再撐滿文字欄高度。");
 }
 
-// ---- 測試 3：窄螢幕斷點裡，.brand-banner h1 字級調小（不是原本桌面版的 --text-h1），
-//      減少長名字造成的換行行數。 ----
+// ---- 測試 4：.brand-banner h1 字級改用 --text-body-lg（原本的 --text-h1 太大，
+//      單行文字不需要那麼大的字級）。 ----
 {
-  const mq = brandBannerMediaBlock;
+  const h1RuleMatch = styleCss.match(/\.brand-banner h1 \{[^}]*\}/);
+  assert(h1RuleMatch !== null, "應該找得到 .brand-banner h1 規則");
+  assert(h1RuleMatch![0].includes("var(--text-body-lg)"), ".brand-banner h1 應該改用 --text-body-lg（原本的 --text-h1 42px 對單行文字太大）");
 
-  assert(mq.includes(".brand-banner h1 {"), "窄螢幕斷點裡應該要有 .brand-banner h1 的字級覆蓋規則");
-  const h1RuleInMq = mq.match(/\.brand-banner h1 \{[^}]*\}/);
-  assert(h1RuleInMq !== null, "應該找得到窄螢幕斷點裡的 .brand-banner h1 規則內容");
-  assert(
-    !h1RuleInMq![0].includes("--text-h1"),
-    "窄螢幕斷點裡的 .brand-banner h1 字級不應該還是桌面版用的 --text-h1，要調小一階"
-  );
-
-  console.log("✅ 測試 3 通過：窄螢幕斷點裡標題字級調小，減少長名字換行行數。");
+  console.log("✅ 測試 4 通過：.brand-banner h1 改用 --text-body-lg，不再是原本的巨大 --text-h1。");
 }
 
-// ---- 測試 4：桌面／平板寬度（斷點外）維持原樣——.brand-banner-avatar 的預設規則
-//      仍然是 height: 100%／width: auto，.brand-banner.brand-banner--user 預設仍然是
-//      左右排列（不是 column），確認這次修正只影響窄螢幕，沒有動到桌面版版面。 ----
+// ---- 測試 5：不應該再殘留針對 .brand-banner--user 的 @media (max-width: 640px) 覆寫
+//      （新設計頭像固定 56px、單行文字，手機/桌面表現一致，不需要特殊處理）。 ----
 {
-  // 抓出「品牌橫幅那個」@media 區塊之前的內容，確認桌面版預設規則沒被改掉
-  // （不能用 styleCss.indexOf("@media (max-width: 640px)") 天真取第一個位置，
-  // 檔案裡現在有不只一個同斷點的 @media 區塊，見檔案開頭註解）。
-  assert(brandBannerMediaIndex !== -1, "應該找得到品牌橫幅那個 @media (max-width: 640px) 區塊的位置");
-  const beforeMediaQuery = styleCss.slice(0, brandBannerMediaIndex);
-
-  const defaultAvatarRule = beforeMediaQuery.match(/\.brand-banner-avatar \{[^}]*\}/);
-  assert(defaultAvatarRule !== null, "應該找得到桌面版預設的 .brand-banner-avatar 規則（在 @media 區塊之前）");
-  assert(defaultAvatarRule![0].includes("height: 100%;") && defaultAvatarRule![0].includes("width: auto;"), "桌面版預設的 .brand-banner-avatar 應該維持 height:100%／width:auto，不受這次窄螢幕修正影響");
-
-  const defaultUserBannerRule = beforeMediaQuery.match(/\.brand-banner\.brand-banner--user \{[^}]*\}/);
-  assert(defaultUserBannerRule !== null, "應該找得到桌面版預設的 .brand-banner.brand-banner--user 規則");
+  const leftoverMediaMatch = styleCss.match(
+    /@media \(max-width: 640px\) \{\s*\.brand-banner\.brand-banner--user \{/
+  );
   assert(
-    !defaultUserBannerRule![0].includes("flex-direction: column"),
-    "桌面版預設的 .brand-banner.brand-banner--user 不應該是 column，要維持原本的左右排列"
+    leftoverMediaMatch === null,
+    "不應該再殘留舊版針對 .brand-banner--user 的手機版 @media 覆寫區塊（新設計不需要手機版特殊處理）"
   );
 
-  console.log("✅ 測試 4 通過：桌面／平板寬度維持原本左右排列的版面，這次修正只在窄螢幕生效。");
+  console.log("✅ 測試 5 通過：沒有殘留舊版 .brand-banner--user 的手機版覆寫區塊。");
 }
 
-console.log("\n✅ 全部品牌橫幅窄螢幕響應式修正驗證通過。");
+console.log("\n✅ 全部品牌橫幅（風格改版 v2 單行招呼語＋固定頭像）驗證通過。");

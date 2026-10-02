@@ -165,6 +165,18 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.163 App 端執行：風格改版 v2（主色 #347FBC 定案＋抬頭區塊重新設計）（2026-10-02）
+
+執行 `docs/handoff-prompt-style-refresh-v2.md`。
+
+- **Token 檔案色彩／圓角更新**：`--color-primary-700` 等品牌色、強調色、feedback 色、中性色全部換成 v2 定案色碼；Tint 區塊 5 個淡色重算成最終色碼；新增 `--radius-xs: 6px`，`--radius-sm`（8px→12px）／`--radius-md`（16px→18px）更圓潤。
+- **`style.css` 衍生色重算**：`--color-success-text`／`--color-success-bg`／`--color-error-text`／`--color-error-bg`／`--color-primary-700-hover`／`--color-reward-hover` 依新基礎色重新計算；同步更新 `crosswordStandalone.css`／`memoryMatchStandalone.css` 複製貼上的 `--color-primary-700-hover`（`#003b78`→`#2A6694`），避免兩款遊戲的按鈕 hover 停留在舊藍色。
+- **抬頭區塊重新設計**（這次最主要的版面調整）：`main.ts` 的 `appendBrandBanner()` 已登入狀態拿掉 `<br/>` 強制兩行招呼語跟獨立的 `.brand-banner-text`／`.brand-subtitle`，改成頭像在前＋單行「Hi, {name}！一起玩英語」；`style.css` 對應調整：`.brand-banner` 內距/外距縮小、`.brand-banner h1` 字級從 `--text-h1`（42px）降到 `--text-body-lg`（23px）、`.brand-banner-avatar` 從 `height:100%` 動態撐滿改成固定 56×56px、`.brand-banner.brand-banner--user` 改用 `align-items: center`；原本因應舊版「頭像撐滿文字欄高度」問題而寫的手機版 `@media (max-width: 640px)` 覆寫區塊（頭像放大到 288px、改上下堆疊）整段拿掉，因為新設計桌面/手機表現本來就一致，不需要特殊處理。未登入狀態（選使用者畫面）維持原樣不變。
+- **改寫 `verify-brand-banner-responsive.ts`**：舊版測試腳本整支都是針對「手機版覆寫區塊」寫的斷言，這次新設計已經沒有那個區塊，照 handoff 指示重寫整支腳本，改驗證新版狀態（單行招呼語無 `<br/>`、頭像固定 56px、`align-items: center`、`h1` 用 `--text-body-lg`、確認沒有殘留舊版手機版覆寫區塊）。
+- **驗證**：`npx tsc --noEmit` 通過；全部既有 `verify-*.ts`（含改寫後的 `verify-brand-banner-responsive.ts`）重跑一次全部通過；`rm -rf dist && npm run build` 成功；grep 打包後的 `dist/assets/main-*.css`／`*.js` 確認 `347FBC`、`.brand-banner-avatar{width:56px;height:56px...}`、`.brand-banner h1{...font-size:var(--text-body-lg)...}`、單行招呼語字串 `Hi, ${x.name}` 都確實進到最終產出。
+- **明確沒動的部分**（照 handoff 指示）：主題卡片進度條 DOM／邏輯完全不碰；`--text-*`／`--space-*` 數值本身不變；未登入狀態的抬頭版面不變。
+- **後續**：開發沙盒沒有瀏覽器無法截圖，實機/手機寬度模擬確認抬頭高度確實大幅縮減、圓角變圓潤沒有造成元素重疊，仍待 `demo-standalone.html` 或 `npm run dev` 人工檢查；緊接著繼續執行 9.158-9.160（風格改版 v3）與 9.162（v4）。
+
 ### 9.162 風格改版 v4：拿掉「衍生色」，答對/答錯文字直接用基礎色票，按鈕 hover 改用 color-mix() 公式（2026-10-01）
 
 使用者對 9.161 新補的「衍生色」章節有意見：這 6 個 token（`success-text`／`success-bg`／`error-text`／`error-bg`／`primary-700-hover`／`reward-hover`）是沒有依據的手動色碼，要求新方案全部不採用，並舉例「錯誤文字直接用 error #FF7A7A」。另外要求每張色卡下方都要有用途說明，且質疑色卡下方的灰底標籤樣式是「沒來由亂加」的設定。

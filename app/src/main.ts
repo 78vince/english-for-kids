@@ -1285,11 +1285,8 @@ function appendBrandBanner(): void {
     banner.className = "brand-banner brand-banner--user";
     const avatarUrl = getAvatarById(activeProfile.avatarId).url;
     banner.innerHTML = `
-      <div class="brand-banner-text">
-        <p class="brand-subtitle">English for Kids</p>
-        <h1>Hi! ${activeProfile.name}<br />今天也來玩一點英語吧！</h1>
-      </div>
       <img class="brand-banner-avatar" src="${avatarUrl}" alt="" />
+      <h1>Hi, ${activeProfile.name}！一起玩英語</h1>
     `;
   } else {
     banner.className = "brand-banner";
