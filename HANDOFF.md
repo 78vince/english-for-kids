@@ -165,6 +165,10 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.168 使用者回報：Stage C 完成畫面沒有引導進入 Stage D，撰寫 handoff（2026-10-02）
+
+使用者截圖回報：完成 Stage C（短文理解）後，畫面只有「從頭再玩一次」「回選單」，沒有引導進入 Stage D 綜合關卡的按鈕。對照 Stage D 自己通過後的畫面（`renderCapstone()`）發現它已經正確示範「有下一關就優先給一顆 reward 配色的導向按鈕」（進入 Stage E 會話練習），確認是 Stage C 完成畫面（`renderChoice()`）本身漏掉了這個模式，不是整套邏輯有問題。撰寫 `docs/handoff-prompt-stage-c-next-stage-cta.md`，補上「🏆 前往 Stage D 綜合關卡 →」按鈕（reward 配色排第一顆，呼叫現成的 `goToCapstone()`），原本的「從頭再玩一次」降級成次要按鈕，跟 Stage D 完成畫面的按鈕排列邏輯一致。待 App 端執行。
+
 ### 9.167 App 端執行：風格改版 v5（success-700/error-700 文字分級色＋修正「慢速」按鈕收合展開例句的 bug）（2026-10-02）
 
 執行 `docs/handoff-prompt-style-refresh-v5.md`，接續 9.165（v4 執行完成）之後做。
