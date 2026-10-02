@@ -920,8 +920,16 @@ function stageHeader(title: string, progressText: string, extraActions: HTMLElem
   slowToggleBtn.innerHTML = `${TURTLE_ICON(18)}<span>${isSlowSpeechEnabled() ? "慢速中" : "慢速"}</span>`;
   slowToggleBtn.setAttribute("aria-label", "切換慢速發音");
   slowToggleBtn.addEventListener("click", () => {
-    setSlowSpeechEnabled(!isSlowSpeechEnabled());
-    render(); // 重新渲染目前畫面，讓按鈕文字／active 樣式立刻反映新狀態
+    const next = !isSlowSpeechEnabled();
+    setSlowSpeechEnabled(next);
+    // 2026-10-02 風格改版 v5：不再呼叫 render()——慢速設定只影響這顆按鈕自己的外觀
+    // （下次播放語音時才會讀取這個設定），直接更新按鈕本身的 class／文字／aria 即可，
+    // 比照 renderVocabOverview() 的「練習模式」主開關同一套做法。原本呼叫 render() 會把
+    // 整個畫面重新建構一次 DOM，導致單字總覽頁面「例句 ▾」展開面板的本地開關狀態
+    // （純粹是 DOM 屬性，沒有存到任何模組變數）全部被重置成收合，捲動位置也會跳動。
+    slowToggleBtn.classList.toggle("active", next);
+    slowToggleBtn.setAttribute("aria-pressed", String(next));
+    slowToggleBtn.innerHTML = `${TURTLE_ICON(18)}<span>${next ? "慢速中" : "慢速"}</span>`;
   });
   actions.appendChild(slowToggleBtn);
 

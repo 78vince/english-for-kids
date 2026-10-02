@@ -21,9 +21,13 @@
   --color-accent-pink:   #FFB8E8; /* 原 #FFBDEF */
   --color-accent-yellow: #FFD873; /* 原 #FFD166 */
 
-  /* ---------- Color / Feedback ---------- */
-  --color-success: #7EDBA0; /* 原 #6FCF97 */
-  --color-error:   #FF7A7A; /* 原 #FF6B6B */
+  /* ---------- Color / Feedback（2026-10-02 風格改版 v5：新增 -700 文字/邊框專用分級，
+     解決色弱可及性問題——比照 primary-700/500/100 的分級寫法，正式收錄進色票系統，
+     不是重新引入 v4 拿掉的那種私下存放、沒有依據的「衍生色」）---------- */
+  --color-success: #7EDBA0;       /* 原 #6FCF97，裝飾性填色專用（進度條、色條），不可當文字/邊框色 */
+  --color-success-700: #237A4F;   /* 新增：答對狀態文字/邊框色，對白底 5.3:1、對 success-tint 4.9:1，通過 WCAG AA */
+  --color-error:   #FF7A7A;       /* 原 #FF6B6B，裝飾性填色專用 */
+  --color-error-700: #C13D37;     /* 新增：答錯狀態文字/邊框色，對白底 5.3:1、對 error-tint 4.7:1，通過 WCAG AA */
 
   /* ---------- Color / Neutral（背景改暖色調，呼應「舒適」方向）---------- */
   --color-bg:        #F7F5F1;   /* 原 #F4F6F9，冷色藍灰改暖米灰 */

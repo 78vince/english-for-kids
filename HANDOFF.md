@@ -165,6 +165,17 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.167 App 端執行：風格改版 v5（success-700/error-700 文字分級色＋修正「慢速」按鈕收合展開例句的 bug）（2026-10-02）
+
+執行 `docs/handoff-prompt-style-refresh-v5.md`，接續 9.165（v4 執行完成）之後做。
+
+- **新增 `--color-success-700`／`--color-error-700`**：`design-tokens.v2-daily-play.css` Feedback 色彩區塊，比照 `primary-700/500/100` 的分級寫法正式收錄進色票系統。套用前先用 WCAG 相對亮度公式實際算過，確認 handoff 給的色碼數據正確：`success-700` 對白底 5.29:1、對 `success-tint` 4.91:1；`error-700` 對白底 5.26:1、對 `error-tint` 4.66:1，跟 handoff 聲稱的 5.3/4.9/5.3/4.7 幾乎吻合，都通過 WCAG AA 一般文字門檻（4.5:1）。
+- **全站 28 行文字/邊框改用 `-700`**：用 node 腳本精確比對「整行 trim 後完全等於 `color: var(--color-success);` 或 `border-color: var(--color-success);`」（error 同理）才替換，避免誤改到字面上包含相同子字串但語意不同的規則——例如 `.menu-item--good:hover { border-left-color: var(--color-success); }` 這種「色條」用途的 `border-left-color`，字串上包含 `color: var(--color-success);` 但不是要改的目標，用精確的整行比對正確排除掉了。改完後 grep 確認：28 處文字/邊框規則全部换成 `-700`（`.option--correct`／`.card--correct`／`.answer-area--correct`／`.token--correct-pos`／`.hint--correct`／Stage E 對話選項等，含對應的答錯版本），`.menu-item--good`／`.topic-progress-fill`／`.stats-bar-fill` 等純裝飾性填色／色條維持用基礎色不變，跟 handoff 的「刻意不改」清單一致。
+- **修正「慢速」按鈕收合展開例句的 bug**：`main.ts` 的 `stageHeader()` 裡慢速切換按鈕的 click handler 拿掉 `render()`，改成比照 `renderVocabOverview()` 練習模式主開關的做法，直接更新按鈕自己的 `classList`／`aria-pressed`／`innerHTML`。因為 `stageHeader()` 是全站共用函式，這個修正讓所有題型畫面的「慢速」按鈕都受惠，不只是單字總覽。
+- **確認不用改的部分**：`gameHighScores.ts` 的 `recordStars()`「只記錄最佳成績」邏輯（`if (clamped <= current) return;`）核對過跟 handoff 描述一致，使用者已確認維持現狀，這次沒有碰這支檔案。
+- **驗證**：`npx tsc --noEmit` 通過；全部既有 `verify-*.ts` 重跑一次全部通過；`rm -rf dist && npm run build` 成功；grep 打包後的 `dist/assets/main-*.css` 確認 `--color-success-700`／`--color-error-700`、`.option--correct{border-color:var(--color-success-700);background:var(--color-success-tint);color:var(--color-success-700)...}` 都進到最終產出，`.menu-item--good` 仍維持基礎色；grep 打包後的 `dist/assets/main-*.js` 確認慢速按鈕的 click handler 裡 `classList.toggle`／`setAttribute`／`innerHTML` 更新緊接在 `setSlowSpeechEnabled()` 之後，中間沒有 `render()` 呼叫。
+- **後續**：開發沙盒沒有瀏覽器，實機/色弱模擬確認答對答錯文字在白底跟淡底色上都清楚可讀、單字總覽展開例句後點慢速按鈕不再被收合，仍待人工檢查。
+
 ### 9.166 風格改版 v5：補成功/錯誤文字分級色解決色弱對比度問題＋修正「慢速」按鈕收合單字總覽展開例句的 bug（2026-10-02）
 
 v4 上線後使用者實測回報 3 件事：
