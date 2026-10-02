@@ -356,11 +356,11 @@ body {
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--space-1);
   font-family: var(--font-display);
   font-size: var(--text-body);
   font-weight: 700;
-  padding: 8px 12px;
+  padding: var(--space-2) var(--space-3);
   border-radius: var(--nav-item-radius);
   border: none;
   background: none;
@@ -412,7 +412,7 @@ body {
 }
 
 .function-nav--compact .nav-item {
-  padding: 8px 10px;
+  padding: var(--space-2);
   gap: 0;
 }
 
@@ -641,7 +641,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 4px;
+  gap: var(--space-1);
   padding: var(--space-5);
   border-radius: var(--radius-lg);
   border: 2px solid var(--color-border);
@@ -799,6 +799,20 @@ body {
   transform: translateY(-2px);
   border-color: var(--color-primary-500);
   box-shadow: var(--shadow-md);
+}
+
+/* 手機版（≤640px）：.topic-card／.menu-item 用 auto-fit grid 自動收成單欄，
+   欄數不用額外處理，但卡片內距在窄螢幕單欄版面下沒有跟著縮小，維持桌面版
+   的大內距會顯得浪費空間。只調整內距，字級先不動（design-system.md 第 3 節：
+   避免一次改太多，如果實機看起來字還是偏大再回報調整）。 */
+@media (max-width: 640px) {
+  .topic-card {
+    padding: var(--space-4);
+  }
+
+  .menu-item {
+    padding: var(--space-4);
+  }
 }
 
 .topic-thumb {
@@ -1562,6 +1576,38 @@ body {
 .modal-close-btn:hover {
   border-color: var(--color-error);
   color: var(--color-error-text);
+}
+
+/* 手機版（≤640px，見 docs/design-system.md 第 2 節主斷點）：彈窗整體縮小一階，
+   避免桌面版版面原封不動搬到窄螢幕上顯得擁擠（使用者截圖回報過「戳泡泡」
+   確認彈窗在手機上太擠）。這組是 .modal-overlay／.modal-card 共用外殼，所有
+   彈窗（確認彈窗、首次進站提醒、改名字、換頭像等）都會一併受惠。 */
+@media (max-width: 640px) {
+  .modal-overlay {
+    padding: var(--space-3);
+  }
+
+  .modal-card {
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+  }
+
+  .modal-card-header {
+    margin-bottom: var(--space-3);
+  }
+
+  .modal-card-header h3 {
+    font-size: var(--text-body-lg);
+  }
+
+  .modal-close-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .modal-text {
+    font-size: var(--text-caption);
+  }
 }
 
 /* 通用的 modal 內文段落——目前給「首次進站提醒」（appendWelcomeNoticeModal()）用，

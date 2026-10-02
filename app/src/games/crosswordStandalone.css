@@ -239,23 +239,31 @@ body {
 }
 
 .crossword-tray {
-  margin-top: var(--space-5);
+  /* 2026-09-30 使用者手機實機回饋：題目區（網格）太小，字母區的方塊可以縮小一點，
+     把空間讓給題目區——字母磚數量多的關卡（第 3 關最多可能十幾個字母）在窄螢幕上會
+     換成好幾行，原本 48px 的磚＋12px 間距，換行多的時候可以吃掉一兩百 px 的高度；
+     這裡把間距跟上邊距都縮小，字母磚本身的尺寸調整見下面 .crossword-tile。
+     跟網格的縮放邏輯是同一個機制：crosswordStandalone.ts 的 fitGridToViewport() 是在
+     整頁（含字母區）都排版完成後才量測「整頁高度有沒有超出可視範圍」，字母區占用的
+     高度變少，網格就能分到更多可用高度、格子可以縮小得少一點（也就是格子可以更大），
+     不用額外改 JS 邏輯，單純調整這裡的 CSS 數字就會透過既有機制反映到網格大小上。 */
+  margin-top: var(--space-4);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-3);
-  min-height: 56px;
+  gap: var(--space-2);
+  min-height: 44px;
 }
 
 .crossword-tile {
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   border-radius: var(--radius-md);
   border: none;
   background: var(--color-crossword-pink-500);
   color: #fff;
   font-family: var(--font-display);
-  font-size: var(--text-body-lg);
+  font-size: 16px;
   font-weight: 700;
   box-shadow: var(--shadow-sm);
   cursor: grab;
