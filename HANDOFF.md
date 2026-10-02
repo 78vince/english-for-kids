@@ -165,6 +165,10 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.170 使用者回報：Stage C「前往 Stage D」按鈕格式跟全站既有轉場不一致，修正 handoff（2026-10-02）
+
+9.169 App 端執行完後，使用者截圖比對 Stage B-2→C、Stage C→D、Stage D→E 三個完成畫面，指出格式不一致：9.169 的實作把「前往 Stage D」做成跟 Stage D→E 的「💬 進入 Stage E」一樣的橘色 reward 樣式排第一顆，但比對全站其餘 4 處既有轉場（字卡暖身→A、A→B-1、B-1→B-2、B-2→C）才發現，橘色 reward 樣式是「Stage E 不是每個主題都有」這個特例才用的，Stage D 綜合關卡是每個主題都一定會經過的必要關卡，應該比照既有轉場的格式：次要按鈕（重玩/從頭再玩）排第一顆、純藍色 `primary-btn`（不是 reward 橘色）排第二顆、文案統一用「前往 Stage X：名稱 →」。改寫 `docs/handoff-prompt-stage-c-next-stage-cta.md`，直接在原檔案裡修正（不開新檔），列出第一版的問題分析＋修正後的完整程式碼，並提醒 Stage D→E 的橘色按鈕本身不用動（那裡才是真正的例外）。待 App 端重新執行。
+
 ### 9.169 App 端執行：修正 Stage C 完成畫面沒有引導進入 Stage D 的 bug（2026-10-02）
 
 執行 `docs/handoff-prompt-stage-c-missing-capstone-link.md`。
