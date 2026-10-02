@@ -78,13 +78,46 @@ footer.appendChild(menuBtn);
 
 `goToCapstone()`（第 690-719 行）維持不動，純粹是按鈕的 class／文案／順序調整。
 
+## 3. 第三輪修正：關卡轉場按鈕一律不加 emoji／icon（含 Stage D→E 那顆）
+
+使用者進一步要求：**全站所有「關卡轉場」按鈕都不加 emoji/icon**，連 `renderCapstone()`（Stage D 完成畫面）現有的「💬 進入 Stage E 會話練習 →」也要拿掉 💬。橘色 reward 配色維持不變（Stage E 不是每個主題都有，繼續用顏色區分這個特殊場景就夠了，不需要再疊加 emoji），純粹是拿掉文字前面的符號。
+
+`app/src/main.ts` 第 4083-4089 行：
+
+```ts
+if (hasConversation) {
+  const convBtn = document.createElement("button");
+  convBtn.className = "primary-btn primary-btn--reward";
+  convBtn.textContent = "💬 進入 Stage E 會話練習 →";
+  convBtn.addEventListener("click", goToConversation);
+  footer.appendChild(convBtn);
+}
+```
+
+改成：
+
+```ts
+if (hasConversation) {
+  const convBtn = document.createElement("button");
+  convBtn.className = "primary-btn primary-btn--reward";
+  convBtn.textContent = "進入 Stage E 會話練習 →"; // 拿掉前面的 💬，全站關卡轉場按鈕統一不加 emoji
+  convBtn.addEventListener("click", goToConversation);
+  footer.appendChild(convBtn);
+}
+```
+
+**範圍提醒**：這次「不加 emoji」只限定在「關卡轉場」這一類按鈕（前往下一個 Stage、重玩、回選單），不包含其他功能性的 emoji 按鈕——例如播放發音的 🔊、提示按鈕的 💡「給我一點提示」、首次進站確認的 ✅「確定，開始使用」——那些 emoji 本身是按鈕功能的一部分（圖像化的播放鍵、提示燈泡），跟關卡轉場文字按鈕是不同性質，這次不動。
+
 ## 不用改的部分
 
-- `renderCapstone()`（Stage D 完成畫面）的「💬 進入 Stage E 會話練習 →」維持橘色 reward 樣式不變——這裡才是真正的例外情境（Stage E 不是每個主題都有），橘色 reward 樣式繼續只保留給這一個場景用，不要因為這次修正而連它一起改掉。
+- `renderCapstone()` 的 reward 橘色配色本身維持不變，只拿掉 emoji 文字。
 - 不用检查「這個主題是否真的有 Stage D」——目前所有主題都有 Stage D 綜合關卡。
+- 播放發音／提示／確認這類功能性 emoji 按鈕不在這次調整範圍內（見上方範圍提醒）。
 
 ## 驗證
 
 - `npm run build` 要過，全部 `verify-*.ts` 重跑一次。
-- 手動測試：任一主題玩到 Stage C 全部完成，確認畫面依序出現「從頭再玩一次（Stage A）」（白底次要按鈕）、「前往 Stage D：綜合關卡 →」（純藍色主要按鈕，不是橘色）、「回選單」三顆按鈕，排列順序跟文案風格跟 Stage B-2→C 等既有轉場畫面一致；點「前往 Stage D：綜合關卡 →」會直接進入 Stage D 綜合關卡。
-- 順便確認 Stage D 完成畫面的「💬 進入 Stage E 會話練習 →」橘色按鈕沒有被這次修正誤改。
+- 手動測試：
+  - 任一主題玩到 Stage C 全部完成，確認畫面依序出現「從頭再玩一次（Stage A）」（白底次要按鈕）、「前往 Stage D：綜合關卡 →」（純藍色主要按鈕，不是橘色，沒有 emoji）、「回選單」三顆按鈕，排列順序跟文案風格跟 Stage B-2→C 等既有轉場畫面一致；點下去會直接進入 Stage D 綜合關卡。
+  - 有 Stage E 的主題玩到 Stage D 通過，確認「進入 Stage E 會話練習 →」按鈕還是橘色 reward 樣式，但文字前面不再有 💬。
+  - 播放發音（🔊）、提示（💡）等其他功能性 emoji 按鈕維持原樣，沒有被誤刪。

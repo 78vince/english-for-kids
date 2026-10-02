@@ -165,6 +165,15 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.171 使用者回報：關卡轉場按鈕不要加 emoji，連 Stage D→E 現有的也要拿掉（2026-10-02）
+
+9.170 修正完 Stage C→D 按鈕格式後，使用者又提了一句「不要加 icon」。用 `AskUserQuestion` 確認範圍是否包含 Stage D→E 現有的「💬 進入 Stage E 會話練習 →」按鈕，使用者選擇「連 Stage D→E 的 💬 也要拿掉」，確認是全站「關卡轉場」類按鈕一律不加 emoji，不只是這次新改的 Stage C→D。
+
+- 在 `docs/handoff-prompt-stage-c-next-stage-cta.md` 補上第 3 節，指示把 `renderCapstone()`（`main.ts` 第 4083-4089 行）的 `convBtn.textContent = "💬 進入 Stage E 會話練習 →"` 改成拿掉 💬，文字變成「進入 Stage E 會話練習 →」；橘色 `primary-btn--reward` 樣式跟排第一顆的順序維持不變，因為 Stage E 本身仍是「不是每個主題都有」的特例，用顏色區分這個特例就夠了，不需要再疊加 emoji。
+- 特別標明範圍：這次「不加 emoji」只限定在「關卡轉場」文字按鈕（前往下一關／重玩／回選單），不包含播放發音的 🔊、提示按鈕的 💡、首次進站確認的 ✅ 這類功能性 emoji 按鈕——這些 emoji 是按鈕功能本身的圖像化呈現，跟轉場文字按鈕性質不同，這次不動，也沒有被使用者提及。
+- 同步更新文件原本「不用改的部分」「驗證」段落，反映 Stage D→E 按鈕現在「只拿掉 emoji、橘色樣式不變」這個正確範圍（原文字原本誤寫成整顆按鈕都不能動）。
+- 待 App 端一併執行 9.170＋9.171 的完整修正（目前線上版本兩者都還沒套用，line 3956 跟 4086 都還是舊文字）。
+
 ### 9.170 使用者回報：Stage C「前往 Stage D」按鈕格式跟全站既有轉場不一致，修正 handoff（2026-10-02）
 
 9.169 App 端執行完後，使用者截圖比對 Stage B-2→C、Stage C→D、Stage D→E 三個完成畫面，指出格式不一致：9.169 的實作把「前往 Stage D」做成跟 Stage D→E 的「💬 進入 Stage E」一樣的橘色 reward 樣式排第一顆，但比對全站其餘 4 處既有轉場（字卡暖身→A、A→B-1、B-1→B-2、B-2→C）才發現，橘色 reward 樣式是「Stage E 不是每個主題都有」這個特例才用的，Stage D 綜合關卡是每個主題都一定會經過的必要關卡，應該比照既有轉場的格式：次要按鈕（重玩/從頭再玩）排第一顆、純藍色 `primary-btn`（不是 reward 橘色）排第二顆、文案統一用「前往 Stage X：名稱 →」。改寫 `docs/handoff-prompt-stage-c-next-stage-cta.md`，直接在原檔案裡修正（不開新檔），列出第一版的問題分析＋修正後的完整程式碼，並提醒 Stage D→E 的橘色按鈕本身不用動（那裡才是真正的例外）。待 App 端重新執行。
