@@ -3948,20 +3948,21 @@ function renderChoice(): void {
         全部題型加總正確率 ${grandAccuracy}%（答對 ${grandCorrect} 次／共作答 ${grandTotal} 次）
       </p>
     `;
-    const nextStageBtn = document.createElement("button");
-    // Stage A→B-1→B-2→C 都跑完一輪，自然的下一步是 Stage D 綜合關卡，用 reward 配色
-    // （橘色）凸顯這是建議的下一步，比照 renderCapstone() 完成畫面「進入 Stage E」
-    // 按鈕的同一套模式。
-    nextStageBtn.className = "primary-btn primary-btn--reward";
-    nextStageBtn.textContent = "🏆 前往 Stage D 綜合關卡 →";
-    nextStageBtn.addEventListener("click", goToCapstone);
-    footer.appendChild(nextStageBtn);
-
     const restartBtn = document.createElement("button");
-    restartBtn.className = "secondary-btn"; // 原本是 primary-btn--reward，降級成次要按鈕
+    // 比照 Stage A→B-1→B-2→C 既有轉場的格式：次要按鈕排第一顆。
+    restartBtn.className = "secondary-btn";
     restartBtn.textContent = "從頭再玩一次（Stage A）";
     restartBtn.addEventListener("click", restartEverything);
     footer.appendChild(restartBtn);
+
+    const nextStageBtn = document.createElement("button");
+    // Stage D 是每個主題都會經過的必要關卡（不是像 Stage E 那樣的選擇性加場），
+    // 所以套用既有「前往下一關」的純藍色 primary-btn 格式，不用 reward 橘色、
+    // 不加 emoji，文案格式跟其餘「前往 Stage X：名稱 →」一致。
+    nextStageBtn.className = "primary-btn";
+    nextStageBtn.textContent = "前往 Stage D：綜合關卡 →";
+    nextStageBtn.addEventListener("click", goToCapstone);
+    footer.appendChild(nextStageBtn);
 
     const menuBtn = document.createElement("button");
     menuBtn.className = "secondary-btn";
@@ -4083,7 +4084,7 @@ function renderCapstone(): void {
     if (hasConversation) {
       const convBtn = document.createElement("button");
       convBtn.className = "primary-btn primary-btn--reward";
-      convBtn.textContent = "💬 進入 Stage E 會話練習 →";
+      convBtn.textContent = "進入 Stage E 會話練習 →"; // 拿掉前面的 💬，全站關卡轉場按鈕統一不加 emoji
       convBtn.addEventListener("click", goToConversation);
       footer.appendChild(convBtn);
     }
