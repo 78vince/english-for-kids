@@ -4538,8 +4538,8 @@ function renderConversation(): void {
     const accuracy = total > 0 ? Math.round((game.correctCount / total) * 100) : 100;
 
     controls.innerHTML = `
-      <div style="padding: 16px; background: var(--color-success-bg); border: 2px solid var(--color-success-text); border-radius: var(--radius-lg); text-align: center;">
-        <p style="font-size: 16px; font-weight: 700; color: var(--color-success-text); margin: 0 0 12px; line-height: 1.6;">
+      <div style="padding: 16px; background: var(--color-success-tint); border: 2px solid var(--color-success); border-radius: var(--radius-lg); text-align: center;">
+        <p style="font-size: 16px; font-weight: 700; color: var(--color-success); margin: 0 0 12px; line-height: 1.6;">
           🎉 太棒了！完成了 Stage E 會話練習！<br />
           共進行了 ${game.totalTurns * 2} 句對話，正確率 ${accuracy}%！
         </p>

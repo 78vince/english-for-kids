@@ -9,19 +9,13 @@
    ============================================================ */
 @import "../../assets/design-tokens/design-tokens.v2-daily-play.css";
 
-/* ---- 由 tokens 衍生出來的輔助色（tokens 本身只給單一色階，
-   但「答對／答錯」這類狀態需要「淺底色＋深字色」兩階搭配才能維持
-   白底上的可讀性，所以在這裡另外定義，並清楚標示是衍生值） ---- */
+/* 2026-10-01 風格改版 v4：原本這裡有一段「由 tokens 衍生出來的輔助色」（success/error
+   的深字色/淺底色、主按鈕/獎勵按鈕的 hover 深色），使用者指出這 6 個色碼是沒有依據、
+   另外手動挑出來的，不在正式色票系統裡，要求全部拿掉，改成兩條規則：文字/邊框語意色
+   直接用基礎色票（--color-success／--color-error），背景淡底色直接用 -tint 淡底色票
+   （--color-error-tint 這次新增），按鈕 hover 改用 CSS color-mix() 公式即時算出來，
+   不再存成新 token。詳見 docs/design-tokens.html 第 2／2b 節的取捨說明。 */
 :root {
-  /* 2026-10-01 風格改版 v2：基礎色換了（主色 #347FBC 定案、success/error 柔和降階），
-     這幾個衍生色跟著重算，維持「比基礎色再深一階、維持對比度」的原則。 */
-  --color-success-text: #2E8C5C; /* 原 #2f8f5e，依新 success #7EDBA0 重算 */
-  --color-success-bg: #E9F9F0; /* 原 #e6f7ee */
-  --color-error-text: #C24A45; /* 原 #c2453f，依新 error #FF7A7A 重算 */
-  --color-error-bg: #FFEBE9; /* 原 #ffe9e7 */
-  --color-primary-700-hover: #2A6694; /* 原 #003b78，依新主色 #347FBC 重算（再深一階） */
-  --color-reward-hover: #E8824A; /* 原 #e8703f，依新 accent-orange #FF9A68 重算 */
-
   color-scheme: light;
 }
 
@@ -398,7 +392,7 @@ body {
    提醒這是一個離開目前使用者的動作，不是導覽到某個頁面。 */
 .nav-item--logout {
   margin-left: auto;
-  color: var(--color-error-text);
+  color: var(--color-error);
 }
 
 /* 功能列「塞不塞得下」改用 main.ts 的 ResizeObserver 動態偵測（見
@@ -424,7 +418,7 @@ body {
    ——如果之後實機測試發現長名字在窄螢幕換行，再回報調整，不要重新套用整欄堆疊的舊方案。 */
 
 .nav-item--logout:hover {
-  background: var(--color-error-bg);
+  background: var(--color-error-tint);
 }
 
 /* 選使用者畫面（本機端「誰在玩」）—— 原本每個畫面右上角的頭像＋登出小標籤
@@ -854,7 +848,7 @@ body {
 }
 
 .secondary-btn.danger-btn:hover {
-  background: var(--color-error-bg);
+  background: var(--color-error-tint);
   border-color: var(--color-error);
 }
 
@@ -1394,7 +1388,7 @@ body {
 
 .modal-close-btn:hover {
   border-color: var(--color-error);
-  color: var(--color-error-text);
+  color: var(--color-error);
 }
 
 /* 手機版（≤640px，見 docs/design-system.md 第 2 節主斷點）：彈窗整體縮小一階，
@@ -1525,16 +1519,16 @@ body {
 }
 
 .card--correct {
-  border-color: var(--color-success-text);
-  background: var(--color-success-bg);
-  color: var(--color-success-text);
+  border-color: var(--color-success);
+  background: var(--color-success-tint);
+  color: var(--color-success);
   cursor: default;
 }
 
 .card--wrong {
-  border-color: var(--color-error-text);
-  background: var(--color-error-bg);
-  color: var(--color-error-text);
+  border-color: var(--color-error);
+  background: var(--color-error-tint);
+  color: var(--color-error);
 }
 
 .game-footer {
@@ -1575,7 +1569,8 @@ body {
 }
 
 .primary-btn:hover {
-  background: var(--color-primary-700-hover);
+  /* 2026-10-01 風格改版 v4：不再存成固定 token，改用 color-mix() 當場算出「基礎色混 15% 黑」 */
+  background: color-mix(in srgb, var(--color-primary-700) 85%, black 15%);
 }
 
 /* 特別留給整個學習流程裡最有「破關獎勵」感的按鈕（例如全部題型都跑完一輪的
@@ -1585,7 +1580,8 @@ body {
 }
 
 .primary-btn--reward:hover {
-  background: var(--color-reward-hover);
+  /* 2026-10-01 風格改版 v4：不再存成固定 token，改用 color-mix() 當場算出「基礎色混 15% 黑」 */
+  background: color-mix(in srgb, var(--color-accent-orange) 85%, black 15%);
 }
 
 .secondary-btn {
@@ -1624,7 +1620,7 @@ body {
 }
 
 .error {
-  color: var(--color-error-text);
+  color: var(--color-error);
 }
 
 /* Stage B：句子排序 */
@@ -1643,15 +1639,15 @@ body {
 }
 
 .answer-area--correct {
-  border-color: var(--color-success-text);
+  border-color: var(--color-success);
   border-style: solid;
-  background: var(--color-success-bg);
+  background: var(--color-success-tint);
 }
 
 .answer-area--wrong {
-  border-color: var(--color-error-text);
+  border-color: var(--color-error);
   border-style: solid;
-  background: var(--color-error-bg);
+  background: var(--color-error-tint);
 }
 
 .answer-placeholder {
@@ -1683,15 +1679,15 @@ body {
 }
 
 .token--correct-pos {
-  border-color: var(--color-success-text);
-  background: var(--color-success-bg);
-  color: var(--color-success-text);
+  border-color: var(--color-success);
+  background: var(--color-success-tint);
+  color: var(--color-success);
 }
 
 .token--wrong-pos {
-  border-color: var(--color-error-text);
-  background: var(--color-error-bg);
-  color: var(--color-error-text);
+  border-color: var(--color-error);
+  background: var(--color-error-tint);
+  color: var(--color-error);
 }
 
 .token--dragging {
@@ -1712,11 +1708,11 @@ body {
 }
 
 .hint--correct {
-  color: var(--color-success-text);
+  color: var(--color-success);
 }
 
 .hint--wrong {
-  color: var(--color-error-text);
+  color: var(--color-error);
 }
 
 /* Stage B-2：句子填空 / Stage C：選擇題 共用的選項按鈕 */
@@ -1745,16 +1741,16 @@ body {
 }
 
 .option--correct {
-  border-color: var(--color-success-text);
-  background: var(--color-success-bg);
-  color: var(--color-success-text);
+  border-color: var(--color-success);
+  background: var(--color-success-tint);
+  color: var(--color-success);
   cursor: default;
 }
 
 .option--wrong {
-  border-color: var(--color-error-text);
-  background: var(--color-error-bg);
-  color: var(--color-error-text);
+  border-color: var(--color-error);
+  background: var(--color-error-tint);
+  color: var(--color-error);
 }
 
 .fill-blank-sentence {
@@ -3319,8 +3315,8 @@ body {
 }
 
 .conversation-option-btn--wrong {
-  border-color: var(--color-error-text);
-  background: var(--color-error-bg);
+  border-color: var(--color-error);
+  background: var(--color-error-tint);
   opacity: 0.65;
   cursor: not-allowed;
   animation: opt-shake 0.35s ease-in-out;
@@ -3333,18 +3329,18 @@ body {
 }
 
 .conversation-option-btn--wrong .conversation-option-en {
-  color: var(--color-error-text);
+  color: var(--color-error);
   text-decoration: line-through;
 }
 
 .conversation-option-btn--correct {
-  border-color: var(--color-success-text);
-  background: var(--color-success-bg);
+  border-color: var(--color-success);
+  background: var(--color-success-tint);
   cursor: default;
 }
 
 .conversation-option-btn--correct .conversation-option-en {
-  color: var(--color-success-text);
+  color: var(--color-success);
 }
 
 /* ==========================================================================

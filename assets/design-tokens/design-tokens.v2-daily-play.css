@@ -37,6 +37,7 @@
      不新增色相，只是同一個顏色的極淡版本，讓卡片底色可以呼應色條又不會蓋過白底陰影）---------- */
   --color-primary-tint: #EAF2FB;
   --color-success-tint: #EBFAF1;
+  --color-error-tint: #FFEDEC;        /* 2026-10-01 風格改版 v4 新增：答錯／警示狀態淡底色，取代原本 style.css 自己算的 --color-error-bg */
   --color-accent-yellow-tint: #FFF8E9;
   --color-accent-orange-tint: #FFF2EA;
   --color-accent-pink-tint: #FFF3FA;

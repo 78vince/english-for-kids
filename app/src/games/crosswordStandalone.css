@@ -6,7 +6,9 @@
 @import "../../../assets/design-tokens/design-tokens.v2-daily-play.css";
 
 :root {
-  --color-primary-700-hover: #2A6694; /* 2026-10-01 風格改版 v2：依新主色 #347FBC 重算，同步 style.css 的衍生色 */
+  /* 2026-10-01 風格改版 v4：原本這裡有一份複製貼上的 --color-primary-700-hover，
+     盤點後發現完全沒有地方使用（這個遊戲的按鈕 hover 實際用的是下面的粉色系
+     --color-crossword-pink-700，不是這個 token），是死碼，直接刪除。 */
   color-scheme: light;
 
   /* 填字遊戲專屬的粉色系衍生色——從 design tokens 既有的 --color-accent-pink

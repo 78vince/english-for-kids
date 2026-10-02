@@ -165,6 +165,19 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.165 App 端執行：風格改版 v4（拿掉衍生色，答對/答錯改用基礎色票，hover 改 color-mix()）（2026-10-02）
+
+執行 `docs/handoff-prompt-style-refresh-v4.md`，接續 9.163（v2）／9.164（v3）之後做。
+
+- **新增 `--color-error-tint`**：`design-tokens.v2-daily-play.css` Tint 區塊補上，沿用既有 tint 的淡化比例。
+- **刪除 `style.css` 自己的衍生色 `:root` 區塊**：`--color-success-text`／`--color-success-bg`／`--color-error-text`／`--color-error-bg`／`--color-primary-700-hover`／`--color-reward-hover` 這 6 個 token 整段刪除，`color-scheme: light` 保留。
+- **全站機械式取代**（19 處 `style.css` 規則，見 handoff 清單）：`-text`→基礎色、`-bg`→對應 `-tint`。取代後額外 grep 全專案，發現 handoff 清單沒列到的第 20 處——`main.ts` 第 4541-4542 行 Stage E 會話練習結算畫面的**inline style**（`background: var(--color-success-bg)`／`border-color`／`color: var(--color-success-text)`）也引用了這兩個被刪掉的 token，一併修正，不然這個畫面的底色/邊框/文字會變成無效的 CSS 值。
+- **按鈕 hover 改用 `color-mix()`**：`.primary-btn:hover`／`.primary-btn--reward:hover` 改成當場算「基礎色混 15% 黑」，不再查固定 token。
+- **清理死碼**：`crosswordStandalone.css` 複製的那份 `--color-primary-700-hover` 盤點後確認完全沒有使用點（這個遊戲按鈕 hover 實際用自己的粉色系 token），直接刪除宣告；`memoryMatchStandalone.css` 那份維持不動（翻牌配對已經下架，照 handoff 指示留給之後整份刪除該檔案時一併清理，不用現在單獨處理）。
+- **驗證**：`npx tsc --noEmit` 通過；全部既有 `verify-*.ts` 重跑一次全部通過；`rm -rf dist && npm run build` 成功；grep 打包後的 `dist/assets/main-*.css` 確認 `--color-error-tint`、`color-mix(in srgb,var(--color-primary-700) 85%,black 15%)`、`color-mix(in srgb,var(--color-accent-orange) 85%,black 15%)` 都進到最終產出，且舊的 6 個 token 名稱在 `app/src/` 全目錄（含兩個遊戲 Standalone CSS）grep 結果都是 0 筆（`memoryMatchStandalone.css` 那份依 handoff 指示保留，不在這次清除範圍內）。
+- **⚠️ 對比度檢查，發現問題、依照指示不自己決定改法**：使用者特別要求檢查答對/答錯文字色改用基礎色票後會不會太淡看不清楚。用 WCAG 對比度公式實際算給白底的結果：舊版 `--color-success-text`（#2E8C5C）對白底對比度 4.18:1、`--color-error-text`（#C24A45）對白底 4.82:1（後者剛好過 AA 一般文字門檻 4.5:1，前者微幅不足但接近）；新版直接用 `--color-success`（#7EDBA0）對白底只剩 **1.68:1**、`--color-error`（#FF7A7A）對白底只剩 **2.52:1**，兩者都遠低於 WCAG AA 一般文字門檻（4.5:1），`--color-success` 甚至連大字/粗體文字的門檻（3.0:1）都不到——換算成白話：答對文字（淺綠）在白底上會相當不清楚、答錯文字（淺紅）也偏淡，不是「略微」不夠清楚，是客觀測量確實不合格。照使用者這次的明確指示（「不要自己決定改法」「不要重新引入衍生色」），這次**沒有**自行調整，程式碼已經照 handoff 原樣套用基礎色票，實際清晰度問題留給使用者看過 `demo-standalone.html` 之後決定要怎麼處理（例如字重加粗、底色加深、或其他不涉及新增衍生色 token 的方式）。
+- **後續**：四份風格改版 handoff（v2／v3／v4）全部執行完畢；答對/答錯文字對比度問題待使用者決策；9.164 遺留的 `.profile-stat-card` 落差也待使用者決策。
+
 ### 9.164 App 端執行：風格改版 v3（星星分級／代幣圖示／按鈕選取狀態／抬頭膠囊圓角等）（2026-10-02）
 
 執行 `docs/handoff-prompt-style-refresh-v3.md`（檔案目前最新內容，已整合兩輪使用者回饋，接續 9.163 的 v2 執行完成之後做）。
