@@ -165,6 +165,17 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.173 使用者回報：Stage E 完成畫面顏色/按鈕沒跟上既有規範，排查發現 2 處同類漏網問題（2026-10-02）
+
+9.172 執行完後，使用者用三張截圖（Stage C→D、Stage D→E、Stage E 完成畫面）比對回報三點：顏色系統沒依照原本設定、按鈕順序沒依照先前方式、會話練習的綠色應該參照答對加深的設定。並要求「排定計劃檢查一下，有沒有類似的問題沒有被發現然後修正」。
+
+全文 grep `main.ts` 裡所有 `primary-btn--reward`／`var(--color-success)`／`var(--color-error)` 的出現位置排查，確認 Stage C→D、Stage D→E 兩處轉場本身已經正確（截圖裡這兩顆沒問題），問題出在：
+
+1. **`renderConversation()`（Stage E 完成畫面，約第 4556-4567 行）**：結算框用 inline style 直接寫 `var(--color-success)` 當文字/邊框色——這正是 v5 當初修過的同一種對比度問題，但 v5 的 grep 只掃了 `style.css`，沒掃到 `main.ts` 裡這段 inline style，這次補上升級成 `--color-success-700`（背景 `-tint` 不變）。「再練一次」按鈕誤用橘色 `primary-btn--reward`（橘色全站應該只保留給「前往下一個選擇性關卡」的 CTA，重玩類按鈕一律是 `secondary-btn`），且還留著 9.171 說好要拿掉的 💬 emoji，兩個一起修掉。
+2. **`renderCapstone()`（Stage D 完成畫面，第 4092-4096 行）**：發現一個藏在三元判斷裡、連這次使用者截圖都沒拍到的同類問題——`restartBtn.className = hasConversation ? "secondary-btn" : "primary-btn primary-btn--reward"`，也就是沒有 Stage E 的主題玩完 Stage D 時，「從頭再玩一次」會被誤升級成橘色 reward 樣式。改成固定用 `secondary-btn`，不受 `hasConversation` 影響。
+
+寫入 `docs/handoff-prompt-style-refresh-v6.md`，列出兩處的目前程式碼／修正後程式碼、明確排除紙花特效陣列（`CONFETTI_COLORS`，純裝飾不是文字/邊框，不用改）跟功能性 emoji 按鈕（🔊💡✅）。待 App 端執行。
+
 ### 9.172 App 端執行：修正 Stage C「前往 Stage D」按鈕格式，統一關卡轉場按鈕不加 emoji（2026-10-02）
 
 執行 `docs/handoff-prompt-stage-c-next-stage-cta.md`，修正 9.169 第一版實作的問題。
