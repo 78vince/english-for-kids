@@ -4090,7 +4090,11 @@ function renderCapstone(): void {
     }
 
     const restartBtn = document.createElement("button");
-    restartBtn.className = hasConversation ? "secondary-btn" : "primary-btn primary-btn--reward";
+    // 2026-10-02 風格改版 v6：拿掉三元判斷，「重玩／再玩一次」不管有沒有下一個選擇性
+    // 關卡（Stage E）都固定用 secondary-btn——橘色 reward 樣式自始至終只給「前往下一個
+    // 選擇性關卡」的 CTA 用（目前唯一案例是下面的 Stage D→E 按鈕），沒有 CTA 時單純
+    // 不出現橘色按鈕，不會轉移到重玩按鈕上。
+    restartBtn.className = "secondary-btn";
     restartBtn.textContent = "從頭再玩一次（Stage A）";
     restartBtn.addEventListener("click", restartEverything);
     footer.appendChild(restartBtn);
@@ -4554,13 +4558,13 @@ function renderConversation(): void {
     const accuracy = total > 0 ? Math.round((game.correctCount / total) * 100) : 100;
 
     controls.innerHTML = `
-      <div style="padding: 16px; background: var(--color-success-tint); border: 2px solid var(--color-success); border-radius: var(--radius-lg); text-align: center;">
-        <p style="font-size: 16px; font-weight: 700; color: var(--color-success); margin: 0 0 12px; line-height: 1.6;">
+      <div style="padding: 16px; background: var(--color-success-tint); border: 2px solid var(--color-success-700); border-radius: var(--radius-lg); text-align: center;">
+        <p style="font-size: 16px; font-weight: 700; color: var(--color-success-700); margin: 0 0 12px; line-height: 1.6;">
           🎉 太棒了！完成了 Stage E 會話練習！<br />
           共進行了 ${game.totalTurns * 2} 句對話，正確率 ${accuracy}%！
         </p>
         <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
-          <button type="button" class="primary-btn primary-btn--reward" id="btn-conv-restart">再練一次 💬</button>
+          <button type="button" class="secondary-btn" id="btn-conv-restart">再練一次</button>
           <button type="button" class="secondary-btn" id="btn-conv-menu">回選單</button>
         </div>
       </div>

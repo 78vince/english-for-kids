@@ -165,6 +165,16 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.174 App 端執行：修正 Stage E 完成畫面顏色/按鈕樣式，拿掉 renderCapstone() 的三元誤用（2026-10-02）
+
+執行 `docs/handoff-prompt-style-refresh-v6.md`。
+
+- **`renderConversation()`（Stage E 完成畫面）三處同時修正**：結算框的 `border`／文字 `color` 從裝飾性基礎色 `var(--color-success)` 升級成 v5 新增的 `var(--color-success-700)`（背景 `--color-success-tint` 維持不變）——這是 v5 掃描範圍的漏網之魚，v5 當時只處理了 `style.css` 的規則，沒掃到 `main.ts` 裡這段用 inline style 寫的結算框；「再練一次」按鈕從誤用的橘色 `primary-btn primary-btn--reward` 改成固定的 `secondary-btn`（橘色 reward 樣式只保留給「前往下一個選擇性關卡」的 CTA，重玩類按鈕不管在哪個畫面都不該用）；拿掉文字後面殘留的 💬 emoji，統一比照 9.171 的「關卡轉場/重玩類按鈕不加 emoji」規範。
+- **`renderCapstone()` 拿掉三元判斷**：`restartBtn.className = hasConversation ? "secondary-btn" : "primary-btn primary-btn--reward"` 改成固定 `"secondary-btn"`——原邏輯在主題沒有 Stage E 時（`hasConversation === false`，Stage D 是最後一關）會讓重玩按鈕被誤升級成橘色，這是跟 Stage E 完成畫面同一種誤用：沒有下一個選擇性關卡時，橘色樣式應該單純不出現，不會轉移到別顆按鈕上。
+- **排查方式**：全文 grep `main.ts` 裡所有 `primary-btn--reward` 與 `var(--color-success)`／`var(--color-error)` 的出現位置，確認修正後只剩 Stage D→E 那顆按鈕還用 `primary-btn--reward`（唯一合法案例），裝飾性的紙花特效色票陣列（`CONFETTI_COLORS`）裡的 `var(--color-success)` 維持不動（不是文字也不是邊框，不在這次範圍）。
+- **驗證**：`npx tsc --noEmit` 通過；全部既有 `verify-*.ts` 重跑一次全部通過；`rm -rf dist && npm run build` 成功；grep 打包後的 `dist/assets/main-*.js` 確認兩處「從頭再玩一次（Stage A）」（Stage C 跟 Stage D 完成畫面）的 `className` 都固定是 `"secondary-btn"`（不再有三元判斷）、「再練一次」字串後面沒有殘留 emoji、`color-success-700` 確實出現在 Stage E 結算框對應位置。
+- **後續**：開發沙盒沒有瀏覽器，實機確認 Stage E 完成畫面的綠色文字/邊框確實變深看得清楚、兩顆按鈕都是白底次要樣式；沒有 Stage E 的主題玩到 Stage D 完成，確認重玩按鈕是白底不是橘色，仍待人工檢查。
+
 ### 9.173 使用者回報：Stage E 完成畫面顏色/按鈕沒跟上既有規範，排查發現 2 處同類漏網問題（2026-10-02）
 
 9.172 執行完後，使用者用三張截圖（Stage C→D、Stage D→E、Stage E 完成畫面）比對回報三點：顏色系統沒依照原本設定、按鈕順序沒依照先前方式、會話練習的綠色應該參照答對加深的設定。並要求「排定計劃檢查一下，有沒有類似的問題沒有被發現然後修正」。
