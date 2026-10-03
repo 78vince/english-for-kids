@@ -165,6 +165,15 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.175 專案整理：封存過期文件／Dashboard 製作歷程／備份輪替／第二套內容版本骨架（2026-10-03）
+
+使用者提出四項整理需求，逐一處理：
+
+1. **封存過期文件**：`docs/` 底下 49 份 `handoff-prompt-*.md` 逐一排查（grep 比對 `HANDOFF.md` 是否已有對應執行紀錄），確認除了尚待 App 端執行的 `handoff-prompt-style-refresh-v6.md` 以外全部已執行完成，連同 `content-plan-gept-kids.md`（文件本身已自行標註「已停用並搬移」）、`plan-rename-world-to-unit.md`（規劃已執行）、`scenes-generation-queue.md`（129 張情境插畫全部 ✅ 完成）、`social-post-*.md`（已發布的貼文草稿）、`style-plan-daily-play.md`（已採用的風格提案，內容現已反映在 `design-tokens.html`）、`image-prompt-bubble-pop-background.md`／`image-prompt-crossword-background.md`（背景圖已確認存在於 `app/src/assets/games/` 並接進 CSS）共 56 份文件一起移到新建的 `docs/archive/`（附 `README.md` 說明封存範圍與原因），`docs/` 主目錄只留仍有效的參考文件（`content-plan.md`／`achievement-badges.md`／`design-system.md`／`design-tokens.html`／`prompt-star-rating-mechanism.md`／`image-prompt-badge-showcase.md`，後兩者是對外參考文件/狀態未確認使用，保留不動）跟唯一尚待執行的 `handoff-prompt-style-refresh-v6.md`。排查過程中發現 `docs/design-system.md` 第 1／5 節仍描述「6 個衍生色還沒搬進 token 檔案、是已知技術債」，但這個問題早就在風格改版 v4/v5 用不同方式解決掉了（不是搬進 token 檔案，是整個移除衍生色概念，改用 `-700` 分級色階），一併更新成最新現況。
+2. **Dashboard 新增「製作歷程」分頁**：`dashboard.html` 原本的「開發階段」分頁是 Phase 1-4 的里程碑總覽，不是時間軸，新增獨立的「製作歷程」tab（沿用既有 `.tab-btn`/`.tab-panel` 機制，JS 不用改），依月份（2026-08／09／10）整理重大事件，小細節整併成單一事件，完整逐筆紀錄仍以 `HANDOFF.md` 為準。新增 `.timeline`／`.timeline-month`／`.timeline-events` 等 CSS，視覺風格比照既有 `.phase` 卡片。
+3. **備份輪替**：刪除 3 份最舊的備份 zip（08-19／08-26／09-27，共約 280MB），只保留 10-01 這份舊備份；新建 `English-for-Kids-backup-2026-10-03.zip`（82MB，738 檔案，`unzip -t` 驗證完整性通過），已用 `present_files` 提供。
+4. **第二套內容版本資料夾骨架**：使用者確認是「兩個不同的網站，新網站沿用現有平台架構但內容全新製作」，不是同一站動態切換內容（App 目前用 Vite `import.meta.glob` 寫死路徑讀取 `content/`，沒辦法做到執行時切換）。新建 `content-letsgo/` 資料夾，依照 `content/` 既有子資料夾結構建立 9 個空骨架（vocab／sentences／passages／glossary／conversations／crosswords／games／units／badges，各放一個 `.gitkeep`），刻意不複製 `schema/`（維持共用 `content/schema/` 當格式契約，避免之後 App 端改規則兩邊沒同步）；兩個資料夾各自新增 `README.md` 互相指向、說明用途與目前只是骨架／App 引擎尚未複製／內容製作到一定程度後才討論怎麼接線。
+
 ### 9.174 App 端執行：修正 Stage E 完成畫面顏色/按鈕樣式，拿掉 renderCapstone() 的三元誤用（2026-10-02）
 
 執行 `docs/handoff-prompt-style-refresh-v6.md`。

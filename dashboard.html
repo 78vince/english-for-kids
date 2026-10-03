@@ -73,6 +73,24 @@
   .phase li:before{content:"□"; position:absolute; left:0; color:#c7cbd6;}
   .phase .note{font-size:12px; margin-top:10px; padding-top:10px; border-top:1px dashed var(--line); color:var(--sub);}
 
+  /* ---- 製作歷程時間軸 ---- */
+  .timeline{position:relative; padding-left:28px; margin-top:4px;}
+  .timeline:before{content:""; position:absolute; left:7px; top:4px; bottom:4px; width:2px; background:var(--line);}
+  .timeline-month{position:relative; margin-bottom:30px;}
+  .timeline-month:last-child{margin-bottom:0;}
+  .timeline-month:before{
+    content:""; position:absolute; left:-28px; top:3px; width:16px; height:16px; border-radius:50%;
+    background:var(--blue); border:3px solid var(--card); box-shadow:0 0 0 2px var(--blue);
+  }
+  .timeline-month h3{font-size:16px; margin:0 0 4px;}
+  .timeline-month .month-theme{font-size:13px; color:var(--sub); margin:0 0 12px;}
+  .timeline-events{background:var(--card); border-radius:14px; padding:16px 18px; box-shadow:var(--shadow); border:1px solid var(--line);}
+  .timeline-event{padding:9px 0; border-bottom:1px dashed var(--line); font-size:13.5px; display:flex; gap:10px;}
+  .timeline-event:last-child{border-bottom:none; padding-bottom:0;}
+  .timeline-event .ev-date{flex:0 0 72px; color:var(--blue); font-weight:600; font-variant-numeric:tabular-nums; font-size:12.5px; padding-top:1px;}
+  .timeline-event .ev-text{flex:1; color:var(--ink);}
+  .timeline-event .ev-text b{font-weight:600;}
+
   table{width:100%; border-collapse:collapse; background:var(--card); border-radius:14px; overflow:hidden; box-shadow:var(--shadow); border:1px solid var(--line);}
   th,td{padding:11px 14px; text-align:left; font-size:13.5px; border-bottom:1px solid var(--line);}
   th{background:#fafbfd; color:var(--sub); font-weight:600; font-size:12.5px; text-transform:uppercase; letter-spacing:.03em;}
@@ -162,6 +180,7 @@
   <nav class="tabs" id="tabs">
     <button class="tab-btn" data-tab="overview">總覽</button>
     <button class="tab-btn" data-tab="phases">開發階段</button>
+    <button class="tab-btn" data-tab="history">製作歷程</button>
     <button class="tab-btn" data-tab="content">課程內容資產</button>
     <button class="tab-btn" data-tab="tech">技術待辦</button>
     <button class="tab-btn" data-tab="files">檔案總覽</button>
@@ -235,6 +254,50 @@
           <li>AI 語音辨識答對與否</li>
         </ul>
         <div class="note">免費資源已研究完成：Web Speech API／Whisper／Vosk／Azure Pronunciation Assessment，實作待 Phase 1-3 完成後才開始。</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ TAB: 製作歷程 ============ -->
+  <section class="tab-panel" data-tab="history">
+    <h2><span class="num">H</span>製作歷程</h2>
+    <p style="font-size:13px; color:var(--sub); margin:-6px 0 20px;">依月份整理的重大事件時間軸，小細節已整併，完整逐筆紀錄請見 <code>HANDOFF.md</code>（目前 174+ 筆）。</p>
+
+    <div class="timeline">
+
+      <div class="timeline-month">
+        <h3>2026 年 8 月</h3>
+        <p class="month-theme">從本地端 MVP 到正式上線：視覺改版、內容大擴充、手機版適配</p>
+        <div class="timeline-events">
+          <div class="timeline-event"><span class="ev-date">08-04</span><span class="ev-text">視覺風格 v2「<b>每天玩一點，英語變好玩</b>」確立品牌方向與色彩／字級 token 架構。</span></div>
+          <div class="timeline-event"><span class="ev-date">08-06~08</span><span class="ev-text">Phase 2 啟動：成就徽章系統改版為 43 個正式徽章；挑戰紀錄頁改版；功能列圖示與題型橫幅統一視覺語言。</span></div>
+          <div class="timeline-event"><span class="ev-date">08-19~25</span><span class="ev-text">內容大擴充：單元 0～七共 43 個主題陸續上線（含「字卡暖身」學習單元、單字收藏功能、學習成就六宮格、連續天數機制）。</span></div>
+          <div class="timeline-event"><span class="ev-date">08-20~28</span><span class="ev-text">多輪手機版 RWD 修正（品牌橫幅、功能列、字卡排列、挑戰紀錄卡片等）；「世界」全面改名為「單元」。</span></div>
+          <div class="timeline-event"><span class="ev-date">08-26~27</span><span class="ev-text"><b>Phase 3 完成</b>：GitHub Pages 正式上線；加入 CC BY-NC 4.0 授權；首次進站提醒＋「關於本站」頁面。</span></div>
+          <div class="timeline-event"><span class="ev-date">08-28</span><span class="ev-text">加入 App 圖示（K 字母怪獸美術）／加入主畫面功能；「獲得新徽章」紙花掉落動畫；雙擊上傳工具。</span></div>
+        </div>
+      </div>
+
+      <div class="timeline-month">
+        <h3>2026 年 9 月</h3>
+        <p class="month-theme">Stage E 會話練習上線、遊戲室三款小遊戲陸續推出</p>
+        <div class="timeline-events">
+          <div class="timeline-event"><span class="ev-date">09-07</span><span class="ev-text">「關於本站」新增更新紀錄區塊；修復 Stage B-1 數個互動 bug。</span></div>
+          <div class="timeline-event"><span class="ev-date">09-14~23</span><span class="ev-text">內容語意微調；短文理解生字加入語音朗讀＋全單字發音兜底機制。</span></div>
+          <div class="timeline-event"><span class="ev-date">09-24~27</span><span class="ev-text">單字總覽「練習模式」改版；新增語音設定（自選裝置語音）；單元/主題完成度徽章判定納入 Stage E。</span></div>
+          <div class="timeline-event"><span class="ev-date">09-28~30</span><span class="ev-text"><b>「遊戲室」上線</b>（代幣經濟機制）：翻牌配對（架構升級為獨立 iframe）、填字遊戲、戳泡泡遊戲三款小遊戲陸續推出，經多輪實機試玩修正。</span></div>
+        </div>
+      </div>
+
+      <div class="timeline-month">
+        <h3>2026 年 10 月</h3>
+        <p class="month-theme">全站設計系統健檢與風格改版</p>
+        <div class="timeline-events">
+          <div class="timeline-event"><span class="ev-date">10-01</span><span class="ev-text">全站設計系統健檢（token 盤點／斷點規範／手機版缺口盤點）；風格改版 v2～v3：主色 #347FBC 定案、抬頭區塊重新設計、星星分級／代幣圖示統一。</span></div>
+          <div class="timeline-event"><span class="ev-date">10-02</span><span class="ev-text">風格改版 v4～v5：移除「衍生色」改用正式分級 token，新增 <code>success-700</code>／<code>error-700</code> 解決色弱對比度問題；修正 Stage C→D／Stage D→E 轉場按鈕格式不一致。</span></div>
+          <div class="timeline-event"><span class="ev-date">10-03</span><span class="ev-text">風格改版 v6（Stage E 完成畫面色彩/按鈕修正）；專案文件整理歸檔（56 份歷史文件封存到 <code>docs/archive/</code>）；Dashboard 新增本分頁；準備第二套內容版本資料夾骨架。</span></div>
+        </div>
       </div>
 
     </div>

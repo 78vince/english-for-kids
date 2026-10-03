@@ -1,11 +1,11 @@
 # 設計系統參考文件
 
-> 2026-10-01 新增。專案目前沒有統一的設計系統說明文件——token 本身定義在 `assets/design-tokens/design-tokens.v2-daily-play.css`，但斷點慣例、衍生色邏輯、各元件該怎麼用 token 都只散落在 CSS 註解裡，容易新增元件時各做各的（已發生過好幾次：功能列斷點 bug、填字/翻牌配對兩款遊戲完全沒有手機版樣式、`.nav-item` 的間距用寫死 px 而不是 token）。這份文件把現況整理成一份固定參考，之後新增元件/新遊戲請先看這份文件，不要重新發明一套間距/斷點邏輯。
+> 2026-10-01 新增，2026-10-03 更新第 1／5 節反映衍生色已移除的現況。專案目前沒有統一的設計系統說明文件——token 本身定義在 `assets/design-tokens/design-tokens.v2-daily-play.css`，但斷點慣例、各元件該怎麼用 token 都只散落在 CSS 註解裡，容易新增元件時各做各的（已發生過好幾次：功能列斷點 bug、填字/翻牌配對兩款遊戲完全沒有手機版樣式、`.nav-item` 的間距用寫死 px 而不是 token）。這份文件把現況整理成一份固定參考，之後新增元件/新遊戲請先看這份文件，不要重新發明一套間距/斷點邏輯。
 
 ## 1. Token 檔案在哪裡
 
 - `assets/design-tokens/design-tokens.v2-daily-play.css`——唯一的 token 來源，顏色／字級／間距／圓角／陰影／功能列／徽章分級色都在這裡。`app/src/style.css` 跟三款遊戲各自的 Standalone CSS（`crosswordStandalone.css`／`bubblePopStandalone.css`／`memoryMatchStandalone.css`）都是用 `@import` 讀這同一份檔案，共用同一套基礎色彩／字級／圓角／陰影，這點做得正確，之後新增遊戲／新頁面也要延續「`@import` 同一份 token 檔案」這個做法，不要各自重寫一份顏色變數。
-- `app/src/style.css` 自己的 `:root` 區塊（約第 14-23 行）額外放了幾個「衍生色」（`--color-success-text`／`--color-success-bg`／`--color-error-text`／`--color-error-bg`／`--color-primary-700-hover`／`--color-reward-hover`），這些是手動算出來的深/淺色版本，**目前還沒搬進 token 檔案本身**，而且 `crosswordStandalone.css`／`memoryMatchStandalone.css` 又各自複製了一份（詳見第 5 節，這是已知要處理的技術債）。
+- **衍生色已經整個移除（2026-10 風格改版 v4/v5 處理完畢，不是技術債）**：`app/src/style.css` `:root` 區塊原本手動算出來的 6 個衍生色（`--color-success-text`／`--color-success-bg`／`--color-error-text`／`--color-error-bg`／`--color-primary-700-hover`／`--color-reward-hover`）已經全部拿掉，改成：答對/答錯文字與邊框用正式收錄進 token 檔案的 `--color-success-700`／`--color-error-700`（比照 `primary-700/500/100` 的分級邏輯，對比度有算過 WCAG 公式）；背景淡底色用 `-tint` 系列 token；按鈕 hover 深色不再存成固定色值，改用 CSS 的 `color-mix(in srgb, var(--color-X) 85%, black 15%)` 即時算出來。完整規格跟每個色票的用法說明見 `docs/design-tokens.html` 第 2／2b 節。
 
 ## 2. 斷點慣例（這次新制定，之前是各元件各自選數字）
 
@@ -39,7 +39,7 @@
 
 ## 5. 已知技術債（這次健檢發現，暫不處理，記錄起來避免之後重複發現同一個問題）
 
-- `style.css` 自己 `:root` 裡的 6 個衍生色（成功/錯誤的文字色與底色、hover 色）應該搬進 token 檔案本身集中管理，`crosswordStandalone.css`／`memoryMatchStandalone.css` 目前用「手動複製貼上」的方式各自保留一份同樣的值，檔案裡也自己寫註解提醒「以後 style.css 那邊改了要記得同步」——這是個維護風險，但牽涉三個檔案同時改，這次先不動，列入下一輪。
+- ~~`style.css` 自己 `:root` 裡的 6 個衍生色應該搬進 token 檔案本身集中管理~~ **已於 2026-10 風格改版 v4/v5 解決**：不是搬進 token 檔案，而是整個移除衍生色這個概念，改用正式分級的 `-700` 色階＋`-tint` 背景色＋即時 `color-mix()` hover 公式，見第 1 節。
 - 填字遊戲、戳泡泡遊戲的粉色系主題色（`--color-crossword-pink-*`／`--color-bubble-pink-*`）是從 `--color-accent-pink` 手動目測調出來的深淺變化，沒有用 `color-mix()` 這類語法跟來源色綁定，如果以後 `--color-accent-pink` 改色，這些衍生色不會自動更新，也沒人會記得要手動重新調——同樣列入下一輪，不在這次健檢範圍內處理。
 - `--nav-height: 64px` 這個 token 目前似乎沒有實際被任何 CSS 規則引用（`.function-nav` 沒有設定 `height`），之後清理時可以確認是否為多餘的 token。
 - `--color-primary-tint`／`--color-success-tint`／`--color-accent-yellow-tint` 目前只涵蓋 3 種主色，橘色／粉色沒有對應的淡色 tint token，如果之後有新的卡片分級功能想用橘色/粉色系的淡底色，會發現沒有現成 token 可用。

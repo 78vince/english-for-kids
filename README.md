@@ -26,11 +26,15 @@ English for Kids 是一個以台灣國小階段常見英語學習主題為範圍
 
 ```
 English for Kids/
-├── app/            前端 App（Vite + TypeScript，Phase 1 開發中）
-├── content/        課程內容（單字／句子／短文 JSON，single source of truth）
-├── docs/           規劃文件（內容規劃、交接文件）
-└── HANDOFF.md      專案交接文件
+├── app/               前端 App（Vite + TypeScript）
+├── content/           現行版本課程內容（單字／句子／短文 JSON，single source of truth）
+├── content-letsgo/    第二套內容版本「LET'S GO」入口（準備中，只有資料夾骨架，見其 README.md）
+├── docs/              規劃文件（內容規劃、交接文件、設計系統參考）
+│   └── archive/       已執行完成、不再具行動力的歷史文件封存處
+└── HANDOFF.md         專案交接文件
 ```
+
+專案內隨時可能同時存在多套內容版本，`content/` 是現行版本、`content-letsgo/` 是籌備中的第二套版本，兩者平行、互不干擾，請勿混用——詳見各自資料夾裡的 `README.md`。
 
 ## 開發
 
