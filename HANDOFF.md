@@ -165,6 +165,22 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.176 使用者回報：demo-standalone.html 雙擊打開整頁空白，排查出根因，撰寫 handoff（2026-10-03）
+
+使用者問 dashboard.html／content-review.html 之後要怎麼給 LET'S GO 版本用（回答：這兩個檔案是 `app/scripts/build-dashboard.mjs`／`build-content-review.mjs` 自動產生、內容來源路徑寫死 `content/`，屬於 App 引擎範圍，等之後複製 app/ 給第二站時再一併複製改路徑，這次不用處理），接著回報 `demo-standalone.html` 雙擊打開完全空白，一定要透過 `localhost:5174` 開發伺服器才能用。
+
+截圖 DevTools Console 看到 7 個錯誤，關鍵是這三行：
+
+```
+Access to script at 'file:///.../modulepreload-polyfill-B5Qt9EMX.js' ... blocked by CORS policy
+Access to script at 'file:///.../gameBridge-DsWlonG_.js' ... blocked by CORS policy
+Access to script at 'file:///.../speech-DNC2BivM.js' ... blocked by CORS policy
+```
+
+排查確認根因：`app/vite.config.ts` 現在有 5 個進入點（main／voiceLab／三款遊戲室 iframe），`speech.ts`（全站語音）跟 `gameBridge.ts`（遊戲室 iframe 通訊）同時被 `main.ts` 跟三款遊戲的 standalone 進入點一起 import，Rollup 建置多進入點時會自動把這種「被 2 個以上進入點共用的模組」拆成獨立 chunk（`dist/index.html` 現在有 3 個 `<link rel="modulepreload">` 指到這些共用 chunk），但 `app/scripts/build-standalone-demo.mjs` 只抓「第一個 `<script src>`」跟「第一個 `<link href>`」各一份塞進單檔 HTML，完全沒處理這三個 modulepreload 連結——這支腳本是遊戲室架構出現、`speech.ts`／`gameBridge.ts` 變成共用 chunk 之前寫的，假設早就不成立了，沒人同步回來改，所以 `demo-standalone.html` 從遊戲室上線後其實就已經失效，只是部署流程平常不會真的雙擊這個檔案測試，沒被發現。
+
+寫入 `docs/handoff-prompt-standalone-demo-chunk-split-bug.md`，列出兩個修法方向：A（建議）改用 `vite-plugin-singlefile` 取代手寫的 regex 抓檔案腳本，正確處理共用 chunk 內嵌，以後架構再變也不會重演；B（較小改動）在 `vite.config.ts` 加 `manualChunks` 把這兩個共用模組強制塞回各自進入點的 bundle，改動小但較不穩固。待 App 端評估執行。
+
 ### 9.175 專案整理：封存過期文件／Dashboard 製作歷程／備份輪替／第二套內容版本骨架（2026-10-03）
 
 使用者提出四項整理需求，逐一處理：
