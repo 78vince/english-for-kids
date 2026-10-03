@@ -1,6 +1,7 @@
 # 相依套件與建置產物
 node_modules/
 dist/
+dist-standalone/
 *.log
 *.timestamp-*.mjs
 

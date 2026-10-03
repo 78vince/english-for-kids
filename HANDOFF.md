@@ -165,6 +165,15 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.177 App 端執行：修正 demo-standalone.html 雙擊打開整頁空白的 bug（採方向 A：vite-plugin-singlefile）（2026-10-03）
+
+執行 `docs/handoff-prompt-standalone-demo-chunk-split-bug.md`，採用 handoff 建議的方向 A（更穩固，不會因為以後架構再變而重演）。
+
+- **新增 `app/vite.standalone.config.ts`**：獨立的 Vite 設定，只建置 `main` 單一進入點（不含 `voiceLab`／三款遊戲 iframe，那些本來就是 standalone 版本既有的已知限制），掛上 `vite-plugin-singlefile`（`npm install -D` 新增依賴，版本 `^2.3.3`，相容目前專案的 Vite 5.4.21），輸出到獨立的 `dist-standalone/` 資料夾（加進 `.gitignore`，跟 `dist/` 同類處理）；`assetsInlineLimit` 沿用 `vite.config.ts` 同樣的 200000 門檻，確保頭像/音效/徽章圖都內嵌成 base64。`package.json` 新增 `build:standalone` script 方便執行。
+- **`build-standalone-demo.mjs` 整支改寫**：不再手動 regex 從 `dist/index.html` 抓「第一個 script/css」塞進手刻的 HTML 模板（這個假設在遊戲室上線、`speech.ts`／`gameBridge.ts` 變成共用 chunk 之後已經不成立），改成直接讀取 `dist-standalone/index.html`（已經是 `vite-plugin-singlefile` 正確處理過共用 chunk／模組相依性之後內嵌出來的完整單檔），只做兩個後處理：(1) 拿掉 favicon／apple-touch-icon／manifest 這三種指向外部檔案的 `<link>`（這些檔案只存在於 `dist-standalone/` 旁邊，複製到專案根目錄的 `demo-standalone.html` 旁邊沒有這些檔案，留著會在雙擊開啟時變成 404，在 DevTools Console 顯示新的紅字錯誤，這次順手一起清掉，不留下另一種「console 不乾淨」）；(2) 標題補回「（單機示範版）」字樣（沿用改版前的既有做法）；(3) 插入既有的遊戲室 iframe MutationObserver 補丁（維持原樣不變，這份 standalone 單檔本來就不含三款遊戲的 iframe 頁面）。
+- **驗證**：`npx tsc --noEmit` 通過；全部既有 `verify-*.ts` 重跑一次全部通過；`rm -rf dist && npm run build` 確認正式站多進入點建置完全不受影響（兩份 Vite 設定互相獨立）；`rm -rf dist-standalone && npm run build:standalone` 成功產出單一 `index.html`（40MB，含完整內嵌的 JS/CSS/base64 素材）；跑 `node scripts/build-standalone-demo.mjs` 後，用 Python 腳本靜態檢查最終產出的 `demo-standalone.html`：只有一個 `<script type="module">` 標籤、`<div id="app">` 存在、favicon/apple-touch-icon/manifest 連結都是 0 筆、標題正確帶有「（單機示範版）」、MutationObserver 補丁確實插入在 `</body>` 前；額外掃過整份檔案裡所有 `src="./..."`／`href="./..."` 相對路徑引用，只剩一個 `href="./voice-lab.html"`（純粹是導覽連結，不是會在載入時觸發 CORS 的 render-blocking resource，而且是改動前就存在的既有限制，不在這次範圍）。開發沙盒沒有真正的瀏覽器能雙擊測試 file://，這次改用詳細的靜態結構檢查取代，確認產出檔案在結構上跟「正常载入」的單檔完全一致；實機雙擊確認 Console 真的乾淨無紅字、首頁/選主題/四種題型/成就徽章/語音朗讀都正常運作，仍待人工驗證。
+- **後續**：`npm install` 新增了 `vite-plugin-singlefile` 這個 devDependency，`package-lock.json` 一併更新並 commit；以後只要先跑 `npm run build:standalone` 再跑 `node scripts/build-standalone-demo.mjs`（跟原本「先 `npm run build` 再跑這支腳本」的習慣改了一個步驟，取代用舊的 `npm run build` 產物），README 目前沒有提到這支腳本的建置流程，這次沒有新增說明（現有結構沒有合適的既有段落可以掛，之後如果需要可以再補）。
+
 ### 9.176 使用者回報：demo-standalone.html 雙擊打開整頁空白，排查出根因，撰寫 handoff（2026-10-03）
 
 使用者問 dashboard.html／content-review.html 之後要怎麼給 LET'S GO 版本用（回答：這兩個檔案是 `app/scripts/build-dashboard.mjs`／`build-content-review.mjs` 自動產生、內容來源路徑寫死 `content/`，屬於 App 引擎範圍，等之後複製 app/ 給第二站時再一併複製改路徑，這次不用處理），接著回報 `demo-standalone.html` 雙擊打開完全空白，一定要透過 `localhost:5174` 開發伺服器才能用。
