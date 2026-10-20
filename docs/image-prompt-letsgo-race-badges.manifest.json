@@ -1,0 +1,73 @@
+{
+ "version": 1,
+ "updated": "2026-10-11",
+ "naming": "^RC-0[1-9]$ ；raw 為 .png、final 為 .jpg，主檔名＝徽章代號",
+ "skeleton": "A compact circular achievement badge centered on a 1024x1024 square canvas, with an outer badge circle diameter of exactly 800 pixels and a wide 112-pixel pure solid white (#FFFFFF) empty border margin on all four sides.\nCrafted from soft tactile materials: handcrafted colorful polymer play-doh clay and fuzzy needle-felted wool texture, rich micro handcrafted details and finger-press clay marks.\nRound medallion badge with a thick textured soft clay rim border.\nCute, goofy, exaggerated, funny childlike art style.\nMain subject: {S}.\nBackground: Pure solid white (#FFFFFF), ABSOLUTELY NO drop shadow outside the badge circle, sharp clean circular silhouette with exact 112px white margin.\nStudio macro photograph lighting, high detail craft photography, vibrant candy pastel color scheme. No text, no letters.",
+ "badges": [
+  {
+   "code": "RC-01",
+   "name": "烏龜首勝",
+   "condition": "贏過第 1 場（烏龜）",
+   "type": "one_time",
+   "description": "第一次在賽跑中贏過烏龜",
+   "category": "race",
+   "subject": "A cheerful felt turtle with a bumpy clay shell wearing a tiny clay silver medal, waving a little felt hat at a tiny felt kid doll who is crossing a clay checkered finish ribbon, goofy googly eyes",
+   "prompt": "A compact circular achievement badge centered on a 1024x1024 square canvas, with an outer badge circle diameter of exactly 800 pixels and a wide 112-pixel pure solid white (#FFFFFF) empty border margin on all four sides.\nCrafted from soft tactile materials: handcrafted colorful polymer play-doh clay and fuzzy needle-felted wool texture, rich micro handcrafted details and finger-press clay marks.\nRound medallion badge with a thick textured soft clay rim border.\nCute, goofy, exaggerated, funny childlike art style.\nMain subject: A cheerful felt turtle with a bumpy clay shell wearing a tiny clay silver medal, waving a little felt hat at a tiny felt kid doll who is crossing a clay checkered finish ribbon, goofy googly eyes.\nBackground: Pure solid white (#FFFFFF), ABSOLUTELY NO drop shadow outside the badge circle, sharp clean circular silhouette with exact 112px white margin.\nStudio macro photograph lighting, high detail craft photography, vibrant candy pastel color scheme. No text, no letters.",
+   "raw_png": "/Users/admin/VK Agent/image-generator-skill/for Kids/badge 2/RC-01.png",
+   "final_jpg": "/Users/admin/VK Agent/English for Kids LetsGo/app/src/assets/badges/RC-01.jpg",
+   "size": "1024x1024 -> 200x200"
+  },
+  {
+   "code": "RC-02",
+   "name": "兔子追不上",
+   "condition": "贏過第 2 場（兔子）",
+   "type": "one_time",
+   "description": "第一次在賽跑中贏過兔子",
+   "category": "race",
+   "subject": "A sleepy fluffy felt bunny snoring on a clay carrot pillow with tiny Z bubbles, while a tiny felt kid doll runs past with a clay gold medal swinging, long floppy felt ears, goofy googly eyes",
+   "prompt": "A compact circular achievement badge centered on a 1024x1024 square canvas, with an outer badge circle diameter of exactly 800 pixels and a wide 112-pixel pure solid white (#FFFFFF) empty border margin on all four sides.\nCrafted from soft tactile materials: handcrafted colorful polymer play-doh clay and fuzzy needle-felted wool texture, rich micro handcrafted details and finger-press clay marks.\nRound medallion badge with a thick textured soft clay rim border.\nCute, goofy, exaggerated, funny childlike art style.\nMain subject: A sleepy fluffy felt bunny snoring on a clay carrot pillow with tiny Z bubbles, while a tiny felt kid doll runs past with a clay gold medal swinging, long floppy felt ears, goofy googly eyes.\nBackground: Pure solid white (#FFFFFF), ABSOLUTELY NO drop shadow outside the badge circle, sharp clean circular silhouette with exact 112px white margin.\nStudio macro photograph lighting, high detail craft photography, vibrant candy pastel color scheme. No text, no letters.",
+   "raw_png": "/Users/admin/VK Agent/image-generator-skill/for Kids/badge 2/RC-02.png",
+   "final_jpg": "/Users/admin/VK Agent/English for Kids LetsGo/app/src/assets/badges/RC-02.jpg",
+   "size": "1024x1024 -> 200x200"
+  },
+  {
+   "code": "RC-03",
+   "name": "鴕鳥克星",
+   "condition": "贏過第 3 場（鴕鳥）",
+   "type": "one_time",
+   "description": "第一次在賽跑中贏過鴕鳥",
+   "category": "race",
+   "subject": "A tall wobbly felt ostrich with long pink neck and fluffy white wool tail feathers looking surprised, a tiny felt kid doll standing on a clay winner podium holding a big shiny clay trophy, goofy googly eyes",
+   "prompt": "A compact circular achievement badge centered on a 1024x1024 square canvas, with an outer badge circle diameter of exactly 800 pixels and a wide 112-pixel pure solid white (#FFFFFF) empty border margin on all four sides.\nCrafted from soft tactile materials: handcrafted colorful polymer play-doh clay and fuzzy needle-felted wool texture, rich micro handcrafted details and finger-press clay marks.\nRound medallion badge with a thick textured soft clay rim border.\nCute, goofy, exaggerated, funny childlike art style.\nMain subject: A tall wobbly felt ostrich with long pink neck and fluffy white wool tail feathers looking surprised, a tiny felt kid doll standing on a clay winner podium holding a big shiny clay trophy, goofy googly eyes.\nBackground: Pure solid white (#FFFFFF), ABSOLUTELY NO drop shadow outside the badge circle, sharp clean circular silhouette with exact 112px white margin.\nStudio macro photograph lighting, high detail craft photography, vibrant candy pastel color scheme. No text, no letters.",
+   "raw_png": "/Users/admin/VK Agent/image-generator-skill/for Kids/badge 2/RC-03.png",
+   "final_jpg": "/Users/admin/VK Agent/English for Kids LetsGo/app/src/assets/badges/RC-03.jpg",
+   "size": "1024x1024 -> 200x200"
+  },
+  {
+   "code": "RC-04",
+   "name": "全三星",
+   "condition": "三場賽跑都拿到三顆星",
+   "type": "one_time",
+   "description": "三場對手都以三顆星勝利",
+   "category": "race",
+   "subject": "Three goofy felt animals (turtle, bunny, ostrich) standing in a row in front of a clay podium, each holding up three chunky yellow clay stars, tiny confetti made of felt, big googly eyes",
+   "prompt": "A compact circular achievement badge centered on a 1024x1024 square canvas, with an outer badge circle diameter of exactly 800 pixels and a wide 112-pixel pure solid white (#FFFFFF) empty border margin on all four sides.\nCrafted from soft tactile materials: handcrafted colorful polymer play-doh clay and fuzzy needle-felted wool texture, rich micro handcrafted details and finger-press clay marks.\nRound medallion badge with a thick textured soft clay rim border.\nCute, goofy, exaggerated, funny childlike art style.\nMain subject: Three goofy felt animals (turtle, bunny, ostrich) standing in a row in front of a clay podium, each holding up three chunky yellow clay stars, tiny confetti made of felt, big googly eyes.\nBackground: Pure solid white (#FFFFFF), ABSOLUTELY NO drop shadow outside the badge circle, sharp clean circular silhouette with exact 112px white margin.\nStudio macro photograph lighting, high detail craft photography, vibrant candy pastel color scheme. No text, no letters.",
+   "raw_png": "/Users/admin/VK Agent/image-generator-skill/for Kids/badge 2/RC-04.png",
+   "final_jpg": "/Users/admin/VK Agent/English for Kids LetsGo/app/src/assets/badges/RC-04.jpg",
+   "size": "1024x1024 -> 200x200"
+  },
+  {
+   "code": "RC-05",
+   "name": "零失誤",
+   "condition": "任一場賽跑沒撞到任何障礙就獲勝",
+   "type": "one_time",
+   "description": "整場賽跑完全沒有撞到障礙並獲勝",
+   "category": "race",
+   "subject": "A tiny felt kid doll sprinting through a tunnel of clay rocks, mud puddles and hanging branches without touching anything, glowing clay sparkles trailing behind the shoes, proud winking googly eye",
+   "prompt": "A compact circular achievement badge centered on a 1024x1024 square canvas, with an outer badge circle diameter of exactly 800 pixels and a wide 112-pixel pure solid white (#FFFFFF) empty border margin on all four sides.\nCrafted from soft tactile materials: handcrafted colorful polymer play-doh clay and fuzzy needle-felted wool texture, rich micro handcrafted details and finger-press clay marks.\nRound medallion badge with a thick textured soft clay rim border.\nCute, goofy, exaggerated, funny childlike art style.\nMain subject: A tiny felt kid doll sprinting through a tunnel of clay rocks, mud puddles and hanging branches without touching anything, glowing clay sparkles trailing behind the shoes, proud winking googly eye.\nBackground: Pure solid white (#FFFFFF), ABSOLUTELY NO drop shadow outside the badge circle, sharp clean circular silhouette with exact 112px white margin.\nStudio macro photograph lighting, high detail craft photography, vibrant candy pastel color scheme. No text, no letters.",
+   "raw_png": "/Users/admin/VK Agent/image-generator-skill/for Kids/badge 2/RC-05.png",
+   "final_jpg": "/Users/admin/VK Agent/English for Kids LetsGo/app/src/assets/badges/RC-05.jpg",
+   "size": "1024x1024 -> 200x200"
+  }
+ ]
+}

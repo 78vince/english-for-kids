@@ -165,6 +165,238 @@ Obsidian/發想/開發/兒童英語學習平台/
 
 驗證：`npm run build`（`tsc --noEmit && vite build`）通過；`app/scripts/verify-playlog-logic.ts`（連續天數演算法，8 個測試）、`verify-playtime-logic.ts`（累計遊玩時間，7 個測試）與其餘既有 `verify-*.ts` 全部重跑一次都通過；有手動 grep 打包後的 `dist/assets/*.js`／`*.css` 確認新字串（口號全文、`--color-tier-*`、`F4F6F9`、`modal-overlay`、「累計遊玩時間」）真的有進到最終產出。因為開發沙盒沒有瀏覽器，沒辦法做真正的畫面截圖驗證，正式的視覺確認要靠 `app/demo-standalone.html`。
 
+### 9.215 token v1.5.0（兔子跳躍、步調參數，2026-10-12）
+
+- 依 `docs/handoff-prompt-letsgo-rabbit-hop.md`：兔子重畫為直立造型、`run`＝跳躍循環（擠壓伸展與高度起伏在動作內）、其餘姿勢同步；新增 `race.player.pace`（步調）；重新試算並調整對手速度（烏龜 120、兔子 148／衝刺 215、鴕鳥 230）與 `targetTime`（23／20.5／18）；企劃 §7 已更新。App 端：`EXPECTED_GAME_TOKENS_VERSION` 改 1.5.0，覆蓋 `game-tokens.*`、`game-race.js`；步調改讀 `race.player.pace`；對手速度與 targetTime 讀 token 即自動更新；兔子 viewBox 已改 130×112（App 依 `animalViewBox` 底對齊，不用改）。
+
+### 9.214 token v1.4.1＋App 交辦：移除物種選項（2026-10-12）
+
+- token：`options.species` 只剩 kid、`legacy.species.bear→kid`、移除兩組小熊預設角色；bear 仍留給熊熊裁判。App 端：`EXPECTED_GAME_TOKENS_VERSION` 改 1.4.1，覆蓋 `game-tokens.*`；工作室「身體」分類移除「物種」區（選項只剩一個時整區不顯示）與小熊毛色（`fur`）區，身體分類只留膚色；隨機鈕不用再保留物種或隨機毛色；`normalizeLook()` 要套用 `legacy.species`（舊存檔小熊→小孩）；`NAMES` 的小熊相關可移除。賽跑裁判仍用 `race.referee.look`（bear），不受影響。
+
+### 9.213 token v1.4.0（賽跑場景第二輪，2026-10-12）
+
+- 依 `docs/handoff-prompt-letsgo-race-scene-r2.md`：木頭物件（log／stump／campfire／bench／stool／signpost）改 bark 色；移除 `windZone` 與 `effects.wind`（重算：兔子 134、targetTime 25／23／20.5）；`startGate`／`finishLine` 改成貼地黑白格線（32×16、無星形，`broken`＝彩帶碎片），舊拱門留作選用 `startArch`／`finishArch`；森林樹冠高光移除；所有角色手持旗子在任何動作下保持朝上（`rig.flagTilt` 12°）。企劃 §7 已更新。App 端：`EXPECTED_GAME_TOKENS_VERSION` 改 1.4.0，覆蓋 `game-tokens.*`、`game-character.js`、`game-props.js`、`game-race.js`、`game-scene.js`；起點／終點尺寸改讀 `size`（32×16，貼地、x 為左緣，容器 `overflow:visible`）；賽道資料不再有 windZone。
+
+### 9.212 token v1.3.3（2026-10-12）
+
+- `shake` 的 label 改回「抖腳舞」。App 端：`EXPECTED_GAME_TOKENS_VERSION` 改 1.3.3，覆蓋 `game-tokens.*`。
+
+### 9.211 token v1.3.2（抖腳舞：向外／向內，2026-10-12）
+
+- 依使用者截圖：雙腿角度在「向外」與「向內（大腿朝中線、小腿朝外）」之間快速切換，腳掌貼地；`ev()` 新增 `'snap'` 模式（近似方波）。App 端：`EXPECTED_GAME_TOKENS_VERSION` 改 1.3.2，覆蓋 `game-tokens.*`、`game-character.js`。
+
+### 9.210 token v1.3.1（抖腳舞改版，2026-10-12）
+
+- 抖腳舞改為腳掌貼地、蹲姿、以雙腿內外角度抖動（細節見 README v1.3.1）。App 端：`EXPECTED_GAME_TOKENS_VERSION` 改 1.3.1，覆蓋 `game-tokens.*`（`game-character.js` 本次沒變）。
+
+### 9.209 token v1.3.0（移除沖天炮、抖腳舞，2026-10-12）
+
+- 移除髮型 `rocket`（legacy→short）；新增動作 `shake`（抖腳舞）。App 端：`EXPECTED_GAME_TOKENS_VERSION` 改 1.3.0，覆蓋 `game-tokens.*`、`game-character.js`；動作分頁讀 `GameArt.poses` 會自動多一個「抖腳舞」（`performablePoses()` 不需改；「動作達人」靠 `stats.poseMasterDone` 已達成者不收回，新使用者要多演一個動作）。`NAMES` 若寫死髮型／動作名稱，可移除「沖天炮」。
+
+### 9.208 token v1.2.1（沖天炮倒三角、可愛實實，2026-10-12）
+
+- 沖天炮改倒三角形並修短瀏海；嘴型 `teeth` 名稱改「可愛實實」，門牙縮短、貼嘴巴上緣、上緣平。App 端：`EXPECTED_GAME_TOKENS_VERSION` 改 1.2.1，覆蓋 `game-tokens.*`、`game-character.js`（名稱讀 `optionLabels`；寫死的 `NAMES` 要把「門牙笑」改成「可愛實實」）。
+
+### 9.207 token v1.2.0（雙馬尾側面、沖天炮、門牙笑，2026-10-12）
+
+- 雙馬尾側面馬尾往後微翹；新增髮型 `rocket`（沖天炮）、嘴型 `teeth`（門牙笑，「實實」我理解為「寶寶」式開心嘴型，若指別的樣子請告知）；`optionLabels` 已補。App 端：`EXPECTED_GAME_TOKENS_VERSION` 改 1.2.0，覆蓋 `game-tokens.*`、`game-character.js`；選項清單讀 token 即自動出現，中文名稱讀 `optionLabels`（若仍用寫死的 `NAMES`，請補 沖天炮／門牙笑）。
+
+### 9.206 token v1.1.0（腿再短一點，2026-10-12）
+
+- 新增 `character.rig.legCut`（10）：腿縮短，身體下移貼地，角色整體矮約 10 單位（groundY 不變）。可再調整該數字。App 端：`EXPECTED_GAME_TOKENS_VERSION` 改 1.1.0，覆蓋 `game-tokens.*`、`game-character.js`；碰撞盒（寬 36／高 120）與蹲下頭高 110 先沿用，若實測手感差再回報。
+
+### 9.205 token v1.0.2＋App 交辦：造型編輯時維持視角（2026-10-12）
+
+- token：刺蝟頭尖刺改短小且多（v1.0.2）。App 端：`EXPECTED_GAME_TOKENS_VERSION` 改 1.0.2，覆蓋 `game-tokens.*`、`game-character.js`。
+- App 交辦（使用者回饋）：在側面／背面視角下選造型（髮型、配件…）時，角色應維持目前視角並更新造型，不要自動轉回正面。見 `docs/handoff-prompt-letsgo-studio-keep-view.md`。
+
+### 9.204 token v1.0.1（側面眉毛位置，2026-10-12）
+
+- 依 `docs/handoff-prompt-letsgo-brows-side-offset.md`：側面眉毛中心＝眼睛 x ＋ `character.rig.browSideShift`（1）；並修正舊縮放軸心讓眉毛實際偏後約 5 單位（所以偏移量比 handoff 估的 1 單位大，以「對在眼睛正上方」為準）。App 端：`EXPECTED_GAME_TOKENS_VERSION` 改 1.0.1，覆蓋 `game-tokens.*`、`game-character.js`。
+
+### 9.203 token v1.0.0（臉型、眉毛、無脖子，2026-10-12）
+
+- 臉頰略突取消；新增 `options.faceShape`（round／square／oval／pointed＝圓臉／方臉／橢圓臉／瓜子臉）與 `options.brows`（none／thin／thick／arch／sharp＝無／細眉／粗眉／彎眉／劍眉），`optionLabels` 已補；脖子全部移除（頭直接接身體）。預設角色、`randomLook()` 同步。**App 端**：`EXPECTED_GAME_TOKENS_VERSION` 改 1.0.0，覆蓋 `game-tokens.*`、`game-character.js`；工作室「臉」分類新增「臉型」「眉毛」兩區（讀 `options.faceShape`／`options.brows`，縮圖用 `thumbLook()` 正面；舊存檔缺欄位時用預設）。
+
+### 9.202 token v0.9.0（髮型與臉部細修，2026-10-12）
+
+- 移除髮型 puff／ponytail／bun／long（legacy 對應 twinbun／twintail／short／bob）；新增 buzz 平頭、sidepart 旁分劉海、spiky 刺蝟頭；兩側臉頰略突；頭下移 2px（脖子更短）；手半徑 9→10.5、手與前臂膚色＝臉色。預設角色髮型與 `optionLabels` 同步更新。**App 端**：`EXPECTED_GAME_TOKENS_VERSION` 改 0.9.0，覆蓋 `game-tokens.*`、`game-character.js`；工作室 `NAMES` 補 平頭／旁分劉海／刺蝟頭（或改讀 `optionLabels`）。
+
+### 9.201 token v0.8.1（2026-10-12，回應 App 賽跑回報 §18.5）
+
+- 新增 `GameArt.animalAvatar(kind,size)`（動物頭像）與 `podium` 頒獎台道具；其餘 §18.5 項目（更多石頭／木頭款式、跌倒表情、直立木頭、`spring` 彈起狀態、HUD 規範）仍待排。App 端：`EXPECTED_GAME_TOKENS_VERSION` 改 0.8.1，覆蓋 `game-tokens.*`、`game-race.js`。
+
+### 9.200 賽跑企劃＋token v0.7.1／v0.7.2／v0.8.0（2026-10-11）
+
+- **企劃**：`docs/plan-game-level1-race.md`（我的角色—賽跑；已確認：裁判改泰迪熊、贏了不發代幣、自動前進＋跳／蹲滑／加速罐、短絆、每場玩家＋1 位對手）。**App handoff**：`docs/handoff-prompt-letsgo-race.md`。**徽章提示詞**：`docs/image-prompt-letsgo-race-badges.md` + `.manifest.json`（`RC-01`～`RC-05`）。
+- **v0.7.1**：樹幹加深（新增 `color.hue.bark`，`tree`／`pine`／`cherry`／`palm`／`maple` 樹幹改用；場景中景樹幹 `midTrunk` 日 #8A6240、夜 #3F3558）。依 `docs/handoff-prompt-letsgo-tree-trunk-color.md`。
+- **v0.7.2**：跌倒殘影修正——`character()` 不帶 pose 畫的是站姿，`animate()` 等下一個 rAF 才套姿勢，序列換步重畫時閃一格站姿；改為啟動／`setPose` 時同步套 t=0。另：`exportSVG` 道具與角色畫在 `near` 之後；`character.options.optionLabels`（中文名稱，供 App 移除寫死的 `NAMES`）。
+- **v0.8.0**：`game-race.js`（烏龜／兔子／鴕鳥 rig＋6 動作、12 個賽跑道具）、`race` 資料（三場賽道、對手參數、效果數值、星等、獎勵）、`race-sim.js` 平衡試算（第 1 場新手 99%、第 2 場一般 61%、第 3 場熟練 41%）、預覽頁 §9。`build-tokens.py` 對 `color.hueDecorOnly` 的裝飾色不檢查文字對比。
+- 待 App 端：實作賽跑（見 handoff）、版本檢查改 0.8.0。待你：用 `RC-01`～`RC-05` 提示詞跑自動化出圖。
+
+### 9.199 遊戲 token v0.7（障礙物、營火、蓄力發光，2026-10-11）
+
+- **營火修正**：舊版柴堆與火焰超出 64×56 viewBox 被裁切；改為 64×60 框內完整繪製。另掃描全部道具：底部／頂部超出者以 `LIFT` 收回（flag、cherry、palm、bush、door、chest:open、cloud）；`exportSVG`／場景嵌入的道具加 `overflow="visible"`。彈起類狀態（giftBlock:hit、spring:launched）本來向上超出，容器需允許 overflow。
+- **新道具**：`log` 木頭 96×32、`stump` 樹墩 48×50；道具新增 `collider`（`solid`：stoneBlock／grassBlock／giftBlock／log／stump；`hazard`：rock）。道具單位＝角色設計單位（`props.units`）。
+- **新動作**：`trip`（絆倒）、`fallen`（趴倒暈）、`getup`（爬起）＋序列 `trip`；動作支援 `ramp:true`。`GameArt.poses` 18→**21**（新增 pose id：trip、fallen、getup；徽章 CS-07「動作達人」要不要納入由 App 端決定，建議排除這三個「事件動作」，只算工作室動作分頁可手動表演的）。
+- **蓄力發光**：`GameArt.setCharge(svg,on,full)`＋CSS（`.g-glow-core`、`.g-glow-sp`）；預覽頁已示範（按住 ↓）。
+- 交 App 端：`docs/handoff-prompt-letsgo-studio-obstacles.md`（測試場景圓石絆倒、方塊／木頭可踩踏、營火顯示、蓄力改發光）。版本檢查改 **0.7.0**。
+- 驗證：成圖（絆倒序列、營火、木頭、樹墩、圓石、光暈）、全道具邊界掃描、60 組隨機造型×3 視角×21 動作、jsdom 預覽 0 錯誤；未在真實瀏覽器操作，也未做碰撞物理（屬 App 端）。
+
+### 9.198 遊戲 token v0.6.1（2026-10-11）
+
+- 長直髮正面：改畫在**全場最底層**（側面、背面維持身體之下）。
+- 歡呼：兩手 Z 軸在最上層。新增 pose 旗標 `armsTop:true`，實作為手臂另畫一份複製層（`.arms-top`）、切換 `.arms-base` / `.arms-top` 顯示，所以 `animate().setPose()` 動態切換也有效；未來要讓其他動作手在最上層，只要在 json 加 `armsTop:true`。
+- 版本 0.6.1（App 端版本檢查請改 0.6.1）。
+- v0.6.2（2026-10-11）：側面歡呼改為「近手最上層、遠手維持最低層且略暗」（遠手色 `skinFar` 加深到 12%）；正面／背面歡呼仍是兩手最上層。App 端版本檢查請改 **0.6.2**。
+- v0.6.3：背面歡呼兩手維持最低層（不上移）；正面兩手最上層、側面近手最上／遠手最低。App 端版本檢查請改 **0.6.3**（取代 0.6.2）。
+
+### 9.197 遊戲 token v0.6（角色細修 12 項，2026-10-10）
+
+- **移除**：蝴蝶結 bow、領巾 bandana、圍巾 scarf、星星髮夾 star-clip、閃亮眼 sparkle、大眼睛 oval；正面不畫背包。
+- **改名／改款**：爆炸頭 curly → 雙包頭 `twinbun`（兩個包頭）；眯眯眼 `happy` 改兩條橫線；小花束 bouquet → 馬桶吸把 `plunger`；書 book → 帶骨肉 `meat`；翅膀改羽毛翅膀；披風改紅色（`character.colors.cape`）。
+- **驚訝**：`wide` 眼＝有眼白與瞳孔的大眼睛。
+- **比例**：手半徑 9、顏色比膚色深約 6%；鞋略大；身體往下加長 4px（腿起點不變，總高不變）；脖子再縮短（下巴 y=76，正面外露約 4.5px）；頭像取景 `14 3 92 92`。
+- **Z 軸**：長直髮側面／背面在身體之下；背面兩手在最低層；側面遠手最低、近手最高（皆在腿與身體之外另畫一層，同 `data-part`）。
+- **坐在地上正／背面**：鞋底平面朝身體中心（`footIn:90`）。
+- **App 端需處理（舊存檔相容）**：`GameTokens.character.legacy` 有舊 id 對應——curly→twinbun、oval／sparkle→dot、bow／bandana／scarf／star-clip→移除、bouquet→plunger、book→meat；未知 id 一律以預設值替換。預設角色已更新（`kid-sunny`、`kid-fairy`、`panda-buddy` 的蝴蝶結等已拿掉）。徽章 CS 系列條件不受影響。App 端的版本檢查改 **0.6.0**。
+- 解讀備註：「眯眯眼」＝原本的 `happy` 眼（彎弧）；「大眼睛」＝`oval`；「手的顏色」套用整條手臂（上臂、前臂、手掌）。若解讀有誤請告訴我。
+- 驗證：成圖檢查三視角×主要動作與全部預設角色、300 組隨機造型×3 視角×18 動作無錯誤、jsdom 預覽 0 錯誤；未在真實瀏覽器操作。
+
+### 9.196 遊戲 token v0.5（角色比例與動作修正，2026-10-10）
+
+- 依 `docs/handoff-prompt-letsgo-character-proportions.md`：頭放大（kid 約 30／bear 約 30.5，下巴貼肩 y=75）、正面脖子露出約 6px（側面／背面脖子仍在身體之下）、手掌半徑 8.2、鞋＝上緣半圓弧下緣平（底貼 164）；頭像取景改 `14 2 92 92`；`PV.head` 轉軸改 (60|62, 78)；特效（zzz／思考／驚嘆）右移 9px。
+- 正面手臂：移除 `scY` 壓扁，改旋轉（前擺→往中線，上臂長度不變）；彎曲規則統一為「前臂朝身體中線／頭折」（手臂垂下朝內、舉過約 80–100° 後朝內上），已寫進 `motion.paramFormat`。揮手、歡呼、耶、思考、奔跑已用成圖檢查。
+- 正／背面蹲下與落地改 `legMode:'splay'`（膝蓋往兩側張開、小腿內收、腳掌水平；手放膝蓋），不再縮放壓短腿。
+- 坐姿拆分：`sit`＝坐在椅子上（`seat:{prop:'stool',hUnits:34}`，新增道具 `stool` 小板凳，座高 28）、**新增 `sitGround`＝坐在地上**（正／背面盤腿）。`GameArt.poses` 17→**18**；新增 pose id：`sitGround`。徽章 CS-07 條件為「全部動作」，App 端須把 `sitGround` 納入、已得者保留。
+- 新 API：`GameArt.seatFor(pose)`；`exportSVG` 遇到 `sit` 自動補小板凳（`opts.seat:false` 可關）。
+- 不變：viewBox 120×170、groundY 164、`data-part` 名稱、各 API 參數。
+- 驗證：cairosvg 成圖（三視角×主要動作、全部預設角色、配件／手持物、頭像五款）、jsdom 預覽冒煙 0 錯誤；**未在真實瀏覽器逐項操作**。已知取捨：正面奔跑後擺的手仍畫在身體之上（未做被身體遮住）；正面坐椅子時大腿被縮短（前縮透視，非壓扁手臂）。
+
+### 9.195 遊戲 token v0.4（第一關 M1，2026-10-08）
+
+- 角色款式：髮型 +curly/twintail/long；眼 +lash/sparkle；口 +tongue；服裝 +jacket/stripe/sundress；配件 +star-clip/goggles/wings/cape；手持 +pinwheel/bouquet；小熊毛色 5 種；預設角色 5→9。
+- 動作 10→17：sit、salute、victory、sleep、think、surprise、shy ＋ 表情覆寫（eyes/mouth/blush）、特效 zzz/think/bang、`byView`（同動作不同視角參數）；序列 `motion.sequences`（spin 轉圈展示、hello 打招呼）＋ `GameArt.sequenceAt`。
+- 場景：新增「攝影棚」studio（sky/far/ground，無日月，日夜只換燈光色）。
+- 新檔 `game-export.js`：`exportSVG`／`exportPNG`（整個舞台重組成 SVG，CSS 變數與夜晚濾鏡展開）、`avatar`；icon 44→55（camera、undo、redo、save、download、image、shirt、dice、trash、edit、face）。
+- 預覽頁：新增場景切換、拍照（16:9／1:1／4:5）、序列、攝影棚縮圖、頭像；Artifact `game-design-tokens` 已更新。
+- 補記 v0.3.1 之後的小調整：側面耳朵同膚色且在髮型之上（bob 除外）、蹲下腳掌不變形且腿在身體之上、膝蓋可見、按鈕 A 上／B 左下、跳更高、按住 B 奔跑（跑跳較遠）、落地 240ms 且可接續走跑、鍵盤 B（B/Shift/K）、蹲下不能前進。
+- 驗證：jsdom 冒煙（切場景、拍照、切視角）0 錯誤；cairosvg 成圖檢查三視角×新動作；**未在真實瀏覽器逐項操作**（Artifact 無法截圖），請使用者實測。
+- 已寫 handoff：`docs/handoff-prompt-letsgo-game-framework.md`（1/3，先做）、`handoff-prompt-letsgo-character-studio.md`（2/3）、`handoff-prompt-letsgo-character-photo.md`（3/3）。App 端執行未確認。
+- 徽章圖提示詞（自動化用）：`docs/image-prompt-letsgo-character-badges.md`＋`.manifest.json`，7 張 CS-01～CS-07；原圖 `badge 2/<code>.png`、成品 `app/src/assets/badges/<code>.jpg`（200×200）。
+- 2026-10-08 使用者實測回饋 6 項（褲色同衣服、重新命名、刪除第 2/3 角色、縮圖不疊加配件、彈簧 1.8×、蹲下蓄力 2× 跳）：token 加 `pantsColor:'match'`（內容端已做、預覽已更新）；其餘寫成 `docs/handoff-prompt-letsgo-character-studio-r2.md` 交 App 端。
+
+### 9.194 第一關「人物設定」企劃（2026-10-08）
+
+- 企劃文件：`docs/plan-game-level1-character-studio.md`（角色工作室：造型、儲存 3 槽、試玩、場景替換、拍照；含資料模型、分工、里程碑、驗收、9 項待決策）。
+- 2026-10-08 使用者回覆 OK＝§13 九項全採建議（定案）。
+- 下一步：（已確認）§13 待決策 → 內容端補 token（款式、表情動作、攝影棚／海灘場景、匯出函式）→ 拆 handoff（game-framework／character-studio／character-photo）。
+
+### 9.193 遊戲 token v0.2（2026-10-08）
+
+- Artifact `game-design-tokens`；新增文字系統（12 樣式＋氣泡／標籤／計數晶片／飄浮字）、44 個扁平雙色 icon、可彎曲肢體角色（兩段肢體、正／側／背視角、10 動作）、森林場景（遠中近景＋地面＋樹冠前景，白天／夜晚）。舊 6 套場景已移除，其他主題待做。
+- 原始碼：新專案 `assets/game-tokens/`（見其 README）。
+- v0.3.1：角色腳底改站在地面泥土區（舞台高 88%）並隨容器尺寸變化重算；近景改為大樹叢、略超出畫面下緣，移除花草；圖層開關移到控制器下方；太陽顏色隨高度變化（地平線黃橘→正午偏白，`skyAt().sun.color`、CSS 變數 `--sunc`）；新增「系統時間」模式（`GameArt.uFromDate()`，06:00 日出、18:00 日落）；HUD z-index 拉高到前景之上。
+- v0.3.0：角色 Z 順序重排（背面脖子、手在身體之下；側面脖子在身體之下；圍巾／領巾在身體之下脖子之上；背包在身體之上；手持物在手之下）、側面耳機改豎直支架、側面眼鏡重畫、脖子縮短 3px、氣球改棒棒糖；動作重新設計並加入自動貼地（plant：由腿的正向運動學算出腳底最低點）、腳掌獨立水平（蹲下不再變形）、影子隨離地高度縮放；虛擬按鍵 A 上 B 下；道具新增 4 種樹（松、櫻、棕櫚、楓）、15 種道具的互動狀態、hover 放大、去除多餘亮點、太陽改為純色圓＋柔光。新增 `game-props.js`。
+- v0.2.1：道具區縮小成密集圖庫、雲與天體加底色；太陽／月亮改為獨立道具物件（不再畫在天空層），新增 `GameArt.skyAt(id,u)`（u＝一天時間軸，回傳天空色、夜晚強度、日月位置），預覽頁可拖曳時間或播放日升月落；場景圖層改為 sky／stars／clouds／far／mid／ground／near／canopy。
+
+### 9.192 遊戲 design token、帳號密碼鎖、全螢幕遊戲 handoff（2026-10-08）
+
+- **遊戲 design token**（新專案 `assets/game-tokens/`）：`game-tokens.json`（唯一來源）→ `build-tokens.py` 產生 css/js 並檢查對比；`game-art.js`（角色／24 道具／6 場景／10 動作）；`preview.html` 目視檢查；`README.md` 規則。平台遊戲本體待使用者審視 token 後再規劃（虛擬按鍵 ↑↓←→ A B）。
+- **handoff**：`docs/handoff-prompt-letsgo-profile-lock.md`（伺服器端 PBKDF2 驗證，雜湊不含明文；名稱 vicnent/vincent，請 App 確認實際名稱）、`docs/handoff-prompt-letsgo-fullscreen-games.md`（填字、戳泡泡改同視窗整頁，移除 iframe/gameBridge）。
+- 遊戲為另行開發，vk-playground 僅作概念參考，不沿用資料。
+
+### 9.191 學習紀錄改存電腦（區網伺服器同步）決議與 handoff（2026-10-05）
+
+- 使用者提議並確認：Let's Go 版只在這台電腦運行、僅區網使用，學習紀錄改存電腦，任一設備登入同一使用者都能接續，也不怕清除瀏覽器資料。預設決議：第一次同步以較新者為準（被取代版本另存 conflicts）、同時使用以後寫入者為準、保留最近 14 天備份、localStorage 當快取（離線可用、恢復後補傳）、區網無密碼不對外開放。
+- 設計：新增免套件的 Node 伺服器（取代 `vite preview`）提供網頁與 `/api/sync`；紀錄存 `learning-data/store.json`（原子寫入、每日備份）；前端新增 `storage.ts` 取代 32 處直接呼叫 localStorage；使用者清單、進度、收藏、徽章統計、代幣高分等跟著電腦走，`activeProfileId`、語音等設定留在各設備。
+- 固定 IP 規則放寬：IP 變動不再讓紀錄歸零（仍建議固定 IP 以免主畫面圖示失效）。
+- handoff：`docs/handoff-prompt-letsgo-server-sync.md`（待 App 端執行）。
+
+### 9.190 重新製作獨立 app 識別標誌：黃色 GO＋藍色漸層（2026-10-05）
+
+- 使用者指定：標誌符號為黃色字母 "GO"，藍色漸層背景，顏色用 design token。實作：漸層 = `--gradient-primary`（135deg，`--color-primary-700` #347FBC → `--color-primary-500` #5B9CD1），字 = `--color-accent-yellow` #FFD873，字型 Poppins Bold，字不加陰影（使用者要求）。
+- 已直接替換新專案 `app/public/` 的 `favicon.ico`、`apple-touch-icon.png`（180，不透明方形，交給 iOS 自己裁圓角）、`icons/icon-192.png`、`icons/icon-512.png`、`icons/favicon-16.png`、`icons/favicon-32.png`（圖示屬二進位資產，內容端可直接處理；`index.html`、`manifest` 引用的檔名與主題色 #347FBC 不變，無需改程式）。
+- 產生器：`scripts/gen-letsgo-logo.py`（可重現）。
+- 平板已加入主畫面者，圖示通常會被快取，需移除後重新「加入主畫面」才會換新圖。
+
+### 9.189 驗收戳泡泡補充字，修正中文提示（2026-10-04）
+
+- 驗收：App 端已接進 `bubble_words.json`（可用單字 Unit 1／2／3／全部＝19／22／32／73；Unit 2 連玩無重複題；順手修了「出過哪些字」改以單字本身記錄）。
+- 採納回報：過去式單字的中文提示改為孩子能對應的形式——`slept` 睡了、`flew` 飛了、`won` 贏了、`broke` 打破了、`found` 找到了、`lost` 弄丟了；`drive` 改「開車」；另把所有提示裡的括號註解拿掉（App 顯示時會去掉括號內容），`tennis` 改「網球」、`guide` 改「導遊」。兩邊內容同步。
+- 之後新增補充字的規則：`zh` 不放括號；過去式單字用「…了」。
+
+### 9.188 驗收第三輪-C 徽章，回覆 App 端兩項疑問（2026-10-04）
+
+- 驗收：新專案 `content/badges/badges.json` 與內容端 `badges.v2.json` 內容完全一致（52 筆展開為 66 枚）。App 端留在專案根目錄的 `_to_delete/`（內容是舊的 v2 副本，已比對相同）已由內容端在授權範圍內刪除。
+- 疑問 1「三星＝最佳正確率 100%」：**維持現狀**。徽章名稱就是「三星」，與孩子在畫面上看到的星等一致；每輪從題庫抽 10 句，一輪全對可達成。若實際使用後孩子覺得太難，再調整星等門檻（改 App 計星規則，不改徽章）。
+- 疑問 2「GM-01~08 的 id 含中文（如 `match_新手`）」：**不更動**。舊 id 已被既有使用者的解鎖紀錄使用，改了會讓已取得的徽章重新彈窗；本輪新增的 id 皆為 ASCII（`talk_novice`、`talk_master` 等），舊 id 的 schema pattern 例外即可。
+- 待辦（使用者）：生成場景圖（9 張）與徽章圖（第 1 批 5 張優先）；平板重新執行 `區網啟動.command` 看新徽章。
+
+### 9.187 戳泡泡 Unit 2 可用字不足：新增 bubble_words 補充檔（2026-10-04）
+
+- App 端回報（新專案 HANDOFF §7.4）：戳泡泡單選 Unit 2 只剩 SINGER、WRITER 兩字（其餘為片語或 8 字母以上）。
+- 內容端解法：不改 `vocab.json`，從課堂片語取 3–7 字母的關鍵單字另存 `level4/unit{1,2,3}/bubble_words.json`（`vocabId`、`word`、`zh`；zh 是該單字本身的意思），兩邊同步。Unit 1／2／3 補 6／20／18 筆；單一 Unit 可用字數約 19／22／24（原本 13／2／14）。
+- handoff：`docs/handoff-prompt-letsgo-bubble-words.md`（載入、併入題源、去重、移除 Unit 2 重複出題標示、驗證腳本）。
+- 備註：App 建立的既有檔案無法由內容端沙盒直接覆寫，故補充字採「新增檔案」而非修改 `vocab.json`。
+
+### 9.186 第三輪執行：規則式徽章（階段 3）（2026-10-04）
+
+- 新增 `content-letsgo/badges/badges.v2.json`（52 筆，與新專案 `content/badges/badges.v2.json` 同步）：沿用 36 筆舊徽章；移除逐 Unit 寫死的 `unit_completion.l4u1~l4u8`，改為 3 筆範本（`unit_completion`、`unit_mastery`、`level_completion`，依 `level.json` 展開；展開後 id 與舊 id 相容）；新增 13 筆固定徽章（單元里程碑 3、會話 3＋會話新手／大師 2、遊戲室 5）。
+- 圖案共 25 張，分兩批（第 1 批 5 張＝Unit 1–3 數字怪獸、三星、Level 4 完成）：`docs/image-prompt-letsgo-badges.md`。單元徽章圖 Unit 1–8 所有 Level 共用，Level 差異由 App 疊小標；更正規劃稿的圖數估計（10–12 → 25）。
+- handoff：`docs/handoff-prompt-letsgo-round3c-badges.md`（範本展開、新判定與統計、徽章頁分組與佔位圖、驗證）。
+- 第三輪三項 handoff 全數就緒：3-A 遊戲室、3-B 會話、3-C 徽章；建議執行順序 A → B → C（C 的遊戲室／會話類徽章依賴 A、B 的事件）。
+
+### 9.185 第三輪執行：遊戲室題庫、會話故事、handoff（階段 1–2）（2026-10-04）
+
+- 使用者確認規劃 4 點全部 OK（填字每 Unit 1 關、要有 Unit 三星精熟徽章、主角維持 Benny）。
+- **遊戲室**：新增 `scripts/gen-letsgo-crossword.py`（產生＋驗證：交疊字母一致、無非預期相連、全連通、≤9×9），產出 `level4/unit{1,2,3}/crossword.json`（陣列；Unit 1「出門前準備」6 字、Unit 2「夢想職業」5 字、Unit 3「生日月份」6 字）與 `content-letsgo/games/games.json`（填字、戳泡泡）。兩邊內容同步。handoff：`docs/handoff-prompt-letsgo-round3a-games.md`。
+- **會話故事**：`level4/unit{1,2,3}/conversation.json`（Benny's Camping Trip／Dream Day／Birthday Party，各 6 回合 3 場景，錯誤選項皆設計成該 Unit 的常見文法錯誤並附 hint），兩邊同步；9 張場景插圖提示詞 `docs/image-prompt-letsgo-scenes.md`（待使用者生成）。handoff：`docs/handoff-prompt-letsgo-round3b-conversation.md`（無圖 fallback）。
+- 獨立 app 資料夾內誤建的暫存檔 `content/level4/unit1/_t`（零位元組）已在使用者授權後刪除。
+- 下一步：階段 3 徽章（`badges.json` 範本、圖案清單與提示詞、handoff）。
+
+### 9.184 獨立 app 第三輪規劃：遊戲室回歸／會話故事／規則式徽章（2026-10-04）
+
+- 使用者決議：遊戲室只帶回現行上架的填字、戳泡泡；會話練習每 Unit 一則原創 Benny 故事＋場景插圖（使用者生成）；徽章改為可擴充 Level／Unit 的規則式（範本自動展開），圖案一併重做；先規劃、確認後再拆 handoff。
+- 規劃文件：`docs/plan-letsgo-round3-games-story-badges.md`（待使用者確認 4 點後執行）。
+
+### 9.183 內容端驗收 Stage P 答錯提示（獨立 app HANDOFF §6）（2026-10-04）
+
+- 驗收：新專案 `cloze.reasons` 19/19 筆長度與 answers 一致；App 端驗證（單格、兩格錯一格、兩格全錯、fallback、手機／平板）皆通過。
+- 採納回饋：`l4u1.sen.004` 的原因改為「It's 就是 It is，說「將要」用 be going to：It's going to be…。」，兩邊內容同步。
+- 保留干擾項 `fiveth`、`breaked`（孩子常見的錯誤拼法，答錯時會顯示正確答案與原因，不會誤導）。
+
+### 9.182 Stage P 答錯提示改為「正確答案＋原因」：內容端補 reasons＋handoff（2026-10-04）
+
+- 使用者回饋（第二輪 cloze 已上線）：答錯只顯示句型名稱，看不出正確選項與原因。
+- 內容端：19 筆 `cloze` 新增 `reasons`（與 `answers` 一一對應，共 23 條簡短中文理由），原專案與獨立 app 兩邊內容同步。
+- handoff：`docs/handoff-prompt-letsgo-wrong-answer-hint.md`（只列錯誤格的「正確答案＋原因」，不自動填入；`grammar_point` 降為小標籤；無 reasons 時 fallback）。
+
+### 9.181 獨立 app 第二輪：內容端補 cloze 欄位＋固定 IP 規則＋handoff（2026-10-04）
+
+- 使用者實機驗收：平板端、區網啟動皆正常。
+- **固定 IP 規則（使用者要求嚴格執行）**：學習紀錄存在平板瀏覽器、綁定網址（IP＋port）；電腦區網 IP 一變，孩子紀錄就歸零。必須在路由器為電腦設定固定 IP（DHCP 保留），不得更動；port 固定 5180。啟動腳本需偵測 IP 變動並強制確認（見 handoff §3）。
+- 內容端：`level4/unit{1,2,3}/sentences.json` 19 筆全數新增 `cloze`（text／answers／distractors），已用腳本驗證填回後與例句逐字相同；原專案與獨立 app 兩邊內容同步。
+- handoff：`docs/handoff-prompt-letsgo-round2.md`（verify script 路徑空格修正、Stage P 逐格填空接線、固定 IP 防呆）。
+
+### 9.180 內容端檢視獨立 app（English for Kids LetsGo）（2026-10-04）
+
+- 檢視結果：內容資料與 `content-letsgo/level4/` 一致；全專案無教材書名／出版社名（僅 HANDOFF 引用原專案檔案路徑）；`tsc --noEmit` 通過；`verify-level-unit-content.ts` 通過（Unit 1–3）。
+- 內容端修正：3 個單字例句沒出現單字本身（a tennis racket／won a race／lost his cell phone），已改寫，兩邊內容同步，Stage B 填空現在涵蓋全部單字。
+- 回報 App 端：`app/scripts/verify-level-unit-content.ts` 第 21 行用 `new URL(import.meta.url).pathname`，專案路徑含空格時會變成 `%20` 而 ENOENT（使用者實際路徑「English for Kids LetsGo」就有空格），建議改 `fileURLToPath`。
+- 待使用者實機：平板語音、區網啟動；第二輪：Stage P 逐格填空需內容端補填空答案欄位。
+
+### 9.179 撰寫 handoff：建立獨立 app（Level N - Unit N 課堂複習版）（2026-10-04）
+
+- 決議：從現行 `app/` 複製成獨立專案（新資料夾 `English for Kids LetsGo/`），第一版不帶遊戲室與 Stage C 短文，保留徽章機制，新增句型練習題型（Stage P），區網提供平板使用、不上 GitHub Pages。
+- handoff：`docs/handoff-prompt-letsgo-app-bootstrap.md`（待 App 端執行）。
+
+### 9.178 第二套內容版本改為 Level N - Unit N 結構，決議走獨立 app（2026-10-04）
+
+- 使用者決議：課堂內容可近似重現供自家孩子複習；命名不提書名，統一用 Level N - Unit N（Level 4 預計 8 單元，之後 Level 5、6）；若需新題型／導覽，另開獨立 app（複製現行引擎，待 demo-standalone 白頁問題修復後進行；私有、區網提供平板使用，不上 GitHub Pages）。
+- `content-letsgo/` 重整為 `level4/level.json` + `level4/unit{1,2,3}/{unit.json, vocab.json, sentences.json}`（ID 格式 `l4u1.voc.001`），移除舊的 `vocab/ sentences/ units/` 與空骨架資料夾；Unit 1–3 共 72 單字、19 句型。
+- 檢閱頁與 README 改為 Level 4 命名；規劃文件 `docs/letsgo-platform-comparison-plan.md` 補上決議。
+
 ### 9.177 App 端執行：修正 demo-standalone.html 雙擊打開整頁空白的 bug（採方向 A：vite-plugin-singlefile）（2026-10-03）
 
 執行 `docs/handoff-prompt-standalone-demo-chunk-split-bug.md`，採用 handoff 建議的方向 A（更穩固，不會因為以後架構再變而重演）。
@@ -2152,3 +2384,44 @@ Stage C 短文理解畫面裡，點英文短文中的單字或片語，會在字
 **Phase 1 規劃項目已全部完成，可以進 Phase 3**（README 完整版、授權條款、GitHub Pages 上架）。之後如果還想繼續強化體驗（非必要），可以考慮：
 - 使用者新增時檢查重複名字（目前允許同名）
 - Phase 2 剩餘項目：擴充世界三～六共 13 個官方主題內容、學習報告匯出
+
+### §9.223 爬樹內容端交付 token v2.0.0（內容端）
+- `assets/game-tokens/`：新增 `game-tree.js`（樹枝／障礙／道具／高度分層背景 `treeCompose`、`treeBuild(levelId,seed)`）、`tree-sim.js`（可達性＋平衡）；`game-tokens.json` 升 v2.0.0（`treeClimb`、動作 `parachute`／`fly`、23 個新道具、徽章 TC-01..08 草案）；預覽頁新增「爬樹」分頁。
+- 試算：450 組地形樹頂不可達 0；星等門檻 小樹苗 15/55/125、大橡樹 25/50/85、千年神木 25/45/75 m。技能模型為假設，未經實機。
+- App 端交接：`docs/handoff-prompt-letsgo-tree-climb.md`；`EXPECTED_GAME_TOKENS_VERSION`＝2.0.0。
+- 待辦：徽章 TC-01..08 尚未寫入 `content/badges/badges.json`（待使用者確認）；games.json 的 `tree_climb` 由 App 端新增。
+
+### §9.222 新遊戲企劃：爬樹（tree_climb，企劃草案）
+- 新增 `docs/plan-game-tree-climb.md`（含 `plan-game-tree-climb.concept.png`）：巨樹分區背景、單向樹枝跳躍、限時爬高、掉出畫面降落傘、障礙物、三難度、星等稱號、分工與里程碑；§14 為待使用者確認的決定。尚未動工。
+
+### §9.221 新遊戲開發規範（內容端）
+- 新增 `docs/game-dev-spec-my-character-games.md`：給負責製作新「我的角色」遊戲的 agent（分工、技術架構、角色與 token 規範、註冊與同步白名單、UX、平衡、驗證、內容端協作格式、企劃範本與驗收清單）。
+
+### §9.220 手機橫式賽跑版面規格 v1.8.0（內容端）
+- `game-tokens.json` 新增 `layout.landscapePhone`（三欄、按鍵尺寸、HUD 細列、過關對話框雙欄）。App 待辦見 `docs/handoff-prompt-letsgo-race-landscape.md`（含對照圖）；`EXPECTED_GAME_TOKENS_VERSION` → 1.8.0。
+
+### §9.219 學習代幣獲得規則 v1.7.0（內容端）
+- `game-tokens.json` 新增 `economy`（第一次完成／刷新最高分／首次滿分／再次複習；題型權重；單元倍率；不設每日總上限）。App 待辦見 `docs/handoff-prompt-letsgo-token-economy.md`；`EXPECTED_GAME_TOKENS_VERSION` → 1.7.0。
+
+### §9.218 Unit 4 單字精簡（內容端，C＋B＋E）
+- `vocab.json` 55 → 42（比較級／最高級改掛原級 `related_forms`，新增 good／bad）；`bubble_words.json` 12 筆；`unit.json` 加 `vocab_groups`、`comparison_rules`。驗證全過。
+- App 待辦見 `docs/handoff-prompt-letsgo-vocab-families.md`（總覽字族顯示、分組收合、規則頁）。
+
+### §9.217 新增 Level 4 - Unit 4「School／學校生活」內容（內容端，位於 English for Kids LetsGo/content/level4/unit4/）
+- 依 10 張課本照片整理（Let's Talk／Learn／Learn More／Read／Review）；例句、對話、提示全部原創，不收錄課本對話、歌謠、閱讀短文與埃及尋寶短文。
+- `vocab.json` 55 字（科目 9、季節與天氣 12、形容詞 14、比較級與最高級 16、ck／nk 拼讀字 6）；`sentences.json` 10 題（皆有 cloze＋reasons）；`crossword.json` 1 關（季節與天氣 6 字）；`bubble_words.json` 3 筆；`conversation.json` 7 回合（Benny，3 個場景）；`unit.json` 文法／拼讀；`level.json` Unit 4 狀態改 drafted。
+- 驗證：`verify-level-unit-content`、`verify-badge-rules`、`verify-badgestats-logic`、`verify-favorites-logic` 全過；Unit 4 會自動開放，徽章依 `planned_units` 自動展開，不用改程式。
+- 待辦：場景圖 `l4u4_scene_1~3.jpg` 尚未生成（提示詞已加入 `scripts/flow-queue-letsgo.json`，跑 `generate-flow-scenes-letsgo.mjs` 即可；缺圖時 App 用色塊 fallback）。
+
+### §9.216 賽跑第三輪平衡 v1.6.0（內容端）
+- 移除蹲滑依賴：賽道無 `branch`／`hive`；`stoneBlock` ≤2 層（2 層前有 1 層台階）；`effects.branch/hive`、`player.chargeJump` 已刪。
+- `speedShoe.mult` 1.6、`boostCan.mult` 2.1、`player.pace.tap` 1.6。
+- 對手 turtle 122／rabbit 215（nap.lead 450）／ostrich 283；targetTime 24／18.5／14.5。勝率 96%／63%／47%。
+- App：`EXPECTED_GAME_TOKENS_VERSION`＝1.6.0、覆蓋 `game-tokens.*`，清空 `BOOST_MULT`、拿掉 `CROUCH_ONLY` 與疊層上限，全部改讀 token。
+
+
+### §9.224 字卡暖身：「← 上一張」與作答前「← 回看這一組字卡」（2026-10-20，使用者回饋；LetsGo 同步實作）
+- 回饋：字卡暖身還沒作答時，希望能往回看先前的字卡。
+- `flashcardGame.ts`：新增 `canGoBackCard`／`previousCard()`（同一組第 2 張起可退回上一張，一樣觸發 `onCardShown` 自動唸單字；不跨組）、`canReviewCards`／`backToCards()`（進入這一組測驗後、這一組還沒作答過任何一題前，可回到這一組最後一張字卡再往前翻；再按「開始這一組的測驗」重新排隊出題）。以 `groupQuizAnswered` 記錄這一組是否作答過（點任何選項即設為 true，換組重設），作答後不再提供回看，避免每題回去偷看。「跳過字卡」模式不提供。不改答對／答錯／已學會的計數。
+- `main.ts`：字卡畫面底部加 `secondary-btn`「← 上一張」（第 1 張停用但保留位置，該組只有 1 張時不顯示）；測驗畫面作答前顯示「← 回看這一組字卡」＋小字「還沒記熟？開始作答前可以回去再看一次。」。`style.css`：按鈕列改 flex＋gap（手機自動換行不貼在一起）、停用樣式。
+- 驗證：新增 `scripts/verify-flashcard-back.ts`（第 1 張不能往回、往返順序不變、會唸單字、作答前可回看、答對／答錯後不能回看、換組重設、跳過字卡模式、計數不變）；全部 43 支 verify 腳本、`tsc --noEmit`、`npm run build` 通過。尚未上傳 GitHub Pages（請用 `上傳更新.command`）。

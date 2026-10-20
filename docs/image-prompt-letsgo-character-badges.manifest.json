@@ -1,0 +1,99 @@
+{
+ "version": 1,
+ "updated": "2026-10-08",
+ "naming": "^CS-0[1-9]$ ；raw 為 .png、final 為 .jpg，主檔名＝徽章 code",
+ "skeleton": "A compact circular achievement badge centered on a 1024x1024 square canvas, with an outer badge circle diameter of exactly 800 pixels and a wide 112-pixel pure solid white (#FFFFFF) empty border margin on all four sides.\nCrafted from soft tactile materials: handcrafted colorful polymer play-doh clay and fuzzy needle-felted wool texture, rich micro handcrafted details and finger-press clay marks.\nRound medallion badge with a thick textured soft clay rim border.\nCute, goofy, exaggerated, funny childlike art style.\nMain subject: {S}.\nBackground: Pure solid white (#FFFFFF), ABSOLUTELY NO drop shadow outside the badge circle, sharp clean circular silhouette with exact 112px white margin.\nStudio macro photograph lighting, high detail craft photography, vibrant candy pastel color scheme. No text, no letters.",
+ "badges": [
+  {
+   "code": "CS-01",
+   "name": "初次變身",
+   "condition": "首次儲存角色",
+   "type": "one_time",
+   "description": "第一次在角色工作室儲存自己的角色",
+   "category": "character_studio",
+   "subject": "A goofy felt kid doll standing on a tiny clay pedestal, half of it still plain grey clay and half already dressed in a colorful felt hoodie with a tiny clay bow, little felt sparkles around, one big googly eye winking",
+   "prompt": "A compact circular achievement badge centered on a 1024x1024 square canvas, with an outer badge circle diameter of exactly 800 pixels and a wide 112-pixel pure solid white (#FFFFFF) empty border margin on all four sides.\nCrafted from soft tactile materials: handcrafted colorful polymer play-doh clay and fuzzy needle-felted wool texture, rich micro handcrafted details and finger-press clay marks.\nRound medallion badge with a thick textured soft clay rim border.\nCute, goofy, exaggerated, funny childlike art style.\nMain subject: A goofy felt kid doll standing on a tiny clay pedestal, half of it still plain grey clay and half already dressed in a colorful felt hoodie with a tiny clay bow, little felt sparkles around, one big googly eye winking.\nBackground: Pure solid white (#FFFFFF), ABSOLUTELY NO drop shadow outside the badge circle, sharp clean circular silhouette with exact 112px white margin.\nStudio macro photograph lighting, high detail craft photography, vibrant candy pastel color scheme. No text, no letters.",
+   "raw_png": "/Users/admin/VK Agent/image-generator-skill/for Kids/badge 2/CS-01.png",
+   "final_jpg": "/Users/admin/VK Agent/English for Kids LetsGo/app/src/assets/badges/CS-01.jpg",
+   "size": "1024x1024 -> 200x200"
+  },
+  {
+   "code": "CS-02",
+   "name": "造型師",
+   "condition": "3 個角色槽都存過不同角色",
+   "type": "one_time",
+   "description": "三個角色槽都存了不同的角色",
+   "category": "character_studio",
+   "subject": "Three tiny goofy felt dolls side by side wearing three different felt outfits (a hoodie, a dress, overalls), the middle one holding a clay comb and a pair of felt scissors, a tiny golden clay hanger above them",
+   "prompt": "A compact circular achievement badge centered on a 1024x1024 square canvas, with an outer badge circle diameter of exactly 800 pixels and a wide 112-pixel pure solid white (#FFFFFF) empty border margin on all four sides.\nCrafted from soft tactile materials: handcrafted colorful polymer play-doh clay and fuzzy needle-felted wool texture, rich micro handcrafted details and finger-press clay marks.\nRound medallion badge with a thick textured soft clay rim border.\nCute, goofy, exaggerated, funny childlike art style.\nMain subject: Three tiny goofy felt dolls side by side wearing three different felt outfits (a hoodie, a dress, overalls), the middle one holding a clay comb and a pair of felt scissors, a tiny golden clay hanger above them.\nBackground: Pure solid white (#FFFFFF), ABSOLUTELY NO drop shadow outside the badge circle, sharp clean circular silhouette with exact 112px white margin.\nStudio macro photograph lighting, high detail craft photography, vibrant candy pastel color scheme. No text, no letters.",
+   "raw_png": "/Users/admin/VK Agent/image-generator-skill/for Kids/badge 2/CS-02.png",
+   "final_jpg": "/Users/admin/VK Agent/English for Kids LetsGo/app/src/assets/badges/CS-02.jpg",
+   "size": "1024x1024 -> 200x200"
+  },
+  {
+   "code": "CS-03",
+   "name": "攝影新手",
+   "condition": "累計拍照 1 張",
+   "type": "one_time",
+   "description": "第一次在角色工作室拍照",
+   "category": "character_studio",
+   "subject": "A cute round clay camera with a huge googly-eye lens and a happy open mouth, a little felt strap, a tiny paper-like clay photo popping out with a smiling felt star on it",
+   "prompt": "A compact circular achievement badge centered on a 1024x1024 square canvas, with an outer badge circle diameter of exactly 800 pixels and a wide 112-pixel pure solid white (#FFFFFF) empty border margin on all four sides.\nCrafted from soft tactile materials: handcrafted colorful polymer play-doh clay and fuzzy needle-felted wool texture, rich micro handcrafted details and finger-press clay marks.\nRound medallion badge with a thick textured soft clay rim border.\nCute, goofy, exaggerated, funny childlike art style.\nMain subject: A cute round clay camera with a huge googly-eye lens and a happy open mouth, a little felt strap, a tiny paper-like clay photo popping out with a smiling felt star on it.\nBackground: Pure solid white (#FFFFFF), ABSOLUTELY NO drop shadow outside the badge circle, sharp clean circular silhouette with exact 112px white margin.\nStudio macro photograph lighting, high detail craft photography, vibrant candy pastel color scheme. No text, no letters.",
+   "raw_png": "/Users/admin/VK Agent/image-generator-skill/for Kids/badge 2/CS-03.png",
+   "final_jpg": "/Users/admin/VK Agent/English for Kids LetsGo/app/src/assets/badges/CS-03.jpg",
+   "size": "1024x1024 -> 200x200"
+  },
+  {
+   "code": "CS-04",
+   "name": "攝影師",
+   "condition": "累計拍照 10 張",
+   "type": "one_time",
+   "description": "在角色工作室累計拍了 10 張照片",
+   "category": "character_studio",
+   "subject": "A goofy number \"10\" monster made of orange clay with googly eyes wearing a tiny felt photographer vest and holding a clay camera, a string of small clay photos clipped to a felt rope behind it",
+   "prompt": "A compact circular achievement badge centered on a 1024x1024 square canvas, with an outer badge circle diameter of exactly 800 pixels and a wide 112-pixel pure solid white (#FFFFFF) empty border margin on all four sides.\nCrafted from soft tactile materials: handcrafted colorful polymer play-doh clay and fuzzy needle-felted wool texture, rich micro handcrafted details and finger-press clay marks.\nRound medallion badge with a thick textured soft clay rim border.\nCute, goofy, exaggerated, funny childlike art style.\nMain subject: A goofy number \"10\" monster made of orange clay with googly eyes wearing a tiny felt photographer vest and holding a clay camera, a string of small clay photos clipped to a felt rope behind it.\nBackground: Pure solid white (#FFFFFF), ABSOLUTELY NO drop shadow outside the badge circle, sharp clean circular silhouette with exact 112px white margin.\nStudio macro photograph lighting, high detail craft photography, vibrant candy pastel color scheme. No text, no letters.",
+   "raw_png": "/Users/admin/VK Agent/image-generator-skill/for Kids/badge 2/CS-04.png",
+   "final_jpg": "/Users/admin/VK Agent/English for Kids LetsGo/app/src/assets/badges/CS-04.jpg",
+   "size": "1024x1024 -> 200x200"
+  },
+  {
+   "code": "CS-05",
+   "name": "環遊世界",
+   "condition": "每個場景都拍過照",
+   "type": "one_time",
+   "description": "每一種場景都至少拍過一張照片",
+   "category": "character_studio",
+   "subject": "A cute felt bear wearing a tiny clay explorer hat standing on a small clay globe, holding a clay camera, tiny felt trees and a felt spotlight stage on the globe",
+   "prompt": "A compact circular achievement badge centered on a 1024x1024 square canvas, with an outer badge circle diameter of exactly 800 pixels and a wide 112-pixel pure solid white (#FFFFFF) empty border margin on all four sides.\nCrafted from soft tactile materials: handcrafted colorful polymer play-doh clay and fuzzy needle-felted wool texture, rich micro handcrafted details and finger-press clay marks.\nRound medallion badge with a thick textured soft clay rim border.\nCute, goofy, exaggerated, funny childlike art style.\nMain subject: A cute felt bear wearing a tiny clay explorer hat standing on a small clay globe, holding a clay camera, tiny felt trees and a felt spotlight stage on the globe.\nBackground: Pure solid white (#FFFFFF), ABSOLUTELY NO drop shadow outside the badge circle, sharp clean circular silhouette with exact 112px white margin.\nStudio macro photograph lighting, high detail craft photography, vibrant candy pastel color scheme. No text, no letters.",
+   "raw_png": "/Users/admin/VK Agent/image-generator-skill/for Kids/badge 2/CS-05.png",
+   "final_jpg": "/Users/admin/VK Agent/English for Kids LetsGo/app/src/assets/badges/CS-05.jpg",
+   "size": "1024x1024 -> 200x200"
+  },
+  {
+   "code": "CS-06",
+   "name": "日夜都愛",
+   "condition": "白天與夜晚各拍過 1 張",
+   "type": "one_time",
+   "description": "白天和夜晚都至少拍過一張照片",
+   "category": "character_studio",
+   "subject": "A round clay badge split in two halves: a sunny yellow felt sun with googly eyes on the left and a deep blue felt moon with googly eyes and a tiny night cap on the right, they hold a little clay camera together",
+   "prompt": "A compact circular achievement badge centered on a 1024x1024 square canvas, with an outer badge circle diameter of exactly 800 pixels and a wide 112-pixel pure solid white (#FFFFFF) empty border margin on all four sides.\nCrafted from soft tactile materials: handcrafted colorful polymer play-doh clay and fuzzy needle-felted wool texture, rich micro handcrafted details and finger-press clay marks.\nRound medallion badge with a thick textured soft clay rim border.\nCute, goofy, exaggerated, funny childlike art style.\nMain subject: A round clay badge split in two halves: a sunny yellow felt sun with googly eyes on the left and a deep blue felt moon with googly eyes and a tiny night cap on the right, they hold a little clay camera together.\nBackground: Pure solid white (#FFFFFF), ABSOLUTELY NO drop shadow outside the badge circle, sharp clean circular silhouette with exact 112px white margin.\nStudio macro photograph lighting, high detail craft photography, vibrant candy pastel color scheme. No text, no letters.",
+   "raw_png": "/Users/admin/VK Agent/image-generator-skill/for Kids/badge 2/CS-06.png",
+   "final_jpg": "/Users/admin/VK Agent/English for Kids LetsGo/app/src/assets/badges/CS-06.jpg",
+   "size": "1024x1024 -> 200x200"
+  },
+  {
+   "code": "CS-07",
+   "name": "動作達人",
+   "condition": "試過所有動作",
+   "type": "one_time",
+   "description": "在角色工作室把每個動作都演過一次",
+   "category": "character_studio",
+   "subject": "A goofy felt kid doll striking a funny dance pose with arms and legs bent in different directions, tiny clay musical notes and felt stars flying around, cheeky googly eyes",
+   "prompt": "A compact circular achievement badge centered on a 1024x1024 square canvas, with an outer badge circle diameter of exactly 800 pixels and a wide 112-pixel pure solid white (#FFFFFF) empty border margin on all four sides.\nCrafted from soft tactile materials: handcrafted colorful polymer play-doh clay and fuzzy needle-felted wool texture, rich micro handcrafted details and finger-press clay marks.\nRound medallion badge with a thick textured soft clay rim border.\nCute, goofy, exaggerated, funny childlike art style.\nMain subject: A goofy felt kid doll striking a funny dance pose with arms and legs bent in different directions, tiny clay musical notes and felt stars flying around, cheeky googly eyes.\nBackground: Pure solid white (#FFFFFF), ABSOLUTELY NO drop shadow outside the badge circle, sharp clean circular silhouette with exact 112px white margin.\nStudio macro photograph lighting, high detail craft photography, vibrant candy pastel color scheme. No text, no letters.",
+   "raw_png": "/Users/admin/VK Agent/image-generator-skill/for Kids/badge 2/CS-07.png",
+   "final_jpg": "/Users/admin/VK Agent/English for Kids LetsGo/app/src/assets/badges/CS-07.jpg",
+   "size": "1024x1024 -> 200x200"
+  }
+ ]
+}

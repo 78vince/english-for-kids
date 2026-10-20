@@ -3320,6 +3320,17 @@ function renderFlashcards(): void {
     const footer = document.createElement("footer");
     footer.className = "game-footer";
     const isLastCardInGroup = game.cardPositionInGroup === game.groupCardCount;
+    // 「← 上一張」：同一組裡往回看先前的字卡（使用者回饋）。第 1 張時維持按鈕但停用，
+    // 按鈕位置才不會跳動；這一組只有 1 張字卡時就不顯示。
+    if (game.groupCardCount > 1) {
+      const prevBtn = document.createElement("button");
+      prevBtn.type = "button";
+      prevBtn.className = "secondary-btn flashcard-prev-btn";
+      prevBtn.textContent = "← 上一張";
+      prevBtn.disabled = !game.canGoBackCard;
+      prevBtn.addEventListener("click", () => game.previousCard());
+      footer.appendChild(prevBtn);
+    }
     const nextBtn = document.createElement("button");
     nextBtn.className = "primary-btn";
     nextBtn.textContent = isLastCardInGroup ? "開始這一組的測驗 →" : "下一張字卡 →";
@@ -3383,7 +3394,19 @@ function renderFlashcards(): void {
 
     const footer = document.createElement("footer");
     footer.className = "game-footer";
-    if (game.feedback === "correct") {
+    if (game.canReviewCards) {
+      // 這一組還沒作答前，可以回去再看一次這一組的字卡；作答後就不再提供（避免每題回去偷看）。
+      const reviewBtn = document.createElement("button");
+      reviewBtn.type = "button";
+      reviewBtn.className = "secondary-btn flashcard-review-btn";
+      reviewBtn.textContent = "← 回看這一組字卡";
+      reviewBtn.addEventListener("click", () => game.backToCards());
+      footer.appendChild(reviewBtn);
+      const reviewHint = document.createElement("p");
+      reviewHint.className = "hint flashcard-review-hint";
+      reviewHint.textContent = "還沒記熟？開始作答前可以回去再看一次。";
+      footer.appendChild(reviewHint);
+    } else if (game.feedback === "correct") {
       const msg = document.createElement("p");
       msg.className = "hint hint--correct";
       msg.textContent = "✅ 答對了！";

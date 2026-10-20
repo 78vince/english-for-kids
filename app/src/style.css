@@ -3428,3 +3428,23 @@ body {
     min-height: 52px;
   }
 }
+
+/* 字卡暖身「← 上一張」／「← 回看這一組字卡」（使用者回饋：作答前想往回看先前的字卡）。
+   第 1 張時「上一張」維持在原位但停用，按鈕位置不會跳動。 */
+.game-footer:has(.flashcard-prev-btn) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
+.game-footer .flashcard-prev-btn {
+  margin-right: 0;
+}
+.flashcard-prev-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.flashcard-review-hint {
+  margin-top: var(--space-2);
+  font-size: var(--text-caption);
+}

@@ -53,6 +53,10 @@ export class FlashcardGame {
   private quizQueue: Vocab[] = [];
   private locked = false;
   private roundComplete = false;
+  /** 這一組的測驗是不是已經作答過（點過任何選項）。作答前可以「回看這一組字卡」，
+   * 作答後就不行——避免每題之間回去偷看，失去記憶練習的意義（使用者回饋：想在還沒作答前
+   * 往回看先前的字卡）。換到新的一組時重設。 */
+  private groupQuizAnswered = false;
 
   /** 使用者按「跳過字卡，直接測驗」時打開——之後每一組都不再顯示字卡畫面，
    * 直接進測驗（給重玩同一個主題、已經很熟的孩子用，跟使用者確認過是建議功能，非硬性規定）。 */
@@ -153,6 +157,7 @@ export class FlashcardGame {
 
   private enterGroupCards(): void {
     this.cardIndexInGroup = 0;
+    this.groupQuizAnswered = false;
     this.enterCardPhaseForCurrentIndex();
   }
 
@@ -194,6 +199,8 @@ export class FlashcardGame {
       // 保險起見直接算這個字過關，往隊伍下一個前進，不讓畫面卡住。
       this.quizQueue.shift();
       this.masteredCount += 1;
+      // 已經有字被直接算過關，就不再提供回看字卡（不然回看後重考會重複計算已學會數）
+      this.groupQuizAnswered = true;
       this.loadNextQuizFromQueue();
       return;
     }
@@ -234,10 +241,47 @@ export class FlashcardGame {
     this.onChange();
   }
 
+  /** 字卡階段能不能按「← 上一張」：同一組裡第 2 張以後才可以（不跨組往回）。 */
+  get canGoBackCard(): boolean {
+    return !this.roundComplete && this.phase === "card" && !this.skipCards && this.cardIndexInGroup > 0;
+  }
+
+  /** 字卡階段「← 上一張」：退回同一組的上一張字卡（一樣會觸發 onCardShown 自動唸一次單字）。
+   * 不影響答對／答錯／已學會的計數。 */
+  previousCard(): void {
+    if (!this.canGoBackCard) return;
+    this.cardIndexInGroup -= 1;
+    this.enterCardPhaseForCurrentIndex();
+    this.onChange();
+  }
+
+  /** 測驗畫面能不能「← 回看這一組字卡」：這一組還沒作答過任何一題、目前這題也還沒作答，
+   * 而且不是「跳過字卡」模式（那個模式沒有字卡可看）。 */
+  get canReviewCards(): boolean {
+    return (
+      !this.roundComplete &&
+      this.phase === "quiz" &&
+      !this.skipCards &&
+      !this.groupQuizAnswered &&
+      this.feedback === "building"
+    );
+  }
+
+  /** 從這一組測驗的開頭回到這一組的最後一張字卡，可以再往前翻；之後再按「開始這一組的測驗」
+   * 會重新排待考隊伍、重新出題。不影響任何計數。 */
+  backToCards(): void {
+    if (!this.canReviewCards) return;
+    this.quizQueue = [];
+    this.cardIndexInGroup = Math.max(0, this.currentGroup.length - 1);
+    this.enterCardPhaseForCurrentIndex();
+    this.onChange();
+  }
+
   selectQuizOption(text: string): void {
     if (this.locked || this.phase !== "quiz" || !this.quizQuestion) return;
     const option = this.optionStates.find((o) => o.text === text);
     if (!option) return;
+    this.groupQuizAnswered = true;
 
     if (text === this.quizQuestion.answer) {
       // 答對了：畫面停在這裡，等使用者自己按「下一個字」，不用計時器自動跳。

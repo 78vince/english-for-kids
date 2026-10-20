@@ -1,37 +1,25 @@
-# 內容版本：LET'S GO（準備中）
+# 內容版本：Level N - Unit N（課堂複習版）
 
-這是**第二套內容版本**的資料夾入口，跟現有 `content/`（English for Kids 現行版本）是平行、互不干擾的兩套內容。
+第二套內容版本，與現行 `content/` 平行、互不干擾。供孩子在課後對應課堂進度複習，家庭內部使用，不公開部署。
 
-## 跟 `content/` 的關係
+## 結構
 
-- **`content/`**：現行版本，App 端目前就是讀這份內容建置，維持不動，請勿混用。
-- **`content-letsgo/`（這裡）**：全新內容版本「LET'S GO」，兩個版本共用同一套平台架構（App 引擎、六種題型玩法、成就徽章機制、遊戲室等），**差別只在內容本身**（單字／句子／短文／會話／主題分類），內容會另外製作提供。
+```
+level4/
+  level.json        Level 概要：預計 8 個單元、單元清單與狀態、涵蓋的不規則動詞
+  unit1/
+    unit.json       單元標題、文法重點、Phonics、文化閱讀頁備註（不收錄原文）
+    vocab.json      單字（topic 欄位為單元內的分組）
+    sentences.json  句型框架（grammar_point 為句型名稱）
+  unit2/ unit3/ ...
+level5/ level6/     之後依同樣格式新增
+letsgo-content-review.html   檢閱頁（雙擊即可開啟，資料已內嵌）
+```
 
-## 目前進度：只有資料夾骨架，App 端還沒接線
+- ID 格式：`l4u1.voc.001`、`l4u1.sen.001`（Level 4、Unit 1）。
+- 狀態：Unit 1–3 已整理；Unit 4–8 在 `level.json` 標示為 `planned`。
+- 例句皆為原創；不收錄課本的角色對話、歌謠／chant、文化閱讀短文原文。
 
-這次先依照 `content/` 既有的子資料夾結構建好空骨架（每個資料夾裡的 `.gitkeep` 只是讓 git 追蹤空資料夾用，開始放內容檔案後可以刪掉）：
+## 後續
 
-- `vocab/` — 單字清單（每個主題一個 JSON 檔）
-- `sentences/` — 例句（每個主題一個 JSON 檔）
-- `passages/` — 短文理解內容
-- `glossary/` — 短文理解點字查詢的補充詞彙表
-- `conversations/` — Stage E 會話練習腳本
-- `crosswords/` — 遊戲室「填字遊戲」題庫
-- `games/` — 遊戲室上架清單
-- `units/` — 單元分類設定
-- `badges/` — 成就徽章清單
-
-**注意：目前刻意沒有建立 `schema/` 子資料夾**——資料格式規範（JSON schema）是 App 端讀取內容的「契約」，兩套內容版本如果要共用同一套 App 引擎，格式規範也應該共用同一份（見 `content/schema/`），不要另外複製一份，否則之後 App 端改了規則，這邊會沒同步到而出問題。新內容請直接比照 `content/schema/` 底下的格式撰寫。
-
-## 這次「先做好準備」的範圍
-
-這次只先把內容資料夾骨架建好，**沒有**：
-
-- 複製一份 App 引擎（`app/`）給 LET'S GO 版本——因為 App 目前讀取內容的方式（Vite `import.meta.glob("../../content/*.json")`）是建置時寫死路徑，沒辦法讓同一個網站執行時動態切換兩套內容。等 LET'S GO 的內容製作到一定程度、確定要建站時，再討論用什麼方式讓這套內容接上 App 引擎（複製一份 `app/` 並改路徑，是目前最直接的做法，但還有其他可能性，到時候再評估）。
-- 幫 LET'S GO 另外寫一套 `docs/content-plan.md`、`HANDOFF.md` 等規劃/紀錄文件——等實際開始製作內容時再視需要建立。
-
-## 放內容檔案前的檢查清單
-
-1. 先確認主題命名、單元分類不要跟 `content/` 既有的 fileKey 混用，避免之後兩套內容要同時維護時搞混（例如都叫 `family.json` 但內容完全不同，日後如果要在同一個倉庫比對/合併會很困擾）。
-2. 格式請完全比照 `content/schema/` 底下的 JSON schema，可以先用 `content/vocab/`、`content/sentences/` 等既有檔案當模板。
-3. 放第一批內容進來後，記得把對應資料夾裡的 `.gitkeep` 刪掉。
+此資料夾之後會搬進獨立 app 專案（複製現行引擎，待 demo-standalone 白頁問題修復後進行）。規劃見 `docs/letsgo-platform-comparison-plan.md`。
