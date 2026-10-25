@@ -1,9 +1,22 @@
 [
   {
+    "id": "character_studio",
+    "name": "我的角色",
+    "description": "打扮自己的角色、走走跳跳、換場景拍照。之後的關卡都會用這個角色。",
+    "icon_placeholder": "🧒",
+    "kind": "studio",
+    "page": "games/character-studio.html",
+    "cost": 0,
+    "status": "active",
+    "order": 0
+  },
+  {
     "id": "crossword",
     "name": "填字遊戲",
     "description": "拖曳字母填滿空格，找出隱藏在網格裡的英文單字。",
     "icon_placeholder": "🧩",
+    "kind": "learning",
+    "page": "games/crossword.html",
     "cost": 5,
     "status": "active",
     "order": 1
@@ -13,8 +26,69 @@
     "name": "戳泡泡",
     "description": "照著中文提示，依序點破拼出正確顏色單字的泡泡。",
     "icon_placeholder": "🫧",
+    "kind": "learning",
+    "page": "games/bubble-pop.html",
     "cost": 5,
     "status": "active",
     "order": 2
+  },
+  {
+    "id": "race",
+    "name": "賽跑",
+    "description": "用你的角色跟森林動物賽跑！跳過石頭、撿加速鞋，先衝過終點就贏。",
+    "icon_placeholder": "🏃",
+    "kind": "character",
+    "page": "games/race.html",
+    "cost": 5,
+    "payout": 0,
+    "status": "active",
+    "order": 4
+  },
+  {
+    "id": "tree_climb",
+    "name": "爬樹",
+    "description": "用自己的角色爬上巨大神木！踩著樹枝往上跳、收集披風飛升，掉出畫面就開降落傘。",
+    "icon_placeholder": "🌳",
+    "kind": "character",
+    "page": "games/tree-climb.html",
+    "cost": 5,
+    "payout": 0,
+    "status": "active",
+    "order": 5
+  },
+  {
+    "id": "rocket",
+    "name": "火箭發射",
+    "description": "連續快速點按 A、B 按鍵為火箭注入推力，衝破大氣層直奔宇宙！",
+    "icon_placeholder": "🚀",
+    "kind": "character",
+    "page": "games/rocket.html",
+    "cost": 5,
+    "payout": 0,
+    "status": "active",
+    "order": 6
+  },
+  {
+    "id": "mole",
+    "name": "打地鼠",
+    "description": "在限時內點擊從草地土坑冒出來的小夥伴！點擊普通夥伴得 1 分，但別點到戴西瓜帽的偽裝夥伴喔！",
+    "icon_placeholder": "🐾",
+    "kind": "character",
+    "page": "games/mole.html",
+    "cost": 5,
+    "payout": 0,
+    "status": "active",
+    "order": 7
+  },
+  {
+    "id": "memory_match",
+    "name": "翻牌配對",
+    "description": "翻開卡片，找出成對的英文單字與圖案。",
+    "icon_placeholder": "🃏",
+    "kind": "learning",
+    "page": "games/memory-match.html",
+    "cost": 20,
+    "status": "disabled",
+    "order": 9
   }
 ]

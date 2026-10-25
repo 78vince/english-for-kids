@@ -2425,3 +2425,58 @@ Stage C 短文理解畫面裡，點英文短文中的單字或片語，會在字
 - `flashcardGame.ts`：新增 `canGoBackCard`／`previousCard()`（同一組第 2 張起可退回上一張，一樣觸發 `onCardShown` 自動唸單字；不跨組）、`canReviewCards`／`backToCards()`（進入這一組測驗後、這一組還沒作答過任何一題前，可回到這一組最後一張字卡再往前翻；再按「開始這一組的測驗」重新排隊出題）。以 `groupQuizAnswered` 記錄這一組是否作答過（點任何選項即設為 true，換組重設），作答後不再提供回看，避免每題回去偷看。「跳過字卡」模式不提供。不改答對／答錯／已學會的計數。
 - `main.ts`：字卡畫面底部加 `secondary-btn`「← 上一張」（第 1 張停用但保留位置，該組只有 1 張時不顯示）；測驗畫面作答前顯示「← 回看這一組字卡」＋小字「還沒記熟？開始作答前可以回去再看一次。」。`style.css`：按鈕列改 flex＋gap（手機自動換行不貼在一起）、停用樣式。
 - 驗證：新增 `scripts/verify-flashcard-back.ts`（第 1 張不能往回、往返順序不變、會唸單字、作答前可回看、答對／答錯後不能回看、換組重設、跳過字卡模式、計數不變）；全部 43 支 verify 腳本、`tsc --noEmit`、`npm run build` 通過。尚未上傳 GitHub Pages（請用 `上傳更新.command`）。
+
+### §9.225 遊戲室同步第一階段：「我的角色」三款遊戲上公開版（2026-10-20，App 端）
+- **範圍**：角色工作室（含造型商店、拍照相簿）、賽跑、爬樹＋共用遊戲框架（`app/src/game/`）＋美術套件 `assets/game-tokens/` v2.1.0，全部從 LetsGo 同步。填字／戳泡泡維持公開版自己的版本（按主題出題），翻牌配對不變。
+- **同步方式**：新增 `scripts/sync-games-from-letsgo.sh`（`bash scripts/sync-games-from-letsgo.sh`）。只複製 `app/src/game/*`、`app/src/games/{characterStudio,race,treeClimb}*`、`app/games/{character-studio,race,tree-climb}.html`、`assets/game-tokens/*`；唯一的文字轉換是 localStorage／IndexedDB 前綴 `levelUnitReview.` → `englishForKids.`（兩邊紀錄各自獨立）。只新增／覆蓋，不刪檔。之後 LetsGo 改了遊戲：雙擊根目錄的 `同步遊戲.command`（執行同步腳本，再問要不要接著跑 `上傳更新.command`）。
+- **公開版轉接檔（不在同步範圍，LetsGo 的同名檔絕對不要複製過來）**：
+  - `app/src/storage.ts`：同名同介面，只用 localStorage；`flushPending()` 直接完成、同步狀態固定 `local`、`bootThen()` 直接載入。不送任何 `/api` 請求。
+  - `app/src/pin.ts`：`isLoginRemembered()` 永遠 true（公開版沒有密碼；LetsGo 的 pin.ts 含家人密碼雜湊）。
+  - `app/src/badgeRules.ts`：`evaluateRuleBadge()` 一律回傳 null——角色工作室 CS-01～07、賽跑 RC-01～05 徽章**第一階段不判定、不顯示**（第二階段再接）。
+  - `types.ts`：加上 Race／TreeClimb／CharacterStudio 存檔型別；`BadgeCategory` 加 `character_studio`／`race`／`tree_climb`（沒有資料、不在徽章頁排序裡，不會顯示）。
+- **主頁**：遊戲室最前面加「我的角色」「賽跑」「爬樹」三張卡（`app/src/myCharacterCards.ts`，由 `main.ts` **動態 import**，遊戲美術套件不進主頁初始程式）。點卡片同視窗進 `games/*.html?from=gameRoom`；離開遊戲回 `index.html#gameRoom`，`main.ts` 讀 hash 直接顯示遊戲室並清掉 hash。首頁「我的角色」入口、角色頭像取代動物頭像：第二階段。
+- **代幣**：沿用公開版 `gameTokens.ts`（每輪 +5）。賽跑／爬樹每場扣 5、贏了不發；工作室第一次存檔 +10、第一張照片 +5；商店用代幣買造型。
+- **單檔展示版**：`vite.config.ts` define `__STANDALONE__=false`、`vite.standalone.config.ts` 為 true；單檔版不顯示三張卡（程式在建置時被移除）。
+- **順帶修 LetsGo**：賽跑頁開啟就報錯（`insertBefore`，LetsGo §41 把角色包進 `.gstage-world` 造成），已在 LetsGo `race.ts` 修正後再同步（見 LetsGo HANDOFF §44）。
+- **驗證**（Linux 複本 `npm ci`）：`tsc --noEmit`、`npm run build`、`build:standalone`、全部 verify 腳本通過。Playwright（站台放在 `/english-for-kids/` 子路徑模擬 GitHub Pages）：1180×820、844×390（觸控）、390×844（觸控）——遊戲室五張卡、工作室按「隨機」後存檔寫入 `englishForKids.character.v1.<id>` 且代幣 +10、返回後回到遊戲室、賽跑與爬樹開局各扣 5 代幣並正常開跑；沒有水平捲動；**零個 `/api` 請求、除既有 Google Fonts 外沒有對外請求**、無 console error。build 產物搜尋不到 `levelUnitReview`、密碼雜湊、`/api/sync`、教材書名。
+- 尚未上傳 GitHub Pages（請用 `上傳更新.command`）。
+
+### §9.226 遊戲室同步第二階段：遊戲、代幣規則、上架閘門全部跟 LetsGo 一致（2026-10-25，App 端，使用者要求「除了課程以外同步遊戲室內容」）
+- **使用者決定**：代幣規則一起換成 LetsGo 的新規則；遊戲相關徽章**先不接**（`badgeRules.ts` 維持一律回傳 null）。
+- **遊戲**：我的角色、賽跑、爬樹＋新增**火箭發射**、**打地鼠**；框架 `app/src/game/*`（含 `rocketStore.ts`、`moleStore.ts`）、美術套件 `assets/game-tokens/` v2.3.0 → **v2.10.0**（宇宙空間、海底、咪頭、森林蜜蜂／蝙蝠、天氣、火箭與打地鼠素材…）。課程內容完全沒動；填字／戳泡泡維持公開版自己的版本（按主題出題）。
+- **同步腳本改版**：`scripts/sync-games-from-letsgo.sh` 只負責找 Node.js，實際工作在新的 `scripts/sync-games-from-letsgo.mjs`：
+  - 依 LetsGo `content/games/games.json` 自動決定要帶哪些遊戲：`kind` 是 studio／character 且 `status` 是 `active`；LetsGo 還在遊戲實驗室（`in_development`）的不帶。
+  - 公開版 `games.json` 會被合併：我的角色類換成 LetsGo 的，公開版自己的 learning 類保留。
+  - 另外同步 `gameTokens.ts`（代幣規則）、`gameRelease.ts`（上架閘門）、`gamePages.ts`（建置清單）、遊戲實驗室（`lab.html`、`src/lab/*`、`vite.lab.config.ts`）、`content/schema/game.schema.json`。
+  - 前綴轉換照舊（`levelUnitReview.` → `englishForKids.`）。
+  - 新增檢查：同步過來的程式用到公開版轉接檔（storage／pin／speech／content…）的名稱，必須都有 export，不然停下來列出缺什麼；新遊戲沒有專屬卡片時提醒（會先用通用卡片顯示）。
+  - `同步遊戲.command` 說明文字同步更新。
+- **公開版轉接檔補充**（不在同步範圍）：
+  - `storage.ts` 加 `serverSyncEnabled()`（一律 false，相簿不會連伺服器）；
+  - `pin.ts` 加 `rememberLogin()`（空函式，給遊戲實驗室用）；
+  - `speech.ts` 加 `unlockSpeech()`（火箭、打地鼠在第一次點擊時解鎖 iOS 語音）。
+- **上架閘門**（跟 LetsGo 同一套，見 LetsGo `docs/GAME-PRODUCTION-SPEC.md` §2）：
+  - 資料：`games.json` 每一筆都有 `kind`、`page`，`status` 多了 `in_development`；翻牌配對登記成 `disabled`（原本就沒列出）；`types.ts` 的 `GameConfig` 同步更新。
+  - 建置：`vite.config.ts` 改用 `gamePageInputs({ lab: false })`，只打包 `active` 的遊戲頁，不再寫死；`voice-lab.html` 照舊。
+  - 遊戲室卡片：「我的角色」卡片（`myCharacterCards.ts`）改成依 `games.json` 產生、經 `isGamePlayable`。賽跑、爬樹、火箭、打地鼠有專屬卡片（顯示個人紀錄）；沒有專屬寫法的新遊戲用通用卡片。主題小遊戲只列 learning 類。
+  - 遊戲實驗室：`npm run lab`（http://localhost:5190/lab.html）、`npm run build:lab`（輸出 `dist-lab/`，已加進 `.gitignore`）。
+- **代幣規則（跟 LetsGo 一樣）**：
+  - 公開版原本「每輪固定 +5」改成：第一次完成 12、第一次滿分 +6、刷新最高分 4、複習 3（不限次數）× 題型加權。
+  - 公開版沒有單元加成（主題一律 ×1）；多一個「短文理解 choice」題型，加權給 1.5。
+  - 每輪保底 3；完成後 2 分鐘內開始另一個題型，那一輪 ×2（連續挑戰）。
+  - 今日第一輪寶箱：Lv.1–5 送 20／22／24／27／30，連續天數升級、中斷一天退一級。
+  - 完成畫面顯示代幣明細＋代幣雨；首頁與題型選單有寶箱提示。
+  - 數值直接讀 `assets/game-tokens/game-tokens.json` 的 `economy`（只打包這一段，主頁程式只多約 10 KB）。
+  - 賽跑、爬樹、火箭、打地鼠每場扣 5，玩遊戲不賺代幣。
+- **畫面**：代幣改金色硬幣「G」（原本藍色圓圈「K」）；遊戲室代幣區改深紫夜空底＋72px 大金幣（`style.css` 最後一段，同名規則覆蓋舊樣式）。
+- **驗證**（Linux 複本 `npm ci`）：
+  - 建置與腳本：`tsc --noEmit`、`npm run build`、`build:lab`、`build:standalone` 通過；全部 **45** 支 verify 通過，包含：
+    - 新增 `verify-token-economy.ts`（從 LetsGo 改寫：主題、choice）、`verify-game-release.ts`（公開版專用：清單、閘門、前綴、沒有 `?test` 後門；本機 `dist/` 有舊檔只提醒，因為 `emptyOutDir` 是 false，正式站由 GitHub Actions 重新建置）；
+    - 修改 `verify-game-tokens-logic.ts`（改檢查 `awardRoundTokens`）。
+  - Playwright（站台放在 `/english-for-kids/` 子路徑）：
+    - 1024 寬：昨天領過 Lv.2 的使用者首頁出現「寶箱 Lv.3 +24」→ Greetings 配對全對 → 「打開今日寶箱！獲得 42 個遊戲代幣」（12＋6＋24）、代幣雨、連續挑戰倒數；
+    - 遊戲室七張卡依序是我的角色、賽跑、爬樹、火箭發射、打地鼠、填字遊戲、戳泡泡，深紫代幣區＋金色 G；
+    - 390 寬（觸控）沒有水平捲動；五個遊戲頁都能開；實驗室列出 8 款（含已下架的翻牌配對）；`lab.html` 在正式建置裡 404；
+    - 沒有 `/api` 請求、無 console error。
+- **尚未上傳 GitHub Pages**：§9.225 與這一節都還沒 commit。請雙擊 `上傳更新.command`（會一起上傳）。
+- 之後 LetsGo 改了遊戲：雙擊 `同步遊戲.command` 即可。新遊戲在 LetsGo 上架（`active`）後才會被帶過來。

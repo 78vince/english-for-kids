@@ -1,0 +1,1689 @@
+/* 火箭發射遊戲樣式：完全遵循遊戲室規範（--g-* token、.gpage、.gstage、.vpad、白色控制艙） */
+@import "../game/gamePage.css";
+
+#rocket-app,
+.rocket-page {
+  gap: 8px;
+  padding-left: max(12px, env(safe-area-inset-left));
+  padding-right: max(12px, env(safe-area-inset-right));
+  padding-top: max(8px, env(safe-area-inset-top));
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+  background: var(--g-surface);
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  font-family: var(--g-font-ui);
+  color: var(--g-ink);
+}
+
+/* ==================== 
+   頂部導覽列 
+   ==================== */
+.rocket-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  min-height: 48px;
+  height: 48px;
+}
+
+.rocket-who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.rocket-who-avatar svg {
+  display: block;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--g-sky-soft);
+}
+
+.rocket-who-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.rocket-who-text strong {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 9em;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--g-ink);
+}
+
+.rocket-title-line {
+  color: var(--g-sky-deep);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.rocket-top-spacer {
+  flex: 1;
+}
+
+/* 頂部 HUD 狀態標籤 */
+.rocket-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--g-radius-pill);
+  font-weight: 800;
+  font-size: 14px;
+  background: var(--g-surface-raised);
+  box-shadow: 0 2px 0 var(--g-stone-ledge);
+  color: var(--g-ink);
+}
+
+.rocket-coin-chip {
+  background: var(--g-sun-soft);
+  color: var(--g-sun-deep);
+  box-shadow: 0 2px 0 var(--g-sun-ledge);
+  gap: 5px;
+}
+
+.rocket-timer-chip {
+  background: var(--g-peach-soft);
+  color: var(--g-peach-deep);
+  box-shadow: 0 2px 0 var(--g-peach-ledge);
+  font-size: 16px;
+}
+
+.rocket-timer-chip.urgent {
+  background: var(--g-rose-soft);
+  color: var(--g-rose-deep);
+  animation: pulseUrgent 0.6s infinite alternate;
+}
+
+@keyframes pulseUrgent {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.06); }
+}
+
+/* ==================== 
+   中央主舞台（.gstage）
+   ==================== */
+.rocket-stage {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--g-radius-xl);
+  box-shadow: var(--g-shadow-lift);
+  background: var(--g-space-night-sky-top);
+  contain: layout paint;
+}
+
+/* 垂直世界 500vh 背景層 */
+.rocket-sky-world {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 500vh;
+  bottom: 0;
+  will-change: transform;
+  transform: translateY(0vh);
+  background: linear-gradient(
+    to top,
+    var(--g-sky-soft) 0%,       /* 0~500m 地表發射場晴空 */
+    var(--g-sky) 18%,      /* 500~3,000m 雲層、熱氣球、齊柏林飛船與飛機 */
+    var(--g-sky-deep) 38%,      /* 3,000~10,000m 平流層湛藍 */
+    var(--g-space-day-sky-top) 60%,      /* 10,000~30,000m 中氣層深墨紫黑 */
+    var(--g-space-night-sky-bottom) 80%,      /* 30,000m+ 外太空黑夜 */
+    var(--g-space-night-sky-top) 100%
+  );
+}
+
+.rocket-bg-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ====================
+   STAGE 1: 0m ~ 500m 地表發射基地、遠山、高樓群、直升機與起飛濃煙
+   ==================== */
+.stage1-ground-group {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 90vh;
+  pointer-events: none;
+}
+
+/* 遠山背景（層次雪山群） */
+.stage1-distant-mountains {
+  position: absolute;
+  bottom: 110px;
+  left: 0;
+  right: 0;
+  height: 180px;
+  opacity: 0.9;
+}
+
+/* 遠景城市大樓天際線（高樓大廈群） */
+.stage1-city-skyline {
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  height: 110px;
+  opacity: 0.82;
+}
+
+/* 低空飛鳥群 */
+.stage1-birds {
+  position: absolute;
+  bottom: 270px;
+  left: 18%;
+  width: 90px;
+  height: 40px;
+  animation: birdFly 12s linear infinite;
+}
+
+@keyframes birdFly {
+  0% { transform: translateX(-40px) translateY(0); }
+  50% { transform: translateX(80px) translateY(-15px); }
+  100% { transform: translateX(200px) translateY(0); }
+}
+
+/* 直升機（低空巡邏、雙旋翼旋轉） */
+.stage1-helicopter {
+  position: absolute;
+  bottom: 370px;
+  left: -120px;
+  width: 100px;
+  height: 52px;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
+  animation: heliPatrol 16s linear infinite;
+}
+
+@keyframes heliPatrol {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(calc(55vw + 60px)) translateY(-16px); }
+  100% { transform: translateX(calc(105vw + 140px)) translateY(0); }
+}
+
+.heli-rotor-main {
+  transform-origin: 47px 6px;
+  animation: rotorSpinMain 0.08s linear infinite;
+}
+
+@keyframes rotorSpinMain {
+  0% { transform: scaleX(1); }
+  50% { transform: scaleX(-1); }
+  100% { transform: scaleX(1); }
+}
+
+.heli-rotor-tail {
+  transform-origin: 5px 18px;
+  animation: rotorSpinTail 0.08s linear infinite;
+}
+
+@keyframes rotorSpinTail {
+  0% { transform: scaleY(1); }
+  50% { transform: scaleY(-1); }
+  100% { transform: scaleY(1); }
+}
+
+/* 地表發射平台總成 */
+.stage1-launch-station {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--g-ink);
+  border-top: 5px solid var(--g-ink-soft);
+}
+
+/* 發射台中央基座（底座頂高 38px，火箭底座吻合貼齊） */
+.stage1-pad-deck {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 170px;
+  height: 38px;
+  background: var(--g-ink);
+  border: 3px solid var(--g-stone-deep);
+  border-radius: 6px 6px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 16px;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.stage1-exhaust-trench {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 76px;
+  height: 18px;
+  background: var(--g-ink);
+  border-top: 2px solid var(--g-ink-soft);
+  border-radius: 4px 4px 0 0;
+}
+
+.stage1-clamp-arm {
+  width: 15px;
+  height: 34px;
+  background: var(--g-stone-deep);
+  border: 2px solid var(--g-stone-ledge);
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  z-index: 2;
+}
+
+.stage1-clamp-left {
+  transform: rotate(5deg);
+}
+
+.stage1-clamp-right {
+  transform: rotate(-5deg);
+}
+
+/* 巨型發射導航塔架（右側） */
+.stage1-tower {
+  position: absolute;
+  bottom: 16px;
+  left: calc(50% + 78px);
+  width: 52px;
+  height: 220px;
+}
+
+/* ====================
+   發射起飛時「完全不透明」起飛濃煙（無陰影、升空時平滑擴散消散過程動畫）
+   ==================== */
+.stage1-launch-smoke {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 380px;
+  height: 105px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 25;
+}
+
+.stage1-launch-smoke.billowing {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+  transition: opacity 0.25s ease-out;
+}
+
+.stage1-launch-smoke.dissipating {
+  animation: smokeDissipate 1.6s cubic-bezier(0.2, 0.8, 0.35, 1) forwards;
+}
+
+@keyframes smokeDissipate {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  30% {
+    opacity: 0.9;
+    transform: translateX(-50%) translateY(-14px) scale(1.08);
+  }
+  65% {
+    opacity: 0.45;
+    transform: translateX(-50%) translateY(-30px) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-48px) scale(1.35);
+  }
+}
+
+.stage1-launch-smoke .smoke-puff {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--g-surface-raised);
+  opacity: 1; /* 完全不透明、無陰影效果 */
+  box-shadow: none;
+}
+
+/* 左側噴湧濃煙群 */
+.stage1-launch-smoke.billowing .smoke-l1,
+.stage1-launch-smoke.dissipating .smoke-l1 {
+  width: 85px;
+  height: 70px;
+  left: 60px;
+  bottom: 4px;
+  background: var(--g-surface-raised);
+  animation: billowLeftDense 0.75s ease-out infinite alternate;
+}
+
+.stage1-launch-smoke.billowing .smoke-l2,
+.stage1-launch-smoke.dissipating .smoke-l2 {
+  width: 95px;
+  height: 80px;
+  left: 15px;
+  bottom: 0px;
+  background: var(--g-surface-raised);
+  animation: billowLeftDense 0.85s ease-out infinite alternate-reverse;
+}
+
+.stage1-launch-smoke.billowing .smoke-l3,
+.stage1-launch-smoke.dissipating .smoke-l3 {
+  width: 105px;
+  height: 85px;
+  left: -35px;
+  bottom: 8px;
+  background: var(--g-surface-sunken);
+  animation: billowLeftFar 0.9s ease-out infinite alternate;
+}
+
+.stage1-launch-smoke.billowing .smoke-l4,
+.stage1-launch-smoke.dissipating .smoke-l4 {
+  width: 75px;
+  height: 65px;
+  left: -65px;
+  bottom: 18px;
+  background: var(--g-stone-soft);
+  animation: billowLeftFar 0.8s ease-out infinite alternate-reverse;
+}
+
+.stage1-launch-smoke.billowing .smoke-l5,
+.stage1-launch-smoke.dissipating .smoke-l5 {
+  width: 60px;
+  height: 50px;
+  left: 80px;
+  bottom: 22px;
+  background: var(--g-surface-raised);
+  animation: billowLeftDense 0.7s ease-out infinite alternate;
+}
+
+/* 右側噴湧濃煙群 */
+.stage1-launch-smoke.billowing .smoke-r1,
+.stage1-launch-smoke.dissipating .smoke-r1 {
+  width: 85px;
+  height: 70px;
+  right: 60px;
+  bottom: 4px;
+  background: var(--g-surface-raised);
+  animation: billowRightDense 0.75s ease-out infinite alternate;
+}
+
+.stage1-launch-smoke.billowing .smoke-r2,
+.stage1-launch-smoke.dissipating .smoke-r2 {
+  width: 95px;
+  height: 80px;
+  right: 15px;
+  bottom: 0px;
+  background: var(--g-surface-raised);
+  animation: billowRightDense 0.85s ease-out infinite alternate-reverse;
+}
+
+.stage1-launch-smoke.billowing .smoke-r3,
+.stage1-launch-smoke.dissipating .smoke-r3 {
+  width: 105px;
+  height: 85px;
+  right: -35px;
+  bottom: 8px;
+  background: var(--g-surface-sunken);
+  animation: billowRightFar 0.9s ease-out infinite alternate;
+}
+
+.stage1-launch-smoke.billowing .smoke-r4,
+.stage1-launch-smoke.dissipating .smoke-r4 {
+  width: 75px;
+  height: 65px;
+  right: -65px;
+  bottom: 18px;
+  background: var(--g-stone-soft);
+  animation: billowRightFar 0.8s ease-out infinite alternate-reverse;
+}
+
+.stage1-launch-smoke.billowing .smoke-r5,
+.stage1-launch-smoke.dissipating .smoke-r5 {
+  width: 60px;
+  height: 50px;
+  right: 80px;
+  bottom: 22px;
+  background: var(--g-surface-raised);
+  animation: billowRightDense 0.7s ease-out infinite alternate;
+}
+
+/* 中央劇烈向上翻滾大雲團 */
+.stage1-launch-smoke.billowing .smoke-c1,
+.stage1-launch-smoke.dissipating .smoke-c1 {
+  width: 90px;
+  height: 75px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 2px;
+  background: var(--g-surface-raised);
+  animation: billowCenterDense 0.65s ease-out infinite alternate;
+}
+
+.stage1-launch-smoke.billowing .smoke-c2,
+.stage1-launch-smoke.dissipating .smoke-c2 {
+  width: 110px;
+  height: 85px;
+  left: 45%;
+  transform: translateX(-50%);
+  bottom: 14px;
+  background: var(--g-surface-raised);
+  animation: billowCenterDense 0.75s ease-out infinite alternate-reverse;
+}
+
+.stage1-launch-smoke.billowing .smoke-c3,
+.stage1-launch-smoke.dissipating .smoke-c3 {
+  width: 80px;
+  height: 65px;
+  left: 55%;
+  transform: translateX(-50%);
+  bottom: 25px;
+  background: var(--g-surface-raised);
+  animation: billowCenterDense 0.8s ease-out infinite alternate;
+}
+
+.stage1-launch-smoke.billowing .smoke-c4,
+.stage1-launch-smoke.dissipating .smoke-c4 {
+  width: 100px;
+  height: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -4px;
+  background: var(--g-stone);
+  z-index: -1;
+  animation: billowCenterDense 0.7s ease-out infinite alternate;
+}
+
+@keyframes billowLeftDense {
+  0% { transform: translateX(0) translateY(0) scale(0.9); }
+  100% { transform: translateX(-35px) translateY(-14px) scale(1.22); }
+}
+
+@keyframes billowLeftFar {
+  0% { transform: translateX(0) translateY(0) scale(0.85); }
+  100% { transform: translateX(-55px) translateY(-18px) scale(1.3); }
+}
+
+@keyframes billowRightDense {
+  0% { transform: translateX(0) translateY(0) scale(0.9); }
+  100% { transform: translateX(35px) translateY(-14px) scale(1.22); }
+}
+
+@keyframes billowRightFar {
+  0% { transform: translateX(0) translateY(0) scale(0.85); }
+  100% { transform: translateX(55px) translateY(-18px) scale(1.3); }
+}
+
+@keyframes billowCenterDense {
+  0% { transform: translateX(-50%) translateY(0) scale(0.88); }
+  100% { transform: translateX(-50%) translateY(-22px) scale(1.25); }
+}
+
+/* ====================
+   STAGE 2: 500m ~ 3,000m 豐富多層雲海、對稱熱氣球、齊柏林飛船、噴射客機
+   ==================== */
+.stage2-cloud-group {
+  position: absolute;
+  bottom: 95vh;
+  left: 0;
+  right: 0;
+  height: 90vh;
+  pointer-events: none;
+}
+
+/* 共通白雲外型（立體蓬鬆、完全不透明） */
+.stage1-cloud,
+.stage2-cloud {
+  position: absolute;
+  background: var(--g-surface-raised);
+  border-radius: 50px;
+  opacity: 1 !important;
+  box-shadow: 0 6px 14px rgba(71, 85, 105, 0.12);
+}
+
+.stage1-cloud::before,
+.stage1-cloud::after,
+.stage2-cloud::before,
+.stage2-cloud::after {
+  content: "";
+  position: absolute;
+  background: var(--g-surface-raised);
+  border-radius: 50%;
+}
+
+/* 雲朵 1 (低層大雲團，左) */
+.stage2-cloud-1 {
+  width: 200px;
+  height: 55px;
+  left: -20px;
+  bottom: 8%;
+}
+.stage2-cloud-1::before {
+  width: 80px;
+  height: 80px;
+  top: -38px;
+  left: 35px;
+}
+.stage2-cloud-1::after {
+  width: 65px;
+  height: 65px;
+  top: -28px;
+  left: 95px;
+}
+
+/* 雲朵 2 (右下蓬鬆雲) */
+.stage2-cloud-2 {
+  width: 170px;
+  height: 48px;
+  right: 6%;
+  bottom: 18%;
+}
+.stage2-cloud-2::before {
+  width: 68px;
+  height: 68px;
+  top: -32px;
+  left: 30px;
+}
+.stage2-cloud-2::after {
+  width: 55px;
+  height: 55px;
+  top: -24px;
+  left: 85px;
+}
+
+/* 雲朵 3 (左側中層雲) */
+.stage2-cloud-3 {
+  width: 150px;
+  height: 44px;
+  left: 18%;
+  bottom: 34%;
+}
+.stage2-cloud-3::before {
+  width: 60px;
+  height: 60px;
+  top: -28px;
+  left: 25px;
+}
+.stage2-cloud-3::after {
+  width: 50px;
+  height: 50px;
+  top: -22px;
+  left: 70px;
+}
+
+/* 雲朵 4 (右側大雲山) */
+.stage2-cloud-4 {
+  width: 230px;
+  height: 60px;
+  right: -30px;
+  bottom: 46%;
+}
+.stage2-cloud-4::before {
+  width: 90px;
+  height: 90px;
+  top: -42px;
+  left: 45px;
+}
+.stage2-cloud-4::after {
+  width: 75px;
+  height: 75px;
+  top: -32px;
+  left: 115px;
+}
+
+/* 雲朵 5 (中央小浮雲) */
+.stage2-cloud-5 {
+  width: 120px;
+  height: 38px;
+  left: 42%;
+  bottom: 60%;
+}
+.stage2-cloud-5::before {
+  width: 48px;
+  height: 48px;
+  top: -22px;
+  left: 20px;
+}
+.stage2-cloud-5::after {
+  width: 40px;
+  height: 40px;
+  top: -16px;
+  left: 55px;
+}
+
+/* 雲朵 6 (高空厚雲層，左) */
+.stage2-cloud-6 {
+  width: 180px;
+  height: 50px;
+  left: 4%;
+  bottom: 74%;
+}
+.stage2-cloud-6::before {
+  width: 72px;
+  height: 72px;
+  top: -34px;
+  left: 32px;
+}
+.stage2-cloud-6::after {
+  width: 58px;
+  height: 58px;
+  top: -26px;
+  left: 90px;
+}
+
+/* 雲朵 7 (平流層交界雲橋，右) */
+.stage2-cloud-7 {
+  width: 210px;
+  height: 56px;
+  right: 10%;
+  bottom: 88%;
+}
+.stage2-cloud-7::before {
+  width: 82px;
+  height: 82px;
+  top: -38px;
+  left: 40px;
+}
+.stage2-cloud-7::after {
+  width: 66px;
+  height: 66px;
+  top: -28px;
+  left: 105px;
+}
+
+/* 經典對稱彩色熱氣球（造型圓潤無變形，高明度暖色系） */
+.stage2-hot-balloon {
+  position: absolute;
+  bottom: 24%;
+  left: 8%;
+  width: 124px;
+  height: 160px;
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.12)) brightness(1.12);
+  animation: floatBalloon 4.5s ease-in-out infinite alternate;
+}
+
+@keyframes floatBalloon {
+  0% { transform: translateY(0) rotate(-2.5deg); }
+  100% { transform: translateY(-24px) rotate(2.5deg); }
+}
+
+/* 齊柏林巨型飛船（優雅橫越天際，機頭朝右向前由左向右航行） */
+.stage2-zeppelin {
+  position: absolute;
+  bottom: 72%;
+  left: -200px;
+  width: 160px;
+  height: 64px;
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.22));
+  animation: zeppelinCruiseRight 24s linear infinite;
+}
+
+@keyframes zeppelinCruiseRight {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(calc(55vw + 100px)) translateY(-14px); }
+  100% { transform: translateX(calc(110vw + 240px)) translateY(0); }
+}
+
+/* 高空噴射客機（從左飛向右，機頭在前、凝結尾在後） */
+.stage2-airplane {
+  position: absolute;
+  bottom: 52%;
+  left: -140px;
+  width: 120px;
+  height: 46px;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.18));
+  animation: airplaneFlyRight 13s linear infinite;
+}
+
+@keyframes airplaneFlyRight {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(calc(55vw + 70px)) translateY(-14px); }
+  100% { transform: translateX(calc(105vw + 160px)) translateY(-22px); }
+}
+
+/* ====================
+   STAGE 3: 3,000m ~ 10,000m 平流層雙層極光、流星群、高空卷雲
+   ==================== */
+.stage3-aurora-group {
+  position: absolute;
+  bottom: 190vh;
+  left: 0;
+  right: 0;
+  height: 90vh;
+  pointer-events: none;
+}
+
+.stage3-cirrus {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 40px;
+  filter: blur(2px);
+}
+
+.stage3-aurora-wave {
+  position: absolute;
+  top: 25%;
+  left: -20%;
+  right: -20%;
+  height: 180px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(34, 211, 238, 0.4) 20%,
+    rgba(74, 222, 128, 0.5) 45%,
+    rgba(192, 132, 252, 0.45) 75%,
+    transparent 100%
+  );
+  filter: blur(28px);
+  transform: skewY(-6deg);
+  animation: waveAurora 6s ease-in-out infinite alternate;
+}
+
+.stage3-aurora-wave-2 {
+  position: absolute;
+  top: 45%;
+  left: -15%;
+  right: -15%;
+  height: 140px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(168, 85, 247, 0.35) 25%,
+    rgba(56, 189, 248, 0.45) 60%,
+    transparent 100%
+  );
+  filter: blur(22px);
+  transform: skewY(5deg);
+  animation: waveAurora 7.5s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes waveAurora {
+  0% { opacity: 0.45; transform: skewY(-6deg) translateY(0); }
+  100% { opacity: 0.9; transform: skewY(-2deg) translateY(-30px); }
+}
+
+.stage3-shooting-star {
+  position: absolute;
+  width: 140px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--g-surface-raised), rgba(56, 189, 248, 0.8), transparent);
+  transform: rotate(-35deg);
+  opacity: 0.85;
+}
+
+/* ====================
+   STAGE 4: 10,000m ~ 30,000m 中氣層地球弧線、太空站 ISS、人造衛星
+   ==================== */
+.stage4-mesosphere-group {
+  position: absolute;
+  bottom: 285vh;
+  left: 0;
+  right: 0;
+  height: 90vh;
+  pointer-events: none;
+}
+
+.stage4-earth-curve {
+  position: absolute;
+  bottom: -60px;
+  left: -30%;
+  right: -30%;
+  height: 200px;
+  border-radius: 50% 50% 0 0;
+  background: linear-gradient(to top, rgba(14, 165, 233, 0.4), transparent 75%);
+  border-top: 4px solid rgba(56, 189, 248, 0.7);
+  filter: drop-shadow(0 -6px 20px rgba(56, 189, 248, 0.6));
+}
+
+.stage4-iss {
+  position: absolute;
+  top: 22%;
+  left: 8%;
+  width: 110px;
+  height: 60px;
+  animation: orbitISS 9s ease-in-out infinite alternate;
+}
+
+@keyframes orbitISS {
+  0% { transform: translateY(0) rotate(-4deg); }
+  100% { transform: translateY(-16px) rotate(4deg); }
+}
+
+.stage4-satellite {
+  position: absolute;
+  top: 36%;
+  right: 12%;
+  width: 95px;
+  height: 75px;
+  animation: orbitSatellite 7s ease-in-out infinite alternate;
+}
+
+@keyframes orbitSatellite {
+  0% { transform: translateY(0) rotate(-8deg); }
+  100% { transform: translateY(-22px) rotate(8deg); }
+}
+
+/* ====================
+   STAGE 5: 30,000m+ 外太空黑夜、土星環、火星、隕石群、月球與 UFO
+   ==================== */
+.stage5-space-group {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 115vh;
+  pointer-events: none;
+}
+
+.stage5-stars-field {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(1.5px 1.5px at 25px 35px, var(--g-surface-raised), transparent),
+    radial-gradient(2px 2px at 110px 85px, var(--g-sun-soft), transparent),
+    radial-gradient(1.5px 1.5px at 210px 170px, var(--g-surface-raised), transparent),
+    radial-gradient(2.5px 2.5px at 320px 55px, var(--g-sky-soft), transparent),
+    radial-gradient(1.5px 1.5px at 450px 130px, var(--g-surface-raised), transparent),
+    radial-gradient(2px 2px at 580px 95px, var(--g-stone), transparent);
+  background-repeat: repeat;
+  background-size: 240px 240px;
+}
+
+.stage5-saturn {
+  position: absolute;
+  top: 15vh;
+  left: 8%;
+  width: 130px;
+  height: 90px;
+  filter: drop-shadow(0 0 16px rgba(251, 191, 36, 0.4));
+  animation: floatPlanet 10s ease-in-out infinite alternate;
+}
+
+.stage5-mars {
+  position: absolute;
+  top: 36vh;
+  right: 22%;
+  width: 72px;
+  height: 72px;
+  filter: drop-shadow(0 0 14px rgba(239, 68, 68, 0.35));
+}
+
+.stage5-asteroid {
+  position: absolute;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
+}
+
+.stage5-asteroid-1 {
+  top: 24vh;
+  right: 8%;
+  width: 48px;
+  height: 42px;
+  animation: rotateAsteroid 20s linear infinite;
+}
+
+.stage5-asteroid-2 {
+  top: 48vh;
+  left: 14%;
+  width: 36px;
+  height: 32px;
+  animation: rotateAsteroid 16s linear infinite reverse;
+}
+
+@keyframes rotateAsteroid {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes floatPlanet {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-12px); }
+}
+
+.stage5-moon {
+  position: absolute;
+  top: 8vh;
+  right: 10%;
+  width: 100px;
+  height: 100px;
+  filter: drop-shadow(0 0 20px rgba(254, 240, 138, 0.55));
+}
+
+.stage5-ufo {
+  position: absolute;
+  top: 28vh;
+  left: 20%;
+  width: 90px;
+  height: 64px;
+  animation: hoverUFO 4s ease-in-out infinite alternate;
+}
+
+@keyframes hoverUFO {
+  0% { transform: translateY(0) rotate(-6deg); }
+  100% { transform: translateY(-18px) rotate(6deg); }
+}
+
+/* ==================== 
+   舞台左側高度標尺 
+   ==================== */
+.rocket-alt-sidebar {
+  position: absolute;
+  left: 14px;
+  top: 16px;
+  bottom: 24px;
+  width: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.rocket-alt-track {
+  position: relative;
+  width: 6px;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  overflow: visible;
+}
+
+.rocket-alt-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0%;
+  background: var(--g-sky);
+  border-radius: 3px;
+  transition: height 0.08s linear;
+}
+
+.rocket-alt-target-line {
+  position: absolute;
+  top: 6%;
+  left: -4px;
+  right: -4px;
+  height: 2px;
+  background: var(--g-sun);
+}
+
+.rocket-alt-label {
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--g-surface-raised);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+}
+
+/* ==================== 
+   火箭主體與動態尾焰 
+   起點精準座落底座表面（底座頂高 38px，尾翼距底部 5px，底邊置於 33px，接觸完美無縫！）
+   ==================== */
+.rocket-actor-container {
+  position: absolute;
+  left: 50%;
+  bottom: 33px;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 165px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  transition: bottom 0.12s ease-out;
+}
+
+.rocket-actor-container.thrusting {
+  animation: rocketSubtleShake 0.06s infinite alternate;
+}
+
+@keyframes rocketSubtleShake {
+  0% { transform: translateX(calc(-50% - 1.2px)); }
+  100% { transform: translateX(calc(-50% + 1.2px)); }
+}
+
+.rocket-svg-wrap {
+  position: relative;
+  width: 100px;
+  height: 165px;
+}
+
+/* 圓形金屬舷窗框（始終保持顯示在火箭上） */
+.rocket-porthole-avatar {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--g-sky-soft);
+  border: 3px solid var(--g-stone-ledge);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: background 0.2s ease;
+}
+
+.rocket-porthole-avatar svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.rocket-porthole-glass {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, transparent 52%);
+  z-index: 3;
+}
+
+/* 停在發射台失敗時的驚訝對話框泡泡 */
+.rocket-stuck-bubble {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--g-surface-raised);
+  color: var(--g-ink);
+  font-size: 13px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: var(--g-radius-pill);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border: 2px solid var(--g-peach-deep);
+  white-space: nowrap;
+  animation: bubblePop 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+  z-index: 25;
+}
+
+@keyframes bubblePop {
+  0% { transform: translateX(-50%) scale(0.6); opacity: 0; }
+  100% { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+.rocket-thruster-flame {
+  position: absolute;
+  top: 151px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 0px;
+  opacity: 0;
+  transition: height 0.06s ease, opacity 0.1s ease, filter 0.1s ease;
+  transform-origin: top center;
+  pointer-events: none;
+}
+
+.rocket-thruster-flame.active {
+  opacity: 1;
+}
+
+/* ==================== 
+   失敗跳傘舞台（降落傘 Z 軸低於玩家角色） 
+   ==================== */
+.rocket-eject-stage {
+  position: absolute;
+  width: 120px;
+  height: 200px;
+  z-index: 30;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.rocket-eject-stage.descending {
+  opacity: 1;
+  animation: parachuteSlowDrift 4.6s cubic-bezier(0.2, 0.9, 0.4, 1) forwards;
+}
+
+@keyframes parachuteSlowDrift {
+  0% {
+    transform: translate(-50%, 0px) scale(0.9) rotate(0deg);
+  }
+  15% {
+    transform: translate(-50%, -45px) scale(1) rotate(-4deg);
+  }
+  35% {
+    transform: translate(calc(-50% - 20px), 30px) rotate(-7deg);
+  }
+  60% {
+    transform: translate(calc(-50% + 20px), 110px) rotate(7deg);
+  }
+  85% {
+    transform: translate(calc(-50% - 10px), 180px) rotate(-3deg);
+  }
+  100% {
+    transform: translate(-50%, 250px) rotate(0deg);
+  }
+}
+
+.rocket-eject-chute {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 80px;
+  z-index: 1;
+  transform-origin: bottom center;
+  animation: chuteOpen 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.35s both;
+}
+
+@keyframes chuteOpen {
+  0% { transform: translateX(-50%) scale(0); opacity: 0; }
+  100% { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+.rocket-eject-character {
+  position: absolute;
+  top: 65px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 90px;
+  z-index: 5;
+}
+
+/* ==================== 
+   過關 POP 畫面：背景太空艙內景＋下方數據儀表
+   ==================== */
+.rocket-cockpit-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 90;
+  animation: cockpitFadeIn 0.45s ease-out forwards;
+  padding: 12px;
+}
+
+@keyframes cockpitFadeIn {
+  0% { opacity: 0; transform: scale(0.94); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.cockpit-console-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: 94%;
+  border-radius: var(--g-radius-xl);
+  background: var(--g-surface-raised);
+  border: 5px solid var(--g-stone-soft);
+  box-shadow: var(--g-shadow-pop), 0 24px 48px rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  gap: 12px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.cockpit-cabin-scene {
+  position: relative;
+  width: 100%;
+  height: 205px;
+  border-radius: var(--g-radius-lg);
+  overflow: hidden;
+  border: 4px solid var(--g-stone);
+  background: var(--g-ink);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cockpit-cabin-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cockpit-porthole-view {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 144px;
+  height: 144px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--g-space-night-sky-top);
+  z-index: 3;
+}
+
+.cockpit-earth-mini {
+  position: absolute;
+  bottom: -65px;
+  right: -25px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--g-sky) 0%, var(--g-sky-deep) 70%, var(--g-space-night-sky-top) 100%);
+  box-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+  opacity: 0.95;
+}
+
+.cockpit-saturn-mini {
+  position: absolute;
+  top: 10px;
+  left: 8px;
+  width: 50px;
+  height: 32px;
+  opacity: 0.85;
+}
+
+.cockpit-porthole-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, transparent 60%);
+  border-radius: 50%;
+  z-index: 5;
+}
+
+.cockpit-zero-g-char {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -50px;
+  margin-top: -60px;
+  width: 100px;
+  height: 120px;
+  z-index: 10;
+  transform-origin: center center;
+  animation: zeroGFloatRotate 7.5s linear infinite;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.6));
+  pointer-events: none;
+}
+
+@keyframes zeroGFloatRotate {
+  0% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-8px) rotate(90deg); }
+  50% { transform: translateY(0px) rotate(180deg); }
+  75% { transform: translateY(8px) rotate(270deg); }
+  100% { transform: translateY(0px) rotate(360deg); }
+}
+
+.zero-g-floating-prop {
+  position: absolute;
+  font-size: 16px;
+  z-index: 8;
+  pointer-events: none;
+  animation: floatProp 4s ease-in-out infinite alternate;
+}
+
+.zero-g-star {
+  left: 22%;
+  top: 24%;
+  animation-delay: 0.3s;
+}
+
+.zero-g-star-2 {
+  right: 22%;
+  bottom: 24%;
+  animation-delay: 1.2s;
+}
+
+@keyframes floatProp {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-12px) rotate(25deg); }
+}
+
+/* 下半部：一體化遙測數據面板 */
+.cockpit-telemetry-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+}
+
+.telemetry-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.telemetry-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--g-ink);
+}
+
+.telemetry-subtitle {
+  font-size: 12px;
+  color: var(--g-ink-soft);
+}
+
+.telemetry-time-badge {
+  background: var(--g-sun-soft);
+  color: var(--g-sun-deep);
+  border: 1px solid var(--g-sun-ledge);
+  border-radius: var(--g-radius-md);
+  padding: 6px 12px;
+  font-weight: 800;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.new-record-tag {
+  background: var(--g-rose-deep);
+  color: var(--g-surface-raised);
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: var(--g-radius-pill);
+  font-weight: 900;
+  margin-left: 4px;
+}
+
+.telemetry-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.telemetry-item {
+  background: var(--g-surface-sunken);
+  border-radius: var(--g-radius-md);
+  padding: 8px 6px;
+}
+
+.telemetry-lbl {
+  font-size: 11px;
+  color: var(--g-ink-soft);
+  font-weight: 700;
+  display: block;
+}
+
+.telemetry-num {
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--g-ink);
+  display: block;
+  margin-top: 1px;
+}
+
+.telemetry-num.accent {
+  color: var(--g-sky-deep);
+}
+
+.telemetry-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.telemetry-actions .gbtn {
+  flex: 1;
+}
+
+/* ==================== 
+   底部控制按鈕區（A、B 按鍵完全置中對齊！） 
+   ==================== */
+.rocket-controls {
+  flex: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 16px;
+  min-height: 84px;
+}
+
+.rocket-speed-badge {
+  position: absolute;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rocket-speed-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--g-ink-soft);
+}
+
+.rocket-speed-val {
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--g-sky-deep);
+}
+
+.rocket-vpad-pair {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+.rocket-alt-hint {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--g-rose-deep);
+  color: var(--g-surface-raised);
+  font-size: 12px;
+  font-weight: 900;
+  padding: 3px 10px;
+  border-radius: var(--g-radius-pill);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  pointer-events: none;
+  animation: hintPop 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+  z-index: 60;
+}
+
+@keyframes hintPop {
+  0% { transform: translateX(-50%) scale(0.7); opacity: 0; }
+  100% { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+.vpad-k.suggest {
+  box-shadow: 0 0 14px var(--g-sun), 0 4px 0 var(--g-sun-ledge) !important;
+  animation: vpadPulse 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes vpadPulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+/* ==================== 
+   開場倒數 5-4-3-2-1-FIRE 
+   ==================== */
+.rocket-countdown-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(5px);
+  z-index: 100;
+}
+
+.rocket-countdown-number {
+  font-size: 80px;
+  font-weight: 900;
+  color: var(--g-sun);
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  animation: numPop 0.8s ease-out forwards;
+}
+
+@keyframes numPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.rocket-countdown-tip {
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--g-surface-raised);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+
+.rocket-start-btn {
+  margin-top: 18px;
+  padding: 12px 28px;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--g-surface-raised);
+  background: var(--g-sun);
+  border: none;
+  border-radius: var(--g-radius-pill);
+  box-shadow: 0 4px 0 var(--g-sun-ledge), 0 8px 16px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.rocket-start-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--g-sun-ledge);
+}
+
+/* ==================== 
+   失敗結算與代幣不足面板 
+   ==================== */
+.rocket-result-modal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  z-index: 120;
+  padding: 16px;
+}
+
+.rocket-result-card {
+  width: 100%;
+  max-width: 360px;
+  background: var(--g-surface-raised);
+  border-radius: var(--g-radius-xl);
+  box-shadow: var(--g-shadow-pop);
+  padding: 22px 18px;
+  text-align: center;
+  color: var(--g-ink);
+}
+
+.rocket-result-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--g-ink);
+  margin-bottom: 4px;
+}
+
+.rocket-result-subtitle {
+  font-size: 13px;
+  color: var(--g-ink-soft);
+  margin-bottom: 14px;
+}
+
+.rocket-result-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.rocket-stat-item {
+  background: var(--g-surface-sunken);
+  border-radius: var(--g-radius-md);
+  padding: 10px 8px;
+}
+
+.rocket-stat-label {
+  font-size: 11px;
+  color: var(--g-ink-soft);
+  font-weight: 700;
+}
+
+.rocket-stat-val {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--g-ink);
+  margin-top: 2px;
+}
+
+.rocket-stat-val.accent {
+  color: var(--g-sky-deep);
+}
+
+.rocket-result-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.rocket-result-actions .gbtn {
+  flex: 1;
+}
+
+.rocket-need-coins-card {
+  width: 100%;
+  max-width: 330px;
+  background: var(--g-surface-raised);
+  border-radius: var(--g-radius-xl);
+  box-shadow: var(--g-shadow-pop);
+  padding: 24px 20px;
+  text-align: center;
+  color: var(--g-ink);
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .stage1-launch-smoke.billowing .smoke-puff,
+  .stage1-launch-smoke.dissipating .smoke-puff,
+  .stage1-launch-smoke.dissipating,
+  .stage3-aurora-wave,
+  .stage3-aurora-wave-2,
+  .stage3-shooting-star,
+  .stage2-hot-balloon,
+  .stage2-zeppelin,
+  .stage2-airplane,
+  .heli-rotor-main,
+  .heli-rotor-tail {
+    animation: none !important;
+  }
+}

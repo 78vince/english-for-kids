@@ -92,7 +92,11 @@ export type BadgeCategory =
   | "total_days"
   | "performance"
   | "favorites"
-  | "healthy_habit";
+  | "healthy_habit"
+  // 2026-10-20：「我的角色」遊戲同步自 LetsGo，程式會比對這三個分類；公開版目前還沒有這三類的徽章資料。
+  | "character_studio"
+  | "race"
+  | "tree_climb";
 
 export interface Badge {
   id: string;
@@ -125,14 +129,21 @@ export interface ChangelogEntry {
 // 排列順序、顯示文字」，沒辦法無中生有生出遊戲玩法——每一款遊戲的實際互動邏輯都要
 // 另外寫一支對應的引擎模組（id 對應到模組檔名，例如 memory_match →
 // app/src/games/memoryMatchGame.ts），不是改這份 JSON 就能長出新遊戲。
+export type GameStatus = "in_development" | "coming_soon" | "active" | "disabled";
+
+/** content/games/games.json 的一筆（2026-10-25 跟 LetsGo 同格式，見 content/schema/game.schema.json） */
 export interface GameConfig {
-  id: string; // 對應 app 端遊戲引擎模組，例如 "memory_match" → memoryMatchGame.ts
+  id: string; // "crossword"／"bubble_pop"／"race"…
   name: string;
   description: string;
-  icon_placeholder: string; // 暫時用 emoji 當圖示佔位
-  cost: number; // 玩一次需要的遊戲代幣數量
-  status: "active" | "coming_soon" | "disabled";
-  order: number; // 遊戲室清單顯示順序，數字小的排前面
+  icon_placeholder: string;
+  /** studio＝角色工作室；learning＝主題小遊戲（iframe）；character＝用自己的角色玩的整頁遊戲 */
+  kind: "studio" | "learning" | "character";
+  page: string; // games/<name>.html
+  cost: number;
+  payout?: number; // 一律 0：玩遊戲不賺代幣
+  status: GameStatus;
+  order: number;
 }
 
 // 對應 content/schema/conversation.schema.json —— Stage E 會話練習的資料型別
@@ -196,4 +207,80 @@ export interface Crossword {
   gridWidth: number;
   gridHeight: number;
   words: CrosswordWordDef[];
+}
+
+// ---- 「我的角色」遊戲存檔型別（2026-10-20，與 LetsGo app/src/types.ts 同步；遊戲程式在 app/src/game/）----
+
+export interface RaceStageRecord {
+  best: number | null;
+  stars: number; // 0–3
+  wins: number;
+  hitsMin: number | null;
+}
+
+export interface RaceProfileData {
+  stages: Record<string, RaceStageRecord>;
+  losses?: number;
+  rewards?: {
+    badges?: string[];
+    titles?: string[];
+    trophy?: boolean;
+  };
+  stats?: {
+    played: number;
+    coinsSpent: number;
+  };
+}
+
+export interface TreeClimbLevelRecord {
+  bestAlt: number; // 最高到達高度（設計單位）
+  bestMeters: number; // 最高到達公尺數（alt / 50）
+  stars: number; // 0–3
+  climbs: number; // 遊玩次數
+  summits: number; // 登頂次數
+}
+
+export interface TreeClimbProfileData {
+  levels: Record<string, TreeClimbLevelRecord>;
+  rewards?: {
+    badges?: string[];
+    titles?: string[];
+  };
+  stats?: {
+    played: number;
+    coinsSpent: number;
+    totalMeters: number;
+    summits: number;
+    hourglassesPicked: number;
+    capesUsed: number;
+    falls: number;
+  };
+}
+
+export interface CharacterStudioSlot {
+  id: string;
+  name: string;
+  look: Record<string, unknown>;
+  scene?: { id: string; time: string; useSystemTime?: boolean };
+  createdAt?: number;
+  updatedAt?: number;
+}
+
+export interface CharacterStudioStats {
+  photos: number;
+  scenesShot: string[];
+  dayShot?: boolean;
+  nightShot?: boolean;
+  posesTried?: string[];
+  slotsEverSaved?: Record<string, string>;
+  poseMasterDone?: boolean;
+  firstSaveRewarded?: boolean;
+  firstPhotoRewarded?: boolean;
+}
+
+export interface CharacterStudioProfileData {
+  version: number;
+  activeSlot: number;
+  slots: CharacterStudioSlot[];
+  stats: CharacterStudioStats;
 }

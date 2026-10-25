@@ -1,8 +1,14 @@
 import { defineConfig } from "vite";
+import { gamePageInputs } from "./gamePages";
 
 // content/ 放在 app/ 外面（跟 docs/ 平行），是內容的 single source of truth。
 // 開發環境下 Vite 預設不允許存取專案根目錄以外的檔案，這裡放行給 ../content 使用。
 export default defineConfig({
+  // 單檔展示版（vite.standalone.config.ts）設 true，用來隱藏「我的角色」整頁遊戲
+  define: {
+    __STANDALONE__: JSON.stringify(false),
+    __LAB__: JSON.stringify(false),
+  },
   base: "./", // 相對路徑輸出，方便未來部署到 GitHub Pages 的專案子路徑
   server: {
     fs: {
@@ -30,15 +36,10 @@ export default defineConfig({
       input: {
         main: "index.html",
         voiceLab: "voice-lab.html",
-        // 遊戲室各獨立遊戲的進入點都放在 games/ 資料夾集中管理（見
-        // docs/handoff-prompt-memory-match-iframe-migration.md），這是第一款：
-        // 翻牌配對。之後每加一款新遊戲，這裡加一行就好。
-        memoryMatch: "games/memory-match.html",
-        // 第二款：填字遊戲（見 docs/handoff-prompt-crossword-game.md），從一開始就照
-        // 這個「獨立 iframe 頁面」架構做，不用像翻牌配對一樣事後遷移。
-        crossword: "games/crossword.html",
-        // 第三款：戳泡泡（見 docs/handoff-prompt-bubble-pop-game.md）
-        bubblePop: "games/bubble-pop.html",
+        // 2026-10-25：遊戲頁清單改由 content/games/games.json 決定（gamePages.ts，跟 LetsGo 同一套）：
+        // 只打包 status = "active" 的遊戲；開發中的遊戲只在遊戲實驗室（vite.lab.config.ts）打包，
+        // 正式站上打網址也打不開。新遊戲請登記到 games.json，不要在這裡手動加頁面。
+        ...gamePageInputs({ lab: false }),
       },
     },
   },

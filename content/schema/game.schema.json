@@ -7,6 +7,8 @@
     "name",
     "description",
     "icon_placeholder",
+    "kind",
+    "page",
     "cost",
     "status",
     "order"
@@ -15,7 +17,7 @@
     "id": {
       "type": "string",
       "pattern": "^[a-z_]+$",
-      "description": "遊戲代號，對應 app 端的遊戲引擎模組（例如 memory_match → memoryMatchGame.ts）"
+      "description": "遊戲代號（小寫＋底線）。character 類對應 app/src/games/<camelCase>.ts 與 <camelCase>Boot.ts；learning 類對應 games/<id>.html 的 iframe 遊戲"
     },
     "name": {
       "type": "string",
@@ -29,23 +31,46 @@
       "type": "string",
       "description": "暫時用 emoji 當圖示佔位，之後美術定案可換成圖檔路徑"
     },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "studio",
+        "learning",
+        "character"
+      ],
+      "description": "studio＝角色工作室（免費）；learning＝跟單元綁定的學習遊戲（iframe，選 Unit 後扣款）；character＝用使用者角色玩的全螢幕遊戲"
+    },
+    "page": {
+      "type": "string",
+      "pattern": "^games/[a-z0-9-]+\\.html$",
+      "description": "遊戲頁（相對 app/）。只有 status=active 的頁面會被 npm run build 打包進 App；其他狀態只在遊戲實驗室（npm run lab）打包"
+    },
     "cost": {
       "type": "integer",
       "minimum": 0,
       "description": "玩一次需要的遊戲代幣數量"
     },
+    "payout": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 0,
+      "description": "玩遊戲本身發的代幣，一律 0（代幣只能從學習賺）"
+    },
     "status": {
       "type": "string",
       "enum": [
-        "active",
+        "in_development",
         "coming_soon",
+        "active",
         "disabled"
       ],
-      "description": "active=正常上架可玩；coming_soon=清單上顯示但標記「即將推出」不可點擊；disabled=下架不顯示"
+      "description": "in_development＝開發／測試中：不進 App、只在遊戲實驗室出現；coming_soon＝遊戲室顯示卡片但不能玩（頁面不打包）；active＝正式上架；disabled＝下架（不顯示、頁面不打包）"
     },
     "order": {
       "type": "integer",
       "description": "遊戲室清單顯示順序，數字小的排前面"
     }
-  }
+  },
+  "description": "遊戲室上架清單（content/games/games.json）。每一款遊戲室遊戲都要登記在這裡；status 決定它會不會進入孩子使用的 App（見 docs/GAME-PRODUCTION-SPEC.md §2）。",
+  "additionalProperties": false
 }

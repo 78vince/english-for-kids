@@ -1,0 +1,370 @@
+:root {
+  /* 產生自 game-tokens.json — 請勿手改 */
+  --g-ink: #35405A;
+  --g-ink-soft: #5B6784;
+  --g-ink-faint: #8D97AD;
+  --g-surface: #FBF8F3;
+  --g-surface-raised: #FFFFFF;
+  --g-surface-sunken: #EEF1F5;
+  --g-on-fill: #35405A;
+  --g-sky: #8EC5E8;
+  --g-sky-soft: #E3F1FA;
+  --g-sky-deep: #2F6FA3;
+  --g-sky-ledge: #6FA9D1;
+  --g-mint: #9ADBC0;
+  --g-mint-soft: #E2F5EC;
+  --g-mint-deep: #2E7A5E;
+  --g-mint-ledge: #78C0A2;
+  --g-sun: #FFD873;
+  --g-sun-soft: #FFF4D6;
+  --g-sun-deep: #80600F;
+  --g-sun-ledge: #EBBE50;
+  --g-peach: #FFB596;
+  --g-peach-soft: #FFEADF;
+  --g-peach-deep: #9C4A25;
+  --g-peach-ledge: #F09A76;
+  --g-rose: #F4A9C8;
+  --g-rose-soft: #FCE6EF;
+  --g-rose-deep: #9A3A63;
+  --g-rose-ledge: #E58BB1;
+  --g-lilac: #BDAEE8;
+  --g-lilac-soft: #ECE7F8;
+  --g-lilac-deep: #58479A;
+  --g-lilac-ledge: #A28FD6;
+  --g-leaf: #A7D79A;
+  --g-leaf-soft: #E8F5E2;
+  --g-leaf-deep: #3A7330;
+  --g-leaf-ledge: #86BD77;
+  --g-wood: #D8B48A;
+  --g-wood-soft: #F4E8D8;
+  --g-wood-deep: #7A5430;
+  --g-wood-ledge: #BF9A6E;
+  --g-stone: #C9CFDA;
+  --g-stone-soft: #EBEEF3;
+  --g-stone-deep: #4F596E;
+  --g-stone-ledge: #AEB6C4;
+  --g-bark: #7A5230;
+  --g-bark-soft: #E9DACB;
+  --g-bark-deep: #4F3319;
+  --g-bark-ledge: #5F3F24;
+  --g-skin-porcelain: #FFE3D2;
+  --g-skin-peach: #F8CDB1;
+  --g-skin-sand: #EBB68F;
+  --g-skin-honey: #D39A72;
+  --g-skin-cocoa: #A8704D;
+  --g-skin-espresso: #7C4E36;
+  --g-hair-ink: #3D4258;
+  --g-hair-chestnut: #7A503A;
+  --g-hair-caramel: #B07A4E;
+  --g-hair-honey: #DDB063;
+  --g-hair-rose: #E58BB1;
+  --g-hair-sky: #7FB5DC;
+  --g-hair-lilac: #A895DB;
+  --g-hair-mint: #7FCBAA;
+  --g-fur-bear: #C99A6B;
+  --g-fur-bear-belly: #F0DBBE;
+  --g-fur-panda: #F4F1EC;
+  --g-fur-cloud: #E7EDF5;
+  --g-fur-honey-bear: #E2B672;
+  --g-fur-cocoa-bear: #8A6244;
+  --g-face-eye: #35405A;
+  --g-face-mouth: #B5526A;
+  --g-face-cheek: #F4A9C8;
+  --g-face-nose: #5A4638;
+  --g-forest-day-sky-top: #BFE3F7;
+  --g-forest-day-sky-bottom: #F1F8E8;
+  --g-forest-day-celestial: #FFE59A;
+  --g-forest-day-halo: #FFF3C4;
+  --g-forest-day-star: #FFFFFF;
+  --g-forest-day-cloud: #FFFFFF;
+  --g-forest-day-far-hill: #CFE9D8;
+  --g-forest-day-far-hill2: #BEE0CB;
+  --g-forest-day-far-tree: #B2DBC0;
+  --g-forest-day-far-tree2: #A3D2B3;
+  --g-forest-day-mid-trunk: #8A6240;
+  --g-forest-day-mid-trunk-ledge: #6E4A2E;
+  --g-forest-day-canopy: #98D4A3;
+  --g-forest-day-canopy-light: #B6E3BA;
+  --g-forest-day-canopy-deep: #7FC18E;
+  --g-forest-day-mid-mush: #FFB596;
+  --g-forest-day-ground-top: #A7D79A;
+  --g-forest-day-ground-body: #D8B48A;
+  --g-forest-day-ground-stone: #C6A27B;
+  --g-forest-day-bush: #86BD77;
+  --g-forest-day-bush-light: #A7D79A;
+  --g-forest-day-grass: #78B86A;
+  --g-forest-day-flower-a: #F4A9C8;
+  --g-forest-day-flower-b: #FFD873;
+  --g-forest-day-flower-c: #BDAEE8;
+  --g-forest-day-firefly: #FFF3C4;
+  --g-forest-day-canopy-top: #6FB57F;
+  --g-forest-day-canopy-top2: #86C894;
+  --g-forest-night-sky-top: #2F3A66;
+  --g-forest-night-sky-bottom: #5E6CA6;
+  --g-forest-night-celestial: #F3EEC8;
+  --g-forest-night-halo: #8E9ACF;
+  --g-forest-night-star: #FFF6C9;
+  --g-forest-night-cloud: #8A94C4;
+  --g-forest-night-far-hill: #4F5C8E;
+  --g-forest-night-far-hill2: #46528A;
+  --g-forest-night-far-tree: #43507F;
+  --g-forest-night-far-tree2: #3B4875;
+  --g-forest-night-mid-trunk: #3F3558;
+  --g-forest-night-mid-trunk-ledge: #322A48;
+  --g-forest-night-canopy: #4E7C88;
+  --g-forest-night-canopy-light: #639199;
+  --g-forest-night-canopy-deep: #406C79;
+  --g-forest-night-mid-mush: #C98BB0;
+  --g-forest-night-ground-top: #5E8A78;
+  --g-forest-night-ground-body: #675D7E;
+  --g-forest-night-ground-stone: #5A5270;
+  --g-forest-night-bush: #46766C;
+  --g-forest-night-bush-light: #5A8C80;
+  --g-forest-night-grass: #4A8068;
+  --g-forest-night-flower-a: #C98BB0;
+  --g-forest-night-flower-b: #E5CB7E;
+  --g-forest-night-flower-c: #9A8CD0;
+  --g-forest-night-firefly: #FFEFA0;
+  --g-forest-night-canopy-top: #34606C;
+  --g-forest-night-canopy-top2: #3F6C78;
+  --g-studio-day-sky-top: #F4ECFA;
+  --g-studio-day-sky-bottom: #FFEFE3;
+  --g-studio-day-bokeh-a: #FFFFFF;
+  --g-studio-day-bokeh-b: #FFD9E6;
+  --g-studio-day-bokeh-c: #D5E9FF;
+  --g-studio-day-floor: #F1E3D3;
+  --g-studio-day-floor-edge: #E4D0BC;
+  --g-studio-day-spot: #FFFFFF;
+  --g-studio-day-star: #FFFFFF;
+  --g-studio-day-cloud: #FFFFFF;
+  --g-studio-day-firefly: #FFF3C4;
+  --g-studio-night-sky-top: #2F3358;
+  --g-studio-night-sky-bottom: #4B4F7E;
+  --g-studio-night-bokeh-a: #8A90C8;
+  --g-studio-night-bokeh-b: #C79ACB;
+  --g-studio-night-bokeh-c: #7FA6D8;
+  --g-studio-night-floor: #575C8A;
+  --g-studio-night-floor-edge: #474B77;
+  --g-studio-night-spot: #9EA4D8;
+  --g-studio-night-star: #FFFFFF;
+  --g-studio-night-cloud: #FFFFFF;
+  --g-studio-night-firefly: #FFF3C4;
+  --g-ocean-day-sky-top: #9FE0EC;
+  --g-ocean-day-sky-bottom: #3E9DC4;
+  --g-ocean-day-ray: #FFFFFF;
+  --g-ocean-day-glow: #E8FFF6;
+  --g-ocean-day-far-rock: #6DB6D0;
+  --g-ocean-day-far-rock2: #5AA6C2;
+  --g-ocean-day-far-weed: #5FB2C6;
+  --g-ocean-day-coral-a: #F49AB4;
+  --g-ocean-day-coral-b: #FFB596;
+  --g-ocean-day-coral-c: #BDAEE8;
+  --g-ocean-day-coral-line: #FFFFFF;
+  --g-ocean-day-weed: #5FBF8E;
+  --g-ocean-day-fish-a: #FFD873;
+  --g-ocean-day-fish-b: #F09A76;
+  --g-ocean-day-fish-eye: #35405A;
+  --g-ocean-day-ground-body: #EBD3A2;
+  --g-ocean-day-ground-top: #F4E2B9;
+  --g-ocean-day-ripple: #DCC08A;
+  --g-ocean-day-shell: #FFEADF;
+  --g-ocean-day-star: #F09A76;
+  --g-ocean-day-weed-near: #3E9E75;
+  --g-ocean-day-bubble: #FFFFFF;
+  --g-ocean-day-surface: #E3F7FB;
+  --g-ocean-day-cloud: #FFFFFF;
+  --g-ocean-day-firefly: #E8FFF6;
+  --g-ocean-night-sky-top: #24477A;
+  --g-ocean-night-sky-bottom: #0F2547;
+  --g-ocean-night-ray: #9FC9F0;
+  --g-ocean-night-glow: #9DF5E0;
+  --g-ocean-night-far-rock: #21416B;
+  --g-ocean-night-far-rock2: #1B3860;
+  --g-ocean-night-far-weed: #1F4870;
+  --g-ocean-night-coral-a: #9C5C86;
+  --g-ocean-night-coral-b: #A06A62;
+  --g-ocean-night-coral-c: #6E62A0;
+  --g-ocean-night-coral-line: #C9D6F2;
+  --g-ocean-night-weed: #2E7064;
+  --g-ocean-night-fish-a: #B8A75C;
+  --g-ocean-night-fish-b: #A0705E;
+  --g-ocean-night-fish-eye: #0F2547;
+  --g-ocean-night-ground-body: #5E5A6E;
+  --g-ocean-night-ground-top: #6E6A7E;
+  --g-ocean-night-ripple: #55516A;
+  --g-ocean-night-shell: #9A93B0;
+  --g-ocean-night-star: #A0705E;
+  --g-ocean-night-weed-near: #1E5A52;
+  --g-ocean-night-bubble: #C9E4FF;
+  --g-ocean-night-surface: #3B6EA5;
+  --g-ocean-night-cloud: #FFFFFF;
+  --g-ocean-night-firefly: #9DF5E0;
+  --g-space-day-sky-top: #25205E;
+  --g-space-day-sky-bottom: #463A8C;
+  --g-space-day-milky: #C7B6FF;
+  --g-space-day-milky-core: #FFE6F2;
+  --g-space-day-nebula-a: #8B6AD8;
+  --g-space-day-nebula-b: #E592C4;
+  --g-space-day-star: #FFFFFF;
+  --g-space-day-star-warm: #FFE7A3;
+  --g-space-day-star-cool: #BFE3FF;
+  --g-space-day-planet-a: #F3A866;
+  --g-space-day-planet-a-shade: #DB8A4C;
+  --g-space-day-planet-ring: #FFD99C;
+  --g-space-day-planet-b: #6CC6EA;
+  --g-space-day-planet-b-shade: #4AA3CC;
+  --g-space-day-planet-b-crater: #5AB4DC;
+  --g-space-day-moon: #C4BEE2;
+  --g-space-day-moon-shade: #A79FD0;
+  --g-space-day-dust: #D9D2FF;
+  --g-space-day-comet: #FFFFFF;
+  --g-space-night-sky-top: #0F0C2C;
+  --g-space-night-sky-bottom: #211A4E;
+  --g-space-night-milky: #9D8BE6;
+  --g-space-night-milky-core: #E7D2F2;
+  --g-space-night-nebula-a: #5E46A8;
+  --g-space-night-nebula-b: #A8649A;
+  --g-space-night-star: #FFFFFF;
+  --g-space-night-star-warm: #FFE7A3;
+  --g-space-night-star-cool: #BFE3FF;
+  --g-space-night-planet-a: #C98552;
+  --g-space-night-planet-a-shade: #A9693E;
+  --g-space-night-planet-ring: #D9B37C;
+  --g-space-night-planet-b: #4E9EC2;
+  --g-space-night-planet-b-shade: #387FA3;
+  --g-space-night-planet-b-crater: #438FB2;
+  --g-space-night-moon: #9A93C2;
+  --g-space-night-moon-shade: #7F77AC;
+  --g-space-night-dust: #B5AAE8;
+  --g-space-night-comet: #E8F2FF;
+  --g-graveyard-day-sky-top: #3C345C;
+  --g-graveyard-day-sky-bottom: #8C6584;
+  --g-graveyard-day-star: #FFEFA0;
+  --g-graveyard-day-cloud: #6E567A;
+  --g-graveyard-day-far-castle: #2E2548;
+  --g-graveyard-day-far-hill: #382F54;
+  --g-graveyard-day-mid-fence: #221C35;
+  --g-graveyard-day-mid-tomb: #5E5676;
+  --g-graveyard-day-mid-tree: #322842;
+  --g-graveyard-day-ground-top: #4D4464;
+  --g-graveyard-day-ground-body: #5A4B42;
+  --g-graveyard-day-grass: #3C3450;
+  --g-graveyard-day-pumpkin: #FF8A3D;
+  --g-graveyard-day-pumpkin-ledge: #D96214;
+  --g-graveyard-day-shroom: #9ADBC0;
+  --g-graveyard-day-wisp: #FFF4D6;
+  --g-graveyard-day-near-bush: #2A223E;
+  --g-graveyard-night-sky-top: #18152E;
+  --g-graveyard-night-sky-bottom: #2E244B;
+  --g-graveyard-night-star: #FFF8DC;
+  --g-graveyard-night-cloud: #362C55;
+  --g-graveyard-night-far-castle: #161226;
+  --g-graveyard-night-far-hill: #1F1A36;
+  --g-graveyard-night-mid-fence: #130F22;
+  --g-graveyard-night-mid-tomb: #3D3554;
+  --g-graveyard-night-mid-tree: #1F172C;
+  --g-graveyard-night-ground-top: #312948;
+  --g-graveyard-night-ground-body: #3E3132;
+  --g-graveyard-night-grass: #251F3A;
+  --g-graveyard-night-pumpkin: #FF9640;
+  --g-graveyard-night-pumpkin-ledge: #BD4E0A;
+  --g-graveyard-night-shroom: #6FE0B8;
+  --g-graveyard-night-wisp: #9DF5E0;
+  --g-graveyard-night-near-bush: #171228;
+  --g-radius-xs: 6px;
+  --g-radius-sm: 10px;
+  --g-radius-md: 16px;
+  --g-radius-lg: 24px;
+  --g-radius-xl: 32px;
+  --g-radius-pill: 999px;
+  --g-shadow-ledge: 0 4px 0 var(--ledge-color, rgba(53,64,90,.18));
+  --g-shadow-tile: 0 2px 8px rgba(53,64,90,.10);
+  --g-shadow-lift: 0 8px 18px rgba(53,64,90,.16);
+  --g-shadow-ground: rgba(53,64,90,.14);
+  --g-space-1: 4px;
+  --g-space-2: 8px;
+  --g-space-3: 12px;
+  --g-space-4: 16px;
+  --g-space-5: 24px;
+  --g-space-6: 32px;
+  --g-space-7: 48px;
+  --g-space-8: 64px;
+  --g-dur-instant: 80ms;
+  --g-dur-fast: 140ms;
+  --g-dur-base: 220ms;
+  --g-dur-slow: 420ms;
+  --g-dur-pose: 700ms;
+  --g-ease-soft: cubic-bezier(.3,.7,.3,1);
+  --g-ease-bounce: cubic-bezier(.34,1.56,.64,1);
+  --g-ease-linear: linear;
+  --g-font-ui: "Nunito","Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --g-font-number: "Nunito",ui-rounded,"SF Pro Rounded",system-ui,sans-serif;
+  --g-text-xs: 12px;
+  --g-text-sm: 14px;
+  --g-text-md: 16px;
+  --g-text-lg: 20px;
+  --g-text-xl: 24px;
+  --g-text-2xl: 32px;
+  --g-text-3xl: 44px;
+  --g-text-4xl: 64px;
+  --g-weight-regular: 500;
+  --g-weight-semibold: 600;
+  --g-weight-bold: 700;
+  --g-weight-heavy: 800;
+  --g-weight-black: 900;
+  --g-leading-tight: 1.15;
+  --g-leading-snug: 1.35;
+  --g-leading-normal: 1.6;
+  --g-icon-sm: 16px;
+  --g-icon-md: 24px;
+  --g-icon-lg: 32px;
+  --g-icon-xl: 48px;
+  --g-tap-min: 56px;
+}
+.g-t-display{font-family:var(--g-font-ui);font-size:var(--g-text-4xl);font-weight:var(--g-weight-black);line-height:var(--g-leading-tight);color:var(--g-ink);margin:0}
+.g-t-title{font-family:var(--g-font-ui);font-size:var(--g-text-2xl);font-weight:var(--g-weight-black);line-height:var(--g-leading-tight);color:var(--g-ink);margin:0}
+.g-t-heading{font-family:var(--g-font-ui);font-size:var(--g-text-xl);font-weight:var(--g-weight-heavy);line-height:var(--g-leading-snug);color:var(--g-ink);margin:0}
+.g-t-body{font-family:var(--g-font-ui);font-size:var(--g-text-md);font-weight:var(--g-weight-regular);line-height:var(--g-leading-normal);color:var(--g-ink);margin:0}
+.g-t-dialog{font-family:var(--g-font-ui);font-size:var(--g-text-lg);font-weight:var(--g-weight-semibold);line-height:var(--g-leading-snug);color:var(--g-ink);margin:0}
+.g-t-label{font-family:var(--g-font-ui);font-size:var(--g-text-sm);font-weight:var(--g-weight-bold);line-height:var(--g-leading-snug);color:var(--g-ink);margin:0}
+.g-t-button{font-family:var(--g-font-ui);font-size:var(--g-text-lg);font-weight:var(--g-weight-heavy);line-height:var(--g-leading-tight);color:var(--g-ink);margin:0}
+.g-t-caption{font-family:var(--g-font-ui);font-size:var(--g-text-xs);font-weight:var(--g-weight-semibold);line-height:var(--g-leading-snug);color:var(--g-ink-soft);margin:0}
+.g-t-number{font-family:var(--g-font-number);font-size:var(--g-text-xl);font-weight:var(--g-weight-black);line-height:var(--g-leading-tight);font-variant-numeric:tabular-nums;color:var(--g-ink);margin:0}
+.g-t-score{font-family:var(--g-font-number);font-size:var(--g-text-3xl);font-weight:var(--g-weight-black);line-height:var(--g-leading-tight);font-variant-numeric:tabular-nums;color:var(--g-ink);margin:0}
+.g-t-tag{font-family:var(--g-font-ui);font-size:var(--g-text-xs);font-weight:var(--g-weight-heavy);line-height:var(--g-leading-tight);letter-spacing:0.04em;color:var(--g-ink);margin:0}
+.g-t-floating{font-family:var(--g-font-number);font-size:var(--g-text-xl);font-weight:var(--g-weight-black);line-height:var(--g-leading-tight);color:var(--g-ink);margin:0}
+.g-h-sky{--h:var(--g-sky);--h-soft:var(--g-sky-soft);--h-deep:var(--g-sky-deep);--h-ledge:var(--g-sky-ledge)}
+.g-h-mint{--h:var(--g-mint);--h-soft:var(--g-mint-soft);--h-deep:var(--g-mint-deep);--h-ledge:var(--g-mint-ledge)}
+.g-h-sun{--h:var(--g-sun);--h-soft:var(--g-sun-soft);--h-deep:var(--g-sun-deep);--h-ledge:var(--g-sun-ledge)}
+.g-h-peach{--h:var(--g-peach);--h-soft:var(--g-peach-soft);--h-deep:var(--g-peach-deep);--h-ledge:var(--g-peach-ledge)}
+.g-h-rose{--h:var(--g-rose);--h-soft:var(--g-rose-soft);--h-deep:var(--g-rose-deep);--h-ledge:var(--g-rose-ledge)}
+.g-h-lilac{--h:var(--g-lilac);--h-soft:var(--g-lilac-soft);--h-deep:var(--g-lilac-deep);--h-ledge:var(--g-lilac-ledge)}
+.g-h-leaf{--h:var(--g-leaf);--h-soft:var(--g-leaf-soft);--h-deep:var(--g-leaf-deep);--h-ledge:var(--g-leaf-ledge)}
+.g-h-wood{--h:var(--g-wood);--h-soft:var(--g-wood-soft);--h-deep:var(--g-wood-deep);--h-ledge:var(--g-wood-ledge)}
+.g-h-stone{--h:var(--g-stone);--h-soft:var(--g-stone-soft);--h-deep:var(--g-stone-deep);--h-ledge:var(--g-stone-ledge)}
+.g-h-bark{--h:var(--g-bark);--h-soft:var(--g-bark-soft);--h-deep:var(--g-bark-deep);--h-ledge:var(--g-bark-ledge)}
+.g-on-night{color:var(--g-surface)}
+.g-bubble{position:relative;display:inline-block;max-width:22em;padding:12px 18px;border-radius:var(--g-radius-lg);background:var(--g-surface-raised);box-shadow:var(--g-shadow-tile);font:var(--g-weight-bold) var(--g-text-md)/var(--g-leading-snug) var(--g-font-ui);color:var(--g-ink)}
+.g-bubble::after{content:'';position:absolute;left:26px;bottom:-7px;width:16px;height:16px;border-radius:0 0 6px 0;background:inherit;transform:rotate(45deg)}
+.g-bubble.g-h-sky,.g-bubble.g-h-sun,.g-bubble.g-h-mint,.g-bubble.g-h-rose,.g-bubble.g-h-lilac,.g-bubble.g-h-peach{background:var(--h-soft)}
+.g-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:var(--g-radius-pill);background:var(--h-soft,var(--g-sky-soft));color:var(--h-deep,var(--g-sky-deep));font:var(--g-weight-heavy) var(--g-text-xs)/1.2 var(--g-font-ui);letter-spacing:.04em}
+.g-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px 6px 10px;border-radius:var(--g-radius-pill);background:var(--h-soft,var(--g-sun-soft));color:var(--h-deep,var(--g-sun-deep));font:var(--g-weight-black) var(--g-text-lg)/1 var(--g-font-number);font-variant-numeric:tabular-nums}
+.g-icon{display:inline-block;width:var(--g-icon-md);height:var(--g-icon-md);flex:none;vertical-align:middle}
+.g-iconbtn{display:inline-flex;align-items:center;justify-content:center;width:var(--g-tap-min);height:var(--g-tap-min);border:0;border-radius:var(--g-radius-pill);background:var(--h,var(--g-surface-raised));color:var(--g-ink);cursor:pointer;box-shadow:0 4px 0 var(--h-ledge,var(--g-stone-ledge));transition:transform var(--g-dur-instant) linear,box-shadow var(--g-dur-instant) linear}
+.g-iconbtn:active,.g-iconbtn.on{transform:translateY(3px);box-shadow:0 1px 0 var(--h-ledge,var(--g-stone-ledge))}
+.g-iconbtn .g-icon{width:var(--g-icon-lg);height:var(--g-icon-lg)}
+@keyframes g-rise{0%{transform:translateY(8px) scale(.9);opacity:0}20%{opacity:1}100%{transform:translateY(-34px) scale(1);opacity:0}}
+.g-float{display:inline-block;animation:g-rise var(--g-dur-pose) var(--g-ease-soft) both;text-shadow:0 2px 0 var(--h-soft,var(--g-sun-soft));color:var(--h-deep,var(--g-sun-deep));font:var(--g-weight-black) var(--g-text-xl)/1 var(--g-font-number)}
+@keyframes g-glow{0%,100%{opacity:.25;transform:translate(0,0)}50%{opacity:1;transform:translate(6px,-8px)}}
+@keyframes g-charge-pulse{0%,100%{opacity:.72;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+@keyframes g-charge-rise{0%{transform:translateY(0);opacity:0}25%{opacity:1}100%{transform:translateY(-46px);opacity:0}}
+.g-glow-core{transform-box:fill-box;transform-origin:center;animation:g-charge-pulse 1.1s ease-in-out infinite}
+.g-glow.full .g-glow-core{animation-duration:.5s;filter:brightness(1.12)}
+.g-glow-sp{animation:g-charge-rise 1.1s ease-out infinite}
+.g-glow.full .g-glow-sp{animation-duration:.6s}
+.g-firefly{animation:g-glow 3.2s ease-in-out infinite}
+@keyframes g-spin{to{transform:rotate(360deg)}}
+.g-spin{transform-box:view-box;transform-origin:50% 50%;animation:g-spin 6s linear infinite}
+@keyframes g-twinkle{0%,100%{opacity:.3}50%{opacity:1}}
+.g-twinkle{animation:g-twinkle 2.8s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){:root{--g-dur-fast:0ms;--g-dur-base:0ms;--g-dur-slow:0ms;--g-dur-pose:0ms}.g-firefly,.g-float,.g-glow-core,.g-glow-sp,.g-spin,.g-twinkle{animation:none}.g-glow-sp{opacity:0}.g-float{opacity:1}}

@@ -8,6 +8,9 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "build:standalone": "vite build --config vite.standalone.config.ts",
+    "lab": "vite --config vite.lab.config.ts",
+    "build:lab": "tsc --noEmit && vite build --config vite.lab.config.ts",
+    "preview:lab": "vite preview --config vite.lab.config.ts",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },

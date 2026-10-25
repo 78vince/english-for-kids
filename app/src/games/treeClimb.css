@@ -1,0 +1,610 @@
+/* 爬樹遊戲樣式：選單（三難度）＋攀爬舞台（16:9 舞台＋按鍵 HUD）。只用遊戲 token（--g-*）。 */
+@import "../game/gamePage.css";
+
+:root {
+  --tree-overhead: 275px;
+}
+
+#tree-climb-app,
+.tree-climb {
+  gap: 6px;
+  padding-left: max(12px, env(safe-area-inset-left));
+  padding-right: max(12px, env(safe-area-inset-right));
+  padding-top: max(8px, env(safe-area-inset-top));
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+  background: var(--g-surface);
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+/* ---- 頂部列 ---- */
+.tree-climb-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  min-height: 44px;
+  height: 44px;
+}
+.tree-who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.tree-who-avatar svg {
+  display: block;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--g-sky-soft);
+}
+.tree-who-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.tree-who-text strong {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 10em;
+  font-size: 15px;
+}
+.tree-title-line {
+  color: var(--g-mint-deep, #2b7a4b);
+  font-size: 12px;
+}
+.tree-top-spacer {
+  flex: 1;
+}
+.tree-coins {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 36px;
+  font-weight: bold;
+}
+
+/* ---- 選單 ---- */
+.tree-menu {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  touch-action: pan-y;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 8px;
+  align-items: center;
+}
+.tree-guide {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  max-width: 600px;
+  width: 100%;
+}
+.tree-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  width: 100%;
+  max-width: 900px;
+}
+.tree-card {
+  background: var(--g-surface-card, #ffffff);
+  border-radius: var(--g-radius-lg, 16px);
+  padding: 16px;
+  box-shadow: var(--g-shadow-sm, 0 2px 8px rgba(0, 0, 0, 0.08));
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 2px solid transparent;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.tree-card:hover {
+  transform: translateY(-2px);
+}
+.tree-card--locked {
+  opacity: 0.65;
+  filter: grayscale(0.5);
+}
+.tree-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tree-card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--g-text);
+}
+.tree-card-stars {
+  color: var(--g-sun-deep, #e69500);
+}
+.tree-card-desc {
+  font-size: 14px;
+  color: var(--g-text-soft, #666);
+  line-height: 1.4;
+}
+.tree-card-best {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--g-mint-deep, #2b7a4b);
+}
+.tree-card-btn {
+  margin-top: auto;
+  min-height: 48px;
+  border-radius: var(--g-radius-md, 12px);
+  font-weight: bold;
+  font-size: 16px;
+  background: var(--g-mint, #38a169);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.tree-card-btn:disabled {
+  background: var(--g-neutral-soft, #ccc);
+  cursor: not-allowed;
+}
+
+/* ---- 遊戲舞台畫面 ---- */
+.tree-play {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  gap: 6px;
+}
+.tree-stage-host {
+  position: relative;
+  width: min(100%, calc((100dvh - var(--tree-overhead, 275px)) * 16 / 9));
+  aspect-ratio: 16 / 9;
+  background: #BFE3F7;
+  border-radius: var(--g-radius-md, 12px);
+  overflow: hidden;
+  box-shadow: var(--g-shadow-md, 0 4px 12px rgba(0, 0, 0, 0.12));
+  flex-shrink: 0;
+}
+.tree-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.tree-bg-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+/* 舞台 SVG 向量圖層與動畫 */
+
+.tree-item-float {
+  animation: treeItemFloat 1.2s ease-in-out infinite alternate;
+}
+@keyframes treeItemFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
+}
+
+.tree-invincible {
+  animation: treeInvincibleBlink 0.15s infinite alternate;
+}
+@keyframes treeInvincibleBlink {
+  0% { opacity: 0.35; }
+  100% { opacity: 1; }
+}
+
+.tree-stunned {
+  filter: sepia(0.6) hue-rotate(-30deg);
+}
+
+/* ---- 頂部 HUD 細條 ---- */
+.tree-hud-strip {
+  width: min(100%, calc((100dvh - var(--tree-overhead, 275px)) * 16 / 9));
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+.tree-timer {
+  background: var(--g-surface-raised, #eee);
+  padding: 3px 10px;
+  border-radius: var(--g-radius-full, 999px);
+  font-weight: bold;
+  font-size: 14px;
+}
+.tree-height-meter {
+  background: var(--g-mint-soft, #e6f4ea);
+  color: var(--g-mint-deep, #1e7e34);
+  padding: 3px 12px;
+  border-radius: var(--g-radius-full, 999px);
+  font-weight: bold;
+  font-size: 14px;
+}
+.tree-hud-items {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tree-cape-indicator {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: var(--g-rose-soft, #fce8e6);
+  color: var(--g-rose-deep, #c5221f);
+  font-size: 12px;
+  font-weight: bold;
+}
+.tree-cape-indicator--empty {
+  opacity: 0.4;
+  filter: grayscale(1);
+}
+.tree-skip-chute-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--g-radius-full, 999px);
+  background: var(--g-sun, #ffc83b);
+  color: var(--g-neutral-ink, #222);
+  font-size: 13px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  animation: treePulse 0.8s infinite alternate;
+}
+@keyframes treePulse {
+  0% { transform: scale(0.96); }
+  100% { transform: scale(1.04); }
+}
+
+.tree-alert-mark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 25;
+  pointer-events: none;
+  animation: treeAlertBlink 0.2s infinite alternate;
+}
+@keyframes treeAlertBlink {
+  0% { transform: scale(0.85); opacity: 0.8; }
+  100% { transform: scale(1.15); opacity: 1; }
+}
+
+/* ---- 下方虛擬按鍵（配置參考賽跑遊戲：左邊十字鍵，右邊 A/B 鍵） ---- */
+.tree-controls {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: min(100%, calc((100dvh - var(--tree-overhead, 275px)) * 16 / 9));
+  margin: 0 auto;
+  touch-action: manipulation;
+  border-radius: var(--g-radius-xl, 20px);
+  background: var(--g-surface-sunken, #edf2f7);
+  box-shadow: inset 0 2px 0 color-mix(in srgb, var(--g-ink, #000) 6%, transparent);
+  padding: 4px 12px;
+  box-sizing: border-box;
+}
+.tree-pad-host {
+  flex: 1;
+  display: flex;
+  width: 100%;
+}
+.tree-pad {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px;
+}
+.tree-controls .vpad-dpad {
+  grid-template-columns: repeat(3, 48px);
+  grid-template-rows: repeat(3, 48px);
+  gap: 4px;
+}
+.tree-controls .vpad-dpad .vpad-k {
+  min-width: 48px;
+  min-height: 48px;
+  width: 48px;
+  height: 48px;
+}
+.tree-controls .vpad-dpad .vpad-k .g-icon {
+  width: 26px;
+  height: 26px;
+}
+.tree-controls .vpad-ab {
+  gap: 10px;
+}
+.tree-controls .vpad-ab .vpad-k {
+  position: relative;
+  flex-direction: column;
+  gap: 0;
+  width: 66px;
+  height: 66px;
+  min-width: 66px;
+  min-height: 66px;
+}
+.tree-controls .vpad-b {
+  margin-right: 76px;
+}
+.tree-pad-label {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+}
+.tree-pad-sub {
+  font-size: 11px;
+  line-height: 1.1;
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  :root {
+    --tree-overhead: 205px;
+  }
+  #tree-climb-app,
+  .tree-climb {
+    padding-top: max(6px, env(safe-area-inset-top));
+    padding-bottom: max(6px, env(safe-area-inset-bottom));
+    gap: 3px;
+  }
+  .tree-climb-top {
+    min-height: 36px;
+    height: 36px;
+    gap: 6px;
+  }
+  .tree-play {
+    gap: 3px;
+  }
+  .tree-hud-strip {
+    height: 24px;
+    font-size: 12px;
+    padding: 0 4px;
+  }
+  .tree-timer,
+  .tree-height-meter {
+    padding: 2px 8px;
+    font-size: 12px;
+  }
+  .tree-cape-indicator,
+  .tree-skip-chute-btn {
+    padding: 2px 6px;
+    font-size: 11px;
+  }
+  .tree-controls {
+    padding: 2px 8px;
+  }
+  .tree-controls .vpad-dpad {
+    grid-template-columns: repeat(3, 38px);
+    grid-template-rows: repeat(3, 38px);
+    gap: 2px;
+  }
+  .tree-controls .vpad-dpad .vpad-k {
+    min-width: 38px;
+    min-height: 38px;
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+  .tree-controls .vpad-dpad .vpad-k .g-icon {
+    width: 20px;
+    height: 20px;
+  }
+  .tree-controls .vpad-ab {
+    gap: 6px;
+  }
+  .tree-controls .vpad-ab .vpad-k {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    min-height: 52px;
+  }
+  .tree-controls .vpad-b {
+    margin-right: 56px;
+  }
+  .tree-pad-label {
+    font-size: 16px;
+  }
+  .tree-pad-sub {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 440px) {
+  .tree-controls .vpad-dpad {
+    grid-template-columns: repeat(3, 42px);
+    grid-template-rows: repeat(3, 42px);
+    gap: 3px;
+  }
+  .tree-controls .vpad-dpad .vpad-k {
+    min-width: 42px;
+    min-height: 42px;
+    width: 42px;
+    height: 42px;
+  }
+  .tree-controls .vpad-ab .vpad-k {
+    width: 58px;
+    height: 58px;
+    min-width: 58px;
+    min-height: 58px;
+  }
+  .tree-controls .vpad-b {
+    margin-right: 50px;
+  }
+}
+
+/* ---- 結算對話框（雙欄） ---- */
+.tree-result-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+  box-sizing: border-box;
+}
+.tree-result-dialog {
+  background: var(--g-surface, #ffffff);
+  border-radius: var(--g-radius-lg, 20px);
+  width: min(680px, 95vw);
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  padding: 24px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  box-shadow: var(--g-shadow-lg, 0 10px 30px rgba(0, 0, 0, 0.2));
+}
+@media (max-width: 540px) {
+  .tree-result-dialog {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 16px;
+  }
+}
+.tree-result-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+}
+.tree-result-avatar {
+  width: 100px;
+  height: 100px;
+}
+.tree-result-meters {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--g-mint-deep, #1e7e34);
+}
+.tree-result-stars {
+  font-size: 24px;
+  color: var(--g-sun-deep, #e69500);
+}
+.tree-result-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--g-lilac-deep, #6b46c1);
+}
+.tree-result-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tree-result-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tree-chip {
+  display: flex;
+  justify-content: space-between;
+  background: var(--g-surface-card, #f7f9fa);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.tree-result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tree-btn-primary {
+  min-height: 48px;
+  border-radius: 12px;
+  background: var(--g-mint, #38a169);
+  color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.tree-btn-secondary {
+  min-height: 44px;
+  border-radius: 12px;
+  background: var(--g-surface-raised, #e2e8f0);
+  color: var(--g-text, #333);
+  border: none;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ---- 暫停對話框 ---- */
+.tree-pause-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  padding: 16px;
+  box-sizing: border-box;
+  animation: treeFadeIn 0.15s ease-out;
+}
+@keyframes treeFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.tree-pause-dialog {
+  background: var(--g-surface, #ffffff);
+  border-radius: var(--g-radius-lg, 20px);
+  width: min(380px, 92vw);
+  padding: 24px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  box-shadow: var(--g-shadow-lg, 0 10px 30px rgba(0, 0, 0, 0.25));
+}
+.tree-pause-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--g-ink);
+}
+.tree-pause-desc {
+  font-size: 15px;
+  color: var(--g-text-soft, #555);
+  line-height: 1.5;
+}
+.tree-pause-desc strong {
+  color: var(--g-mint-deep, #1e7e34);
+}
+.tree-pause-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}

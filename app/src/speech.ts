@@ -412,3 +412,18 @@ export function speakDialogueLine(text: string, options: DialogueSpeechOptions):
 
   window.speechSynthesis.speak(utterance);
 }
+
+// 2026-10-25：同步自 LetsGo 的整頁遊戲（火箭發射、打地鼠）會在使用者第一次點擊時呼叫，
+// 用來解鎖 iOS 的語音（必須在使用者手勢裡先唸一次）。公開版沒有自動朗讀佇列，只做解鎖。
+let speechUnlockedByGesture = false;
+export function unlockSpeech(): void {
+  if (speechUnlockedByGesture || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  speechUnlockedByGesture = true;
+  try {
+    const u = new SpeechSynthesisUtterance(" ");
+    u.volume = 0;
+    window.speechSynthesis.speak(u);
+  } catch {
+    // 忽略
+  }
+}

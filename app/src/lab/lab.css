@@ -1,0 +1,134 @@
+/* 遊戲實驗室：開發測試工具頁（不給孩子使用），沿用 App 的 design tokens */
+@import "../../../assets/design-tokens/design-tokens.v2-daily-play.css";
+
+body {
+  margin: 0;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-body, system-ui, sans-serif);
+}
+.lab {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--space-4) 16px var(--space-6);
+}
+.lab-head h1 {
+  font-family: var(--font-display);
+  margin: 0 0 var(--space-2);
+}
+.lab-note {
+  padding: var(--space-2) var(--space-3);
+  border: 2px dashed var(--color-error-700);
+  border-radius: var(--radius-lg);
+  color: var(--color-error-700);
+  font-size: var(--text-caption);
+}
+.lab-card {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: #fff;
+}
+.lab code {
+  overflow-wrap: anywhere;
+}
+.lab-sub {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-caption);
+  color: var(--color-ink-muted);
+}
+.lab-card h2 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-h3);
+}
+.lab-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.lab button,
+.lab-btn {
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-500);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+.lab-btn--ghost {
+  background: transparent;
+  color: var(--color-primary-700);
+  border: 2px solid var(--color-primary-500);
+}
+.lab .lab-danger {
+  background: var(--color-error-700);
+}
+.lab-games {
+  list-style: none;
+  margin: 0 0 var(--space-3);
+  padding: 0;
+}
+.lab-game {
+  display: grid;
+  grid-template-columns: 40px 1fr auto auto;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.lab-game-icon {
+  font-size: 28px;
+  text-align: center;
+}
+.lab-game-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.lab-game-meta {
+  font-size: var(--text-caption);
+  color: var(--color-ink-muted);
+  overflow-wrap: anywhere;
+}
+.lab-status {
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-caption);
+  font-weight: 700;
+  white-space: nowrap;
+  border: 1.5px solid currentColor;
+}
+.lab-status--active {
+  color: var(--color-success-700);
+}
+.lab-status--in_development {
+  color: var(--color-error-700);
+  border-style: dashed;
+}
+.lab-status--coming_soon,
+.lab-status--disabled {
+  color: var(--color-ink-muted);
+}
+.lab-check {
+  margin: 0 0 var(--space-2);
+  padding-left: 1.4em;
+}
+.lab-check li {
+  margin: var(--space-1) 0;
+}
+@media (max-width: 480px) {
+  .lab-game {
+    grid-template-columns: 32px 1fr auto;
+  }
+  .lab-game .lab-btn {
+    grid-column: 2 / -1;
+    justify-self: start;
+  }
+}

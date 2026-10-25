@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Game Design Tokens</title>
+<style>
+:root{color-scheme:light}
+/*@CSS@*/
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--g-surface);color:var(--g-ink);font-family:var(--g-font-ui);font-size:16px;line-height:1.6}
+nav{position:sticky;top:0;z-index:10;display:flex;gap:6px;flex-wrap:wrap;padding:10px 20px;background:rgba(251,248,243,.94);backdrop-filter:blur(6px)}
+nav a{padding:5px 14px;border-radius:var(--g-radius-pill);background:var(--g-sky-soft);color:var(--g-sky-deep);font-weight:800;font-size:14px;text-decoration:none}
+nav a:hover{background:var(--g-sky);color:var(--g-ink)}
+main{max-width:1080px;margin:0 auto;padding:12px 20px 96px}
+h1{font-size:30px;font-weight:900;margin:16px 0 2px}
+h2{font-size:22px;font-weight:900;margin:56px 0 4px;scroll-margin-top:60px}
+h3{font-size:16px;font-weight:800;margin:22px 0 8px;color:var(--g-ink-soft)}
+p.note{margin:0 0 14px;color:var(--g-ink-soft);font-size:14px}
+code{background:var(--g-surface-sunken);padding:1px 6px;border-radius:var(--g-radius-xs);font-size:13px}
+.grid{display:grid;gap:12px}
+.card{background:var(--g-surface-raised);border-radius:var(--g-radius-lg);padding:16px;box-shadow:var(--g-shadow-tile)}
+.sw{border-radius:var(--g-radius-md);overflow:hidden;background:var(--g-surface-raised);box-shadow:var(--g-shadow-tile)}
+.sw .row{display:flex;height:34px}.sw .row i{flex:1;display:block}
+.sw b{display:block;padding:6px 10px 0;font-size:13px}.sw span{display:block;padding:0 10px 8px;font-size:12px;color:var(--g-ink-soft)}
+.shapes{display:flex;flex-wrap:wrap;gap:14px}.shapes div{width:84px;height:64px;background:var(--g-sky);display:flex;align-items:center;justify-content:center;font-size:12px}
+.shadows{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px}.shadows div{width:120px;height:60px;border-radius:var(--g-radius-md);background:var(--g-surface-raised);display:flex;align-items:center;justify-content:center;font-size:13px}
+/* 文字 */
+.tt{display:grid;grid-template-columns:150px 1fr;gap:4px 18px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--g-surface-sunken)}
+.tt .meta{font-size:12px;color:var(--g-ink-faint)}
+.tt .meta b{display:block;color:var(--g-ink-soft);font-size:13px}
+@media(max-width:640px){.tt{grid-template-columns:1fr}}
+.comp{display:flex;flex-wrap:wrap;gap:22px;align-items:center;padding:8px 0}
+.nightbox{background:linear-gradient(#2F3A66,#5E6CA6);border-radius:var(--g-radius-lg);padding:18px 22px;display:flex;flex-direction:column;gap:6px}
+/* icon */
+.icons{grid-template-columns:repeat(auto-fill,minmax(88px,1fr))}
+.icons .it{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 4px;background:var(--g-surface-raised);border-radius:var(--g-radius-md);font-size:11px;color:var(--g-ink-soft);text-align:center}
+.icons .it .g-icon{width:32px;height:32px;color:var(--g-sky-deep)}
+.grp{font-size:13px;font-weight:800;color:var(--g-ink-faint);margin:16px 0 6px}
+/* 舞台 */
+.stagewrap{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:18px;align-items:start}
+@media(max-width:860px){.stagewrap{grid-template-columns:1fr}}
+.stage{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:var(--g-radius-xl);background:#bfe3f7;box-shadow:var(--g-shadow-lift)}
+.stage .lay{position:absolute;left:0;top:0;height:100%;width:200%;display:flex;will-change:transform}
+.stage .lay svg{width:50%;height:100%;display:block;flex:none}
+.stage .lay.fixed{width:100%}.stage .lay.fixed svg{width:100%}
+.stage .me{position:absolute;left:50%;transform:translateX(-50%)}
+.stage .me [data-part=shadow]{display:none}
+#gshadow{position:absolute;left:50%;z-index:7;border-radius:50%;background:rgba(53,64,90,.16);pointer-events:none}
+.stage .me .flip{transition:none}
+.stage .me svg{display:block;width:100%;height:auto}
+.hud{position:absolute;left:12px;top:12px;display:flex;gap:8px;z-index:30}
+.hudr{position:absolute;right:12px;top:12px;display:flex;gap:8px;z-index:30}
+.speech{position:absolute;z-index:6;left:50%;transform:translateX(-50%)}
+label.f{display:block;font-size:13px;font-weight:700;color:var(--g-ink-soft);margin:10px 0 4px}
+select{width:100%;padding:8px 10px;border-radius:var(--g-radius-sm);border:0;background:var(--g-surface-sunken);color:var(--g-ink);font:inherit}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip2{width:30px;height:30px;border-radius:var(--g-radius-pill);border:0;cursor:pointer;padding:0;box-shadow:var(--g-shadow-tile)}
+.chip2[aria-pressed=true]{outline:3px solid var(--g-ink);outline-offset:2px}
+.seg{display:flex;background:var(--g-surface-sunken);border-radius:var(--g-radius-pill);padding:3px;gap:2px}
+.seg button{flex:1;border:0;background:none;padding:6px 8px;border-radius:var(--g-radius-pill);font:inherit;font-weight:800;font-size:13px;color:var(--g-ink-soft);cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--g-surface-raised);color:var(--g-ink);box-shadow:var(--g-shadow-tile)}
+.btn{border:0;border-radius:var(--g-radius-pill);padding:9px 18px;background:var(--g-sky);color:var(--g-ink);font:inherit;font-weight:800;cursor:pointer;box-shadow:0 4px 0 var(--g-sky-ledge)}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--g-sky-ledge)}
+.btn.alt{background:var(--g-sun);box-shadow:0 4px 0 var(--g-sun-ledge)}
+.pad{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;margin-top:12px;background:var(--g-sky-soft);border-radius:var(--g-radius-xl);touch-action:none;user-select:none;-webkit-user-select:none}
+.dpad{display:grid;grid-template-columns:repeat(3,56px);grid-template-rows:repeat(3,56px);gap:4px}
+.k{display:flex;align-items:center;justify-content:center;border:0;background:var(--g-surface-raised);color:var(--g-sky-deep);border-radius:var(--g-radius-md);cursor:pointer;box-shadow:0 4px 0 var(--g-stone-ledge);transition:transform var(--g-dur-instant) linear,box-shadow var(--g-dur-instant) linear;font:900 22px/1 var(--g-font-ui);touch-action:none}
+.k.on{transform:translateY(3px);box-shadow:0 1px 0 var(--g-stone-ledge)}
+.k .g-icon{width:30px;height:30px}
+.ab{display:flex;flex-direction:column;gap:14px;align-items:flex-end}
+.ab .k{width:72px;height:72px;border-radius:var(--g-radius-pill);color:var(--g-ink)}
+.ab .k.a{background:var(--g-sun);box-shadow:0 4px 0 var(--g-sun-ledge)}.ab .k.a.on{box-shadow:0 1px 0 var(--g-sun-ledge)}
+.ab .k.b{background:var(--g-rose);box-shadow:0 4px 0 var(--g-rose-ledge);margin-right:86px}.ab .k.b.on{box-shadow:0 1px 0 var(--g-rose-ledge)}
+.mid-btns{display:flex;gap:10px;align-items:center}
+/* 圖庫 */
+.gal{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
+.gal .card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px;font-size:12px;color:var(--g-ink-soft);text-align:center}
+.gal svg{height:110px;width:auto}
+.views{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.views .card{display:flex;justify-content:space-around;align-items:flex-end;padding:12px 8px}
+.views svg{height:130px;width:auto}
+.layers{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.layers .th{border-radius:var(--g-radius-md);overflow:hidden;background:#CFE6F4}
+.layers svg{display:block;width:100%;height:auto}
+.props{grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px}
+.props .card{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 4px 8px;border-radius:var(--g-radius-md);font-size:10.5px;line-height:1.3;color:var(--g-ink-soft);text-align:center}
+.props .pv{width:100%;height:56px;border-radius:var(--g-radius-sm);display:flex;align-items:center;justify-content:center;background:var(--g-surface-sunken)}
+.props svg{max-width:84%;height:44px;width:auto}
+.props .card{cursor:pointer;position:relative}.props .card:hover{box-shadow:var(--g-shadow-lift)}
+.props .tg{position:absolute;right:5px;top:5px;width:8px;height:8px;border-radius:99px;background:var(--g-mint-ledge)}
+#zoom{position:fixed;z-index:50;display:none;width:250px;padding:12px;border-radius:var(--g-radius-lg);background:var(--g-surface-raised);box-shadow:0 12px 32px rgba(53,64,90,.22);pointer-events:none}
+#zoom .big{height:150px;border-radius:var(--g-radius-md);display:flex;align-items:center;justify-content:center;background:var(--g-surface-sunken)}
+#zoom .big svg{height:130px;width:auto;max-width:90%}
+#zoom .nm{font-weight:800;margin:8px 0 2px}#zoom .sub{font-size:12px;color:var(--g-ink-soft)}
+#zoom .sts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+#zoom .st{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--g-ink-soft);padding:4px;border-radius:var(--g-radius-sm);background:var(--g-surface-sunken);min-width:50px}
+#zoom .st.cur{outline:2px solid var(--g-sky-deep)}#zoom .st svg{height:34px;width:auto;max-width:44px}
+.celobj{position:absolute;pointer-events:none;will-change:transform}.celobj svg{width:100%;height:100%;display:block}
+.rules{margin:0;padding-left:20px;font-size:14px;color:var(--g-ink-soft)}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#color">色彩與造型</a><a href="#text">文字系統</a><a href="#icon">Icon</a><a href="#char">角色 × 場景</a><a href="#pose">動作</a><a href="#scene">森林場景</a><a href="#props">道具</a><a href="#race">賽跑</a><a href="#tree">爬樹</a>
+</nav>
+<main>
+  <h1>Game Design Tokens <span class="g-tag g-h-lilac" id="ver"></span></h1>
+  <p class="note">遊戲專用視覺規範：柔和色系、圓潤造型、扁平 icon、可彎曲肢體的人物（正／側／背）、森林場景（日／夜）。內容與英語無關，目的在帶來學習動機與樂趣。來源 <code>game-tokens.json</code>，所有圖形由程式依 token 繪製。</p>
+
+  <h2 id="color">1. 色彩、造型與深度</h2>
+  <p class="note">每個色相四階：base 填色（上面的字用 ink）／soft 淡底／deep 彩色文字／ledge 立體底座。漸層只用在場景天空。</p>
+  <div class="grid" id="palette" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))"></div>
+  <h3>圓角階層</h3><div class="shapes" id="shapes"></div>
+  <h3>深度</h3><div class="shadows"><div style="box-shadow:var(--g-shadow-tile)">tile</div><div style="box-shadow:var(--g-shadow-lift)">lift</div><div style="box-shadow:0 4px 0 var(--g-stone-ledge)">ledge</div></div>
+  <h3>造型規則</h3><ul class="rules" id="shapeRules"></ul>
+
+  <h2 id="text">2. 文字系統</h2>
+  <p class="note">字型 Nunito（拉丁、數字）＋ Noto Sans TC（中文），預覽以系統字型代替。12 種樣式對應 CSS class <code>.g-t-*</code>。</p>
+  <div class="card" id="typo"></div>
+  <h3>文字元件</h3>
+  <div class="card">
+    <div class="comp" style="padding-bottom:26px">
+      <div class="g-bubble">哇，今天的森林好安靜！</div>
+      <div class="g-bubble g-h-sun">按 A 跳起來，拿到星星！</div>
+      <span class="g-tag g-h-mint">NEW</span><span class="g-tag g-h-rose">BOSS</span><span class="g-tag g-h-lilac">第 3 關</span>
+      <span class="g-chip g-h-sun" id="chipCoin"></span><span class="g-chip g-h-rose" id="chipHeart"></span><span class="g-chip g-h-sky" id="chipStar"></span>
+    </div>
+    <div class="comp"><button class="btn" id="floatBtn">飄浮字</button><span id="floatBox" style="min-width:120px;height:40px"></span></div>
+    <div class="nightbox"><p class="g-t-heading g-on-night">夜晚場景上的文字用 surface</p><p class="g-t-body g-on-night">螢火蟲亮起來了，一起往森林深處走吧。</p></div>
+  </div>
+  <ul class="rules" id="typoRules" style="margin-top:12px"></ul>
+
+  <h2 id="icon">3. 扁平 Icon</h2>
+  <p class="note">24×24 網格、雙色（主形狀＋35% 次形狀）、圓頭圓角、無輪廓線。顏色由 CSS <code>color</code> 決定。</p>
+  <div id="iconGroups"></div>
+  <h3>尺寸與用法</h3>
+  <div class="card"><div class="comp" id="iconUse"></div></div>
+  <ul class="rules" id="iconRules" style="margin-top:12px"></ul>
+
+  <h2 id="char">4. 角色 × 場景</h2>
+  <p class="note">肢體分兩段、關節圓滑彎曲；可切換正面、側面、背面。用下方虛擬按鍵試玩：←→ 走、按住 B 加速奔跑、↓ 蹲、A 跳；也可以用實體鍵盤：方向鍵移動；A 鍵、Space、J＝A（跳）；B 鍵、Shift、K＝B（按住加速奔跑）。</p>
+  <div class="stagewrap">
+    <div>
+      <div class="stage" id="stage"><div class="hud" id="hud"></div><div class="hudr" id="hudr"></div></div>
+      <div class="pad">
+        <div class="dpad">
+          <span></span><button class="k" data-k="up" aria-label="上"></button><span></span>
+          <button class="k" data-k="left" aria-label="左"></button><span></span><button class="k" data-k="right" aria-label="右"></button>
+          <span></span><button class="k" data-k="down" aria-label="下"></button><span></span>
+        </div>
+        <div class="ab"><button class="k a" data-k="a">A</button><button class="k b" data-k="b">B</button></div>
+      </div>
+      <div class="card" style="margin-top:12px;padding:10px 14px"><div class="chips" id="layerToggles" style="align-items:center"><span style="font-size:13px;font-weight:800;color:var(--g-ink-soft)">圖層</span></div></div>
+    </div>
+    <div class="card" id="panel">
+      <label class="f">時間：<span id="uLbl"></span></label><input type="range" id="uRange" min="0" max="999" value="250" style="width:100%"><div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap"><button class="btn" id="btnCycle" style="padding:6px 12px;font-size:13px">播放日升月落</button><button class="btn alt" id="btnDay" style="padding:6px 12px;font-size:13px">正午</button><button class="btn alt" id="btnSys" style="padding:6px 12px;font-size:13px">系統時間</button><button class="btn alt" id="btnNight" style="padding:6px 12px;font-size:13px">午夜</button></div>
+      <label class="f">場景</label><div class="seg" id="segScene"></div>
+      <label class="f">視角</label><div class="seg" id="segView"></div>
+      <label class="f">待機動作（沒按鍵時）</label><select id="selPose"></select>
+      <label class="f">預設角色</label><select id="selPreset"></select>
+      <div style="display:flex;gap:8px;margin:12px 0"><button class="btn" id="rnd">隨機搭配</button></div>
+      <label class="f">拍照（把整個舞台重組成 SVG 再轉 PNG，不是截螢幕）</label><div class="seg" id="segAspect"></div>
+      <div style="display:flex;gap:8px;margin:8px 0"><button class="btn alt" id="btnShot"></button></div><div id="shotOut"></div>
+      <div id="form"></div>
+    </div>
+  </div>
+
+  <h3>預設角色 × 三視角</h3>
+  <div class="views" id="views"></div>
+
+  <h2 id="pose">5. 基礎動作（可彎曲肢體）</h2>
+  <p class="note">上排側面、下排正面；膝蓋與手肘依 swing / spread / bend 三組參數彎曲。</p>
+  <div class="grid gal" id="poses"></div>
+  <h3>動作連播（序列）</h3>
+  <p class="note">序列用 <code>GameArt.sequenceAt(name, ms)</code> 取樣，回傳該時刻的 pose／view／facing；播放端依回傳值重畫角色。「轉圈展示」用來呈現三視角，「打招呼」播一次後停住。</p>
+  <div class="grid gal" id="seqs"></div>
+
+  <h2 id="scene">6. 森林場景（遠・中・近景＋日夜）</h2>
+  <p class="note">圖層由後到前：天空 → 星星 → 雲 → 遠景 → 中景 → 地面 → 近景 → 樹冠前景；每層可無縫水平平鋪，視差速度見 token。太陽與月亮是獨立物件（見道具），可沿弧線日升月落。</p>
+  <div class="grid layers" id="layerThumbs"></div>
+  <h3>日夜色票</h3>
+  <div class="grid" id="scenePal" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))"></div>
+
+  <h2 id="scene2">6b. 攝影棚場景</h2>
+  <p class="note">只有「天空漸層・散景・地板」三層，專拍人物；日／夜只改變燈光色調，沒有太陽與月亮。用上方的「場景」切換即可在舞台試用。</p>
+  <div class="grid layers" id="studioThumbs"></div>
+
+  <h2 id="props">7. 道具與物件</h2>
+  <p class="note">滑鼠移到道具上可放大並列出所有狀態；有綠點的道具可互動，點擊切換狀態。</p>
+  <div class="grid props" id="propGrid"></div>
+
+  <h2 id="photo">8. 頭像與拍照匯出</h2>
+  <p class="note">頭像：<code>GameArt.avatar(look, size)</code> 裁出頭部，供個人檔案與各關卡右上角使用。拍照：<code>GameArt.exportSVG(opts)</code> 輸出獨立 SVG（CSS 變數與夜晚濾鏡已展開），<code>GameArt.exportPNG(opts)</code> 轉成 PNG；尺寸 16:9＝1920×1080、1:1＝1080×1080、4:5＝1080×1350。到上方「角色 × 場景」按「拍照」即可試。</p>
+  <div class="grid" id="avatars" style="grid-template-columns:repeat(auto-fill,minmax(110px,1fr))"></div>
+
+  <h2 id="race">9. 賽跑（對手動物・裁判・賽道）</h2>
+  <p class="note">對手：<code>GameArt.animal(kind,{pose,t,facing})</code>／<code>GameArt.animateAnimal(svg,pose)</code>（烏龜・兔子・鴕鳥；姿勢 idle／run／sleep／stumble／cheer／sad，動畫啟動時同步套 t=0，不會閃殘影）。裁判＝角色系統的 <code>bear</code>。賽跑道具見上方「道具」（群組：賽跑）。數值與賽道資料在 <code>race</code>，平衡試算：<code>node race-sim.js</code>。</p>
+  <div class="card" style="margin-bottom:12px"><div class="seg" id="segRacePose"></div></div>
+  <div class="grid" id="raceAnimals" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))"></div>
+  <h3>熊熊裁判</h3><div class="grid gal" id="refPoses"></div>
+  <h3>賽道（第 1–3 場；依 stage.items 排列，x 為賽道單位 0–3600）</h3><div id="raceTracks"></div>
+  <h2 id="tree">10. 爬樹（高度分層背景・樹枝・障礙／道具）</h2>
+  <p class="note">資料：<code>treeClimb</code>（世界 50 單位＝1 m、頂高 160 m；3 難度 120/90/60 s）。API：<code>GameArt.treeBuild(levelId,seed)</code>、<code>treeCompose(camAlt,w,h,{branches,sprites})</code>、<code>treeChunk</code>、<code>treeSkyAt</code>。試算：<code>node tree-sim.js</code>。滑桿＝鏡頭高度（m）。</p>
+  <div class="card" style="margin-bottom:12px"><div class="seg" id="segTreeLv"></div><input type="range" id="treeAlt" min="0" max="160" value="0" style="width:100%;margin-top:8px"><span class="note" id="treeAltLbl"></span></div>
+  <div class="card" id="treeView" style="max-width:640px"></div>
+  <h3>難度與星等門檻</h3><div id="treeLv"></div>
+</main>
+
+<script>
+/*@JS@*/
+</script>
+<script>
+(function(){
+  var T=GameTokens, A=GameArt, $=function(i){return document.getElementById(i)}, FF=T.color.world.scene.forest, F=FF, N=T.color.neutral, sceneId='forest';
+  $('ver').textContent='v'+T.meta.version;
+  /* 1 色彩 */
+  var pal='';Object.keys(T.color.hue).forEach(function(h){var s=T.color.hue[h];pal+='<div class="sw"><div class="row"><i style="background:'+s.soft+'"></i><i style="background:'+s.base+'"></i><i style="background:'+s.ledge+'"></i><i style="background:'+s.deep+'"></i></div><b>'+h+'</b><span>'+s.base+' · '+s.deep+'</span></div>'});
+  pal+='<div class="sw"><div class="row"><i style="background:'+N.surface+'"></i><i style="background:'+N['surface-sunken']+'"></i><i style="background:'+N['ink-faint']+'"></i><i style="background:'+N['ink-soft']+'"></i><i style="background:'+N.ink+'"></i></div><b>neutral</b><span>surface → ink</span></div>';
+  $('palette').innerHTML=pal;
+  $('shapes').innerHTML=Object.keys(T.shape.radius).map(function(k){var r=T.shape.radius[k];return '<div style="border-radius:'+r+'px">'+k+(r>=999?'':' '+r)+'</div>'}).join('');
+  var li=function(a){return a.map(function(x){return '<li>'+x+'</li>'}).join('')};
+  $('shapeRules').innerHTML=li(T.shape.rules);$('typoRules').innerHTML=li(T.typography.rules);$('iconRules').innerHTML=li(T.icons.rules);
+  /* 2 文字 */
+  var Y=T.typography,th='';
+  Object.keys(Y.styles).forEach(function(k){var s=Y.styles[k];var sample={display:'森林冒險 Forest Run',title:'第 1 關：安靜的森林',heading:'收集 5 顆星星',body:'小熊 Benny 在森林裡迷路了，你可以幫他找到回家的路嗎？',dialog:'「跟著螢火蟲走，就不會迷路喔！」',label:'繼續 · 返回 · 設定',button:'開始遊戲',caption:'上次通關：2 天前',number:'12,345',score:'98,760',tag:'NEW LEVEL',floating:'+5 Nice!'}[k];
+    th+='<div class="tt"><div class="meta"><b>'+s.label+'</b>.g-t-'+k+' · '+Y.size[s.size]+'px / '+Y.weight[s.weight]+'</div><div class="g-t-'+k+'">'+sample+'</div></div>'});
+  $('typo').innerHTML=th;
+  var ic=function(id,o){return GameIcons.icon(id,o)};
+  $('chipCoin').innerHTML=ic('coin')+'128';$('chipHeart').innerHTML=ic('heart')+'3';$('chipStar').innerHTML=ic('star')+'12';
+  $('floatBtn').onclick=function(){$('floatBox').innerHTML='<span class="g-float g-h-sun">+5</span> <span class="g-float g-h-mint" style="animation-delay:.15s">Nice!</span>'};
+  /* 3 icon */
+  var groups={};T.icons.list.forEach(function(i){(groups[i.group]=groups[i.group]||[]).push(i)});
+  $('iconGroups').innerHTML=Object.keys(groups).map(function(g){return '<div class="grp">'+g+'</div><div class="grid icons">'+groups[g].map(function(i){return '<div class="it">'+ic(i.id)+i.label+'<br>'+i.id+'</div>'}).join('')+'</div>'}).join('');
+  var use='';['sm','md','lg','xl'].forEach(function(s){use+='<span style="color:var(--g-sky-deep)">'+ic('star',{size:s})+'</span>'});
+  [['sky','play'],['sun','pause'],['mint','restart'],['rose','heart'],['lilac','settings']].forEach(function(p){use+='<button class="g-iconbtn g-h-'+p[0]+'" style="--h:var(--g-'+p[0]+')">'+ic(p[1])+'</button>'});
+  use+='<span class="g-chip g-h-lilac">'+ic('gem')+'7</span><span class="g-tag g-h-mint">'+ic('leaf',{size:14})+'森林</span>';
+  $('iconUse').innerHTML=use;
+  document.querySelectorAll('.g-iconbtn').forEach(function(b){b.addEventListener('pointerdown',function(){b.classList.add('on')});['pointerup','pointerleave','pointercancel'].forEach(function(e){b.addEventListener(e,function(){b.classList.remove('on')})})});
+
+  /* 4 角色 × 場景 */
+  var look=JSON.parse(JSON.stringify(A.presets['kid-blue'])), view='side', idlePose='idle', ctl=null, dir=1, offset=0, u=.25, auto=false, sys=false;
+  var stage=$('stage'), layerOn={clouds:1,far:1,mid:1,ground:1,near:1,canopy:1}, st={}, me=document.createElement('div'); me.className='me'; stage.appendChild(me);var gsh=document.createElement('div');gsh.id='gshadow';stage.insertBefore(gsh,me);
+  var Ld=A.sceneLayers('forest','day',960,540), Ln=A.sceneLayers('forest','night',960,540), Z=F.celestial, ZI={sky:1,stars:2,cel:3,clouds:4,far:5,mid:6,ground:7,near:9,canopy:10};
+  function mkDiv(n,html,night){var d=document.createElement('div');d.className='lay'+(n==='sky'||n==='stars'?' fixed':'');d.style.zIndex=ZI[n];d.innerHTML=html;if(night)d.style.opacity=0;stage.insertBefore(d,me);return d}
+  function buildWorld(){
+    F.layers.forEach(function(n){
+      if(n==='sky'){st.sky={day:mkDiv(n,'')}}
+      else if(n==='stars'){st.stars={night:mkDiv(n,Ln.stars,true)}}
+      else st[n]={day:mkDiv(n,Ld[n]+Ld[n]),night:mkDiv(n,Ln[n]+Ln[n],true)};
+    });
+    ['sun','moon'].forEach(function(o){var d=document.createElement('div');d.className='celobj';d.style.zIndex=ZI.cel;d.innerHTML=A.prop(o,o==='moon'&&sceneId==='graveyard'?{state:'skull'}:{state:'round'});stage.insertBefore(d,me);st[o]=d});
+    me.style.zIndex=7;
+    placeMe();updateSky();
+  }
+  var lastNf=-1;
+  function lbl(x){return x<.06?'日出':x<.44?'白天':x<.56?'日落':x<.94?'夜晚':'黎明'}
+  function updateSky(){
+    var K=A.skyAt(sceneId,u),W=stage.clientWidth,H=stage.clientHeight;
+    var g='linear-gradient('+K.top+','+K.bottom+')';stage.style.background=g;st.sky.day.style.background=g;
+    Object.keys(st).forEach(function(n){var e=st[n];if(e&&e.night)e.night.style.opacity=K.night});
+    [['sun',K.sun],['moon',K.moon]].forEach(function(p){var d=st[p[0]],o=p[1],sz=o.size*H;d.style.display=o.visible?'':'none';d.style.width=d.style.height=sz+'px';d.style.left=(o.x*W-sz/2)+'px';d.style.top=(o.y*H-sz/2)+'px'});
+    st.sun.style.setProperty('--sunc',K.sun.color);
+    me.style.filter='brightness('+(1-.12*K.night).toFixed(3)+') saturate('+(1-.08*K.night).toFixed(3)+')';
+    $('uLbl').textContent=lbl(K.u)+'（'+(K.u*100).toFixed(0)+'%）';$('uRange').value=Math.round(K.u*999);
+  }
+  function placeMe(){
+    var H=stage.clientHeight||300, ch=H*.34;me.style.width=(ch*120/170)+'px';
+    me.style.top=(H*.88-ch*164/170)+'px';var gs=document.getElementById('gshadow');if(gs){gs.style.width=(ch*.42)+'px';gs.style.height=(ch*.05)+'px';gs.style.top=(H*.88-ch*.025)+'px'}
+  }
+  var seatEl=document.createElement('div');seatEl.style.cssText='position:absolute;z-index:6;left:50%;display:none;pointer-events:none';stage.insertBefore(seatEl,me);
+  function seatUpd(){var S=A.seatFor(cur),H=stage.clientHeight||300,ch=H*.34,s=ch/170;if(!S){seatEl.style.display='none';return}
+    seatEl.innerHTML=A.prop(S.prop);var sv=seatEl.querySelector('svg');sv.style.cssText='display:block;width:100%;height:100%';seatEl.style.width=(72*s)+'px';seatEl.style.height=(S.hUnits*s)+'px';
+    seatEl.style.top=(H*.88-S.hUnits*s)+'px';seatEl.style.transform='translateX(-50%) translateX('+(S.dx*s)+'px)';seatEl.style.display=''}
+  function drawChar(){
+    me.innerHTML='<div class="flip">'+A.character(Object.assign({},look,{view:view}))+'</div>';lastCOn=false;lastCFull=false;
+    if(ctl)ctl.stop();ctl=A.animate(me.querySelector('svg'),cur=desired());flip();seatUpd();
+  }
+  function flip(){var f=me.querySelector('.flip');if(f)f.style.transform=(view==='side'&&dir<0)?'scaleX(-1)':''}
+  /* HUD */
+  $('hud').innerHTML='<span class="g-chip g-h-sun">'+ic('coin')+'<span id="hCoin">0</span></span><span class="g-chip g-h-rose">'+ic('heart')+'3</span>';
+  $('hudr').innerHTML='<button class="g-iconbtn g-h-sky" style="width:44px;height:44px">'+ic('pause',{size:24})+'</button>';
+  var coins=0;
+  /* 輸入 */
+  var down={}, oneShot=null, shotTimer=0, cur='idle', air=false, vy=0, jy=0, runJump=false;
+  function desired(){ if(oneShot)return oneShot; if(air)return vy<0?'jump':'fall'; if(down.down)return 'crouch'; if(down.left||down.right)return down.b?'run':'walk'; return idlePose; }
+  function shot(p,ms,then){oneShot=p;clearTimeout(shotTimer);shotTimer=setTimeout(function(){oneShot=then||null},ms)}
+  function press(k,v){
+    if(!!down[k]===v)return; down[k]=v; var b=document.querySelector('.k[data-k="'+k+'"]'); if(b)b.classList.toggle('on',v);
+    if(v&&k==='a'&&!air&&oneShot!=='land'){air=true;runJump=!!down.b;vy=-Math.max(520,stage.clientHeight*1.55);coins++;$('hCoin').textContent=coins;
+      var sp=document.createElement('span');sp.className='g-float g-h-sun';sp.textContent='+1';sp.style.cssText='position:absolute;z-index:31;left:50%;top:30%;margin-left:-8px';stage.appendChild(sp);setTimeout(function(){sp.remove()},900)}
+    if(k==='left'&&v){dir=-1;flip()} if(k==='right'&&v){dir=1;flip()}
+  }
+  var keymap={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',' ':'a',a:'a',A:'a',j:'a',J:'a',b:'b',B:'b',Shift:'b',k:'b',K:'b'};
+  addEventListener('keydown',function(e){if(keymap[e.key]&&!/select|input/i.test((e.target||{}).tagName||'')){e.preventDefault();press(keymap[e.key],true)}});
+  addEventListener('keyup',function(e){if(keymap[e.key])press(keymap[e.key],false)});
+  addEventListener('blur',function(){Object.keys(down).forEach(function(k){if(down[k])press(k,false)})});
+  document.querySelectorAll('.k').forEach(function(b){var k=b.dataset.k;
+    var icn={up:'up',down:'down',left:'left',right:'right'}[k]; if(icn)b.innerHTML=ic(icn);
+    b.addEventListener('pointerdown',function(e){e.preventDefault();b.setPointerCapture(e.pointerId);press(k,true)});
+    ['pointerup','pointercancel','lostpointercapture'].forEach(function(ev){b.addEventListener(ev,function(){press(k,false)})})});
+  /* 主迴圈 */
+  var last=0, drift=0, lastH=0, chargeT=0, lastCOn=false, lastCFull=false;
+  function loop(ts){
+    var dt=Math.min(.05,(ts-last)/1000||0);last=ts;
+    if(air){var g=Math.max(1500,stage.clientHeight*4.6);vy+=g*dt;jy-=vy*dt;if(jy<=0){jy=0;air=false;if(!(down.left||down.right))shot('land',240)}}
+    me.style.transform='translateX(-50%) translateY('+(-jy)+'px)';
+    var sh=document.getElementById('gshadow');if(sh){var hh=Math.min(1,jy/(stage.clientHeight*.4));sh.style.transform='translateX(-50%) scale('+(1-.4*hh).toFixed(3)+',1)';sh.style.opacity=(1-.45*hh).toFixed(2)}
+    var mv=(down.left?-1:0)+(down.right?1:0);
+    if(mv&&(air||!down.down)){var spd=stage.clientWidth*(air?(runJump||down.b?.85:.38):(down.b?.85:.38));offset+=mv*spd*dt;}   /* 蹲下時（在地面）不能前進 */
+    drift+=dt*stage.clientWidth*.01;
+    var per=stage.clientWidth;F.layers.forEach(function(n){var f=F.parallax[n];if(!f||!st[n])return;var off=offset*f+(n==='clouds'?drift:0),x=-(((off%per)+per)%per);['day','night'].forEach(function(t){if(st[n][t])st[n][t].style.transform='translateX('+x+'px)'})});
+    if(sys){var nu=A.uFromDate();if(Math.abs(nu-u)>.0003){u=nu;updateSky()}}
+    else if(auto){u=(u+dt*1000/Z.cycleMs)%1;updateSky()}
+    var Hh=stage.clientHeight;if(Hh!==lastH){lastH=Hh;placeMe();updateSky()}
+    var d=desired();if(d!==cur&&ctl){cur=d;ctl.setPose(d);seatUpd()}
+    if(down.down&&!air&&!oneShot){chargeT+=dt}else chargeT=0;var cOn=chargeT>0.35,cFull=chargeT>=1;var sv=me.querySelector('svg');if(sv&&(cOn!==lastCOn||cFull!==lastCFull)){A.setCharge(sv,cOn,cFull);lastCOn=cOn;lastCFull=cFull}
+    requestAnimationFrame(loop)
+  }
+  /* 面板 */
+  function seg(id,vals,labels,get,set){var h='';vals.forEach(function(v){h+='<button data-v="'+v+'" aria-pressed="'+(get()===v)+'">'+labels[v]+'</button>'});$(id).innerHTML=h;$(id).onclick=function(e){var b=e.target.closest('button');if(!b)return;set(b.dataset.v);seg(id,vals,labels,get,set)}}
+  $('uRange').oninput=function(){sys=false;$('btnSys').style.opacity=1;auto=false;$('btnCycle').textContent='播放日升月落';u=this.value/999;updateSky()};
+  $('btnSys').onclick=function(){sys=!sys;auto=false;$('btnCycle').textContent='播放日升月落';this.style.opacity=sys?.6:1;if(sys){u=A.uFromDate();updateSky()}};
+  $('btnCycle').onclick=function(){sys=false;$('btnSys').style.opacity=1;auto=!auto;this.textContent=auto?'暫停':'播放日升月落'};
+  $('btnDay').onclick=function(){sys=false;$('btnSys').style.opacity=1;auto=false;$('btnCycle').textContent='播放日升月落';u=.25;updateSky()};
+  $('btnNight').onclick=function(){sys=false;$('btnSys').style.opacity=1;auto=false;$('btnCycle').textContent='播放日升月落';u=.75;updateSky()};
+  seg('segView',['front','side','back'],{front:'正面',side:'側面',back:'背面'},function(){return view},function(v){view=v;drawChar()});
+  $('selPose').innerHTML=A.poses.map(function(p){return '<option value="'+p+'">'+T.motion.poses[p].label+'</option>'}).join('');
+  $('selPose').onchange=function(){idlePose=this.value};
+  $('selPreset').innerHTML=Object.keys(A.presets).map(function(p){return '<option>'+p+'</option>'}).join('');
+  $('selPreset').onchange=function(){look=JSON.parse(JSON.stringify(A.presets[this.value]));form();drawChar()};
+  $('rnd').onclick=function(){look=A.randomLook();form();drawChar()};
+  var O=A.options;
+  function form(){
+    var h='';
+    function sel(key,vals){h+='<label class="f">'+key+'</label><select data-k="'+key+'">'+vals.map(function(v){return '<option'+(look[key]===v?' selected':'')+'>'+v+'</option>'}).join('')+'</select>'}
+    function chips(key,vals,src){h+='<label class="f">'+key+'</label><div class="chips">'+vals.map(function(v){var c=src==='hue'?T.color.hue[v].base:T.color[src][v];return '<button class="chip2" data-chip="'+key+'" data-v="'+v+'" aria-pressed="'+(look[key]===v)+'" title="'+v+'" style="background:'+c+'"></button>'}).join('')+'</div>'}
+    sel('species',O.species);
+    if(look.species==='bear')chips('fur',O.fur,'fur');
+    if(look.species==='kid'){chips('skin',O.skin,'skin');sel('hairStyle',O.hairStyle);chips('hairColor',O.hairColor,'hair')}
+    sel('eyes',O.eyes);sel('mouth',O.mouth);sel('outfit',O.outfit);chips('outfitColor',O.outfitColor,'hue');chips('pantsColor',O.pantsColor.filter(function(x){return x!=='ink'&&x!=='match'}),'hue');h+='<div class="chips" style="margin-top:6px"><button class="btn'+(look.pantsColor==='match'?'':' alt')+'" data-chip="pantsColor" data-v="match" style="padding:4px 10px;font-size:12px">褲子同衣服色</button></div>';
+    h+='<label class="f">accessories（可複選）</label><div class="chips">'+O.accessories.map(function(a){var on=look.accessories.indexOf(a)>=0;return '<button class="btn'+(on?'':' alt')+'" data-acc="'+a+'" style="padding:4px 10px;font-size:12px;opacity:'+(on?1:.55)+'">'+a+'</button>'}).join('')+'</div>';
+    sel('held',O.held);$('form').innerHTML=h}
+  $('form').addEventListener('change',function(e){var k=e.target.getAttribute('data-k');if(!k)return;look[k]=e.target.value;form();drawChar()});
+  $('form').addEventListener('click',function(e){var t=e.target.closest('button');if(!t)return;
+    if(t.dataset.chip){look[t.dataset.chip]=t.dataset.v;form();drawChar()}
+    else if(t.dataset.acc){var i=look.accessories.indexOf(t.dataset.acc);if(i>=0)look.accessories.splice(i,1);else look.accessories.push(t.dataset.acc);form();drawChar()}});
+  var LB={clouds:'雲',far:'遠景',mid:'中景',ground:'地面',near:'近景',canopy:'樹冠前景'};
+  function buildToggles(){var box=$('layerToggles');box.querySelectorAll('button').forEach(function(b){b.remove()});box.insertAdjacentHTML('beforeend',F.layers.filter(function(n){return LB[n]}).map(function(n){return '<button class="btn" data-l="'+n+'" style="padding:6px 14px;font-size:13px">'+LB[n]+'</button>'}).join(''))}
+  $('layerToggles').onclick=function(e){var b=e.target.closest('button');if(!b)return;var n=b.dataset.l;layerOn[n]=layerOn[n]?0:1;['day','night'].forEach(function(t){if(st[n]&&st[n][t])st[n][t].style.display=layerOn[n]?'':'none'});b.style.opacity=layerOn[n]?1:.45};
+  function setScene(id){sceneId=id;F=T.color.world.scene[id];Z=F.celestial;Ld=A.sceneLayers(id,'day',960,540);Ln=A.sceneLayers(id,'night',960,540);
+    stage.querySelectorAll('.lay,.celobj').forEach(function(e){e.remove()});st={};layerOn={};F.layers.forEach(function(n){layerOn[n]=1});buildWorld();buildToggles()}
+  seg('segScene',A.scenes,{forest:'森林',studio:'攝影棚',ocean:'海底世界',space:'宇宙空間'},function(){return sceneId},function(v){setScene(v)});
+  /* 拍照 */
+  var aspect='16:9';
+  seg('segAspect',['16:9','1:1','4:5'],{'16:9':'16:9','1:1':'1:1','4:5':'4:5'},function(){return aspect},function(v){aspect=v});
+  $('btnShot').innerHTML=ic('camera')+' 拍照';
+  $('btnShot').onclick=function(){
+    var o={scene:sceneId,u:u,aspect:aspect,look:look,pose:cur,t:300,view:view,facing:dir<0?'left':'right',shift:offset/stage.clientWidth,charX:.5};
+    var fl=document.createElement('div');fl.style.cssText='position:absolute;inset:0;background:#fff;z-index:40;opacity:.9;transition:opacity .35s';stage.appendChild(fl);setTimeout(function(){fl.style.opacity=0},30);setTimeout(function(){fl.remove()},420);
+    var url='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(A.exportSVG(o));
+    $('shotOut').innerHTML='<img alt="照片" src="'+url+'" style="width:100%;border-radius:12px;margin-top:6px;box-shadow:var(--g-shadow-tile)"><div style="display:flex;gap:8px;margin-top:8px"><a class="btn" id="dlPng" download="photo.png" style="text-decoration:none;font-size:13px;padding:6px 14px">'+ic('download')+' 下載 PNG</a></div>';
+    A.exportPNG(o).then(function(b){$('dlPng').href=URL.createObjectURL(b)},function(){$('dlPng').style.opacity=.4});
+  };
+  form();buildWorld();buildToggles();drawChar();addEventListener('resize',placeMe);requestAnimationFrame(loop);
+  /* 三視角 */
+  $('views').innerHTML=Object.keys(A.presets).map(function(p){return '<div class="card">'+['front','side','back'].map(function(v){return A.character(Object.assign({},A.presets[p],{view:v}))}).join('')+'</div>'}).join('');
+  /* 5 動作 */
+  var pg='';A.poses.forEach(function(p,i){pg+='<div class="card" data-pose="'+p+'"><div style="display:flex;gap:4px">'+A.character(Object.assign({},A.presets['kid-sunny'],{view:'side'}))+A.character(Object.assign({},A.presets['kid-mint'],{view:'front'}))+'</div><span><b>'+T.motion.poses[p].label+'</b><br>'+p+'</span></div>'});
+  $('poses').innerHTML=pg;
+  document.querySelectorAll('[data-pose]').forEach(function(c){var p=c.dataset.pose;c.querySelectorAll('svg').forEach(function(s){var cc=A.animate(s,p);if(p==='land')setInterval(function(){cc.setPose('land')},1800)})});
+  /* 5b 序列 */
+  A.sequences.forEach(function(name){
+    var Q=T.motion.sequences[name], total=Q.steps.reduce(function(a,b){return a+b.ms},0), card=document.createElement('div'); card.className='card';
+    card.innerHTML='<div class="box" style="width:120px;height:170px;margin:auto"></div><span><b>'+Q.label+'</b><br>'+name+' · '+(Q.loop?'循環':'播放一次')+' · '+Q.steps.map(function(x){return x.pose+'/'+x.view}).join(' → ')+'</span>';
+    $('seqs').appendChild(card);var box=card.querySelector('.box'),t0=0,lastStep=-1,sc=null;
+    (function tick(ts){if(!t0)t0=ts;if(!Q.loop&&ts-t0>total+1200){t0=ts;lastStep=-1}
+      var q=A.sequenceAt(name,ts-t0);if(q.step!==lastStep){lastStep=q.step;if(sc)sc.stop();box.innerHTML=A.character(Object.assign({},A.presets['kid-sunny'],{view:q.view,facing:q.facing}));sc=A.animate(box.querySelector('svg'),q.pose)}
+      requestAnimationFrame(tick)})(0);
+  });
+  /* 6 場景 */
+  var LT={sky:'天空漸層',stars:'星星（夜）',clouds:'雲',far:'遠景',mid:'中景',ground:'地面',near:'近景',canopy:'樹冠前景'}, th2='';
+  FF.layers.forEach(function(n){var bg=n==='stars'?'#3E4A78':n==='clouds'?'#8EC5E8':n==='sky'?'none':'#CFE6F4';th2+='<div><div class="th" style="background:'+bg+'">'+(n==='stars'?Ln[n]:Ld[n])+'</div><p class="note" style="margin:4px 4px 10px">'+LT[n]+' · 視差 ×'+FF.parallax[n]+'</p></div>'});
+  th2+='<div><div class="th" style="background:none">'+A.scene('forest',960,540,{time:'day'})+'</div><p class="note" style="margin:4px">合成・白天</p></div><div><div class="th" style="background:none">'+A.scene('forest',960,540,{time:'night'})+'</div><p class="note" style="margin:4px">合成・夜晚</p></div>';
+  $('layerThumbs').innerHTML=th2;
+  var sp='';['day','night'].forEach(function(tm){var S=FF[tm];['skyTop','skyBottom','farHill','farTree','midTrunk','canopy','groundTop','groundBody','bush','flowerA'].forEach(function(k){sp+='<div class="sw"><div class="row"><i style="background:'+S[k]+'"></i></div><b>'+(tm==='day'?'白天':'夜晚')+' · '+k+'</b><span>'+S[k]+'</span></div>'})});
+  $('scenePal').innerHTML=sp;
+  var stH='';['day','night'].forEach(function(tm){stH+='<div><div class="th" style="background:none">'+A.scene('studio',960,540,{time:tm})+'</div><p class="note" style="margin:4px">攝影棚・'+(tm==='day'?'白天':'夜晚')+'</p></div>'});
+  $('studioThumbs').innerHTML=stH;
+  $('avatars').innerHTML=Object.keys(A.presets).map(function(p){return '<div class="card" style="align-items:center;text-align:center"><div style="width:84px;height:84px;border-radius:50%;overflow:hidden;background:var(--g-sky-soft);margin:auto">'+A.avatar(A.presets[p],84)+'</div><span>'+p+'</span></div>'}).join('');
+  /* 7 道具 */
+  var pst={}, zoom=document.createElement('div');zoom.id='zoom';document.body.appendChild(zoom);
+  function stOf(p){var ss=A.propStates(p.id);return ss?ss[(pst[p.id]||0)%ss.length]:null}
+  function cardHtml(p){var s=stOf(p);return '<div class="pv"'+(p.bg?' style="background:'+p.bg+'"':'')+'>'+A.prop(p.id,s?{state:s.id}:{})+'</div><span>'+p.label+'<br>'+p.id+(s?' · '+s.label:'')+'</span>'+(s?'<i class="tg"></i>':'')}
+  $('propGrid').innerHTML=A.props.map(function(p){return '<div class="card" data-id="'+p.id+'">'+cardHtml(p)+'</div>'}).join('');
+  var byId={};A.props.forEach(function(p){byId[p.id]=p});
+  function showZoom(id,e){var p=byId[id],s=stOf(p),ss=A.propStates(id);
+    zoom.innerHTML='<div class="big"'+(p.bg?' style="background:'+p.bg+'"':'')+'>'+A.prop(id,s?{state:s.id}:{})+'</div><div class="nm">'+p.label+' <span class="sub">'+id+'</span></div>'+(ss?'<div class="sub">可互動・點擊切換狀態</div><div class="sts">'+ss.map(function(x){return '<div class="st'+(x.id===s.id?' cur':'')+'"><div'+(p.bg?' style="background:'+p.bg+';border-radius:6px;padding:2px"':'')+'>'+A.prop(id,{state:x.id})+'</div>'+x.label+'</div>'}).join('')+'</div>':'<div class="sub">'+p.group+'</div>');
+    zoom.style.display='block';moveZoom(e)}
+  function moveZoom(e){var x=e.clientX+18,y=e.clientY+18;if(x+260>innerWidth)x=e.clientX-268;if(y+330>innerHeight)y=Math.max(8,innerHeight-336);zoom.style.left=x+'px';zoom.style.top=y+'px'}
+  $('propGrid').addEventListener('mouseover',function(e){var c=e.target.closest('.card');if(c)showZoom(c.dataset.id,e)});
+  $('propGrid').addEventListener('mousemove',function(e){if(zoom.style.display==='block')moveZoom(e)});
+  $('propGrid').addEventListener('mouseleave',function(){zoom.style.display='none'});
+  $('propGrid').addEventListener('click',function(e){var c=e.target.closest('.card');if(!c)return;var p=byId[c.dataset.id];if(!A.propStates(p.id))return;pst[p.id]=(pst[p.id]||0)+1;c.innerHTML=cardHtml(p);showZoom(p.id,e)});
+
+  /* 9 賽跑 */
+  (function(){
+    var RP=A.animalPoses,curP='run',ctls=[];
+    var lbl={idle:'待機',run:'跑',sleep:'睡覺',stumble:'絆倒',cheer:'歡呼',sad:'沮喪'};
+    $('segRacePose').innerHTML=RP.map(function(p){return '<button data-p="'+p+'">'+lbl[p]+'</button>'}).join('');
+    function draw(){ctls.forEach(function(c){c.stop()});ctls=[];
+      $('raceAnimals').innerHTML=A.animalKinds.map(function(k){var o=T.race.animals[k],vb=A.animalViewBox[k];return '<div class="card" style="align-items:center;text-align:center"><div class="pv" style="height:190px;display:flex;align-items:flex-end;justify-content:center;background:var(--g-sky-soft)">'+A.animal(k,{pose:curP,t:0}).replace('<svg ','<svg height="'+Math.round(vb[1]*1.0)+'" ')+'</div><span>'+o.label+' · '+o.tier+'<br>'+k+'</span></div>'}).join('');
+      Array.prototype.forEach.call($('raceAnimals').querySelectorAll('svg'),function(sv){ctls.push(A.animateAnimal(sv,curP))});
+      Array.prototype.forEach.call($('segRacePose').children,function(b){b.classList.toggle('on',b.dataset.p===curP)});}
+    $('segRacePose').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;curP=b.dataset.p;draw()});draw();
+    var refLook=T.race.referee.look,RK=Object.keys(T.race.referee.poses),rp='';
+    RK.forEach(function(k){var pn=T.race.referee.poses[k];rp+='<div class="card" style="align-items:center;text-align:center"><div class="pv" style="background:var(--g-sky-soft);height:130px">'+A.character(Object.assign({},refLook,{view:'front',pose:pn,t:260}))+'</div><span>'+k+'<br>'+pn+'</span></div>'});
+    $('refPoses').innerHTML=rp;
+    var tr='';T.race.stages.forEach(function(st){
+      var L=T.race.track.length,W=1000,sx=W/L,svg='<svg viewBox="0 0 '+W+' 120" style="width:100%;background:var(--g-sky-soft);border-radius:12px"><rect y="96" width="'+W+'" height="24" fill="#D8B48A"/>';
+      svg+='<rect x="0" y="0" width="'+(300*sx)+'" height="120" fill="#fff" opacity=".35"/><rect x="'+((L-300)*sx)+'" y="0" width="'+(300*sx)+'" height="120" fill="#fff" opacity=".35"/>';
+      st.items.forEach(function(it){var d=A.props.filter(function(p){return p.id===it.id})[0],w=(it.w||d.size[0])*sx*1.0,h=d.size[1]*.5,elev=(it.elev||0)*.5;if(it.id==='stoneBlock'){h=d.size[1]*(it.stack||1)*.5}
+        svg+='<g transform="translate('+(it.x*sx)+' '+(96-h-elev)+')"><svg width="'+Math.max(w,6)+'" height="'+h+'" viewBox="0 0 '+d.size[0]+' '+d.size[1]+'" preserveAspectRatio="none" overflow="visible">'+A.prop(it.id).replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'')+'</svg></g>'});
+      svg+='</svg>';
+      tr+='<div class="card" style="margin-bottom:10px"><b>第 '+st.id+' 場・'+st.label+' · '+T.race.animals[st.opponent].label+'</b><span class="note">天色 u='+st.u+'｜目標時間 '+st.targetTime+'s｜物件 '+st.items.length+'</span>'+svg+'</div>'});
+    $('raceTracks').innerHTML=tr;
+    (function(){var TC=T.treeClimb,lv=TC.levels[0].id;
+      $('segTreeLv').innerHTML=TC.levels.map(function(l){return '<button data-l="'+l.id+'">'+l.label+'</button>'}).join('');
+      function draw(){var m=+$('treeAlt').value,alt=m*TC.world.unitsPerMeter,br=A.treeBuild(lv,7);
+        $('treeAltLbl').textContent=m+' m｜'+(function(z){return z&&z.id||z})(A.treeZoneAt(alt));
+        $('treeView').innerHTML=A.treeCompose(alt,620,0,{branches:br});}
+      $('segTreeLv').onclick=function(e){if(e.target.dataset.l){lv=e.target.dataset.l;draw()}};
+      $('treeAlt').oninput=draw;draw();
+      $('treeLv').innerHTML='<table class="note">'+TC.levels.map(function(l){return '<tr><td>'+l.label+'</td><td>'+l.timeSec+'s</td><td>★ '+TC.stars[l.id].join(' / ')+' m</td><td>障礙：'+l.allow.join('、')+'</td></tr>'}).join('')+'</table>';
+    })();
+  })();
+})();
+</script>
+</body>
+</html>

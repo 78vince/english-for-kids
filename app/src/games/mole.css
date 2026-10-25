@@ -1,0 +1,897 @@
+/* 打地鼠遊戲樣式（完全遵守規範：全草地氛圍、雜物石塊裝飾、3-2-3 坑洞佈局、巨大觸控熱區、0 寫死色碼） */
+@import "../game/gamePage.css";
+
+:root {
+  --mole-hole-w: 190px;
+  --mole-hole-h: 210px;
+  --mole-mound-h: 95px;
+  --mole-mound-offset: 24px;
+  --mole-actor-wrap-h: 180px;
+  --mole-actor-w: 130px;
+  --mole-actor-h: 170px;
+  --mole-player-w: 95px;
+  --mole-player-h: 115px;
+}
+
+#mole-app,
+.mole-page {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: max(6px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+  background: var(--g-leaf-soft);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  font-family: var(--g-font-ui);
+  color: var(--g-ink);
+}
+
+/* ==================== 
+   頂部導覽列（對齊橫式寬度）
+   ==================== */
+.mole-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex: none;
+  width: 100%;
+  max-width: 980px;
+  height: 48px;
+  margin-bottom: 6px;
+}
+
+.mole-top-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mole-btn-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: var(--g-surface-raised);
+  box-shadow: 0 2px 6px rgba(47, 58, 102, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--g-ink);
+  transition: transform 0.15s, background-color 0.15s;
+}
+
+.mole-btn-icon:active {
+  transform: scale(0.92);
+  background: var(--g-surface-sunken);
+}
+
+.mole-who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mole-who-avatar svg {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--g-surface-raised);
+  box-shadow: 0 2px 4px rgba(47, 58, 102, 0.08);
+}
+
+.mole-who-text strong {
+  font-size: 15px;
+  color: var(--g-ink);
+  white-space: nowrap;
+}
+
+/* 時間進度條 */
+.mole-top-center {
+  flex: 1;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.mole-timer-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--g-ink-soft);
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+}
+
+.mole-timer-bar {
+  width: 100%;
+  height: 10px;
+  background: var(--g-surface-raised);
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(47, 58, 102, 0.1);
+}
+
+.mole-timer-fill {
+  height: 100%;
+  background: var(--g-sun-base);
+  border-radius: 5px;
+  transition: width 0.2s linear, background-color 0.3s;
+}
+
+.mole-timer-fill--urgent {
+  background: var(--g-rose-base);
+}
+
+/* 右側得分與代幣 */
+.mole-top-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mole-hud-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--g-surface-raised);
+  padding: 6px 14px;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(47, 58, 102, 0.1);
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.mole-score-val {
+  color: var(--g-leaf-deep);
+  font-size: 18px;
+  min-width: 24px;
+  text-align: right;
+}
+
+.mole-combo-val {
+  font-size: 12px;
+  color: var(--g-peach-deep);
+  background: var(--g-peach-soft);
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 2px;
+}
+
+/* ==================== 
+   橫式草地遊戲台（固定 16:9 比例，全草地氛圍）
+   ==================== */
+.mole-stage {
+  position: relative;
+  flex: none;
+  aspect-ratio: 16 / 9;
+  width: min(96vw, 980px);
+  max-height: calc(100dvh - 74px);
+  border-radius: 32px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, var(--g-leaf-base) 0%, var(--g-leaf-ledge) 100%);
+  border: 4px solid var(--g-leaf-deep);
+  box-shadow: 0 12px 36px rgba(47, 58, 102, 0.16);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 草坪裝飾細節（小石塊、野花、草叢雜物） */
+.mole-bg-deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.mole-deco-item {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.9;
+  transform: translate(-50%, -50%);
+}
+
+.mole-deco-item svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.mole-grass-patch {
+  position: absolute;
+  width: 44px;
+  height: 22px;
+  background: var(--g-leaf-deep);
+  border-radius: 50% 50% 0 0;
+  opacity: 0.18;
+  transform: translate(-50%, -50%);
+}
+
+/* 主角大本營（左下角） */
+.mole-player-dock {
+  position: absolute;
+  bottom: 8px;
+  left: 12px;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.mole-player-dock-svg {
+  width: var(--mole-player-w);
+  height: var(--mole-player-h);
+  transform-origin: bottom center;
+  transition: transform 0.15s ease-out;
+}
+
+.mole-player-dock-svg--swing {
+  transform: scale(1.1) rotate(-10deg);
+}
+
+.mole-player-bubble {
+  background: var(--g-surface-raised);
+  color: var(--g-ink);
+  font-size: 13px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(47, 58, 102, 0.15);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  animation: mole-float 2s infinite ease-in-out;
+}
+
+@keyframes mole-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* ==================== 
+   3-2-3 坑洞佈局與超大感應範圍
+   ==================== */
+.mole-field {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+}
+
+/* 坑洞整體包裝（感應熱區隨舞台響應縮放） */
+.mole-hole-wrap {
+  position: absolute;
+  transform: translate(-50%, -75%);
+  width: var(--mole-hole-w);
+  height: var(--mole-hole-h);
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto;
+}
+
+/* 3-2-3 三列層級深度 */
+.mole-hole-wrap--row1 {
+  transform: translate(-50%, -75%) scale(0.92);
+  z-index: 11;
+}
+
+.mole-hole-wrap--row2 {
+  transform: translate(-50%, -75%) scale(1.0);
+  z-index: 15;
+}
+
+.mole-hole-wrap--row3 {
+  transform: translate(-50%, -75%) scale(1.06);
+  z-index: 20;
+}
+
+/* 坑洞底層（後洞口） */
+.mole-hole-back {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--mole-mound-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.mole-hole-back svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 冒出的目標角色層（頭部、帽子與身體均有充裕空間） */
+.mole-actor-wrap {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  bottom: var(--mole-mound-offset);
+  height: var(--mole-actor-wrap-h);
+  overflow: hidden;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.mole-actor {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 115%);
+  width: var(--mole-actor-w);
+  height: var(--mole-actor-h);
+  transition: transform 0.22s cubic-bezier(0.18, 0.9, 0.32, 1.25);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* 冒出探頭狀態：完全露出頭頂西瓜帽、五官表情與動作肢體 */
+.mole-actor--up {
+  transform: translate(-50%, 0%);
+}
+
+/* 被打擊瞬間彈跳反饋 */
+.mole-actor--hit {
+  transform: translate(-50%, -8%) scale(1.06);
+  filter: brightness(1.12);
+}
+
+/* 誤擊西瓜帽困惑偏頭 */
+.mole-actor--sad {
+  transform: translate(-50%, 0%) rotate(8deg);
+}
+
+.mole-actor svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 前沿泥堆與草叢（遮住下身，營造從泥土探頭的立體感） */
+.mole-hole-front {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--mole-mound-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.mole-hole-front svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 點擊浮動特效 */
+.mole-fx-score {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--g-sun-deep);
+  text-shadow: 0 2px 0 var(--g-surface-raised);
+  z-index: 35;
+  pointer-events: none;
+  animation: mole-rise-fade 0.75s forwards ease-out;
+}
+
+.mole-fx-oops {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--g-rose-deep);
+  background: var(--g-surface-raised);
+  padding: 4px 12px;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(47, 58, 102, 0.16);
+  z-index: 35;
+  pointer-events: none;
+  animation: mole-shake-fade 0.85s forwards ease-out;
+}
+
+@keyframes mole-rise-fade {
+  0% { opacity: 0; transform: translate(-50%, 20px) scale(0.6); }
+  30% { opacity: 1; transform: translate(-50%, -10px) scale(1.2); }
+  100% { opacity: 0; transform: translate(-50%, -45px) scale(1); }
+}
+
+@keyframes mole-shake-fade {
+  0% { opacity: 0; transform: translate(-50%, 10px) scale(0.8); }
+  25% { opacity: 1; transform: translate(-60%, -5px) scale(1.05); }
+  50% { transform: translate(-40%, -10px) scale(1.05); }
+  75% { transform: translate(-50%, -15px) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -35px); }
+}
+
+/* ==================== 
+   彈窗與規則卡片
+   ==================== */
+.mole-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(47, 58, 102, 0.62);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.mole-modal-card {
+  background: var(--g-surface-raised);
+  border-radius: 28px;
+  padding: 24px 28px;
+  max-width: 480px;
+  width: 100%;
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  box-shadow: 0 12px 36px rgba(47, 58, 102, 0.22);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: mole-pop 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes mole-pop {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.mole-modal-card h2 {
+  margin: 0;
+  font-size: 26px;
+  color: var(--g-ink);
+}
+
+.mole-rules-preview {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  width: 100%;
+  margin: 8px 0;
+}
+
+.mole-rule-item {
+  flex: 1;
+  background: var(--g-surface-sunken);
+  border-radius: 18px;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.mole-rule-item svg {
+  width: 72px;
+  height: 72px;
+}
+
+.mole-rule-tag {
+  font-size: 13px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.mole-rule-tag--hit {
+  background: var(--g-leaf-soft);
+  color: var(--g-leaf-deep);
+}
+
+.mole-rule-tag--avoid {
+  background: var(--g-rose-soft);
+  color: var(--g-rose-deep);
+}
+
+.mole-rule-desc {
+  font-size: 12px;
+  color: var(--g-ink-soft);
+}
+
+.mole-modal-actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.mole-btn-primary {
+  flex: 1;
+  min-height: 52px;
+  padding: 0 24px;
+  border-radius: 26px;
+  border: none;
+  background: var(--g-sun-base);
+  color: var(--g-ink);
+  font-weight: 800;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(47, 58, 102, 0.12);
+  transition: transform 0.15s, background-color 0.15s;
+}
+
+.mole-btn-primary:active {
+  transform: scale(0.96);
+  background: var(--g-sun-ledge);
+}
+
+.mole-btn-secondary {
+  min-height: 52px;
+  padding: 0 20px;
+  border-radius: 26px;
+  border: 2px solid var(--g-surface-sunken);
+  background: var(--g-surface-raised);
+  color: var(--g-ink-soft);
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.mole-btn-secondary:active {
+  background: var(--g-surface-sunken);
+}
+
+/* 結算頁面 */
+.mole-result-avatar svg {
+  width: 110px;
+  height: 110px;
+}
+
+.mole-result-stars {
+  display: flex;
+  gap: 6px;
+  font-size: 32px;
+}
+
+.mole-star {
+  color: var(--g-stone-base);
+}
+
+.mole-star--active {
+  color: var(--g-sun-base);
+  transform: scale(1.15);
+}
+
+.mole-result-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+}
+
+.mole-stat-box {
+  background: var(--g-surface-sunken);
+  border-radius: 14px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mole-stat-label {
+  font-size: 12px;
+  color: var(--g-ink-soft);
+}
+
+.mole-stat-num {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--g-ink);
+}
+
+.mole-badge-pill {
+  background: var(--g-leaf-soft);
+  color: var(--g-leaf-deep);
+  font-size: 14px;
+  font-weight: 800;
+  padding: 6px 16px;
+  border-radius: 20px;
+}
+
+/* ==================== 
+   響應式適配（解決手機直放擁擠與橫放裁切）
+   ==================== */
+
+/* 1. 平板與手機：坑洞與角色尺寸動態適配，預留草地間隔 */
+@media (max-width: 768px) {
+  :root {
+    --mole-hole-w: clamp(98px, 24vw, 150px);
+    --mole-hole-h: calc(var(--mole-hole-w) * 1.1);
+    --mole-mound-h: calc(var(--mole-hole-w) * 0.48);
+    --mole-mound-offset: calc(var(--mole-hole-w) * 0.12);
+    --mole-actor-wrap-h: calc(var(--mole-hole-w) * 0.95);
+    --mole-actor-w: calc(var(--mole-hole-w) * 0.68);
+    --mole-actor-h: calc(var(--mole-hole-w) * 0.88);
+    --mole-player-w: clamp(55px, 14vw, 80px);
+    --mole-player-h: calc(var(--mole-player-w) * 1.2);
+  }
+}
+
+/* 2. 手機直向模式：舞台給予充裕垂直縱深，避免 3 排坑洞如土餅擠壓重疊 */
+@media (orientation: portrait) {
+  .mole-stage {
+    aspect-ratio: 4 / 3.3;
+    width: min(94vw, 480px);
+    max-height: calc(100dvh - 84px);
+    border-radius: 24px;
+  }
+  .mole-player-dock {
+    bottom: 6px;
+    left: 6px;
+  }
+  .mole-player-bubble {
+    font-size: 11px;
+    padding: 2px 7px;
+  }
+}
+
+/* 3. 窄螢幕（手機）：導覽列精簡防折行疊字、裝飾元素微縮 */
+@media (max-width: 600px) {
+  .mole-page {
+    padding: max(4px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(4px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+  }
+  .mole-top {
+    height: 40px;
+    margin-bottom: 6px;
+    gap: 6px;
+  }
+  .mole-top-left {
+    gap: 6px;
+  }
+  .mole-btn-icon {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    font-size: 20px;
+  }
+  .mole-who {
+    gap: 4px;
+  }
+  .mole-who-avatar svg {
+    width: 32px;
+    height: 32px;
+  }
+  .mole-who-text {
+    display: none; /* 隱藏暱稱文字，避免窄螢幕水平空間不足導致計時器直向折行 */
+  }
+  .mole-top-center {
+    max-width: 140px;
+    gap: 2px;
+  }
+  .mole-timer-label {
+    font-size: 11px;
+    white-space: nowrap; /* 絕不折行成「剩/餘/時/間」 */
+    gap: 4px;
+  }
+  .mole-timer-bar {
+    height: 6px;
+  }
+  .mole-top-right {
+    gap: 6px;
+  }
+  .mole-hud-chip {
+    padding: 4px 8px;
+    font-size: 13px;
+    gap: 4px;
+  }
+  .mole-score-val {
+    font-size: 15px;
+    min-width: 18px;
+  }
+  .mole-combo-val {
+    font-size: 10px;
+    padding: 1px 4px;
+  }
+  .mole-deco-item {
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+  .mole-modal-card {
+    padding: 18px 16px;
+    gap: 12px;
+  }
+  .mole-result-avatar svg {
+    width: 76px;
+    height: 76px;
+  }
+  .mole-result-stars {
+    font-size: 26px;
+  }
+  .mole-stat-box {
+    padding: 6px 8px;
+  }
+  .mole-stat-num {
+    font-size: 18px;
+  }
+  .mole-btn-primary,
+  .mole-btn-secondary {
+    min-height: 44px;
+    font-size: 16px;
+  }
+}
+
+/* 4. 極窄螢幕（< 380px）：隱藏代幣計數，保證核心資訊清晰 */
+@media (max-width: 380px) {
+  .mole-top-right .mole-hud-chip[title="遊戲代幣"] {
+    display: none;
+  }
+}
+
+/* 5. 矮螢幕與橫向手機（<= 520px）：徹底解決彈窗被上下裁切問題 */
+@media (max-height: 520px) {
+  .mole-page {
+    padding: max(2px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(2px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+  }
+  .mole-top {
+    height: 34px;
+    margin-bottom: 2px;
+    gap: 6px;
+  }
+  .mole-btn-icon {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 16px;
+  }
+  .mole-who-avatar svg {
+    width: 26px;
+    height: 26px;
+  }
+  .mole-who-text strong {
+    font-size: 12px;
+  }
+  .mole-top-center {
+    max-width: 150px;
+    gap: 1px;
+  }
+  .mole-timer-label {
+    font-size: 10px;
+  }
+  .mole-timer-bar {
+    height: 5px;
+  }
+  .mole-hud-chip {
+    padding: 3px 8px;
+    font-size: 12px;
+  }
+  .mole-stage {
+    aspect-ratio: 16 / 9;
+    max-height: calc(100dvh - 42px);
+    border-radius: 18px;
+    border-width: 3px;
+  }
+  :root {
+    --mole-hole-w: clamp(90px, 18vw, 135px);
+    --mole-hole-h: calc(var(--mole-hole-w) * 1.1);
+    --mole-mound-h: calc(var(--mole-hole-w) * 0.48);
+    --mole-mound-offset: calc(var(--mole-hole-w) * 0.12);
+    --mole-actor-wrap-h: calc(var(--mole-hole-w) * 0.95);
+    --mole-actor-w: calc(var(--mole-hole-w) * 0.68);
+    --mole-actor-h: calc(var(--mole-hole-w) * 0.88);
+    --mole-player-w: clamp(48px, 9vw, 70px);
+    --mole-player-h: calc(var(--mole-player-w) * 1.2);
+  }
+  .mole-modal-backdrop {
+    padding: 6px 12px;
+  }
+  .mole-modal-card {
+    max-height: calc(100dvh - 12px);
+    padding: 8px 16px;
+    gap: 6px;
+    border-radius: 18px;
+    max-width: 500px;
+  }
+  .mole-modal-card h2 {
+    font-size: 17px;
+  }
+  .mole-result-avatar svg {
+    width: 48px;
+    height: 48px;
+  }
+  .mole-result-stars {
+    font-size: 20px;
+    gap: 3px;
+  }
+  .mole-badge-pill {
+    font-size: 11px;
+    padding: 2px 8px;
+  }
+  .mole-rule-tag {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+  .mole-result-stats {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+  .mole-stat-box {
+    padding: 3px 4px;
+    border-radius: 8px;
+  }
+  .mole-stat-label {
+    font-size: 9px;
+    white-space: nowrap;
+  }
+  .mole-stat-num {
+    font-size: 15px;
+  }
+  .mole-modal-actions {
+    gap: 8px;
+  }
+  .mole-btn-primary,
+  .mole-btn-secondary {
+    min-height: 36px;
+    font-size: 13px;
+    padding: 0 14px;
+    border-radius: 18px;
+  }
+  .mole-rules-preview {
+    margin: 2px 0;
+    gap: 8px;
+  }
+  .mole-rule-item {
+    padding: 4px 6px;
+    gap: 2px;
+    border-radius: 12px;
+  }
+  .mole-rule-item svg {
+    width: 40px;
+    height: 40px;
+  }
+  .mole-rule-desc {
+    font-size: 10px;
+  }
+}
+
+/* 減少動態效果支援 */
+@media (prefers-reduced-motion: reduce) {
+  .mole-actor,
+  .mole-player-dock-svg,
+  .mole-player-bubble,
+  .mole-fx-score,
+  .mole-fx-oops,
+  .mole-modal-card {
+    transition: none !important;
+    animation: none !important;
+  }
+}

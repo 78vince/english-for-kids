@@ -31,7 +31,7 @@ function assert(condition: boolean, message: string): void {
   if (!condition) throw new Error("❌ " + message);
 }
 
-const { getTokenBalance, earnTokens, spendTokens, TOKENS_EARNED_PER_ROUND } = await import(
+const { getTokenBalance, earnTokens, spendTokens } = await import(
   "../src/gameTokens"
 );
 
@@ -81,32 +81,17 @@ const { getTokenBalance, earnTokens, spendTokens, TOKENS_EARNED_PER_ROUND } = aw
   console.log("✅ 測試 4 通過：不同 profileId 的餘額互相獨立，不會互相污染。");
 }
 
-// ---- 測試 5：TOKENS_EARNED_PER_ROUND 常數存在，且 finalizeRoundCompletion() 有接上
-//      earnTokens(profileId, TOKENS_EARNED_PER_ROUND)（main.ts 原始碼靜態比對，
-//      比照 verify-unit-completion-badges.ts 對 main.ts 做結構性檢查的手法） ----
+// ---- 測試 5（2026-10-25 改）：代幣改成跟 LetsGo 同一套規則，finalizeRoundCompletion() 改呼叫
+//      awardRoundTokens()（詳細規則驗證見 verify-token-economy.ts） ----
 {
-  assert(
-    typeof TOKENS_EARNED_PER_ROUND === "number" && TOKENS_EARNED_PER_ROUND > 0,
-    "TOKENS_EARNED_PER_ROUND 應該是一個正整數常數"
-  );
-
   const dir = path.dirname(fileURLToPath(import.meta.url));
   const mainTs = readFileSync(path.resolve(dir, "../src/main.ts"), "utf-8");
-
-  assert(
-    mainTs.includes('import { earnTokens, getTokenBalance, spendTokens, TOKENS_EARNED_PER_ROUND } from "./gameTokens";'),
-    "main.ts 應該要從 gameTokens.ts import earnTokens／getTokenBalance／spendTokens／TOKENS_EARNED_PER_ROUND"
-  );
-
   const fnStart = mainTs.indexOf("function finalizeRoundCompletion(");
   assert(fnStart !== -1, "main.ts 應該要有 finalizeRoundCompletion() 函式");
-  const fnBody = mainTs.slice(fnStart, fnStart + 1200);
-  assert(
-    fnBody.includes("earnTokens(profileId, TOKENS_EARNED_PER_ROUND)"),
-    "finalizeRoundCompletion() 應該要呼叫 earnTokens(profileId, TOKENS_EARNED_PER_ROUND)，讓每完成一輪任何題型都會賺代幣"
-  );
-
-  console.log("✅ 測試 5 通過：TOKENS_EARNED_PER_ROUND 常數存在，且 finalizeRoundCompletion() 正確接上 earnTokens()。");
+  const fnBody = mainTs.slice(fnStart, fnStart + 2500);
+  assert(fnBody.includes("awardRoundTokens("), "finalizeRoundCompletion() 應該要呼叫 awardRoundTokens()，每完成一輪就依規則賺代幣");
+  assert(fnBody.indexOf("= getStageProgress(") < fnBody.indexOf("  recordStageCompletion(profileId"), "要在寫入這一輪紀錄之前先讀先前的紀錄");
+  console.log("✅ 測試 5 通過：finalizeRoundCompletion() 接上 awardRoundTokens()。");
 }
 
 console.log("\n✅ 全部遊戲代幣（gameTokens.ts）邏輯驗證通過。");

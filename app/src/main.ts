@@ -22,7 +22,22 @@ import {
   type TopicContent,
 } from "./content";
 import { GAME_BRIDGE_CHANNEL, type GameToParentMessage, type ParentToGameMessage } from "./gameBridge";
-import { earnTokens, getTokenBalance, spendTokens, TOKENS_EARNED_PER_ROUND } from "./gameTokens";
+import {
+  awardRoundTokens,
+  claimDailyFirst,
+  comboOnFinish,
+  comboOnStart,
+  comboRule,
+  dailyFirstStatus,
+  getTokenBalance,
+  spendTokens,
+  type ComboState,
+  type TokenAward,
+  type TokenEconomy,
+} from "./gameTokens";
+// 代幣規則數值（同步自 LetsGo 的 game-tokens；只取 economy 這一段，整包美術套件不會進主頁程式）
+import { economy as TOKEN_ECONOMY } from "../../assets/game-tokens/game-tokens.json";
+import { isGameListed, isGamePlayable, labStatusTagHtml, LAB_MODE } from "./gameRelease";
 import { getBestStars, recordStars } from "./gameHighScores";
 import { FLAT_ICON_VIEWBOX, COIN_ICON, CARD_BACK_ICON, CROSSWORD_ICON, BUBBLE_POP_ICON, STAR_EMPTY_ICON, STAR_FILLED_ICON } from "./games/gameIcons";
 import { MatchingGame, type MatchCard } from "./matchingGame";
@@ -361,6 +376,12 @@ if (restoredProfile) {
 
 let screen: Screen = activeProfile ? "topicSelect" : "profileSelect";
 
+// 從「我的角色」整頁遊戲（同視窗導航，game/fullscreenPage.ts 的 leaveTo）回來：index.html#gameRoom／#home
+if (activeProfile && window.location.hash === "#gameRoom") screen = "gameRoom";
+if (window.location.hash === "#gameRoom" || window.location.hash === "#home") {
+  history.replaceState(null, "", window.location.pathname + window.location.search);
+}
+
 // 手機瀏覽器的語音清單常常是非同步載入的（speech.ts 內部也有同樣的
 // window.speechSynthesis.onvoiceschanged 監聽去更新它自己的快取）——如果使用者剛好
 // 停在「個人檔案」頁的語音設定區塊，清單載入完成後要重新畫一次，下拉選單才會補上完整
@@ -583,6 +604,7 @@ function goToAbout(): void {
 // 手動呼叫一次，確保「一進畫面就唸出第一個單字」對第一張字卡也成立，不用等使用者做任何動作。
 function goToFlashcards(): void {
   screen = "flashcards";
+  startCombo("flashcards");
   flashcardGame = new FlashcardGame(playableVocab, 6, 3);
   flashcardGame.onChange = render;
   flashcardGame.onCardShown = (vocab) => speakEnglish(vocab.en);
@@ -608,6 +630,7 @@ function goToFlashcards(): void {
 
 function goToMatching(): void {
   screen = "matching";
+  startCombo("matching");
   matchingGame = new MatchingGame(playableVocab, 6);
   matchingGame.onChange = render;
   matchingGame.onCorrect = () => {
@@ -626,6 +649,7 @@ function goToMatching(): void {
 
 function goToOrdering(): void {
   screen = "ordering";
+  startCombo("ordering");
   orderingGame = new OrderingGame(playableSentences);
   orderingGame.onChange = render;
   orderingGame.onCorrect = () => {
@@ -647,6 +671,7 @@ function goToOrdering(): void {
 
 function goToFillBlank(): void {
   screen = "fillBlank";
+  startCombo("fillBlank");
   fillBlankGame = new FillBlankGame(playableSentences, playableVocab);
   fillBlankGame.onChange = render;
   fillBlankGame.onCorrect = () => {
@@ -665,6 +690,7 @@ function goToFillBlank(): void {
 
 function goToChoice(): void {
   screen = "choice";
+  startCombo("choice");
   choiceGame = new ChoiceGame(currentPassage);
   choiceGame.onChange = render;
   choiceGame.onCorrect = () => {
@@ -689,6 +715,7 @@ function goToChoice(): void {
 // 所以這幾個欄位隨便給合理的值就好，不影響作答邏輯。
 function goToCapstone(): void {
   screen = "capstone";
+  startCombo("capstone");
   const capstoneQuestions = buildCapstoneQuestions(playableVocab, playableSentences, currentPassage);
   const syntheticPassage: Passage = {
     id: `capstone.${currentTopic!.fileKey}`,
@@ -723,6 +750,7 @@ function goToConversation(): void {
   if (!conv) return;
   stopSpeaking();
   screen = "conversation";
+  startCombo("conversation");
   conversationGame = new ConversationGame(conv);
   conversationGame.onCorrect = () => {
     playCorrectSound();
@@ -2043,7 +2071,9 @@ function renderGameRoom(): void {
 
   const header = document.createElement("header");
   header.className = "game-header";
-  header.innerHTML = `<h1>遊戲室</h1><p class="progress">認真學習就能賺代幣，來玩點小遊戲放鬆一下吧！</p>`;
+  header.innerHTML = `<h1>遊戲室</h1><p class="progress">認真學習就能賺代幣，來玩點小遊戲放鬆一下吧！</p>${
+    LAB_MODE ? `<p class="game-room-lab-banner">🧪 遊戲實驗室模式：開發中的遊戲也會顯示；資料只存在這台裝置。<a href="lab.html">回實驗室</a></p>` : ""
+  }`;
   app!.appendChild(header);
 
   const profileId = activeProfile!.id;
@@ -2052,20 +2082,35 @@ function renderGameRoom(): void {
   const tokenHero = document.createElement("div");
   tokenHero.className = "game-tokens-hero";
   tokenHero.innerHTML = `
-    <span class="game-tokens-value">${COIN_ICON(28)} ${balance}</span>
-    <span class="game-tokens-label">遊戲代幣</span>
+    <span class="game-tokens-value">${COIN_ICON(72)}<span class="game-tokens-number">${balance}</span></span>
+    <span class="game-tokens-label">遊戲代幣（第一次完成、刷新最高分、拿滿分、複習都能賺，每輪至少 3 個；難的題型賺更多，連續挑戰翻倍）</span>
   `;
   app!.appendChild(tokenHero);
 
   const list = document.createElement("div");
   list.className = "game-room-list";
 
-  const visibleGames = [...GAMES].filter((g) => g.status !== "disabled").sort((a, b) => a.order - b.order);
+  // 2026-10-20：「我的角色」三款整頁遊戲（角色工作室、賽跑、爬樹）放在清單最前面。
+  // 卡片用動態 import 產生（遊戲美術套件約 1MB，不放進主頁一開始就要下載的程式裡）；
+  // 單檔展示版沒有 games/*.html，不顯示。
+  if (!(typeof __STANDALONE__ !== "undefined" && __STANDALONE__)) {
+    void import("./myCharacterCards")
+      .then(({ buildMyCharacterCards }) => {
+        // 載入完成前若已經離開遊戲室，list 已經不在畫面上，prepend 也不會顯示出來
+        list.prepend(...buildMyCharacterCards(profileId));
+      })
+      .catch(() => {
+        // 載入失敗（例如離線）就只顯示原本的遊戲
+      });
+  }
+
+  // 主題小遊戲（learning 類）用通用卡片；「我的角色」類由上面的 myCharacterCards 產生。上架判斷見 gameRelease.ts。
+  const visibleGames = [...GAMES].filter((g) => g.kind === "learning" && isGameListed(g.id)).sort((a, b) => a.order - b.order);
   for (const game of visibleGames) {
     const card = document.createElement("div");
     card.className = "game-room-card";
 
-    const comingSoon = game.status === "coming_soon";
+    const comingSoon = !isGamePlayable(game.id);
     const affordable = balance >= game.cost;
 
     // 「最高紀錄」星等（gameHighScores.ts）：沒玩過（0 顆星）就不顯示這一排，避免清單
@@ -2095,9 +2140,9 @@ function renderGameRoom(): void {
     card.innerHTML = `
       <div class="game-room-card-icon">${game.icon_placeholder}</div>
       <div class="game-room-card-body">
-        <h3>${game.name}</h3>
+        <h3>${game.name}${labStatusTagHtml(game.id)}</h3>
         <p>${game.description}</p>
-        <span class="game-room-card-cost">${COIN_ICON(16)} ${game.cost} 代幣</span>
+        <span class="game-room-card-cost">${COIN_ICON(22)} ${game.cost} 代幣</span>
         ${starsHtml}
       </div>
     `;
@@ -4582,7 +4627,7 @@ function renderConversation(): void {
 
     controls.innerHTML = `
       <div style="padding: 16px; background: var(--color-success-tint); border: 2px solid var(--color-success-700); border-radius: var(--radius-lg); text-align: center;">
-        <p style="font-size: 16px; font-weight: 700; color: var(--color-success-700); margin: 0 0 12px; line-height: 1.6;">
+        <p class="conversation-complete-text" style="font-size: 16px; font-weight: 700; color: var(--color-success-700); margin: 0 0 12px; line-height: 1.6;">
           🎉 太棒了！完成了 Stage E 會話練習！<br />
           共進行了 ${game.totalTurns * 2} 句對話，正確率 ${accuracy}%！
         </p>
@@ -4641,6 +4686,10 @@ const BADGE_CATEGORY_DISPLAY: Record<Badge["category"], { icon: string; title: s
   performance: { icon: CATEGORY_ICONS.target, title: "表現／正確率" },
   favorites: { icon: CATEGORY_ICONS.star, title: "收藏（最喜歡的單字）" },
   healthy_habit: { icon: CATEGORY_ICONS.sun, title: "正向作息" },
+  // 2026-10-20：「我的角色」遊戲同步時保留的分類；目前沒有徽章資料，也不在 BADGE_CATEGORY_ORDER 裡，不會顯示。
+  character_studio: { icon: CATEGORY_ICONS.gamepad, title: "角色工作室" },
+  race: { icon: CATEGORY_ICONS.gamepad, title: "森林賽跑" },
+  tree_climb: { icon: CATEGORY_ICONS.gamepad, title: "爬樹" },
 };
 
 // 顯示順序照 docs/achievement-badges.md 的章節順序排列。
@@ -4884,6 +4933,189 @@ function diffNewlyAchievedBadges(before: BadgeAchievementSnapshot, after: BadgeA
   return newly;
 }
 
+// ---- 遊戲代幣：完成畫面明細、今日寶箱、連續挑戰、代幣雨（2026-10-25 同步自 LetsGo main.ts）----
+// 這一輪獲得的代幣（完成畫面顯示明細；離開完成畫面就清掉）；rained＝代幣雨已經播過（render 會重複呼叫）
+let lastTokenAward: {
+  screen: Screen;
+  award: TokenAward;
+  combo: boolean;
+  rained: boolean;
+  /** 今日第一輪寶箱（這一輪有領到才有） */
+  daily: { amount: number; level: number; maxLevel: number } | null;
+} | null = null;
+
+// ---- 今日第一輪寶箱（2026-10-21）：首頁、Unit 選單提示；完成時先開寶箱再下代幣雨（規則見 gameTokens.ts） ----
+const CHEST_ICON = (size: number, open = false) =>
+  `<svg class="chest-icon" width="${size}" height="${size}" viewBox="0 0 48 48" aria-hidden="true">
+    <ellipse cx="24" cy="43" rx="17" ry="3" fill="rgba(0,0,0,.12)"/>
+    ${
+      open
+        ? `<circle cx="24" cy="18" r="14" fill="#FFE98A" opacity=".55"/><path d="M8 20 L12 6 Q24 0 36 6 L40 20 Z" fill="#B86B2B"/><rect x="21" y="5" width="6" height="15" rx="2" fill="#FFC21A"/>`
+        : `<path d="M7 22 Q7 9 24 9 Q41 9 41 22 Z" fill="#C97A33"/><rect x="21" y="9" width="6" height="13" rx="2" fill="#FFC21A"/>`
+    }
+    <rect x="7" y="21" width="34" height="20" rx="4" fill="#D98C3F"/>
+    <rect x="7" y="21" width="34" height="5" fill="#B86B2B"/>
+    <rect x="21" y="21" width="6" height="20" rx="2" fill="#FFC21A"/>
+    <rect x="20" y="26" width="8" height="8" rx="2" fill="#FFE98A" stroke="#B9720A" stroke-width="1"/>
+  </svg>`;
+
+function appendDailyChestBanner(): void {
+  if ((screen !== "topicSelect" && screen !== "menu") || !activeProfile) return;
+  const st = dailyFirstStatus(activeProfile.id, economyTokens());
+  if (!st || !st.available) return;
+  const header = app!.querySelector(".game-header");
+  if (!header) return;
+  const p = document.createElement("p");
+  p.className = "daily-chest-banner";
+  p.innerHTML = `${CHEST_ICON(48)}<span><span>今天的第一輪有<strong>寶箱 Lv.${st.level}</strong>！完成任何一個題型，就能打開拿 <strong class="daily-chest-amount">${COIN_ICON(20)}${st.amount}</strong></span>${
+    st.level < st.maxLevel ? `<small>每天都來，寶箱會升級（最高 Lv.${st.maxLevel}）</small>` : `<small>已經是最高等級，繼續保持！</small>`
+  }</span>`;
+  header.insertAdjacentElement("afterend", p);
+}
+
+// ---- 連續挑戰（2026-10-21）：完成一個題型後 2 分鐘內開始另一個題型，完成時代幣 ×2（規則見 gameTokens.ts） ----
+let combo: ComboState = { offer: null, active: null };
+function economyTokens(): TokenEconomy | undefined {
+  // 公開版多一個「短文理解（choice）」題型，LetsGo 的 stageWeight 沒有它：給 1.5（跟排序、填空同級）
+  const eco = TOKEN_ECONOMY as unknown as TokenEconomy;
+  return { ...eco, stageWeight: { choice: 1.5, ...eco.stageWeight } };
+}
+function startCombo(stage: string): void {
+  combo = comboOnStart(combo, currentTopic.fileKey, stage, Date.now());
+}
+function comboOfferLeftMs(): number {
+  const o = combo.offer;
+  if (!o || o.unitKey !== currentTopic?.fileKey) return 0;
+  return Math.max(0, o.until - Date.now());
+}
+function fmtClock(ms: number): string {
+  const sec = Math.ceil(ms / 1000);
+  return `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, "0")}`;
+}
+function comboMultLabel(): string {
+  const m = comboRule(economyTokens())?.multiplier ?? 2;
+  return m === 2 ? "翻倍" : `×${m}`;
+}
+/** 邀請「馬上挑戰下一個題型」：完成畫面、Unit 選單都會出現；倒數由下面的計時器更新，時間到自動消失 */
+function comboInviteEl(): HTMLElement | null {
+  const left = comboOfferLeftMs();
+  if (left <= 0) return null;
+  const p = document.createElement("p");
+  p.className = "combo-invite";
+  p.innerHTML = `<span class="combo-invite-bolt" aria-hidden="true">⚡</span><span>連續挑戰：<strong class="combo-timer">${fmtClock(left)}</strong> 內開始<strong>另一個題型</strong>，那一輪代幣<strong>${comboMultLabel()}</strong>！</span>`;
+  return p;
+}
+function appendComboBanner(): void {
+  if (screen !== "menu") return;
+  const el = comboInviteEl();
+  const header = app!.querySelector(".game-header");
+  if (el && header) header.insertAdjacentElement("afterend", el);
+}
+/** 連續挑戰進行中：畫面上方一個小標籤 */
+function appendComboChip(): void {
+  const a = combo.active;
+  if (!a || a.stage !== screen || a.unitKey !== currentTopic?.fileKey) return;
+  const chip = document.createElement("div");
+  chip.className = "combo-chip";
+  chip.innerHTML = `<span aria-hidden="true">⚡</span> 連續挑戰中：完成這一輪代幣${comboMultLabel()}`;
+  app!.appendChild(chip);
+}
+setInterval(() => {
+  const els = document.querySelectorAll<HTMLElement>(".combo-timer");
+  if (els.length === 0) return;
+  const left = comboOfferLeftMs();
+  if (left <= 0) {
+    combo = { ...combo, offer: null };
+    document.querySelectorAll(".combo-invite").forEach((e) => e.remove());
+    return;
+  }
+  els.forEach((e) => (e.textContent = fmtClock(left)));
+}, 500);
+
+/** 代幣雨：完成一輪時從畫面上方落下一陣代幣（數量跟獲得的代幣成正比），中間跳出「+N」。
+ * 掛在 body 上（render() 重畫 #app 不會打斷）；prefers-reduced-motion 時只顯示「+N」淡入淡出。 */
+function playCoinRain(total: number, isCombo: boolean, daily: { amount: number; level: number } | null = null): void {
+  if (total <= 0) return;
+  const reduced = typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelector(".coin-rain")?.remove();
+  const box = document.createElement("div");
+  box.className = "coin-rain" + (reduced ? " coin-rain--reduced" : "");
+  box.setAttribute("aria-hidden", "true");
+  // 今日第一輪：先在中間打開寶箱（約 1 秒），代幣從寶箱之後才開始落下
+  const lead = daily ? 0.9 : 0;
+  if (daily) {
+    const chest = document.createElement("div");
+    chest.className = "coin-rain-chest";
+    chest.innerHTML = `${CHEST_ICON(120, true)}<span>今日寶箱 Lv.${daily.level}　+${daily.amount}</span>`;
+    box.appendChild(chest);
+  }
+  if (!reduced) {
+    const n = Math.max(12, Math.min(isCombo || daily ? 56 : 40, total + 10));
+    for (let i = 0; i < n; i++) {
+      const c = document.createElement("span");
+      c.className = "coin-rain-coin";
+      const size = 28 + Math.round(Math.random() * 22);
+      c.innerHTML = COIN_ICON(size);
+      c.style.left = `${Math.random() * 100}%`;
+      c.style.setProperty("--d", `${(lead + Math.random() * 0.9).toFixed(2)}s`);
+      c.style.setProperty("--t", `${(1.5 + Math.random() * 1.1).toFixed(2)}s`);
+      c.style.setProperty("--x", `${Math.round((Math.random() * 2 - 1) * 70)}px`);
+      c.style.setProperty("--r", `${Math.round((Math.random() * 2 - 1) * 540)}deg`);
+      box.appendChild(c);
+    }
+  }
+  const pop = document.createElement("div");
+  pop.className = "coin-rain-total";
+  if (lead) pop.style.animationDelay = `${0.15 + lead}s`;
+  pop.innerHTML = `${COIN_ICON(60)}<span>+${total}</span>${isCombo ? `<em>連續挑戰 ${comboMultLabel()}！</em>` : ""}${
+    daily ? `<em>今日寶箱 +${daily.amount}</em>` : ""
+  }`;
+  box.appendChild(pop);
+  document.body.appendChild(box);
+  setTimeout(() => box.remove(), 3600 + lead * 1000);
+}
+
+/** 完成畫面（.done／會話完成卡）下方加上「獲得 N 個代幣」＋明細 */
+function appendTokenAwardSummary(): void {
+  if (!lastTokenAward) return;
+  const anchor = app!.querySelector(".game-footer .done, .conversation-complete-text");
+  if (lastTokenAward.screen !== screen || !anchor) {
+    lastTokenAward = null;
+    return;
+  }
+  const { award } = lastTokenAward;
+  const box = document.createElement("div");
+  box.className = "token-award" + (lastTokenAward.combo ? " token-award--combo" : "");
+  const head = document.createElement("p");
+  head.className = "token-award-total";
+  head.innerHTML =
+    award.total > 0
+      ? `${COIN_ICON(26)} <span>${lastTokenAward.daily ? "打開今日寶箱！" : ""}${lastTokenAward.combo ? "連續挑戰成功！" : ""}獲得 <strong>${award.total}</strong> 個遊戲代幣</span>`
+      : `${COIN_ICON(26)} <span>這一輪沒有獲得代幣，挑戰別的題型、刷新最高分吧！</span>`;
+  box.appendChild(head);
+  if (award.total > 0 && award.breakdown.length > 0) {
+    const ul = document.createElement("ul");
+    ul.className = "token-award-lines";
+    for (const line of award.breakdown) {
+      const li = document.createElement("li");
+      li.innerHTML = `<span></span><strong></strong>`;
+      li.firstElementChild!.textContent = line.label;
+      li.lastElementChild!.textContent = line.value;
+      ul.appendChild(li);
+    }
+    box.appendChild(ul);
+  }
+  // 邀請馬上挑戰下一個題型（連續挑戰）
+  const invite = comboInviteEl();
+  if (invite) box.appendChild(invite);
+  anchor.insertAdjacentElement("afterend", box);
+  // 有「獲得新徽章」視窗時先不下代幣雨，等關掉視窗（closeBadgeUnlockModal → render）再播
+  if (!lastTokenAward.rained && pendingBadgeUnlocks.length === 0) {
+    lastTokenAward.rained = true;
+    playCoinRain(award.total, lastTokenAward.combo, lastTokenAward.daily);
+  }
+}
+
 /**
  * 四種題型「答完一輪」共用的收尾動作：寫入 badgeStats／progress／playLog 相關資料，
  * 順便比對寫入前後的徽章達成狀態，把這一輪新達成（或又達成一次）的徽章收進
@@ -4900,12 +5132,36 @@ function finalizeRoundCompletion(
   const profileId = activeProfile!.id;
   const before = snapshotBadgeAchievements(profileId);
 
+  // 代幣規則要看「這一輪之前」的紀錄，所以在 recordStageCompletion() 寫入前先取出
+  const prev = getStageProgress(profileId, currentTopic.fileKey, stageKey);
   recordStageCompletion(profileId, currentTopic.fileKey, stageKey, correctCount, wrongCount);
   recordPlayToday(profileId);
   recordElapsedPlayTime();
   recordRoundCompletion(profileId, { wrongCount, hintUsed });
   syncStreakBadgesNow(profileId);
-  earnTokens(profileId, TOKENS_EARNED_PER_ROUND); // 每完成一輪任何題型就賺遊戲代幣（見 gameTokens.ts 說明）
+  // 遊戲代幣（2026-10-25 跟 LetsGo 同一套規則）：第一次完成／刷新最高分／滿分／複習 × 題型加權，保底 3；
+  // 連續挑戰再 ×2；今天第一輪另外開寶箱。數值讀 game-tokens 的 economy（公開版沒有單元加成，一律 ×1）。
+  const fin = comboOnFinish(combo, currentTopic.fileKey, stageKey, Date.now(), comboRule(economyTokens()));
+  combo = fin.state;
+  const roundAward = awardRoundTokens(
+    economyTokens(),
+    {
+      profileId,
+      unitKey: currentTopic.fileKey,
+      stage: stageKey,
+      correctCount,
+      wrongCount,
+      prevTimesCompleted: prev?.timesCompleted ?? 0,
+      prevBestAccuracy: prev?.bestAccuracy ?? 0,
+    },
+    fin.multiplier
+  );
+  const daily = claimDailyFirst(profileId, economyTokens());
+  if (daily) {
+    roundAward.total += daily.amount;
+    roundAward.breakdown.push({ label: `今日寶箱 Lv.${daily.level}`, value: `+${daily.amount}` });
+  }
+  lastTokenAward = { screen, combo: fin.multiplier > 1, rained: false, daily, award: roundAward };
 
   const after = snapshotBadgeAchievements(profileId);
   const newly = diffNewlyAchievedBadges(before, after);
@@ -5223,6 +5479,11 @@ function render(): void {
   if (pendingBadgeUnlocks.length > 0) {
     appendBadgeUnlockModal();
   }
+
+  appendTokenAwardSummary();
+  appendDailyChestBanner();
+  appendComboBanner();
+  appendComboChip();
 
   // 不分畫面，「回到頂端」浮動按鈕都要加上——包含選使用者畫面跟七種遊戲題型畫面
   // （這些畫面不會呼叫 appendShell()），寫法比照上面的 appendBadgeUnlockModal()，

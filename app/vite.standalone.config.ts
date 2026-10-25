@@ -19,6 +19,11 @@ import { viteSingleFile } from "vite-plugin-singlefile";
 // 把所有 JS/CSS/共用 chunk 正確內嵌進一份完整的單檔 index.html，不用再手動 regex
 // 猜檔案名稱、也不會因為以後又加新的共用模組/進入點而重演這個 bug。
 export default defineConfig({
+  // 單檔版沒有 games/*.html，「我的角色」整頁遊戲的入口要隱藏（main.ts 讀這個旗標）
+  define: {
+    __STANDALONE__: JSON.stringify(true),
+    __LAB__: JSON.stringify(false),
+  },
   base: "./",
   server: {
     fs: {

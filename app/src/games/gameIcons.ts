@@ -8,21 +8,24 @@
 
 export const FLAT_ICON_VIEWBOX = `viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"`;
 
-// 遊戲代幣：扁平單色錢幣圖示（圓圈＋中間一個貨幣符號的曲線），取代原本的 🪙 emoji。
-// 遊戲代幣圖示——圓圈＋品牌字母 K，呼應吉祥物「羊毛氈字母怪獸 K」，2026-10-01 風格改版 v3
-// 從硬幣造型改版（函式名稱維持 COIN_ICON 不變，改名字要動到三個呼叫點，沒有必要）。
+// 遊戲代幣圖示（2026-10-25 跟 LetsGo 同款）：金色硬幣＋「G」（Game）。顏色寫死在這裡，不跟主題色走；
+// 每個圖示用自己的漸層 id（同一頁會有很多枚，例如代幣雨）。原本是藍色圓圈＋品牌字母 K。
+let coinSeq = 0;
 export const COIN_ICON = (size: number) => {
-  const fontSize = Math.round(size * 0.58);
-  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="vertical-align:-2px">
+  const id = `gameCoin${++coinSeq}`;
+  return `<svg class="game-coin" width="${size}" height="${size}" viewBox="0 0 24 24" style="vertical-align:-2px" aria-hidden="true">
     <defs>
-      <linearGradient id="coinGrad" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="var(--color-primary-700)"/>
-        <stop offset="100%" stop-color="var(--color-primary-500)"/>
+      <linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#FFE98A"/>
+        <stop offset="45%" stop-color="#FFC21A"/>
+        <stop offset="100%" stop-color="#E08E00"/>
       </linearGradient>
     </defs>
-    <circle cx="12" cy="12" r="11" fill="url(#coinGrad)"/>
-    <text x="12" y="12" text-anchor="middle" dy=".35em"
-      font-family="Huninn, sans-serif" font-weight="700" font-size="${fontSize}" fill="#fff">K</text>
+    <circle cx="12" cy="12" r="11" fill="url(#${id})" stroke="#B9720A" stroke-width="1.2"/>
+    <circle cx="12" cy="12" r="8.4" fill="none" stroke="#FFF3B8" stroke-width=".9" opacity=".75"/>
+    <path d="M5.2 9.2 A7.6 7.6 0 0 1 10.4 4.6" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+    <text x="12" y="12" text-anchor="middle" dy=".36em"
+      font-family="Huninn, 'Nunito', sans-serif" font-weight="800" font-size="12.5" fill="#8A4B00">G</text>
   </svg>`;
 };
 

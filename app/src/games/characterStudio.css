@@ -1,0 +1,1470 @@
+/* 角色工作室版面：橫放 ≥ 820×480 舞台約 62%、右側面板約 38%；手機直放：舞台置頂、面板底部抽屜。
+   顏色只用遊戲 token（--g-*）；文字樣式 .g-t-*；點擊區 ≥ 56px。 */
+
+.studio {
+  gap: 10px;
+  padding-left: max(12px, env(safe-area-inset-left));
+  padding-right: max(12px, env(safe-area-inset-right));
+  padding-top: max(10px, env(safe-area-inset-top));
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
+  background: var(--g-surface);
+}
+
+/* ---- 頂部列 ---- */
+.studio-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  min-height: 56px;
+}
+.studio-top .g-iconbtn {
+  flex: none;
+}
+.studio-top .g-iconbtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.studio-top .g-iconbtn.on {
+  outline: 3px solid var(--g-sun-deep);
+  outline-offset: 2px;
+}
+.studio-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 56px;
+  min-width: 0;
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface-raised);
+  box-shadow: var(--g-shadow-tile);
+  color: var(--g-sky-deep);
+  cursor: pointer;
+}
+.studio-name-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+.studio-name-text {
+  color: var(--g-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 9em;
+}
+.studio-top-spacer {
+  flex: 1;
+}
+.studio-save {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 4px;
+  white-space: nowrap;
+}
+.studio-save i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--g-mint-deep);
+}
+.studio-save--saving i {
+  background: var(--g-sun-deep);
+}
+.studio-save--offline i {
+  background: var(--g-rose-deep);
+}
+
+/* ---- 主體 ---- */
+.studio-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 62fr) minmax(300px, 38fr);
+  gap: 12px;
+}
+.studio-stage-wrap {
+  position: relative;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+/* 舞台固定 16:9（場景圖層是 960×540，比例一致腳底線才會對齊） */
+.studio-stage-host {
+  position: relative;
+  flex: none;
+  width: 100%;
+  max-height: calc(100% - 176px);
+  aspect-ratio: 16 / 9;
+  margin: 0 auto;
+  display: flex;
+}
+.studio-stage-host .gstage {
+  flex: 1;
+}
+/* 按鍵：空間夠時放在舞台下方，不擋畫面 */
+.studio-pad-host {
+  position: relative;
+  flex: none;
+  z-index: 40;
+  pointer-events: none;
+  border-radius: var(--g-radius-xl);
+  background: var(--g-sky-soft);
+}
+.studio-pad-host[hidden] {
+  display: none;
+}
+.studio-pad-host .vpad {
+  padding: 10px 14px 14px;
+}
+.studio-views {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 41;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--g-radius-pill);
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: var(--g-shadow-tile);
+}
+.studio-views button {
+  min-width: 48px;
+  min-height: 48px;
+  border: 0;
+  border-radius: var(--g-radius-pill);
+  background: none;
+  font-weight: var(--g-weight-black);
+  color: var(--g-ink-soft);
+  cursor: pointer;
+}
+.studio-views button[aria-pressed="true"] {
+  background: var(--g-sky);
+  color: var(--g-ink);
+}
+.studio-hint {
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  transform: translateX(-50%);
+  max-width: 55%;
+}
+.studio-hint .g-bubble {
+  white-space: nowrap;
+}
+.studio-float {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+/* ---- 相機 ---- */
+.studio-camera-bar {
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  transform: translateX(-50%);
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: var(--g-radius-pill);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--g-shadow-lift);
+}
+.studio-camera-bar[hidden],
+.studio-frame[hidden] {
+  display: none;
+}
+.studio-frame {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 35;
+  border: 3px dashed rgba(255, 255, 255, 0.95);
+  border-radius: var(--g-radius-md);
+  box-shadow: 0 0 0 9999px rgba(53, 64, 90, 0.28);
+  pointer-events: none;
+  max-height: 100%;
+}
+.studio-countdown {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(53, 64, 90, 0.18);
+}
+.studio-countdown .g-t-display {
+  color: var(--g-surface-raised);
+  font-size: 120px;
+}
+.studio-countdown .g-t-caption {
+  color: var(--g-surface-raised);
+}
+.studio-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  background: #fff;
+  opacity: 0.9;
+  transition: opacity 0.35s;
+}
+.studio-flash--go {
+  opacity: 0;
+}
+.studio-photo-card {
+  width: min(760px, 100%);
+}
+.studio-photo-big {
+  display: block;
+  width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  border-radius: var(--g-radius-md);
+  background: var(--g-surface-sunken);
+}
+
+/* ---- 面板 ---- */
+.studio-panel {
+  position: relative;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--g-surface-raised);
+  border-radius: var(--g-radius-xl);
+  box-shadow: var(--g-shadow-tile);
+  overflow: hidden;
+}
+.studio-drawer-toggle {
+  display: none;
+}
+.studio-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  padding: 8px;
+  background: var(--g-surface-sunken);
+  flex: none;
+}
+.studio-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 56px;
+  border: 0;
+  border-radius: var(--g-radius-md);
+  background: none;
+  color: var(--g-ink-soft);
+  font-weight: var(--g-weight-heavy);
+  font-size: var(--g-text-sm);
+  cursor: pointer;
+}
+.studio-tab[aria-selected="true"] {
+  background: var(--g-surface-raised);
+  color: var(--g-sky-deep);
+  box-shadow: var(--g-shadow-tile);
+}
+.studio-tab-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 12px;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+.studio-note {
+  color: var(--g-ink-soft);
+}
+
+.studio-slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.studio-slot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-height: 72px;
+  padding: 6px;
+  border: 0;
+  border-radius: var(--g-radius-md);
+  background: var(--g-surface-sunken);
+  color: var(--g-ink-soft);
+  min-width: 0;
+}
+.studio-slot--empty {
+  justify-content: center;
+  cursor: pointer;
+  border: 2px dashed var(--g-line, currentColor);
+}
+.studio-slot--on {
+  outline: 3px solid var(--g-sky-deep);
+  outline-offset: -3px;
+  background: var(--g-sky-soft);
+}
+.studio-slot-pick {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.studio-slot svg {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--g-sky-soft);
+}
+.studio-slot-name {
+  max-width: 100%;
+  min-height: 32px;
+  padding: 2px 4px;
+  border: 0;
+  border-radius: var(--g-radius-sm, 8px);
+  background: none;
+  color: inherit;
+  cursor: text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.studio-slot-del {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--g-rose-deep);
+  cursor: pointer;
+}
+.studio-slot-del svg {
+  width: 30px;
+  height: 30px;
+  padding: 4px;
+  border-radius: 50%;
+  background: var(--g-surface, #fff);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+}
+.studio-rename {
+  width: 100%;
+  min-width: 4em;
+  max-width: 12em;
+  min-height: 32px;
+  padding: 2px 6px;
+  border: 2px solid var(--g-sky-deep);
+  border-radius: var(--g-radius-sm, 8px);
+  background: var(--g-surface, #fff);
+  color: var(--g-ink);
+  font: inherit;
+  text-align: center;
+}
+.studio-del-preview {
+  display: block;
+  margin: 0 auto 6px;
+  width: 72px;
+}
+.studio-del-preview svg {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--g-sky-soft);
+}
+.studio-match {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: var(--g-surface-sunken);
+  color: var(--g-ink);
+  font: inherit;
+  cursor: pointer;
+}
+.studio-match i {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+.studio-match[aria-pressed="true"] {
+  border-color: var(--g-sky-deep);
+  background: var(--g-sky-soft);
+}
+
+
+.studio-cats {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+  margin-bottom: 10px;
+}
+.studio-cat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 56px;
+  padding: 4px 2px;
+  border: 0;
+  border-radius: var(--g-radius-md);
+  background: var(--g-surface-sunken);
+  color: var(--g-ink-soft);
+  font-size: var(--g-text-xs);
+  font-weight: var(--g-weight-heavy);
+  cursor: pointer;
+}
+.studio-cat[aria-pressed="true"] {
+  background: var(--g-mint-soft);
+  color: var(--g-mint-deep);
+  outline: 2px solid var(--g-mint-deep);
+  outline-offset: -2px;
+}
+.studio-field {
+  margin-bottom: 14px;
+}
+.studio-field > .g-t-label {
+  margin-bottom: 6px;
+}
+.studio-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.studio-swatch {
+  width: 56px;
+  height: 56px;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: var(--g-shadow-tile);
+}
+.studio-swatch[aria-pressed="true"] {
+  outline: 4px solid var(--g-ink);
+  outline-offset: 3px;
+}
+.studio-thumbs,
+.studio-presets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 8px;
+}
+.studio-thumb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-height: 56px;
+  padding: 6px 4px;
+  border: 0;
+  border-radius: var(--g-radius-md);
+  background: var(--g-surface-sunken);
+  cursor: pointer;
+}
+.studio-thumb svg {
+  width: 100%;
+  height: 84px;
+}
+.studio-thumb[aria-pressed="true"] {
+  background: var(--g-sky-soft);
+  outline: 3px solid var(--g-sky-deep);
+  outline-offset: -3px;
+}
+.studio-style-actions {
+  position: sticky;
+  bottom: -12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 6px -12px -12px;
+  padding: 10px 12px 12px;
+  background: var(--g-surface-raised);
+  box-shadow: 0 -6px 12px rgba(53, 64, 90, 0.06);
+}
+.studio-style-actions .gbtn {
+  flex: 1;
+  min-width: 96px;
+  padding: 0 10px;
+}
+
+.studio-poses {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px;
+  margin-top: 6px;
+}
+.studio-pose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 56px;
+  border: 0;
+  border-radius: var(--g-radius-md);
+  background: var(--g-sun-soft);
+  color: var(--g-sun-deep);
+  font-weight: var(--g-weight-heavy);
+  cursor: pointer;
+}
+.studio-pose--seq {
+  background: var(--g-lilac-soft);
+  color: var(--g-lilac-deep);
+}
+.studio-pose[aria-pressed="true"] {
+  outline: 3px solid currentColor;
+  outline-offset: -3px;
+}
+
+.studio-scenes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.studio-scene {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  border: 0;
+  border-radius: var(--g-radius-md);
+  background: var(--g-surface-sunken);
+  cursor: pointer;
+}
+.studio-scene svg {
+  width: 100%;
+  height: auto;
+  border-radius: var(--g-radius-sm);
+}
+.studio-scene[aria-pressed="true"] {
+  outline: 3px solid var(--g-sky-deep);
+  outline-offset: -3px;
+}
+.studio-seg {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface-sunken);
+}
+.studio-seg button,
+.studio-seg-toggle {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 48px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--g-radius-pill);
+  background: none;
+  color: var(--g-ink-soft);
+  font-weight: var(--g-weight-heavy);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.studio-seg button[aria-pressed="true"],
+.studio-seg-toggle[aria-pressed="true"] {
+  background: var(--g-surface-raised);
+  color: var(--g-ink);
+  box-shadow: var(--g-shadow-tile);
+}
+.studio-range {
+  display: block;
+  margin-top: 12px;
+}
+.studio-range input {
+  width: 100%;
+  height: 44px;
+  touch-action: pan-x;
+}
+
+.studio-album {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 8px;
+  margin-top: 6px;
+}
+.studio-photo {
+  position: relative;
+  padding: 0;
+  border: 0;
+  border-radius: var(--g-radius-md);
+  overflow: hidden;
+  background: var(--g-surface-sunken);
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+}
+.studio-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.studio-photo .g-tag {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+}
+.studio-photo--cover {
+  outline: 3px solid var(--g-sun-deep);
+  outline-offset: -3px;
+}
+.studio-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 8px;
+  text-align: center;
+  color: var(--g-sky-deep);
+}
+
+.studio-input {
+  min-height: 56px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: var(--g-radius-md);
+  background: var(--g-surface-sunken);
+  color: var(--g-ink);
+  font: var(--g-weight-bold) var(--g-text-lg) var(--g-font-ui);
+}
+.studio-err {
+  color: var(--g-rose-deep);
+}
+
+.studio-tour {
+  position: fixed;
+  left: 50%;
+  bottom: calc(14px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 95;
+  max-width: min(420px, 46%);
+}
+@media (max-width: 1024px) and (orientation: portrait) {
+  .studio-tour {
+    bottom: auto;
+    top: calc(72px + env(safe-area-inset-top));
+    max-width: calc(100% - 24px);
+  }
+}
+.studio-tour[hidden] {
+  display: none;
+}
+.studio-tour .g-bubble {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: none;
+}
+.studio-tour .g-bubble::after {
+  display: none;
+}
+.studio-tour-skip {
+  margin-left: 6px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface-raised);
+  color: var(--g-sky-deep);
+  font-weight: var(--g-weight-heavy);
+  cursor: pointer;
+}
+
+/* 營火可以點 */
+.gstage-prop--click {
+  pointer-events: auto;
+  cursor: pointer;
+}
+.gstage-props {
+  pointer-events: none;
+}
+
+/* 森林場景生物（蜜蜂、蝙蝠） */
+.gstage-creature {
+  z-index: 9;
+  pointer-events: none;
+}
+.gstage-creature svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* ---- 手動天氣系統（晴天、雨天、颱風天） ---- */
+.gstage-weather {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+  transition: background-color var(--g-dur-slow) var(--g-ease-soft);
+}
+.gstage-weather--rainy {
+  background: rgba(45, 65, 95, 0.16);
+}
+.gstage-weather--typhoon {
+  background: rgba(30, 50, 75, 0.28);
+}
+/* 雨滴 */
+.g-rain-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.g-rain-streak {
+  position: absolute;
+  top: -60px;
+  width: 2px;
+  height: 38px;
+  background: linear-gradient(to bottom, transparent, var(--g-sky-soft));
+  opacity: 0.75;
+  border-radius: 1px;
+  transform: rotate(18deg);
+  animation: g-rain-anim 0.75s linear infinite;
+}
+.gstage-weather--typhoon .g-rain-streak {
+  width: 2.5px;
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, #FFFFFF);
+  transform: rotate(34deg);
+  animation-duration: 0.42s;
+  opacity: 0.85;
+}
+@keyframes g-rain-anim {
+  0% { transform: translateY(0) rotate(18deg); opacity: 0; }
+  20% { opacity: 0.8; }
+  100% { transform: translateY(calc(100vh + 80px)) rotate(18deg); opacity: 0.8; }
+}
+.gstage-weather--typhoon .g-rain-streak {
+  animation-name: g-typhoon-rain-anim;
+}
+@keyframes g-typhoon-rain-anim {
+  0% { transform: translate(60px, 0) rotate(34deg); opacity: 0; }
+  20% { opacity: 0.9; }
+  100% { transform: translate(-140px, calc(100vh + 80px)) rotate(34deg); opacity: 0.9; }
+}
+/* 颱風強風流線 */
+.g-wind-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.g-wind-gust {
+  position: absolute;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.55), transparent);
+  animation: g-gust-anim 1.2s ease-in-out infinite;
+}
+@keyframes g-gust-anim {
+  0% { transform: translateX(110vw); opacity: 0; }
+  20% { opacity: 0.7; }
+  80% { opacity: 0.7; }
+  100% { transform: translateX(-40vw); opacity: 0; }
+}
+/* 颱風時樹木晃動效果 */
+.gstage--typhoon .g-layer-canopy,
+.gstage--typhoon .g-layer-mid {
+  transform-origin: 50% 100%;
+  animation: g-typhoon-sway 1.6s ease-in-out infinite alternate;
+}
+@keyframes g-typhoon-sway {
+  0% { transform: skewX(0deg); }
+  100% { transform: skewX(-2.5deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .g-rain-streak, .g-wind-gust, .gstage--typhoon .g-layer-canopy, .gstage--typhoon .g-layer-mid {
+    animation: none;
+  }
+}
+
+/* ---- 手機直放／窄螢幕：舞台置頂、面板改底部抽屜 ---- */
+@media (max-width: 1024px) and (orientation: portrait) {
+  .studio-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+  .studio-panel {
+    max-height: 64px;
+    transition: max-height var(--g-dur-base) var(--g-ease-soft);
+  }
+  .studio--drawer-open .studio-panel {
+    max-height: 58vh;
+  }
+  .studio-drawer-toggle {
+    display: none;
+  }
+  .studio-name-text {
+    max-width: 5em;
+  }
+  .studio-top {
+    gap: 6px;
+  }
+  .studio-save .g-t-caption {
+    display: none;
+  }
+  .studio-stage-host {
+    max-height: none;
+  }
+  .studio-pad-host .vpad-dpad {
+    grid-template-columns: repeat(3, 52px);
+    grid-template-rows: repeat(3, 52px);
+  }
+  .studio-pad-host .vpad-ab .vpad-k {
+    width: 64px;
+    height: 64px;
+  }
+  .studio-pad-host .vpad-b {
+    margin-right: 72px;
+  }
+  .studio-pad-host .vpad-c {
+    margin-right: 36px;
+  }
+  .studio-cats span {
+    display: none;
+  }
+  .studio-camera-bar {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: calc(100% - 20px);
+    border-radius: var(--g-radius-lg);
+  }
+}
+/* 窄的橫放（< 820 寬）：面板窄一點 */
+@media (max-width: 819px) and (orientation: landscape) {
+  .studio-body {
+    grid-template-columns: minmax(0, 60fr) minmax(250px, 40fr);
+  }
+}
+/* 很矮的橫放手機（640×360）：按鍵縮小、頂部列精簡 */
+@media (max-height: 420px) and (orientation: landscape) {
+  .studio-body {
+    grid-template-columns: minmax(0, 60fr) minmax(260px, 40fr);
+    grid-template-rows: none;
+  }
+  .studio-panel {
+    max-height: none !important;
+  }
+  .studio-top {
+    min-height: 48px;
+  }
+  .studio-top .g-iconbtn {
+    width: 48px;
+    height: 48px;
+  }
+  .studio-pad-host .vpad-dpad {
+    grid-template-columns: repeat(3, 48px);
+    grid-template-rows: repeat(3, 48px);
+  }
+  .studio-pad-host .vpad-ab {
+    gap: 8px;
+  }
+  .studio-pad-host .vpad-ab .vpad-k {
+    width: 56px;
+    height: 56px;
+  }
+}
+/* 高度不夠（橫放手機、小筆電）：按鍵改成浮在舞台下緣兩側，舞台用滿高度 */
+@media (max-height: 600px) and (orientation: landscape) {
+  .studio-stage-host {
+    max-height: 100%;
+  }
+  .studio-pad-host {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: none;
+  }
+}
+
+/* 很窄的手機直放：頂部列按鈕縮小，名字至少看得到 3 個字 */
+@media (max-width: 480px) {
+  .studio-top {
+    gap: 4px;
+  }
+  .studio-top .g-iconbtn {
+    width: 46px;
+    height: 46px;
+  }
+  .studio-top .g-iconbtn .g-icon {
+    width: 26px;
+    height: 26px;
+  }
+  .studio-name {
+    min-height: 46px;
+    padding: 0 10px;
+    flex: 0 1 auto;
+  }
+  .studio-name-text {
+    min-width: 3em;
+    max-width: 5em;
+  }
+  .studio-top-spacer {
+    flex: 0 0 0;
+  }
+}
+/* 矮的橫放：按鍵浮在舞台上，提示改放下緣中間（十字鍵與 A/B 之間），視角鈕橫排 */
+@media (max-height: 600px) and (orientation: landscape) {
+  .studio-views {
+    flex-direction: row;
+  }
+  .studio-hint {
+    top: auto;
+    bottom: 10px;
+  }
+  .studio-tour {
+    bottom: auto;
+    top: calc(64px + env(safe-area-inset-top));
+  }
+}
+
+/* ---- 造型商店（v2.1）：鎖住的款式、試穿列、剛買的東西 ---- */
+.studio-thumb,
+.studio-scene {
+  position: relative;
+}
+.studio-locked > svg {
+  opacity: 0.72;
+}
+.studio-locked--trying {
+  outline: 3px dashed var(--g-sun-ledge);
+  outline-offset: -3px;
+}
+.studio-locked--trying > svg {
+  opacity: 1;
+}
+.studio-price {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 1px 6px 1px 3px;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-sun);
+  color: var(--g-ink);
+  font-size: var(--g-text-xs, 12px);
+  font-weight: var(--g-weight-heavy);
+  line-height: 1.4;
+  box-shadow: 0 2px 0 var(--g-sun-ledge);
+  pointer-events: none;
+}
+/* 場景今天的試玩次數用完了：縮圖更淡，左上角「明天再試」 */
+.studio-locked--notrial > svg {
+  opacity: 0.45;
+}
+.studio-notrial {
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  padding: 1px 8px;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface-raised);
+  color: var(--g-ink-soft);
+  font-weight: var(--g-weight-heavy);
+}
+.studio-price .g-icon {
+  width: 14px;
+  height: 14px;
+}
+.studio-shopbar {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: var(--g-radius-lg);
+  background: var(--g-sun-soft);
+  box-shadow: inset 0 0 0 2px var(--g-sun-ledge);
+}
+.studio-shopbar p {
+  margin: 0 0 6px;
+}
+.studio-shopbar .g-icon {
+  width: 18px;
+  height: 18px;
+  vertical-align: -3px;
+}
+.studio-shopbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.studio-shopbar-actions .gbtn[disabled] {
+  opacity: 0.45;
+  cursor: default;
+}
+.studio-recent {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: var(--g-radius-lg);
+  background: var(--g-surface-sunken);
+}
+.studio-recent-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+.studio-recent-row .g-t-caption {
+  flex: 1;
+}
+.studio-recent-btn {
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: var(--g-text-sm, 15px);
+}
+/* 海底世界：划水時從頭頂冒出的泡泡 */
+.studio-bubbles {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.studio-bubbles i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  animation: studioBubble 1.1s ease-out forwards;
+}
+.studio-bubbles i:nth-child(2) {
+  left: 10px;
+  width: 7px;
+  height: 7px;
+  animation-delay: 0.12s;
+}
+.studio-bubbles i:nth-child(3) {
+  left: -8px;
+  width: 6px;
+  height: 6px;
+  animation-delay: 0.24s;
+}
+@keyframes studioBubble {
+  from {
+    transform: translateY(0);
+    opacity: 0.95;
+  }
+  to {
+    transform: translateY(-60px);
+    opacity: 0;
+  }
+}
+/* 宇宙空間：A 衝刺時噴出的小星塵（不往上飄，原地放大淡出） */
+.studio-bubbles--space i {
+  border: 0;
+  background: rgba(255, 244, 214, 0.9);
+  animation: studioPuff 0.8s ease-out forwards;
+}
+@keyframes studioPuff {
+  from {
+    transform: scale(0.6);
+    opacity: 0.95;
+  }
+  to {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* 魔拐杖與南瓜糖果桶特技效果 */
+.studio-fx-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 25;
+}
+
+@keyframes magic-shard-burst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.4) rotate(0deg);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(1.1) rotate(var(--trot));
+  }
+}
+
+@keyframes magic-firework-ring {
+  0% {
+    opacity: 0.95;
+    transform: translate(-50%, -50%) scale(0.1);
+  }
+  70% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.6);
+  }
+}
+
+@keyframes magic-meteor-flight {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.3) rotate(var(--rot));
+  }
+  12% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(1.05) rotate(var(--rot));
+  }
+}
+
+@keyframes candy-fall-to-ground {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  6% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+    transform: translate(calc(var(--tx) * 0.95), var(--ty)) rotate(var(--trot));
+  }
+  88% {
+    opacity: 1;
+    transform: translate(var(--tx), calc(var(--ty) - 10px)) rotate(calc(var(--trot) + 12deg));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--tx) + 4px), var(--ty)) rotate(calc(var(--trot) + 20deg));
+  }
+}
+
+.magic-shard {
+  position: absolute;
+  font-weight: bold;
+  user-select: none;
+  animation: magic-shard-burst 1.35s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+}
+
+.magic-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 3.5px dashed var(--g-sun);
+  box-shadow: 0 0 16px var(--g-sun-soft);
+  animation: magic-firework-ring 1.3s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+}
+
+.magic-meteor {
+  position: absolute;
+  pointer-events: none;
+  animation: magic-meteor-flight 1.3s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+}
+
+.candy-drop {
+  position: absolute;
+  animation: candy-fall-to-ground 2.1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* 掙脫提示 HUD 與掙扎動態 */
+.studio-struggle-hud {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: rgba(47, 37, 72, 0.92);
+  color: var(--g-sun);
+  padding: 6px 12px;
+  border-radius: var(--g-radius-pill);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), 0 0 0 2px var(--g-sun);
+  font: 900 13px/1.2 var(--g-font-ui);
+  pointer-events: none;
+  z-index: 35;
+  white-space: nowrap;
+  animation: studio-struggle-pop 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.studio-struggle-hud--shake {
+  animation: studio-struggle-wobble 0.12s linear;
+}
+
+@keyframes studio-struggle-pop {
+  0% {
+    transform: translate(-50%, -80%) scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -100%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes studio-struggle-wobble {
+  0% { transform: translate(-50%, -100%) rotate(0deg); }
+  25% { transform: translate(calc(-50% - 4px), -100%) rotate(-3deg); }
+  75% { transform: translate(calc(-50% + 4px), -100%) rotate(3deg); }
+  100% { transform: translate(-50%, -100%) rotate(0deg); }
+}
+
+.studio-struggle-track {
+  width: 90px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.studio-struggle-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--g-sun), var(--g-peach));
+  border-radius: 3px;
+  transition: width 0.08s linear;
+}
+
+/* ---- 地底冒出巨手抓住角色 ---- */
+.studio-hand-erupt svg {
+  animation: studio-hand-burst 0.38s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+  transform-origin: 50% 100%;
+}
+
+@keyframes studio-hand-burst {
+  0% {
+    transform: translateY(100%) scale(0.6);
+    opacity: 0.2;
+  }
+  65% {
+    transform: translateY(-8px) scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.studio-hand-retreat svg {
+  animation: studio-hand-sink 0.8s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
+  transform-origin: 50% 100%;
+}
+
+@keyframes studio-hand-sink {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(14px) scale(0.95);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(100%) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* ---- 墓園場景停留超過 180 秒：蝙蝠群佔據畫面 10 秒 ---- */
+.studio-bat-swarm-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 45;
+}
+
+.studio-swarm-bat {
+  position: absolute;
+  width: 48px;
+  height: 36px;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.studio-swarm-bat .bat-wing {
+  position: absolute;
+  inset: 0;
+}
+
+.studio-swarm-bat .bat-wing--up {
+  animation: studio-bat-wing-up 0.12s steps(1) infinite;
+}
+
+.studio-swarm-bat .bat-wing--down {
+  animation: studio-bat-wing-down 0.12s steps(1) infinite;
+}
+
+@keyframes studio-bat-wing-up {
+  0%, 49.9% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes studio-bat-wing-down {
+  0%, 49.9% { opacity: 0; }
+  50%, 100% { opacity: 1; }
+}
+
+/* 飛行路徑 A：從畫面左側波浪形疾速俯衝掠過至右上，以指定高度為基準 */
+.bat-fly--swoop-lr {
+  animation: bat-path-lr var(--fly-dur, 5.2s) var(--fly-ease, ease-in-out) var(--fly-delay, 0s) forwards;
+}
+
+@keyframes bat-path-lr {
+  0% {
+    transform: translate(-70px, var(--start-y, 30%)) scale(var(--bat-scale, 1)) rotate(16deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  28% {
+    transform: translate(28vw, calc(var(--start-y, 30%) + 28px)) scale(var(--bat-scale, 1)) rotate(-8deg);
+  }
+  52% {
+    transform: translate(56vw, calc(var(--start-y, 30%) - 24px)) scale(var(--bat-scale, 1)) rotate(12deg);
+  }
+  78% {
+    transform: translate(82vw, calc(var(--start-y, 30%) + 18px)) scale(var(--bat-scale, 1)) rotate(-6deg);
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(100vw + 80px), calc(var(--start-y, 30%) - 15px)) scale(var(--bat-scale, 1)) rotate(8deg);
+    opacity: 0;
+  }
+}
+
+/* 飛行路徑 B：從畫面右側反向橫掃俯衝至左上，以指定高度為基準 */
+.bat-fly--swoop-rl {
+  animation: bat-path-rl var(--fly-dur, 5.4s) var(--fly-ease, ease-in-out) var(--fly-delay, 0s) forwards;
+}
+
+@keyframes bat-path-rl {
+  0% {
+    transform: translate(calc(100vw + 70px), var(--start-y, 45%)) scaleX(-1) scale(var(--bat-scale, 1)) rotate(15deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  30% {
+    transform: translate(72vw, calc(var(--start-y, 45%) - 26px)) scaleX(-1) scale(var(--bat-scale, 1)) rotate(-10deg);
+  }
+  55% {
+    transform: translate(46vw, calc(var(--start-y, 45%) + 24px)) scaleX(-1) scale(var(--bat-scale, 1)) rotate(12deg);
+  }
+  78% {
+    transform: translate(20vw, calc(var(--start-y, 45%) - 20px)) scaleX(-1) scale(var(--bat-scale, 1)) rotate(-8deg);
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-80px, calc(var(--start-y, 45%) + 12px)) scaleX(-1) scale(var(--bat-scale, 1)) rotate(10deg);
+    opacity: 0;
+  }
+}
+
+/* 飛行路徑 C：群體盤旋弧形穿梭，以指定高度為基準起伏 */
+.bat-fly--circle-center {
+  animation: bat-path-circle var(--fly-dur, 5.6s) ease-in-out var(--fly-delay, 0s) forwards;
+}
+
+@keyframes bat-path-circle {
+  0% {
+    transform: translate(-70px, calc(var(--start-y, 50%) - 30px)) scale(var(--bat-scale, 1)) rotate(20deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  35% {
+    transform: translate(32vw, calc(var(--start-y, 50%) + 40px)) scale(var(--bat-scale, 1)) rotate(-12deg);
+  }
+  65% {
+    transform: translate(66vw, calc(var(--start-y, 50%) - 35px)) scale(var(--bat-scale, 1)) rotate(16deg);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(100vw + 80px), calc(var(--start-y, 50%) + 15px)) scale(var(--bat-scale, 1)) rotate(-10deg);
+    opacity: 0;
+  }
+}
+
+/* 飛行路徑 D：超大特寫蝙蝠掠過前景鏡頭，以指定高度為基準 */
+.bat-fly--foreground-surge {
+  animation: bat-path-surge var(--fly-dur, 4.8s) cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--fly-delay, 0s) forwards;
+}
+
+@keyframes bat-path-surge {
+  0% {
+    transform: translate(calc(100vw + 90px), calc(var(--start-y, 50%) + 20px)) scaleX(-1) scale(var(--bat-scale, 1.5)) rotate(18deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.95;
+  }
+  45% {
+    transform: translate(52vw, calc(var(--start-y, 50%) - 26px)) scaleX(-1) scale(var(--bat-scale, 1.5)) rotate(-10deg);
+  }
+  80% {
+    transform: translate(18vw, calc(var(--start-y, 50%) + 18px)) scaleX(-1) scale(var(--bat-scale, 1.5)) rotate(14deg);
+  }
+  92% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(-110px, calc(var(--start-y, 50%) - 12px)) scaleX(-1) scale(var(--bat-scale, 1.5)) rotate(-8deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-swarm-bat .bat-wing--up,
+  .studio-swarm-bat .bat-wing--down {
+    animation: none;
+  }
+}
+
