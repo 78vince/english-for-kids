@@ -1,4 +1,12 @@
-/* 賽跑頁：選單（三張對手卡）＋比賽（16:9 舞台＋跳／蹲滑／加速按鈕）。只用遊戲 token（--g-*）。 */
+/* 賽跑頁：選單（三張對手卡）＋比賽（統一按鍵 v2＋GameScreen 五種版面）。只用遊戲 token（--g-*）。 */
+
+#race-app {
+  width: 100vw;
+  height: 100dvh;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
 
 .race {
   gap: 10px;
@@ -7,9 +15,13 @@
   padding-top: max(10px, env(safe-area-inset-top));
   padding-bottom: max(10px, env(safe-area-inset-bottom));
   background: var(--g-surface);
+  height: 100dvh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
-/* ---- 頂部列 ---- */
+/* ---- 頂部列（選單頁） ---- */
 .race-top {
   display: flex;
   align-items: center;
@@ -160,94 +172,154 @@
   color: var(--g-ink-soft);
 }
 
-/* ---- 比賽 ---- */
-.race-play {
-  touch-action: manipulation;
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  position: relative;
-}
-.race-play[hidden],
-.race-menu[hidden] {
-  display: none;
-}
-.race-stage-host {
-  position: relative;
-  flex: none;
-  width: min(100%, calc((100dvh - 300px) * 16 / 9));
-  aspect-ratio: 16 / 9;
-  margin: 0 auto;
-  display: flex;
-}
-.race-stage-host .gstage {
-  flex: 1;
-}
-.race-controls {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  width: min(100%, calc((100dvh - 300px) * 16 / 9));
-  margin: 0 auto;
-}
-/* 虛擬按鍵（共用 VirtualPad，跟工作室同一組）：方向鍵上下左右都保留 */
-.race-controls .vpad {
-  flex: 1;
-  padding: 0 6px;
-}
-/* 控制區：圓角框包住虛擬按鍵（之後可在這裡擴充更多功能） */
-.race-controls {
-  touch-action: manipulation;
-  border-radius: var(--g-radius-xl);
-  background: var(--g-surface-sunken);
-  box-shadow: inset 0 2px 0 color-mix(in srgb, var(--g-ink) 6%, transparent);
-  padding: 8px 10px;
-}
-.race-pad .vpad-ab .vpad-k {
-  position: relative;
-  flex-direction: column;
-  gap: 0;
-}
-.race-pad-label {
-  font-size: 22px;
-  font-weight: 800;
-  line-height: 1;
-}
-.race-pad-sub {
-  font-size: 12px;
-  line-height: 1.2;
-}
-.race-pad-item {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  width: 26px;
-  height: 34px;
-}
-.race-pad-item svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.race-pad-b--ready {
-  outline: 3px solid var(--g-rose-deep);
-  outline-offset: 2px;
-  animation: race-ready 0.9s ease-in-out infinite alternate;
-}
-@keyframes race-ready {
-  from {
-    transform: scale(1);
+@media (max-width: 700px) {
+  .race-cards {
+    grid-template-columns: 1fr;
   }
-  to {
-    transform: scale(1.06);
+  .race-card {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 12px;
+  }
+  .race-card-art {
+    width: 110px;
+    height: 90px;
+  }
+  .race-card-go,
+  .race-card-lock {
+    grid-column: 1 / -1;
+  }
+  .race-guide .race-ref svg {
+    width: 56px;
+    height: 80px;
+  }
+  .race-who-text strong {
+    max-width: 6em;
   }
 }
 
-/* 舞台上的對手、裁判、護盾（世界座標，每幀定位） */
+/* ---- GameScreen HUD 內部元素 ---- */
+.race-hud-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.race-hud-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 道具格（代替原本按鍵上的道具圖示） */
+.race-item-slot {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--g-radius-md);
+  border: 2px dashed color-mix(in srgb, var(--g-ink) 25%, transparent);
+  background: color-mix(in srgb, var(--g-surface-raised) 50%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  transition: all 0.2s ease-out;
+}
+.race-item-slot.has-item {
+  border-style: solid;
+  border-color: var(--g-rose-deep);
+  background: var(--g-rose-soft);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--g-rose) 40%, transparent);
+  animation: race-item-pulse 1.2s ease-in-out infinite alternate;
+}
+.race-item-slot svg {
+  display: block;
+  width: 26px;
+  height: 32px;
+}
+@keyframes race-item-pulse {
+  from {
+    transform: scale(0.96);
+  }
+  to {
+    transform: scale(1.04);
+  }
+}
+
+/* ---- Strip 進度條列 ---- */
+.race-strip-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 36px;
+}
+.race-strip-bar .race-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 5.2em;
+  font-variant-numeric: tabular-nums;
+  flex: none;
+}
+.race-strip-bar .race-progress {
+  position: relative;
+  flex: 1;
+  max-width: 540px;
+  height: 32px;
+  margin: 0 12px;
+}
+.race-progress-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 8px;
+  margin-top: -4px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--g-surface-raised) 80%, transparent);
+  box-shadow: inset 0 1px 2px color-mix(in srgb, var(--g-ink) 15%, transparent);
+}
+.race-progress-flag {
+  position: absolute;
+  right: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--g-rose-deep);
+}
+.race-pin {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+}
+.race-pin--me svg {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--g-sky-soft);
+  box-shadow: 0 0 0 2px var(--g-surface-raised);
+}
+.race-pin--opp {
+  width: 34px;
+  height: 26px;
+  top: 30%;
+}
+.race-pin--opp svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* 手機直放模式下：進度條縮短靠右，避開「橫放更順手」提示 */
+.gscreen[data-layout="phonePort"] .race-strip-bar .race-progress {
+  max-width: 140px;
+  margin-left: auto;
+  margin-right: 4px;
+}
+
+/* ---- 舞台內部元素（世界座標／HUD） ---- */
 .race-opp,
 .race-referee {
   position: absolute;
@@ -304,85 +376,19 @@
   }
 }
 
-/* HUD */
-.race-hud-top {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  right: 8px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  pointer-events: none;
-}
-.race-hud-top > * {
-  pointer-events: auto;
-}
-.race-timer {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  min-width: 5.5em;
-  font-variant-numeric: tabular-nums;
-}
-.race-progress {
-  position: relative;
-  flex: 1;
-  height: 36px;
-  margin: 0 18px;
-}
-.race-progress-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 8px;
-  margin-top: -4px;
-  border-radius: 4px;
-  background: color-mix(in srgb, var(--g-surface-raised) 80%, transparent);
-}
-.race-progress-flag {
-  position: absolute;
-  right: -14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--g-rose-deep);
-}
-.race-pin {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  display: block;
-}
-.race-pin--me svg {
-  display: block;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--g-sky-soft);
-  box-shadow: 0 0 0 2px var(--g-surface-raised);
-}
-.race-pin--opp {
-  width: 34px;
-  height: 26px;
-  top: 30%;
-}
-.race-pin--opp svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
 .race-effects {
   position: absolute;
-  top: 54px;
+  top: 8px;
   left: 8px;
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  z-index: 12;
 }
 .race-edge {
   position: absolute;
   top: 46%;
+  z-index: 12;
 }
 .race-edge--right {
   right: 8px;
@@ -396,6 +402,7 @@
   display: grid;
   place-items: center;
   pointer-events: none;
+  z-index: 15;
 }
 .race-countdown[hidden],
 .race-edge[hidden],
@@ -424,17 +431,17 @@
 }
 .race-refline {
   position: absolute;
-  /* 位置由 placeRefLine() 設在裁判頭頂上（left＝裁判中心、top＝頭頂），往上長 */
   transform: translate(-50%, -100%);
   white-space: nowrap;
   pointer-events: none;
+  z-index: 14;
 }
 .race-refline .g-bubble {
   margin-bottom: 4px;
 }
 .race-float {
   position: absolute;
-  z-index: 12;
+  z-index: 16;
   transform: translateX(-50%);
   pointer-events: none;
   white-space: nowrap;
@@ -442,7 +449,7 @@
 .race-confetti {
   position: absolute;
   inset: 0;
-  z-index: 12;
+  z-index: 16;
   pointer-events: none;
   overflow: hidden;
 }
@@ -460,461 +467,221 @@
   }
 }
 
-/* 結算 */
-.race-result-card {
+/* ---- 彈窗與結算卡（規範 §10.1：五種尺寸一頁看完不捲動，矮螢幕左右雙欄） ---- */
+.race-result,
+.race-pause-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--g-ink) 50%, transparent);
+  backdrop-filter: blur(4px);
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.race-result-card,
+.race-pause-card {
   position: relative;
+  background: var(--g-surface-raised);
+  border-radius: var(--g-radius-xl);
+  box-shadow: var(--g-shadow-modal);
+  box-sizing: border-box;
+}
+
+.race-pause-card {
+  padding: 20px 24px;
+  text-align: center;
+  max-width: 320px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.race-result-card {
+  max-width: min(520px, 94%);
+  max-height: 94%;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
-  max-width: min(560px, 94vw);
-  max-height: 94dvh;
-  overflow: auto;
-  touch-action: pan-y;
+  gap: 8px;
+  overflow: hidden;
 }
-/* 拍照：右上角 */
 .race-result-photo {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+}
+
+.race-result-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 .race-podium {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 18px;
-  height: 140px;
+  gap: 14px;
+  height: 110px;
 }
 .race-podium-me svg {
-  height: 140px;
+  height: 110px;
   width: auto;
 }
 .race-podium-opp svg {
-  height: 96px;
+  height: 75px;
   width: auto;
   overflow: visible;
 }
 .race-result-stars .g-icon {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
 }
-.race-result-list {
-  list-style: none;
-  margin: 4px 0;
-  padding: 0;
+
+.race-result-right {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.race-stat-row {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+  margin: 2px 0;
+}
+.race-stat-item {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 8px;
+  border-radius: var(--g-radius-md);
+  background: var(--g-surface-sunken);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.race-stat-label {
+  font-size: 11px;
+  color: var(--g-ink-soft);
+  white-space: nowrap;
+}
+.race-stat-val {
+  font-size: 15px;
+  color: var(--g-ink);
+  white-space: nowrap;
+}
+.race-title-tag,
+.race-trophy-tag {
+  margin: 0;
+  font-size: 13px;
+  color: var(--g-lilac-deep);
 }
 .race-result-badges {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 6px;
-}
-.race-result-actions {
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.race-tip {
-  text-align: left;
-}
-
-/* 手機直放／矮的橫放 */
-@media (max-width: 700px) {
-  .race-cards {
-    grid-template-columns: 1fr;
-  }
-  .race-card {
-    display: grid;
-    grid-template-columns: 110px minmax(0, 1fr);
-    align-items: center;
-    column-gap: 12px;
-  }
-  .race-card-art {
-    width: 110px;
-    height: 90px;
-  }
-  .race-card-go,
-  .race-card-lock {
-    grid-column: 1 / -1;
-  }
-  .race-hud-top .race-timer {
-    min-width: 4.2em;
-    min-height: 32px;
-    padding: 0 8px;
-    font-size: 14px;
-  }
-  .race-hud-top .race-pause {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-  }
-  .race-progress {
-    margin: 0 10px;
-  }
-  .race-effects {
-    top: 44px;
-  }
-  .race-guide .race-ref svg {
-    width: 56px;
-    height: 80px;
-  }
-  .race-who-text strong {
-    max-width: 6em;
-  }
-}
-@media (orientation: landscape) and (max-height: 600px) {
-  .race-stage-host,
-  .race-controls {
-    width: min(100%, calc((100dvh - 86px) * 16 / 9));
-  }
-  .race-controls {
-    position: absolute;
-    left: 50%;
-    bottom: 6px;
-    transform: translateX(-50%);
-    padding: 0 10px;
-    pointer-events: none;
-    /* 矮的橫放：按鍵浮在舞台上，控制區框改透明，不擋畫面 */
-    background: none;
-    box-shadow: none;
-  }
-  .race-controls .vpad {
-    padding: 0;
-  }
-  .race-controls .vpad-dpad {
-    grid-template-columns: repeat(3, 48px);
-    grid-template-rows: repeat(3, 48px);
-  }
-  .race-controls .vpad-ab .vpad-k {
-    width: 64px;
-    height: 64px;
-  }
-  .race-cards .race-card-art {
-    height: 80px;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .race-count {
-    animation: none;
-  }
-  .race-speedlines.on,
-  .race-pad-b--ready {
-    animation: none;
-  }
-}
-
-/* ---- 手機橫式（race.ts applyLandscape() 加上 .race--lp；數值來自 token layout.landscapePhone，存在 --lp-*） ---- */
-.race.race--lp {
-  height: 100dvh;
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: var(--lp-left) minmax(0, 1fr) var(--lp-right);
-  grid-template-rows: minmax(0, 1fr);
-  column-gap: var(--lp-gap);
-  padding: max(6px, env(safe-area-inset-top)) max(6px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom))
-    max(6px, env(safe-area-inset-left));
-}
-.race--lp > .race-top {
-  display: none;
-}
-.race--lp .race-controls {
-  display: none;
-}
-.race--lp .race-play {
-  grid-column: 2;
-  grid-row: 1;
-  min-height: 0;
-  justify-content: center;
-  align-items: center;
   gap: 4px;
 }
-.race--lp .race-strip,
-.race--lp .race-stage-host {
-  /* 16:9 以寬度為準（扣掉兩側欄），同時不超過可用高度；不裁切視野 */
-  width: min(
-    100%,
-    calc((100dvh - max(6px, env(safe-area-inset-top)) - max(6px, env(safe-area-inset-bottom)) - var(--lp-strip) - 4px) * 16 / 9)
-  );
-  margin: 0;
-}
-.race-strip {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: var(--lp-strip);
-  flex: none;
-}
-.race-strip .race-timer {
-  min-width: 4.2em;
-  min-height: 28px;
-  padding: 0 8px;
-  font-size: 14px;
-}
-.race-strip .race-progress {
-  height: 28px;
-  margin: 0 16px 0 6px;
-}
-.race-rail {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: var(--lp-gap);
-  min-height: 0;
-  touch-action: manipulation;
-  -webkit-user-select: none;
-  user-select: none;
-}
-.race-rail--left {
-  grid-column: 1;
-  grid-row: 1;
-}
-.race-rail--right {
-  grid-column: 3;
-  grid-row: 1;
-  align-items: stretch;
-}
-.race-rail-top {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
-}
-.race-rail--left .race-back {
-  width: var(--lp-back);
-  height: var(--lp-back);
-  min-width: var(--lp-back);
-}
-.race-rail--left .race-who {
-  gap: 6px;
-}
-.race-rail--left .race-who-avatar svg {
-  width: var(--lp-avatar);
-  height: var(--lp-avatar);
-}
-.race-rail--left .race-who-text strong {
-  font-size: 14px;
-  max-width: calc(var(--lp-left) - var(--lp-avatar) - 10px);
-}
-.race-rail--left .race-title-line {
-  display: none;
-}
-.race-rail-coins .race-coins {
-  min-height: 32px;
-  justify-content: center;
-  width: 100%;
-  padding: 0 6px;
-  font-size: 14px;
-}
-.race-rail-row {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--lp-gap);
-}
-.race-rail-row .g-iconbtn {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-}
-/* 方向鍵整組（上下左右）放左欄底部，大小依欄寬 */
-.race-rail-move {
-  display: flex;
-  align-items: flex-end;
-}
-.race-rail-move .vpad-dpad {
-  --lp-dpad: calc((var(--lp-left) - 4px) / 3);
-  grid-template-columns: repeat(3, var(--lp-dpad));
-  grid-template-rows: repeat(3, var(--lp-dpad));
-  gap: 2px;
-}
-.race-rail-move .vpad-k {
-  width: var(--lp-dpad);
-  height: var(--lp-dpad);
-  min-width: 0;
-  min-height: 0;
-}
-.race-rail-move .vpad-k .g-icon {
-  width: 24px;
-  height: 24px;
-}
-/* A（上、較大）、B（下）沿拇指弧線：A 靠外、B 往內偏 */
-.race-rail-ab {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: var(--lp-gap);
-}
-.race-rail-ab .vpad-k {
-  position: relative;
-  flex-direction: column;
-  gap: 0;
-  border-radius: var(--g-radius-pill);
-  color: var(--g-ink);
-  margin: 0;
-}
-.race-rail-ab .vpad-a {
-  width: var(--lp-jump);
-  height: var(--lp-jump);
-}
-.race-rail-ab .vpad-b {
-  width: var(--lp-item);
-  height: var(--lp-item);
-  margin-right: calc(var(--lp-right) - var(--lp-item) - 4px);
-}
-.race-rail-ab .race-pad-label {
-  font-size: 20px;
-}
-.race-rail-ab .vpad-b .race-pad-label {
-  font-size: 18px;
-}
-
-/* 過關對話框：一律分左右兩塊（直式時 display:contents＝跟以前一樣單欄）；橫式手機改雙欄 */
-.race-result-left,
-.race-result-right {
-  display: contents;
-}
-.race-result--lp .race-result-card {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  column-gap: 16px;
-  align-items: center;
-  width: min(760px, 96vw);
-  max-width: min(760px, 96vw);
-  max-height: calc(100dvh - 16px);
-  padding: 12px 16px;
+.race-tip {
+  font-size: 12px;
+  padding: 4px 8px;
   text-align: left;
 }
-.race-result--lp .race-result-left,
-.race-result--lp .race-result-right {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
-}
-.race-result--lp .race-result-left {
-  align-items: center;
-  text-align: center;
-}
-.race-result--lp .race-podium {
-  height: 38dvh;
-}
-.race-result--lp .race-podium-me svg {
-  height: 38dvh;
-}
-.race-result--lp .race-podium-opp svg {
-  height: 26dvh;
-}
-.race-result--lp .race-result-left .g-t-title {
-  margin: 0;
-}
-.race-result--lp .race-result-stars .g-icon {
-  width: 26px;
-  height: 26px;
-}
-.race-result--lp .race-result-list {
+.race-result-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin: 0;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
 }
-.race-result--lp .race-result-list li {
-  padding: 4px 10px;
-  border-radius: var(--g-radius-pill);
-  background: var(--g-surface-sunken);
+.race-result-actions .gbtn {
+  min-height: 42px;
+  padding: 0 14px;
   font-size: 14px;
-}
-.race-result--lp .race-result-actions {
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 6px;
-}
-.race-result--lp .race-result-actions .gbtn {
-  flex: 1 1 auto;
-  width: auto;
-}
-.race-result--lp .race-result-actions .gbtn {
-  min-height: 48px;
-  padding: 0 12px;
-  font-size: 15px;
-}
-.race-result--lp .race-result-photo {
-  top: 8px;
-  right: 8px;
-}
-.race-result--lp .race-tip {
-  font-size: 13px;
-}
-.race-result--lp .race-result-list .race-li-pair {
-  display: contents;
-}
-.race-result--lp .race-li-pair > span:not(.race-li-dot) {
-  padding: 4px 10px;
-  border-radius: var(--g-radius-pill);
-  background: var(--g-surface-sunken);
-  font-size: 14px;
-}
-.race-result--lp .race-li-dot {
-  display: none;
-}
-.race-result--lp .race-result-list {
-  padding-right: 52px; /* 讓出右上角拍照鈕 */
 }
 
-/* ---- 手機直放（.race--pp）：資訊都在舞台外——上方細列（時間、進度、暫停）、下方資訊列（效果、領先幾步） ---- */
-.race--pp .race-strip {
-  width: 100%;
-  height: 44px;
-  margin: 0 auto;
+/* 矮螢幕（高度 ≤ 360px 或手機橫放）：改為左右雙欄排列，保證不捲動 */
+@media (max-height: 440px) and (orientation: landscape), (max-height: 360px) {
+  .race-result-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    max-width: min(680px, 96%);
+    padding: 10px 14px;
+    text-align: left;
+  }
+  .race-result-left {
+    flex: 0 0 auto;
+    width: 200px;
+  }
+  .race-podium {
+    height: 80px;
+  }
+  .race-podium-me svg {
+    height: 80px;
+  }
+  .race-podium-opp svg {
+    height: 55px;
+  }
+  .race-result-left .g-t-title {
+    margin: 0;
+    font-size: 16px;
+  }
+  .race-result-stars .g-icon {
+    width: 22px;
+    height: 22px;
+  }
+  .race-result-right {
+    flex: 1 1 auto;
+    min-width: 0;
+    align-items: stretch;
+    gap: 4px;
+  }
+  .race-stat-row {
+    margin: 0;
+  }
+  .race-stat-item {
+    padding: 3px 6px;
+  }
+  .race-stat-val {
+    font-size: 13px;
+  }
+  .race-result-actions {
+    justify-content: flex-start;
+    margin-top: 2px;
+  }
+  .race-result-actions .gbtn {
+    min-height: 38px;
+    padding: 0 10px;
+    font-size: 13px;
+  }
+  .race-pause-card {
+    padding: 14px 18px;
+    gap: 10px;
+  }
+  .race-pause-card .gmodal-actions .gbtn {
+    min-height: 38px;
+    padding: 0 10px;
+  }
 }
-.race--pp .race-strip .race-pause {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  flex: none;
-}
-.race--pp .race-strip .race-progress {
-  flex: 1;
-}
-.race-infobar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  min-height: 36px;
-  flex: none;
-}
-.race-infobar .race-effects,
-.race-infobar .race-edge {
-  position: static;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.race-infobar .race-edge[hidden] {
-  display: none;
-}
-.race-infobar .race-edge--right {
-  margin-left: auto;
-}
-.race-infobar .g-chip {
-  min-height: 32px;
-  font-size: 14px;
-}
-.race--pp .race-play {
-  gap: 6px;
-}
-.race-rail-info {
-  flex: 1;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  min-height: 0;
-  overflow: hidden;
-}
-.race-rail-info .race-edge--right {
-  margin-left: 0;
-}
-.race-rail-info .g-chip {
-  font-size: 13px;
-  min-height: 28px;
-  padding: 0 8px;
-  max-width: 100%;
-  white-space: nowrap;
+
+@media (prefers-reduced-motion: reduce) {
+  .race-count,
+  .race-speedlines.on,
+  .race-item-slot.has-item {
+    animation: none;
+  }
 }

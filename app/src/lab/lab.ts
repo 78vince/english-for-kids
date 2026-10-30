@@ -11,6 +11,15 @@ import { createProfile, getActiveProfileId, getProfileById, listProfiles, setAct
 import { rememberLogin } from "../pin";
 import { earnTokens, getTokenBalance, spendTokens } from "../gameTokens";
 import { AVATARS } from "../avatars";
+import {
+  loadCharacter,
+  saveCharacter,
+  createInitial,
+  type CharacterData,
+  type CharacterSlot,
+} from "../game/characterStore";
+import { GameArt } from "../game/gameKit";
+import { loadPumpkinBossRecord, savePumpkinBossRecord } from "../game/pumpkinBossStore";
 
 const TESTER_NAME = "測試員";
 const root = document.getElementById("lab")!;
@@ -19,13 +28,27 @@ function ensureTester(): string {
   const active = getActiveProfileId();
   if (active && getProfileById(active)) {
     rememberLogin();
+    if (getTokenBalance(active) < 500) earnTokens(active, 500);
     return active;
   }
   const existing = listProfiles().find((p) => p.name === TESTER_NAME);
   const tester = existing ?? createProfile(TESTER_NAME, AVATARS[0]?.id ?? "default");
   setActiveProfileId(tester.id);
   rememberLogin();
+  if (getTokenBalance(tester.id) < 500) earnTokens(tester.id, 500);
   return tester.id;
+}
+
+function getTesterCharacter(profileId: string): { data: CharacterData; slot: CharacterSlot } {
+  let charData = loadCharacter(profileId);
+  if (!charData || !charData.slots || charData.slots.length === 0) {
+    charData = createInitial();
+    charData.slots[0].name = "測試小夥伴";
+    saveCharacter(profileId, charData);
+  }
+  const activeIdx = Math.min(Math.max(0, charData.activeSlot || 0), charData.slots.length - 1);
+  const slot = charData.slots[activeIdx];
+  return { data: charData, slot };
 }
 
 function esc(s: string): string {
@@ -57,6 +80,34 @@ async function clearAllTestData(): Promise<void> {
   window.location.reload();
 }
 
+const SCENE_NAMES: Record<string, string> = {
+  graveyard: "🪦 夜光墓園",
+  forest: "🌲 森林",
+  studio: "🎬 攝影棚",
+  ocean: "🌊 海底世界",
+  space: "🚀 宇宙空間",
+};
+
+const SCENE_BG_GRADIENTS: Record<string, string> = {
+  graveyard: "linear-gradient(180deg, #1f1830 0%, #3a2b55 100%)",
+  forest: "linear-gradient(180deg, #BFE3F7 0%, #E8F5E2 100%)",
+  studio: "linear-gradient(180deg, #F4ECFA 0%, #F1E3D3 100%)",
+  ocean: "linear-gradient(180deg, #1C4E80 0%, #0E2945 100%)",
+  space: "linear-gradient(180deg, #120D2E 0%, #291D4C 100%)",
+};
+
+const HELD_NAMES: Record<string, string> = {
+  magiccane: "🪄 魔拐杖",
+  pumpkinbucket: "🎃 南瓜糖果桶",
+  wand: "✨ 魔法棒",
+  flag: "🚩 旗子",
+  lollipop: "🍭 棒棒糖",
+  book: "📖 書本",
+  pinwheel: "🌸 風車",
+  poopstick: "💩 便便棒",
+  none: "🚫 空手（無手持物）",
+};
+
 function render(): void {
   if (!LAB_MODE) {
     // 理論上不會發生：一般 build 不打包這一頁
@@ -67,6 +118,17 @@ function render(): void {
   const profile = getProfileById(profileId);
   const balance = getTokenBalance(profileId);
   const games = [...(gamesData as GameConfig[])].sort((a, b) => a.order - b.order);
+
+  const { slot } = getTesterCharacter(profileId);
+  const hasTalisman = (slot.look.accessories || []).includes("zombieTalisman");
+  const currentHeld = slot.look.held || "none";
+  const currentSceneId = slot.scene.id || "forest";
+  const currentTime = slot.scene.time || "day";
+  const sceneBg = SCENE_BG_GRADIENTS[currentSceneId] ?? SCENE_BG_GRADIENTS.forest;
+  const sceneLabel = SCENE_NAMES[currentSceneId] ?? currentSceneId;
+  const timeLabel = currentTime === "night" ? "夜晚 🌙" : "白天 ☀️";
+
+  const charSvg = GameArt.character({ ...slot.look, view: "front", pose: null });
 
   const rows = games
     .map((g) => {
@@ -105,6 +167,103 @@ function render(): void {
       </div>
     </section>
 
+    <!-- 我的角色與場景相關設定（裝備效果測試） -->
+    <section class="lab-card lab-card--character">
+      <div class="lab-card-title-row">
+        <h2>🎭 我的角色與場景相關設定</h2>
+        <span class="lab-pill-tag">裝備效果測試</span>
+      </div>
+      <p class="lab-sub">在實驗室中直接為測試員配置角色外觀、裝備配件（變身符咒、手持物）與場景，立即驗證不同場景與怪物的互動效果。</p>
+
+      <div class="lab-char-layout">
+        <!-- 角色畫布預覽 -->
+        <div class="lab-char-preview-card" style="background: ${sceneBg};">
+          <div class="lab-char-svg-wrap">
+            ${charSvg}
+          </div>
+          <div class="lab-char-preview-footer">
+            <strong class="lab-char-name">${esc(slot.name)}</strong>
+            <span class="lab-char-scene-pill">${esc(sceneLabel)}・${timeLabel}</span>
+            <span class="lab-char-scene-pill">${esc(HELD_NAMES[currentHeld] ?? currentHeld)}</span>
+          </div>
+        </div>
+
+        <!-- 狀態與裝備控制 -->
+        <div class="lab-char-details">
+          <!-- 變身符咒狀態 Banner -->
+          <div class="lab-status-banner ${hasTalisman ? "lab-status-banner--zombie" : "lab-status-banner--normal"}">
+            <div class="lab-status-banner-title">
+              ${hasTalisman ? "🧟 變身狀態：已裝備變身符咒（化身小殭屍）" : "👦 變身狀態：正常角色外觀"}
+            </div>
+            <p class="lab-status-banner-desc">
+              ${hasTalisman
+                ? "額頭垂掛朱砂符文黃紙符咒、其他配件隱藏、行走速度 0.65x、禁止跑步（可跳躍）。在夜光墓園中：怪物不攻擊、靠近殭屍/寶箱觸發萬聖幽默對白！"
+                : "未裝備變身符咒。在夜光墓園中會被寶箱咬住、殭屍緊抱或地底巨手抓取。"}
+            </p>
+          </div>
+
+          <!-- 變身配件按鈕 -->
+          <div class="lab-control-group">
+            <div class="lab-control-label">變身配件測試：</div>
+            <div class="lab-actions">
+              <button type="button" class="lab-btn ${hasTalisman ? "lab-btn--zombie-active" : "lab-btn--zombie"}" data-act="toggleTalisman">
+                ${hasTalisman ? "✨ 解除變身符咒" : "🧟 裝備配件：變身符咒"}
+              </button>
+            </div>
+          </div>
+
+          <!-- 手持物切換（南瓜怪闖關道具） -->
+          <div class="lab-control-group">
+            <div class="lab-control-label">手持物（手持物道具）：</div>
+            <div class="lab-seg-btns">
+              <button type="button" class="lab-seg-btn ${currentHeld === "magiccane" ? "is-active" : ""}" data-act="setHeld" data-val="magiccane">🪄 魔拐杖</button>
+              <button type="button" class="lab-seg-btn ${currentHeld === "pumpkinbucket" ? "is-active" : ""}" data-act="setHeld" data-val="pumpkinbucket">🎃 南瓜糖果桶</button>
+              <button type="button" class="lab-seg-btn ${currentHeld === "wand" ? "is-active" : ""}" data-act="setHeld" data-val="wand">✨ 魔法棒</button>
+              <button type="button" class="lab-seg-btn ${currentHeld === "none" ? "is-active" : ""}" data-act="setHeld" data-val="none">🚫 空手</button>
+            </div>
+          </div>
+
+          <!-- 場景設定 -->
+          <div class="lab-control-group">
+            <div class="lab-control-label">測試場景設定：</div>
+            <div class="lab-seg-btns">
+              <button type="button" class="lab-seg-btn ${currentSceneId === "graveyard" ? "is-active" : ""}" data-act="setScene" data-val="graveyard">🪦 夜光墓園</button>
+              <button type="button" class="lab-seg-btn ${currentSceneId === "forest" ? "is-active" : ""}" data-act="setScene" data-val="forest">🌲 森林</button>
+              <button type="button" class="lab-seg-btn ${currentSceneId === "studio" ? "is-active" : ""}" data-act="setScene" data-val="studio">🎬 攝影棚</button>
+              <button type="button" class="lab-seg-btn ${currentSceneId === "ocean" ? "is-active" : ""}" data-act="setScene" data-val="ocean">🌊 海底世界</button>
+              <button type="button" class="lab-seg-btn ${currentSceneId === "space" ? "is-active" : ""}" data-act="setScene" data-val="space">🚀 宇宙空間</button>
+            </div>
+          </div>
+
+          <!-- 時間設定 -->
+          <div class="lab-control-group">
+            <div class="lab-control-label">時間設定：</div>
+            <div class="lab-seg-btns">
+              <button type="button" class="lab-seg-btn ${currentTime === "night" ? "is-active" : ""}" data-act="setTime" data-val="night">🌙 夜晚</button>
+              <button type="button" class="lab-seg-btn ${currentTime === "day" ? "is-active" : ""}" data-act="setTime" data-val="day">☀️ 白天</button>
+            </div>
+          </div>
+
+          <!-- 一鍵快速組合 -->
+          <div class="lab-control-group">
+            <div class="lab-control-label">一鍵快速組合：</div>
+            <div class="lab-actions">
+              <button type="button" class="lab-btn lab-btn--combo" data-act="comboZombie">🧟 夜光墓園 ＋ 變身符咒（墓園和平對話）</button>
+              <button type="button" class="lab-btn lab-btn--combo" data-act="comboBoss">🎃 夜光墓園 ＋ 魔拐杖（南瓜怪挑戰配置）</button>
+              <button type="button" class="lab-btn lab-btn--combo" data-act="comboForest">🌲 森林 ＋ 白天 ＋ 一般造型</button>
+            </div>
+          </div>
+
+          <!-- 快速進入測試頁 -->
+          <div class="lab-direct-links">
+            <a class="lab-btn lab-btn--studio" href="games/character-studio.html?from=lab">進入我的角色（測試動作與細部造型）</a>
+            <a class="lab-btn lab-btn--boss" href="games/pumpkin-boss.html?from=lab">進入巨大南瓜怪關卡（實戰測試）</a>
+            <a class="lab-btn" href="layout-demo.html">遊戲版面與按鍵測試（ABCD／五種版面）</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="lab-card">
       <h2>遊戲</h2>
       <p class="lab-sub">清單來自 <code>content/games/games.json</code></p>
@@ -135,6 +294,70 @@ function render(): void {
       else if (act === "clear") {
         if (window.confirm("清除這台裝置上所有實驗室測試資料？")) void clearAllTestData();
         return;
+      } else if (act === "toggleTalisman") {
+        const { data: charData, slot: s } = getTesterCharacter(profileId);
+        const accs = new Set(s.look.accessories || []);
+        if (accs.has("zombieTalisman")) {
+          accs.delete("zombieTalisman");
+        } else {
+          accs.add("zombieTalisman");
+          const pb = loadPumpkinBossRecord(profileId);
+          savePumpkinBossRecord(profileId, { ...pb, hasTalisman: true, updatedAt: Date.now() });
+        }
+        s.look.accessories = Array.from(accs);
+        s.updatedAt = Date.now();
+        saveCharacter(profileId, charData);
+      } else if (act === "setHeld") {
+        const { data: charData, slot: s } = getTesterCharacter(profileId);
+        s.look.held = btn.dataset.val ?? "none";
+        s.updatedAt = Date.now();
+        saveCharacter(profileId, charData);
+      } else if (act === "setScene") {
+        const { data: charData, slot: s } = getTesterCharacter(profileId);
+        const sid = btn.dataset.val ?? "graveyard";
+        const savedTime = s.sceneTimes?.[sid]?.time ?? (sid === "graveyard" ? "night" : "day");
+        s.scene = { ...s.scene, id: sid, time: savedTime, useSystemTime: false, u: savedTime === "night" ? 0.75 : 0.25 };
+        s.sceneTimes = { ...(s.sceneTimes ?? {}), [sid]: s.scene };
+        s.updatedAt = Date.now();
+        saveCharacter(profileId, charData);
+      } else if (act === "setTime") {
+        const { data: charData, slot: s } = getTesterCharacter(profileId);
+        const time = (btn.dataset.val ?? "night") as "day" | "night";
+        s.scene = { ...s.scene, time, useSystemTime: false, u: time === "night" ? 0.75 : 0.25 };
+        s.sceneTimes = { ...(s.sceneTimes ?? {}), [s.scene.id]: s.scene };
+        s.updatedAt = Date.now();
+        saveCharacter(profileId, charData);
+      } else if (act === "comboZombie") {
+        const { data: charData, slot: s } = getTesterCharacter(profileId);
+        const accs = new Set(s.look.accessories || []);
+        accs.add("zombieTalisman");
+        s.look.accessories = Array.from(accs);
+        s.scene = { ...s.scene, id: "graveyard", time: "night", useSystemTime: false, u: 0.75 };
+        s.sceneTimes = { ...(s.sceneTimes ?? {}), graveyard: s.scene };
+        const pb = loadPumpkinBossRecord(profileId);
+        savePumpkinBossRecord(profileId, { ...pb, hasTalisman: true, updatedAt: Date.now() });
+        s.updatedAt = Date.now();
+        saveCharacter(profileId, charData);
+      } else if (act === "comboBoss") {
+        const { data: charData, slot: s } = getTesterCharacter(profileId);
+        const accs = new Set(s.look.accessories || []);
+        accs.delete("zombieTalisman");
+        s.look.accessories = Array.from(accs);
+        s.look.held = "magiccane";
+        s.scene = { ...s.scene, id: "graveyard", time: "night", useSystemTime: false, u: 0.75 };
+        s.sceneTimes = { ...(s.sceneTimes ?? {}), graveyard: s.scene };
+        s.updatedAt = Date.now();
+        saveCharacter(profileId, charData);
+      } else if (act === "comboForest") {
+        const { data: charData, slot: s } = getTesterCharacter(profileId);
+        const accs = new Set(s.look.accessories || []);
+        accs.delete("zombieTalisman");
+        s.look.accessories = Array.from(accs);
+        s.look.held = "none";
+        s.scene = { ...s.scene, id: "forest", time: "day", useSystemTime: false, u: 0.25 };
+        s.sceneTimes = { ...(s.sceneTimes ?? {}), forest: s.scene };
+        s.updatedAt = Date.now();
+        saveCharacter(profileId, charData);
       }
       render();
     });

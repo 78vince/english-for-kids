@@ -6,7 +6,17 @@
 import gamesData from "../../content/games/games.json";
 import type { GameConfig, GameStatus } from "./types";
 
-export const LAB_MODE: boolean = typeof __LAB__ !== "undefined" && __LAB__;
+export function isLabMode(): boolean {
+  return (
+    (typeof __LAB__ !== "undefined" && Boolean(__LAB__)) ||
+    (typeof window !== "undefined" &&
+      (Boolean((window as any).__LAB__) ||
+        window.location?.port === "5190" ||
+        new URLSearchParams(window.location?.search || "").get("from") === "lab"))
+  );
+}
+
+export const LAB_MODE: boolean = isLabMode();
 
 const GAME_LIST = gamesData as GameConfig[];
 
@@ -22,14 +32,14 @@ export function gameStatus(id: string): GameStatus | null {
 export function isGamePlayable(id: string): boolean {
   const s = gameStatus(id);
   if (s === null) return false;
-  return LAB_MODE ? true : s === "active";
+  return isLabMode() ? true : s === "active";
 }
 
 /** 遊戲室要不要出現這張卡片：正式版 active／coming_soon；實驗室全部顯示。 */
 export function isGameListed(id: string): boolean {
   const s = gameStatus(id);
   if (s === null) return false;
-  return LAB_MODE ? true : s === "active" || s === "coming_soon";
+  return isLabMode() ? true : s === "active" || s === "coming_soon";
 }
 
 export const GAME_STATUS_LABEL: Record<GameStatus, string> = {

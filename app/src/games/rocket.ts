@@ -2,7 +2,6 @@
 import { GameArt, GameTokens, icon, prefersReducedMotion, type Look } from "../game/gameKit";
 import { getActiveLook, loadCharacter } from "../game/characterStore";
 import {
-  addRotateHint,
   leaveTo,
   preventZoomGestures,
   requireActiveProfileId,
@@ -12,6 +11,8 @@ import {
 import { loadRocketRecord, saveRocketFlight, getRocketRank } from "../game/rocketStore";
 import { earnTokens, getTokenBalance, spendTokens } from "../gameTokens";
 import { speakEnglish, unlockSpeech } from "../speech";
+import { VirtualPad } from "../game/virtualPad";
+import { GameScreen } from "../game/gameScreen";
 import "./rocket.css";
 
 const ROCKET_CFG = (GameTokens as any)?.rocket as { cost: number; payout: number; targetAltitude: number; durationSec: number } | undefined;
@@ -150,6 +151,8 @@ class RocketGame {
   private look: Look;
   private charName = "我的角色";
   private coins = 0;
+  private screen!: GameScreen;
+  private pad!: VirtualPad;
 
   private state: "READY" | "COUNTDOWN" | "PLAYING" | "SUCCESS" | "FAIL" | "RESULT" = "READY";
   private timeLeft = GAME_DURATION_SEC;
@@ -213,34 +216,88 @@ class RocketGame {
   private renderLayout() {
     const record = loadRocketRecord(this.profileId);
 
-    this.appEl.className = "gpage rocket-page";
-    this.appEl.innerHTML = `
-      <!-- 頂部導覽列 -->
-      <header class="rocket-top">
-        <button type="button" class="g-iconbtn" id="rocket-back-btn" aria-label="返回遊戲室">
-          ${icon("back", "lg")}
-        </button>
-        <div class="rocket-who">
-          <div class="rocket-who-avatar">${GameArt.avatar(this.look, 42)}</div>
-          <div class="rocket-who-text">
-            <strong>${this.charName}</strong>
-            <span class="rocket-title-line">火箭發射</span>
-          </div>
-        </div>
-        <div class="rocket-top-spacer"></div>
-        <div class="rocket-chip rocket-coin-chip" id="hudCoinChip">
-          ${icon("coin", "sm")} <span id="coinCount">${this.coins}</span>
-        </div>
-        <div class="rocket-chip rocket-timer-chip" id="hudTimer">⏳ 15.0s</div>
-        <div class="rocket-chip" id="hudTapsChip">🚀 0 次</div>
-        ${record.bestTime > 0 ? `<div class="rocket-chip">⚡ 最佳 ${record.bestTime.toFixed(1)}s</div>` : ""}
-        <button type="button" class="g-iconbtn" id="rocket-sound-btn" aria-label="音效開關">
-          ${icon("sound")}
-        </button>
-      </header>
+    this.appEl.innerHTML = "";
+    this.appEl.style.cssText = "position:fixed;inset:0;overflow:hidden;";
 
-      <!-- 中央主舞台（.gstage 卡片容器） -->
-      <main class="gstage rocket-stage">
+    // 統一按鍵 v2：啟用 A、B 鍵，十字鍵、C、D 鍵設為半透明
+    this.pad = new VirtualPad({ v2: true });
+    this.pad.setActive({
+      up: false,
+      down: false,
+      left: false,
+      right: false,
+      a: true,
+      b: true,
+      c: false,
+      d: false,
+    });
+
+    // 左側 HUD：返回鍵、頭像＋名字
+    const backBtn = document.createElement("button");
+    backBtn.type = "button";
+    backBtn.className = "g-iconbtn";
+    backBtn.id = "rocket-back-btn";
+    backBtn.title = "返回遊戲室";
+    backBtn.setAttribute("aria-label", "返回遊戲室");
+    backBtn.innerHTML = icon("back", "lg");
+    backBtn.addEventListener("click", () => this.handleBack());
+
+    const whoEl = document.createElement("div");
+    whoEl.className = "rocket-who";
+    whoEl.innerHTML = `
+      <div class="rocket-who-avatar">${GameArt.avatar(this.look, 42)}</div>
+      <div class="rocket-who-text">
+        <strong>${this.charName}</strong>
+        <span class="rocket-title-line">火箭發射</span>
+      </div>
+    `;
+
+    // 右側 HUD：代幣、音效開關
+    const coinEl = document.createElement("div");
+    coinEl.className = "rocket-chip rocket-coin-chip";
+    coinEl.id = "hudCoinChip";
+    coinEl.title = "遊戲代幣";
+    coinEl.innerHTML = `${icon("coin", "sm")} <span id="coinCount">${this.coins}</span>`;
+
+    const soundBtn = document.createElement("button");
+    soundBtn.type = "button";
+    soundBtn.className = "g-iconbtn";
+    soundBtn.id = "rocket-sound-btn";
+    soundBtn.title = "音效開關";
+    soundBtn.setAttribute("aria-label", "音效開關");
+    soundBtn.innerHTML = icon(sounds.enabled ? "sound" : "mute");
+    soundBtn.addEventListener("click", () => {
+      sounds.enabled = !sounds.enabled;
+      soundBtn.innerHTML = icon(sounds.enabled ? "sound" : "mute");
+    });
+
+    // 畫面上方細列（strip）：剩餘時間、推進次數、即時手速、最佳紀錄與交替提示
+    const stripEl = document.createElement("div");
+    stripEl.className = "rocket-strip-bar";
+    stripEl.innerHTML = `
+      <div class="rocket-chip rocket-timer-chip" id="hudTimer">⏳ 15.0s</div>
+      <div class="rocket-alt-hint-box" id="rocketAltHintBox"></div>
+      <div class="rocket-strip-spacer"></div>
+      <div class="rocket-chip" id="hudTapsChip">🚀 0 次</div>
+      <div class="rocket-speed-badge">
+        <span class="rocket-speed-label">即時手速</span>
+        <span class="rocket-speed-val" id="cpsMeter">0.0 次/秒</span>
+      </div>
+      ${record.bestTime > 0 ? `<div class="rocket-chip rocket-best-chip">⚡ 最佳 ${record.bestTime.toFixed(1)}s</div>` : ""}
+    `;
+
+    // 統一五種版面容器
+    this.screen = new GameScreen(this.appEl, {
+      pad: this.pad,
+      hudLeft: [backBtn, whoEl],
+      hudRight: [coinEl, soundBtn],
+      strip: stripEl,
+    });
+
+    // 橫式 16:9 中央主舞台（放進 screen.canvas）
+    const stage = document.createElement("main");
+    stage.className = "gstage rocket-stage";
+    stage.innerHTML = `
         <!-- 垂直世界背景層 -->
         <div class="rocket-sky-world" id="rocketWorld">
           <div class="rocket-bg-layer">
@@ -748,74 +805,35 @@ class RocketGame {
           <div class="rocket-countdown-tip" id="countdownTip">連續快速交替點按 A 與 B 發射！</div>
           <button type="button" class="rocket-start-btn" id="btnStartCountdown">點擊開始發射 🚀</button>
         </div>
-      </main>
-
-      <!-- 底部控制按鈕區（A、B 按鍵完全置中對齊！） -->
-      <footer class="rocket-controls">
-        <div class="rocket-speed-badge">
-          <span class="rocket-speed-label">即時手速</span>
-          <span class="rocket-speed-val" id="cpsMeter">0.0 次/秒</span>
-        </div>
-        <div class="rocket-vpad-pair" id="vpadPair">
-          <button type="button" class="vpad-k vpad-a" id="btnA">A</button>
-          <button type="button" class="vpad-k vpad-b" id="btnB">B</button>
-        </div>
-      </footer>
     `;
+    this.screen.canvas.appendChild(stage);
+  }
+
+  private handleBack() {
+    this.destroy();
+    if (typeof window !== "undefined" && window.location.protocol === "file:") {
+      if (window.history.length > 1) window.history.back();
+      else window.close();
+    } else {
+      void leaveTo(returnTarget());
+    }
   }
 
   private bindEvents() {
     tryFullscreenOnFirstTap();
 
-    const handleBack = () => {
-      if (typeof window !== "undefined" && window.location.protocol === "file:") {
-        if (window.history.length > 1) window.history.back();
-        else window.close();
-      } else {
-        void leaveTo(returnTarget());
-      }
-    };
-
-    const btnBack = document.querySelector<HTMLButtonElement>("#rocket-back-btn")!;
-    btnBack.addEventListener("click", handleBack);
-
-    const btnSound = document.querySelector<HTMLButtonElement>("#rocket-sound-btn")!;
-    btnSound.addEventListener("click", () => {
-      sounds.enabled = !sounds.enabled;
-      btnSound.innerHTML = icon(sounds.enabled ? "sound" : "mute");
-    });
-
-    const btnA = document.querySelector<HTMLButtonElement>("#btnA")!;
-    const btnB = document.querySelector<HTMLButtonElement>("#btnB")!;
-
-    const handleTap = (key: "a" | "b", btnEl: HTMLElement) => {
+    // 統一按鍵 v2 監聽（A 鍵開始倒數/推進，B 鍵交替推進）
+    this.pad.on((k, down) => {
+      if (!down) return;
       if (this.state === "READY") {
-        this.triggerStartCountdown();
+        if (k === "a") {
+          this.triggerStartCountdown();
+        }
         return;
       }
       if (this.state !== "PLAYING") return;
-      btnEl.classList.add("on");
-      setTimeout(() => btnEl.classList.remove("on"), 70);
-      this.registerTap(key);
-    };
-
-    btnA.addEventListener("pointerdown", (e) => {
-      e.preventDefault();
-      handleTap("a", btnA);
-    });
-
-    btnB.addEventListener("pointerdown", (e) => {
-      e.preventDefault();
-      handleTap("b", btnB);
-    });
-
-    window.addEventListener("keydown", (e) => {
-      if (e.repeat) return;
-      const k = e.key.toLowerCase();
-      if (k === "a" || k === "j" || k === "arrowleft") {
-        handleTap("a", btnA);
-      } else if (k === "b" || k === "k" || k === "arrowright" || k === " ") {
-        handleTap("b", btnB);
+      if (k === "a" || k === "b") {
+        this.registerTap(k);
       }
     });
 
@@ -830,7 +848,7 @@ class RocketGame {
     // 成功畫面的按鈕監聽
     const btnCockpitBack = document.querySelector<HTMLButtonElement>("#btnCockpitBack");
     const btnCockpitRetry = document.querySelector<HTMLButtonElement>("#btnCockpitRetry");
-    btnCockpitBack?.addEventListener("click", handleBack);
+    btnCockpitBack?.addEventListener("click", () => this.handleBack());
     btnCockpitRetry?.addEventListener("click", () => {
       const curCoins = getTokenBalance(this.profileId);
       if (curCoins < ROCKET_COST) {
@@ -988,41 +1006,22 @@ class RocketGame {
   }
 
   private showAlternateHint(suggestKey: "a" | "b") {
-    const vpadPair = document.querySelector<HTMLElement>("#vpadPair");
-    const btnA = document.querySelector<HTMLElement>("#btnA");
-    const btnB = document.querySelector<HTMLElement>("#btnB");
-
-    if (btnA && btnB) {
-      if (suggestKey === "a") {
-        btnA.classList.add("suggest");
-        btnB.classList.remove("suggest");
-      } else {
-        btnB.classList.add("suggest");
-        btnA.classList.remove("suggest");
-      }
-    }
-
-    if (vpadPair) {
-      let hint = vpadPair.querySelector<HTMLElement>(".rocket-alt-hint");
-      if (!hint) {
-        hint = document.createElement("div");
-        hint.className = "rocket-alt-hint";
-        vpadPair.appendChild(hint);
-      }
-      hint.textContent = `請按 ${suggestKey.toUpperCase()} 鍵！要輪流按！`;
-
+    const hintBox = document.querySelector<HTMLElement>("#rocketAltHintBox");
+    if (hintBox) {
+      hintBox.innerHTML = `<span class="rocket-alt-hint">請按 <strong>${suggestKey.toUpperCase()}</strong> 鍵！要輪流按！</span>`;
       window.clearTimeout(this.altHintTimer);
       this.altHintTimer = window.setTimeout(() => {
         this.clearAlternateHint();
-      }, 900);
+      }, 1000);
     }
   }
 
   private clearAlternateHint() {
     window.clearTimeout(this.altHintTimer);
-    document.querySelector("#btnA")?.classList.remove("suggest");
-    document.querySelector("#btnB")?.classList.remove("suggest");
-    document.querySelector(".rocket-alt-hint")?.remove();
+    const hintBox = document.querySelector<HTMLElement>("#rocketAltHintBox");
+    if (hintBox) {
+      hintBox.innerHTML = "";
+    }
   }
 
   private loop(now: number) {
@@ -1418,16 +1417,7 @@ class RocketGame {
     const stageEl = document.querySelector<HTMLElement>(".rocket-stage") || this.appEl;
     stageEl.appendChild(modal);
 
-    const handleBack = () => {
-      if (typeof window !== "undefined" && window.location.protocol === "file:") {
-        if (window.history.length > 1) window.history.back();
-        else window.close();
-      } else {
-        void leaveTo(returnTarget());
-      }
-    };
-
-    modal.querySelector("#btnFailBack")?.addEventListener("click", handleBack);
+    modal.querySelector("#btnFailBack")?.addEventListener("click", () => this.handleBack());
     modal.querySelector("#btnFailRetry")?.addEventListener("click", () => {
       const curCoins = getTokenBalance(this.profileId);
       if (curCoins < ROCKET_COST) {
@@ -1438,12 +1428,17 @@ class RocketGame {
       window.location.reload();
     });
   }
+
+  public destroy() {
+    cancelAnimationFrame(this.animFrameId);
+    clearInterval(this.countdownTimerId);
+    window.clearTimeout(this.altHintTimer);
+    this.screen?.destroy();
+    this.pad?.destroy();
+  }
 }
 
 preventZoomGestures();
-if (window.matchMedia("(orientation: portrait) and (max-width: 700px)").matches) {
-  addRotateHint();
-}
 
 const rootEl = document.querySelector<HTMLElement>("#rocket-app");
 if (rootEl) {

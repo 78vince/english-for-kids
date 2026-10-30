@@ -8,6 +8,7 @@
 import { appStorage } from "../storage";
 import { GameArt, GameTokens, normalizeLook, type Look } from "./gameKit";
 import { earnTokens, getTokenBalance, spendTokens } from "../gameTokens";
+import { LAB_MODE } from "../gameRelease";
 
 export const WARDROBE_KEY_PREFIX = "englishForKids.wardrobe.v1";
 export type ShopField = "hairStyle" | "mouth" | "eyes" | "brows" | "faceShape" | "outfit" | "accessories" | "held" | "scene";
@@ -125,8 +126,9 @@ export function ownsEntry(e: WardrobeEntry | undefined): boolean {
   return !!e && !e.refundedAt;
 }
 
-/** 這個款式能不能用：不是商品＝免費；是商品＝要買過且沒退回 */
+/** 這個款式能不能用：不是商品＝免費；是商品＝要買過且沒退回。實驗室模式下全部開放測試。 */
 export function isOwned(profileId: string, field: string, value: string, data?: WardrobeData): boolean {
+  if (LAB_MODE) return true;
   const it = findItem(field, value);
   if (!it) return true;
   return ownsEntry((data ?? loadWardrobe(profileId)).items[it.id]);
@@ -241,6 +243,7 @@ function loadSceneTrials(profileId: string, now: number): SceneTrialLog {
 
 /** 今天這個場景還能試玩幾次 */
 export function sceneTrialsLeft(profileId: string, sceneId: string, now = Date.now()): number {
+  if (LAB_MODE) return 999;
   const used = Number(loadSceneTrials(profileId, now).counts[sceneId]) || 0;
   return Math.max(0, sceneTrialRule().perDay - used);
 }

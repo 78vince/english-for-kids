@@ -15,22 +15,29 @@
 
 #mole-app,
 .mole-page {
-  position: relative;
+  position: fixed;
+  inset: 0;
   width: 100vw;
   height: 100dvh;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: max(6px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
-  background: var(--g-leaf-soft);
+  margin: 0;
+  padding: 0;
   overflow: hidden;
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
   font-family: var(--g-font-ui);
   color: var(--g-ink);
+}
+
+.mole-strip-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 4px;
 }
 
 /* ==================== 
@@ -114,10 +121,13 @@
   display: flex;
   gap: 6px;
   align-items: baseline;
+  white-space: nowrap;
+  flex: none;
 }
 
 .mole-timer-bar {
-  width: 100%;
+  flex: 1;
+  width: auto;
   height: 10px;
   background: var(--g-surface-raised);
   border-radius: 5px;
@@ -176,17 +186,26 @@
    ==================== */
 .mole-stage {
   position: relative;
-  flex: none;
-  aspect-ratio: 16 / 9;
-  width: min(96vw, 980px);
-  max-height: calc(100dvh - 74px);
-  border-radius: 32px;
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
   overflow: hidden;
   background: radial-gradient(circle at 50% 50%, var(--g-leaf-base) 0%, var(--g-leaf-ledge) 100%);
-  border: 4px solid var(--g-leaf-deep);
+  border: 3px solid var(--g-leaf-deep);
   box-shadow: 0 12px 36px rgba(47, 58, 102, 0.16);
+  box-sizing: border-box;
+  container-type: size;
   display: flex;
   flex-direction: column;
+  --mole-hole-w: clamp(56px, 18cqw, 180px);
+  --mole-hole-h: calc(var(--mole-hole-w) * 1.1);
+  --mole-mound-h: calc(var(--mole-hole-w) * 0.48);
+  --mole-mound-offset: calc(var(--mole-hole-w) * 0.12);
+  --mole-actor-wrap-h: calc(var(--mole-hole-w) * 0.95);
+  --mole-actor-w: calc(var(--mole-hole-w) * 0.68);
+  --mole-actor-h: calc(var(--mole-hole-w) * 0.88);
+  --mole-player-w: clamp(40px, 9cqw, 85px);
+  --mole-player-h: calc(var(--mole-player-w) * 1.2);
 }
 
 /* 草坪裝飾細節（小石塊、野花、草叢雜物） */
@@ -646,14 +665,8 @@
   }
 }
 
-/* 2. 手機直向模式：舞台給予充裕垂直縱深，避免 3 排坑洞如土餅擠壓重疊 */
+/* 2. 手機直向模式：主角氣泡與大本營微調 */
 @media (orientation: portrait) {
-  .mole-stage {
-    aspect-ratio: 4 / 3.3;
-    width: min(94vw, 480px);
-    max-height: calc(100dvh - 84px);
-    border-radius: 24px;
-  }
   .mole-player-dock {
     bottom: 6px;
     left: 6px;
@@ -793,12 +806,6 @@
   .mole-hud-chip {
     padding: 3px 8px;
     font-size: 12px;
-  }
-  .mole-stage {
-    aspect-ratio: 16 / 9;
-    max-height: calc(100dvh - 42px);
-    border-radius: 18px;
-    border-width: 3px;
   }
   :root {
     --mole-hole-w: clamp(90px, 18vw, 135px);

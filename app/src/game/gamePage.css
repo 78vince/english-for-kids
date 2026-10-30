@@ -272,6 +272,42 @@ button {
   box-shadow: 0 1px 0 var(--g-rose-ledge);
 }
 
+/* ---- 統一按鍵 v2（2026-10-28，game-tokens controls.v2）：十字鍵＋ABCD 一律顯示，沒有功能的鍵半透明；按鍵只有英文字母 ---- */
+.vpad--v2 {
+  display: contents; /* 十字鍵、ABCD 由 GameScreen 放進各自的操作區 */
+}
+.vpad-v2 {
+  touch-action: none;
+  opacity: 0.92;
+  flex: none;
+}
+.vpad-abcd {
+  position: relative;
+}
+.vpad-v2 .vpad-act {
+  position: absolute;
+  border-radius: var(--g-radius-pill);
+  font-family: var(--g-font-number);
+  font-weight: 900;
+  line-height: 1;
+}
+.vpad-act--a { background: var(--g-sun); color: var(--g-sun-deep); box-shadow: 0 4px 0 var(--g-sun-ledge); }
+.vpad-act--a.on { box-shadow: 0 1px 0 var(--g-sun-ledge); }
+.vpad-act--b { background: var(--g-rose); color: var(--g-rose-deep); box-shadow: 0 4px 0 var(--g-rose-ledge); }
+.vpad-act--b.on { box-shadow: 0 1px 0 var(--g-rose-ledge); }
+.vpad-act--c { background: var(--g-mint); color: var(--g-mint-deep); box-shadow: 0 4px 0 var(--g-mint-ledge); }
+.vpad-act--c.on { box-shadow: 0 1px 0 var(--g-mint-ledge); }
+.vpad-act--d { background: var(--g-lilac); color: var(--g-lilac-deep); box-shadow: 0 4px 0 var(--g-lilac-ledge); }
+.vpad-act--d.on { box-shadow: 0 1px 0 var(--g-lilac-ledge); }
+.vpad-v2.vpad-v2--disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+.vpad-v2 .vpad-k--inactive {
+  opacity: 0.35;
+  filter: grayscale(0.6);
+}
+
 /* ---- 共用頁面元件 ---- */
 .gbtn {
   display: inline-flex;

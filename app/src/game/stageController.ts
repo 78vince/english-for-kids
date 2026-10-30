@@ -164,6 +164,8 @@ export class StageController {
   allowCrouch = true;
   /** 可以跳躍（A 鍵）；被寶箱咬住時關掉 */
   allowJump = true;
+  /** 可以跑步（按住 B 鍵）；變身殭屍時關閉 */
+  allowRun = true;
 
   /** 跳躍／落地／每幀／道具靠近等事件（給關卡邏輯用） */
   onJump: () => void = () => {};
@@ -359,6 +361,9 @@ export class StageController {
   }
   get skyState(): SkyState {
     return this.sky ?? GameArt.skyAt(this.sceneId, this.u);
+  }
+  get moonEl(): HTMLDivElement | undefined {
+    return this.cel["moon"];
   }
 
   // ---- 場景 ----
@@ -591,7 +596,7 @@ export class StageController {
     if (this.air) return this.water ? (this.vy < 0 ? "jump" : "fly") : this.vy < 0 ? "jump" : "fall";
     if (d.down && this.allowCrouch) return "crouch";
     if (this.autoRun) return this.autoRun() > 0 ? "run" : this.idlePose;
-    if (d.left || d.right) return d.b ? "run" : "walk";
+    if (d.left || d.right) return (d.b && this.allowRun) ? "run" : "walk";
     return this.idlePose;
   }
 
@@ -991,7 +996,8 @@ export class StageController {
       // 蹲下時（在地面）不能前進；空中速度由起跳當下是否按著 B 決定
       if (mv && (this.air || !this.isCrouching)) {
         const sm = this.speedMult ? this.speedMult(mv) : 1;
-        const spd = W * (this.air ? (this.runJump ? RUN : WALK) : d.b ? RUN : WALK) * (this.water ? this.water.walkMult : 1) * sm;
+        const canSprint = d.b && this.allowRun;
+        const spd = W * (this.air ? (this.runJump ? RUN : WALK) : canSprint ? RUN : WALK) * (this.water ? this.water.walkMult : 1) * sm;
         dx = mv * spd * dt;
       }
     }
@@ -1096,7 +1102,7 @@ export class StageController {
       if (sup < this.jy - 1) {
         this.air = true;
         this.vy = 0;
-        this.runJump = d.b;
+        this.runJump = d.b && this.allowRun;
       } else this.jy = sup;
     }
     this.supportY = this.supportAt(this.jy, cols, 1);

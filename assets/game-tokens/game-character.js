@@ -103,8 +103,12 @@
 
   function character(opts) {
     var o = Object.assign({}, DEF, opts || {}), view = o.view, bear = o.species === 'bear', side = view === 'side', back = view === 'back';
-    var F = C.face, acc = o.accessories || [], has = function (k) { return acc.indexOf(k) >= 0; };
-    var skin = bear ? (C.fur[o.fur] || C.fur.bear) : C.skin[o.skin], skinFar = mix(skin, N.ink, .12);
+    var F = C.face, acc0 = o.accessories || [];
+    var isZombie = acc0.indexOf('zombieTalisman') >= 0;
+    var acc = isZombie ? ['zombieTalisman'] : acc0;
+    var has = function (k) { return acc.indexOf(k) >= 0; };
+    if (isZombie) o.held = 'none';
+    var skin = isZombie ? hue('mint') : bear ? (C.fur[o.fur] || C.fur.bear) : C.skin[o.skin], skinFar = mix(skin, N.ink, .12);
     var hair = C.hair[o.hairColor], oc = hue(o.outfitColor), ocl = hue(o.outfitColor, 'ledge'), ocFar = mix(oc, N.ink, .1);
     var pc = o.pantsColor === 'match' ? oc : o.pantsColor === 'ink' ? N.ink : hue(o.pantsColor), pcFar = mix(pc, N.ink, .1);
     var sundr = o.outfit === 'sundress', dress = o.outfit === 'dress' || sundr, hood = o.outfit === 'hoodie', jacket = o.outfit === 'jacket', longSl = hood || jacket;
@@ -386,6 +390,15 @@
           + rect(40, 22, 40, 7, 3.5, hue('sun'))
           + rpath(star(60, 25.5, 6.5, 3.2), hue('sun', 'ledge'), 2);
       }
+      if (has('zombieTalisman')) {
+        // 黃紙朱砂符咒：一張黃紙垂掛於額頭，上有紅色奇怪符文
+        h += rpath('M53 16 L67 16 L68 42 L60 40 L52 42 Z', '#FFDF6D', 1.5)
+          + circ(60, 20, 2.2, '#D82B2B')
+          + el('path', {
+              d: 'M56 24 Q60 22 64 24 M60 24 L60 28 M56 28 L64 28 M57 31 L63 31 L57 35 L63 35 L60 38',
+              stroke: '#D82B2B', 'stroke-width': 1.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'
+            });
+      }
       if (has('headphones')) h += el('path', { d: 'M33 44 Q33 12 60 12 Q87 12 87 44', stroke: hue('stone', 'deep'), 'stroke-width': 5, 'stroke-linecap': 'round' }) + rect(26, 36, 12, 20, 6, hue('lilac')) + rect(82, 36, 12, 20, 6, hue('lilac'));
       if (has('goggles')) h += line(34, 28, 86, 28, hue('stone', 'deep'), 4.5) + circ(48, 24, 8.5, hue('sky', 'soft'), { stroke: hue('stone', 'deep'), 'stroke-width': 3 }) + circ(72, 24, 8.5, hue('sky', 'soft'), { stroke: hue('stone', 'deep'), 'stroke-width': 3 });
       return h;
@@ -420,6 +433,15 @@
           + ell(62, 30, 43, 7.5, hue('lilac', 'deep'))
           + rect(48, 22, 36, 7, 3.5, hue('sun'))
           + rpath(star(70, 25.5, 6, 3), hue('sun', 'ledge'), 2);
+      }
+      if (has('zombieTalisman')) {
+        // 側面視角符咒：垂掛在前額
+        h += rpath('M72 18 L82 18 L85 42 L78 40 L74 42 Z', '#FFDF6D', 1.5)
+          + circ(77, 22, 2, '#D82B2B')
+          + el('path', {
+              d: 'M75 25 L80 25 M77 25 L77 29 M75 31 L80 31 L76 35 L80 35',
+              stroke: '#D82B2B', 'stroke-width': 1.5, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'
+            });
       }
       /* 耳機（側面）：支架是一條豎直線，對齊耳罩水平中間 */
       if (has('headphones')) h += line(59, 40, 59, 12, hue('stone', 'deep'), 5) + rect(51, 36, 16, 22, 8, hue('lilac'));
@@ -456,6 +478,9 @@
       if (has('witchhat')) {
         h += rpath('M34 31 Q38 9 50 -9 Q66 -31 86 -23 Q80 -7 76 11 L84 31 Z', hue('lilac', 'deep'), 6)
           + ell(60, 32, 46, 9, hue('lilac', 'ledge'));
+      }
+      if (has('zombieTalisman')) {
+        h += rect(56, 18, 8, 4, 1.5, hue('sun', 'ledge'));
       }
       if (has('goggles')) h += line(34, 28, 86, 28, hue('stone', 'deep'), 4.5) + rect(56, 24, 8, 8, 3, hue('stone', 'ledge'));
       return h;

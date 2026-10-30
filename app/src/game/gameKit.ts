@@ -18,7 +18,7 @@ import "../../../assets/game-tokens/game-export.js";
 import "../../../assets/game-tokens/game-icons.js";
 
 /** App 預期的 token 版本；內容端升版後若 API 有變，這裡跟著改。 */
-export const EXPECTED_GAME_TOKENS_VERSION = "2.10.0";
+export const EXPECTED_GAME_TOKENS_VERSION = "2.12.1";
 
 export type View = "front" | "side" | "back";
 export type Facing = "left" | "right";

@@ -1468,3 +1468,405 @@
   }
 }
 
+/* ---- 墓園怪物萬聖幽默對話白色對話框 ---- */
+.monster-dialog-bubble {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  background: var(--g-surface-raised, #ffffff);
+  color: var(--g-ink, #35405A);
+  font-family: var(--font-body, system-ui, sans-serif);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.4;
+  padding: 10px 18px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32), 0 2px 6px rgba(0, 0, 0, 0.12);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 100;
+  border: 2px solid var(--g-surface-sunken, #EEF1F5);
+  animation: monster-bubble-pop 0.32s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+.monster-dialog-bubble::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px 8px 0 8px;
+  border-style: solid;
+  border-color: var(--g-surface-raised, #ffffff) transparent transparent transparent;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.12));
+}
+
+.monster-dialog-bubble--fadeout {
+  opacity: 0;
+  transform: translate(-50%, -115%) scale(0.92);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+@keyframes monster-bubble-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -85%) scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -100%) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .monster-dialog-bubble {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* ---- 萬聖限定：裝備正確裝扮提示文字（純白、無特效、常駐數秒） ---- */
+.halloween-costume-notice {
+  position: absolute;
+  top: 26%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--g-surface-raised, #ffffff);
+  font-family: var(--g-font-ui, system-ui, sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 60;
+  background: none;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+  animation: none;
+}
+
+/* ---- 萬聖限定：夜晚骷髏月亮 10 秒神祕幽綠光芒 ---- */
+.moon-mystic-glow {
+  filter: drop-shadow(0 0 16px var(--g-mint)) drop-shadow(0 0 32px var(--g-mint-soft));
+  animation: moon-mystic-pulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes moon-mystic-pulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 12px var(--g-mint)) drop-shadow(0 0 24px var(--g-mint-soft));
+  }
+  100% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 28px var(--g-mint)) drop-shadow(0 0 48px var(--g-mint-soft));
+  }
+}
+
+/* 傳送門破土而出動畫 */
+.studio-portal-burst svg {
+  animation: studio-portal-emerge 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+  transform-origin: 50% 100%;
+}
+
+@keyframes studio-portal-emerge {
+  0% {
+    transform: translateY(100%) scale(0.65);
+    opacity: 0.2;
+  }
+  65% {
+    transform: translateY(-10px) scale(1.05);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* 傳送門常駐微呼吸動態 */
+.studio-portal-active svg {
+  animation: studio-portal-breathe 2.4s ease-in-out infinite alternate;
+  transform-origin: 50% 100%;
+}
+
+@keyframes studio-portal-breathe {
+  0% {
+    filter: drop-shadow(0 0 10px var(--g-mint-soft));
+  }
+  100% {
+    filter: drop-shadow(0 0 24px var(--g-mint));
+  }
+}
+
+/* ---- 萬聖傳送門碰觸詢問彈窗 ---- */
+.halloween-portal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 12, 28, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 120;
+  padding: 20px;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: portal-modal-fade 0.28s ease-out forwards;
+}
+
+@keyframes portal-modal-fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.halloween-portal-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--g-surface-raised);
+  border-radius: var(--g-radius-xl);
+  box-shadow: var(--g-shadow-pop);
+  padding: 28px 24px;
+  text-align: center;
+  color: var(--g-ink);
+  animation: portal-card-pop 0.32s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+@keyframes portal-card-pop {
+  0% { transform: scale(0.75); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.halloween-portal-badge {
+  width: 90px;
+  height: 120px;
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 18px var(--g-mint));
+  animation: portal-badge-float 2s ease-in-out infinite alternate;
+}
+
+.halloween-portal-badge svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+@keyframes portal-badge-float {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
+}
+
+.halloween-portal-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--g-ink);
+  margin-bottom: 10px;
+}
+
+.halloween-portal-desc {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--g-ink-soft);
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+
+.portal-cost-tag {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 12px;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface-sunken);
+  color: var(--g-mint-deep);
+  font-size: 14px;
+  font-weight: 800;
+  border: 1px solid var(--g-mint-soft);
+}
+
+.halloween-portal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.halloween-portal-actions .gbtn {
+  flex: 1;
+}
+
+/* ---- 萬聖傳送門位置指引閃爍箭頭 ---- */
+.portal-nav-arrow {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(21, 15, 38, 0.88);
+  border: 2px solid var(--g-mint);
+  border-radius: var(--g-radius-pill);
+  color: var(--g-mint);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), 0 0 16px var(--g-mint-soft);
+  font-family: var(--g-font-ui, system-ui, sans-serif);
+  font-size: 15px;
+  font-weight: 900;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 55;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  animation: portal-nav-blink 0.65s ease-in-out infinite alternate;
+}
+
+.portal-nav-arrow--right {
+  animation: portal-nav-blink 0.65s ease-in-out infinite alternate, portal-nav-bounce-right 0.65s ease-in-out infinite alternate;
+}
+
+.portal-nav-arrow--left {
+  animation: portal-nav-blink 0.65s ease-in-out infinite alternate, portal-nav-bounce-left 0.65s ease-in-out infinite alternate;
+}
+
+.portal-nav-arrow--down {
+  transform: translateX(-50%);
+  animation: portal-nav-blink 0.65s ease-in-out infinite alternate, portal-nav-bounce-down 0.65s ease-in-out infinite alternate;
+}
+
+.portal-nav-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+@keyframes portal-nav-blink {
+  0% {
+    opacity: 0.55;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), 0 0 8px var(--g-mint-soft);
+  }
+  100% {
+    opacity: 1;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 22px var(--g-mint);
+  }
+}
+
+@keyframes portal-nav-bounce-right {
+  0% { transform: translateY(-50%) translateX(0); }
+  100% { transform: translateY(-50%) translateX(8px); }
+}
+
+@keyframes portal-nav-bounce-left {
+  0% { transform: translateY(-50%) translateX(0); }
+  100% { transform: translateY(-50%) translateX(-8px); }
+}
+
+@keyframes portal-nav-bounce-down {
+  0% { transform: translateX(-50%) translateY(0); }
+  100% { transform: translateX(-50%) translateY(8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moon-mystic-glow,
+  .studio-portal-burst svg,
+  .studio-portal-active svg,
+  .halloween-portal-overlay,
+  .halloween-portal-card,
+  .halloween-portal-badge,
+  .portal-nav-arrow {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   變身符咒裝備白煙特效 (Talisman Transformation Smoke Effect)
+   ========================================================================== */
+.talisman-smoke-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 35;
+}
+
+.talisman-smoke-core {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  animation: talisman-smoke-core 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes talisman-smoke-core {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0.95;
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(1.25);
+    opacity: 1;
+  }
+  65% {
+    transform: translate(-50%, -50%) scale(1.35) translateY(-8px);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5) translateY(-22px);
+    opacity: 0;
+  }
+}
+
+.talisman-smoke-puff {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  animation: talisman-smoke-puff 0.82s cubic-bezier(0.18, 0.9, 0.32, 1.2) forwards;
+  pointer-events: none;
+}
+
+@keyframes talisman-smoke-puff {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2) translate(0, 0);
+    opacity: 0.95;
+  }
+  35% {
+    transform: translate(-50%, -50%) scale(1.15) translate(calc(var(--tx) * 0.75), calc(var(--ty) * 0.75));
+    opacity: 1;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.22) translate(var(--tx), calc(var(--ty) - 12px));
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.35) translate(calc(var(--tx) * 1.15), calc(var(--ty) - 24px));
+    opacity: 0;
+  }
+}
+
+.talisman-smoke-wisp {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  animation: talisman-smoke-wisp 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes talisman-smoke-wisp {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3) translate(0, 0);
+    opacity: 0.95;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1) translate(var(--tx), calc(var(--ty) - 16px));
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.7) translate(calc(var(--tx) * 1.25), calc(var(--ty) - 36px));
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .talisman-smoke-core,
+  .talisman-smoke-puff,
+  .talisman-smoke-wisp {
+    animation-duration: 0.3s;
+  }
+}
+
+
+
+

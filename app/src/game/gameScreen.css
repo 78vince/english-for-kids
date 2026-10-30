@@ -1,0 +1,115 @@
+/* GameScreen 五種版面（game-tokens layout.screen；說明見 gameScreen.ts 開頭）。按鍵只在操作區，不蓋遊戲畫面。 */
+.gscreen {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  background: var(--g-surface);
+  color: var(--g-ink);
+  font-family: var(--g-font-ui);
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.gscreen-hud,
+.gscreen-rail,
+.gscreen-controls,
+.gscreen-keys {
+  min-width: 0;
+  min-height: 0;
+}
+.gscreen-hud { display: flex; align-items: center; gap: 10px; }
+.gscreen-hud-l, .gscreen-hud-r, .gscreen-rail-top { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.gscreen-hud-mid { flex: 1; min-width: 0; display: flex; justify-content: center; }
+.gscreen-hud-mid .gscreen-strip { flex: 1; min-width: 0; max-width: 760px; justify-content: center; }
+.gscreen-main {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.gscreen-strip { display: flex; align-items: center; gap: 8px; max-width: 100%; }
+.gscreen-canvas {
+  position: relative;
+  max-width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+}
+.gscreen-canvas > * { flex: 1; min-width: 0; }
+.gscreen-rotate {
+  display: none;
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  padding: 4px 12px;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-sun-soft);
+  color: var(--g-sun-deep);
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.gscreen-controls { display: none; align-items: center; justify-content: space-between; gap: 8px; }
+.gscreen-zone { display: flex; }
+.gscreen-keys { display: none; justify-content: center; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--g-ink-soft); }
+.gscreen-keys kbd {
+  font-family: var(--g-font-number);
+  font-weight: 900;
+  background: var(--g-surface-raised);
+  border-radius: 6px;
+  padding: 2px 7px;
+  box-shadow: 0 2px 0 var(--g-surface-sunken);
+  color: var(--g-ink);
+}
+
+/* 1. 手機橫放：三欄，兩側欄＝資訊（上）＋按鍵（下） */
+.gscreen[data-layout="phoneLand"] {
+  grid-template-columns: 188px 1fr 196px;
+  grid-template-rows: 1fr;
+  gap: 6px;
+  padding: max(8px, env(safe-area-inset-top, 0px)) max(6px, env(safe-area-inset-right, 0px)) max(8px, env(safe-area-inset-bottom, 0px)) max(6px, env(safe-area-inset-left, 0px));
+}
+.gscreen[data-layout="phoneLand"] .gscreen-hud { display: none; }
+.gscreen[data-layout="phoneLand"] .gscreen-rail { display: flex; flex-direction: column; justify-content: space-between; padding: 4px 4px 6px; }
+.gscreen[data-layout="phoneLand"] .gscreen-rail--l { align-items: flex-start; }
+.gscreen[data-layout="phoneLand"] .gscreen-rail--r { align-items: flex-end; }
+.gscreen[data-layout="phoneLand"] .gscreen-rail-top { flex-wrap: wrap; }
+.gscreen[data-layout="phoneLand"] .gscreen-rail--r .gscreen-rail-top { justify-content: flex-end; }
+
+/* 2、4. 直放：資訊列／畫面／操作區 */
+.gscreen[data-layout="phonePort"],
+.gscreen[data-layout="tabletPort"] {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr;
+  gap: 10px;
+  padding: max(8px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) max(12px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px));
+}
+.gscreen[data-layout$="Port"] .gscreen-rail { display: none; }
+.gscreen[data-layout$="Port"] .gscreen-controls { display: flex; }
+.gscreen[data-layout$="Port"] .gscreen-rotate { display: block; }
+
+/* 3、5. 平板橫放、電腦：資訊列／畫面／操作區（電腦再加鍵盤說明） */
+.gscreen[data-layout="tabletLand"],
+.gscreen[data-layout="desktop"] {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 10px;
+  padding: max(12px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(12px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+}
+.gscreen[data-layout="desktop"] { grid-template-rows: auto 1fr auto auto; }
+/* 平板橫放：資訊列、操作區都精簡，把高度留給 16:9 畫面 */
+.gscreen[data-layout="tabletLand"] { row-gap: 8px; padding-top: max(8px, env(safe-area-inset-top, 0px)); padding-bottom: max(8px, env(safe-area-inset-bottom, 0px)); }
+.gscreen[data-layout="tabletLand"] .gscreen-controls { align-items: flex-end; }
+.gscreen[data-layout="tabletLand"] .gscreen-rail,
+.gscreen[data-layout="desktop"] .gscreen-rail { display: none; }
+.gscreen[data-layout="tabletLand"] .gscreen-controls,
+.gscreen[data-layout="desktop"] .gscreen-controls { display: flex; }
+.gscreen[data-layout="desktop"] .gscreen-controls { width: 100%; max-width: var(--gscreen-canvas-max, none); justify-self: center; }
+.gscreen[data-layout="desktop"] .gscreen-keys { display: flex; }

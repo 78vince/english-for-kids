@@ -123,6 +123,215 @@ body {
 .lab-check li {
   margin: var(--space-1) 0;
 }
+
+/* 角色與裝備效果測試卡片 */
+.lab-card--character {
+  border-left: 4px solid var(--color-primary-500, #3B82F6);
+}
+.lab-card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.lab-card-title-row h2 {
+  margin: 0;
+}
+.lab-pill-tag {
+  background: #E0F2FE;
+  color: #0369A1;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.lab-char-layout {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: var(--space-4, 16px);
+  align-items: start;
+  margin-top: var(--space-3, 12px);
+}
+.lab-char-preview-card {
+  border-radius: var(--radius-lg, 16px);
+  padding: 16px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: background 0.3s ease;
+  min-height: 220px;
+}
+.lab-char-svg-wrap {
+  width: 100%;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lab-char-svg-wrap svg {
+  height: 160px;
+  width: auto;
+  max-width: 100%;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+}
+.lab-char-preview-footer {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.lab-char-name {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
+}
+.lab-char-scene-pill {
+  background: rgba(255, 255, 255, 0.88);
+  color: #2D3748;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.lab-char-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.lab-status-banner {
+  padding: 10px 14px;
+  border-radius: 12px;
+}
+.lab-status-banner--zombie {
+  background: #E2F5EC;
+  border: 2px solid #2E7A5E;
+  color: #1B4D3B;
+}
+.lab-status-banner--normal {
+  background: #F1F4F9;
+  border: 1.5px solid #CBD5E1;
+  color: #334155;
+}
+.lab-status-banner-title {
+  font-weight: 700;
+  font-size: 13.5px;
+  margin-bottom: 3px;
+}
+.lab-status-banner-desc {
+  font-size: 12px;
+  line-height: 1.45;
+  margin: 0;
+  opacity: 0.9;
+}
+.lab-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.lab-control-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-ink-muted, #64748B);
+}
+.lab-seg-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.lab-seg-btn {
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1.5px solid #CBD5E1;
+  background: #ffffff;
+  color: #334155;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+}
+.lab-seg-btn:hover {
+  border-color: var(--color-primary-500, #3B82F6);
+  background: #F8FAFC;
+}
+.lab-seg-btn.is-active {
+  background: #1E293B;
+  color: #ffffff;
+  border-color: #1E293B;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+.lab-btn--zombie {
+  background: #2E7A5E;
+  color: #ffffff;
+  font-size: 13px;
+}
+.lab-btn--zombie:hover {
+  background: #24634C;
+}
+.lab-btn--zombie-active {
+  background: #DB2777;
+  color: #ffffff;
+  font-size: 13px;
+}
+.lab-btn--zombie-active:hover {
+  background: #BE185D;
+}
+.lab-btn--combo {
+  background: #F1F5F9;
+  color: #334155;
+  border: 1.5px solid #CBD5E1;
+  font-size: 12px;
+  min-height: 32px;
+  padding: 0 10px;
+  font-weight: 600;
+}
+.lab-btn--combo:hover {
+  background: #E2E8F0;
+  border-color: #94A3B8;
+}
+.lab-direct-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+  padding-top: 12px;
+  border-top: 1px dashed #E2E8F0;
+}
+.lab-btn--studio {
+  background: #6366F1;
+  color: #ffffff;
+  font-size: 13px;
+}
+.lab-btn--studio:hover {
+  background: #4F46E5;
+}
+.lab-btn--boss {
+  background: #EA580C;
+  color: #ffffff;
+  font-size: 13px;
+}
+.lab-btn--boss:hover {
+  background: #C2410C;
+}
+
+@media (max-width: 600px) {
+  .lab-char-layout {
+    grid-template-columns: 1fr;
+  }
+  .lab-char-preview-card {
+    max-width: 240px;
+    margin: 0 auto;
+  }
+}
+
 @media (max-width: 480px) {
   .lab-game {
     grid-template-columns: 32px 1fr auto;

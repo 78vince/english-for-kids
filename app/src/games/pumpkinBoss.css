@@ -1,0 +1,721 @@
+/* 巨大南瓜怪大作戰 (pumpkinBoss.css)
+ * 遵守全圓角、無描邊、--g-* 代幣設計規範
+ * 統一按鍵 v2＋GameScreen 五種版面改版
+ */
+
+#pumpkin-boss-app {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--g-surface);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+/* ==========================================================================
+   GameScreen HUD 與 Strip 內部配置
+   ========================================================================== */
+.pumpkin-who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.pumpkin-who-avatar svg {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--g-lilac-soft);
+}
+
+.pumpkin-who-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pumpkin-who-text strong {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 8em;
+  font-size: 15px;
+  color: var(--g-ink);
+}
+
+.pumpkin-title-line {
+  color: var(--g-lilac-deep);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* 生命值 (3 顆愛心) */
+.pumpkin-hearts-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--g-surface-raised);
+  padding: 4px 10px;
+  border-radius: var(--g-radius-pill);
+  box-shadow: var(--g-shadow-tile);
+}
+
+.pumpkin-heart-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--g-rose);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.25s ease;
+}
+
+.pumpkin-heart-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.pumpkin-heart-icon.lost {
+  opacity: 0.22;
+  transform: scale(0.72);
+  filter: grayscale(1);
+}
+
+/* 上方 Strip 細列：石燈籠點燈進度 (5 座) */
+.pumpkin-strip-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+}
+
+.pumpkin-lanterns-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--g-surface-raised);
+  padding: 3px 12px;
+  border-radius: var(--g-radius-pill);
+  box-shadow: var(--g-shadow-tile);
+}
+
+.pumpkin-lantern-pip {
+  width: 24px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.pumpkin-lantern-pip.off {
+  opacity: 0.35;
+  filter: grayscale(0.8) brightness(0.7);
+}
+
+.pumpkin-lantern-pip.lit {
+  opacity: 1;
+  filter: drop-shadow(0 0 6px var(--g-sun));
+  transform: scale(1.1);
+  animation: pip-pulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes pip-pulse {
+  from { transform: scale(1.06); }
+  to { transform: scale(1.14); }
+}
+
+/* 螢幕震顫效果 (南瓜怪砸地時強力震撼加大) */
+.screen-shake {
+  animation: p-screen-shake 0.38s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes p-screen-shake {
+  0% { transform: translate(0, 0); }
+  15% { transform: translate(-3px, 16px); }
+  30% { transform: translate(4px, -12px); }
+  45% { transform: translate(-3px, 9px); }
+  60% { transform: translate(2px, -6px); }
+  75% { transform: translate(-1px, 3px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* 石燈籠光暈與聖光效果加強 */
+.gstage-prop[data-prop="stoneLantern"] svg {
+  overflow: visible;
+}
+
+.gstage-prop[data-prop="stoneLantern"] .g-glow {
+  animation: lanternGlowPulse 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes lanternGlowPulse {
+  0% { transform: scale(0.94); opacity: 0.55; }
+  100% { transform: scale(1.18); opacity: 0.95; }
+}
+
+/* ==========================================================================
+   手持物動態效果（魔拐杖星芒法陣／南瓜糖果桶糖果雨）
+   ========================================================================== */
+.studio-fx-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 25;
+}
+
+.magic-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 3.5px dashed var(--g-sun);
+  box-shadow: 0 0 18px var(--g-sun-soft);
+  animation: magic-firework-ring 1.3s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes magic-firework-ring {
+  0% {
+    opacity: 0.95;
+    transform: translate(-50%, -50%) scale(0.1);
+  }
+  70% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.6);
+  }
+}
+
+.magic-shard {
+  position: absolute;
+  font-weight: bold;
+  user-select: none;
+  animation: magic-shard-burst 1.35s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+}
+
+@keyframes magic-shard-burst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.4) rotate(0deg);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(1.1) rotate(var(--trot));
+  }
+}
+
+.magic-meteor {
+  position: absolute;
+  pointer-events: none;
+  animation: magic-meteor-flight 1.3s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+}
+
+@keyframes magic-meteor-flight {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.3) rotate(var(--rot));
+  }
+  12% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(1.05) rotate(var(--rot));
+  }
+}
+
+.candy-drop {
+  position: absolute;
+  animation: candy-fall-to-ground 2.1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes candy-fall-to-ground {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  6% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+    transform: translate(calc(var(--tx) * 0.95), var(--ty)) rotate(var(--trot));
+  }
+  88% {
+    opacity: 1;
+    transform: translate(var(--tx), calc(var(--ty) - 10px)) rotate(calc(var(--trot) + 12deg));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--tx) + 4px), var(--ty)) rotate(calc(var(--trot) + 20deg));
+  }
+}
+
+/* ==========================================================================
+   巨大南瓜怪 Boss & 擊退三階段動態演出
+   ========================================================================== */
+.gstage-boss-pumpkin {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 320px;
+  height: 256px;
+  pointer-events: none;
+  z-index: 10;
+  transform-origin: center bottom;
+  transition: transform 0.08s linear;
+}
+
+.gstage-boss-pumpkin svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.boss-shudder {
+  animation: boss-shudder-anim 0.08s linear infinite alternate;
+}
+
+@keyframes boss-shudder-anim {
+  from { transform: translate(-3px, 1px) rotate(-1.5deg); }
+  to { transform: translate(3px, -1px) rotate(1.5deg); }
+}
+
+.boss-rapid-shudder {
+  animation: boss-rapid-shudder-anim 0.045s linear infinite alternate;
+}
+
+@keyframes boss-rapid-shudder-anim {
+  from { transform: translate(-7px, 2px) rotate(-3.5deg); }
+  to { transform: translate(7px, -2px) rotate(3.5deg); }
+}
+
+.boss-swell-expand {
+  animation: boss-swell-anim 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes boss-swell-anim {
+  0% { transform: scale(1) translate(0, 0); filter: brightness(1) drop-shadow(0 0 0 rgba(255,200,0,0)); }
+  40% { transform: scale(1.18, 1.25) translate(0, -10px); filter: brightness(1.3) drop-shadow(0 0 14px var(--g-sun)); }
+  75% { transform: scale(1.32, 1.38) translate(0, -16px); filter: brightness(1.7) drop-shadow(0 0 24px var(--g-sun-deep)); }
+  100% { transform: scale(1.48, 1.55) translate(0, -22px); filter: brightness(2.2) drop-shadow(0 0 38px var(--g-sun)); }
+}
+
+/* 南瓜破裂成許多小碎片動態飛散容器 */
+.boss-shatter-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 28;
+}
+
+.pumpkin-shatter-piece {
+  position: absolute;
+  animation: shatter-burst-fly 1.4s cubic-bezier(0.12, 0.85, 0.28, 1) forwards;
+}
+
+@keyframes shatter-burst-fly {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  70% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(0.4) rotate(var(--rot));
+  }
+}
+
+/* ==========================================================================
+   寶箱從天而降金色光柱與著地彈跳
+   ========================================================================== */
+.chest-sky-beam {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 96px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--g-sun) 65%, transparent) 0%,
+    color-mix(in srgb, var(--g-sun-soft) 40%, transparent) 75%,
+    transparent 100%
+  );
+  box-shadow: 0 0 32px var(--g-sun-soft);
+  pointer-events: none;
+  z-index: 12;
+  animation: sky-beam-pulse 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes sky-beam-pulse {
+  from { opacity: 0.65; transform: translateX(-50%) scaleX(0.85); }
+  to { opacity: 0.95; transform: translateX(-50%) scaleX(1.15); }
+}
+
+.chest-sky-descending {
+  animation: chest-descend-wobble 0.85s ease-in-out infinite alternate;
+}
+
+@keyframes chest-descend-wobble {
+  0% { transform: rotate(-5deg); }
+  100% { transform: rotate(5deg); }
+}
+
+.chest-landing-bounce {
+  animation: chest-landing-thump 0.55s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+@keyframes chest-landing-thump {
+  0% { transform: scale(1.3, 0.68) translateY(12px); }
+  45% { transform: scale(0.9, 1.15) translateY(-14px); }
+  75% { transform: scale(1.06, 0.96) translateY(3px); }
+  100% { transform: scale(1, 1) translateY(0); }
+}
+
+/* 點燈光柱射線 */
+.holy-light-beam {
+  position: absolute;
+  bottom: 12%;
+  width: 60px;
+  height: 400px;
+  background: linear-gradient(180deg, transparent 0%, var(--g-sun-soft) 30%, var(--g-sun) 100%);
+  opacity: 0.85;
+  filter: blur(4px);
+  pointer-events: none;
+  z-index: 15;
+  animation: beam-fade 1.4s ease-out forwards;
+}
+
+@keyframes beam-fade {
+  0% { transform: scaleY(0.2) scaleX(0.4); opacity: 0; }
+  35% { transform: scaleY(1.1) scaleX(1.2); opacity: 0.95; }
+  100% { transform: scaleY(1.4) scaleX(1.6); opacity: 0; }
+}
+
+/* 石燈籠地震波震得彈起離開地面 */
+.lantern-earthquake-bounce {
+  animation: lantern-quake-bounce 0.45s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+@keyframes lantern-quake-bounce {
+  0% { transform: translateY(0); }
+  35% { transform: translateY(-22px) rotate(4deg); }
+  70% { transform: translateY(4px) rotate(-2deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* 玩家受傷無敵閃爍 */
+.gstage-me.invulnerable {
+  animation: me-flash 0.18s linear infinite alternate;
+}
+
+@keyframes me-flash {
+  from { opacity: 0.35; filter: brightness(1.6) drop-shadow(0 0 6px var(--g-rose)); }
+  to { opacity: 0.95; filter: brightness(1); }
+}
+
+/* ==========================================================================
+   彈窗與結算卡樣式（規範 §10.1：五種尺寸一頁看完不捲動，矮螢幕左右雙欄）
+   ========================================================================== */
+.pumpkin-modal-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--g-ink) 55%, transparent);
+  backdrop-filter: blur(4px);
+  padding: 8px;
+  box-sizing: border-box;
+  container-type: size;
+  animation: modal-fade-in 0.22s ease-out forwards;
+}
+
+@keyframes modal-fade-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-fade-out {
+  animation: modal-fade-out-anim 0.2s ease-in forwards !important;
+}
+
+@keyframes modal-fade-out-anim {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.92); }
+}
+
+.pumpkin-modal-card {
+  position: relative;
+  background: var(--g-surface-raised);
+  border-radius: var(--g-radius-xl);
+  box-shadow: var(--g-shadow-modal);
+  padding: 16px 20px;
+  max-width: min(520px, 94%);
+  max-height: 94%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.pumpkin-modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.pumpkin-modal-badge {
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+  flex: none;
+}
+
+.pumpkin-modal-badge svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.pumpkin-modal-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--g-ink);
+  line-height: 1.25;
+}
+
+.pumpkin-modal-desc {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--g-ink-soft);
+}
+
+.pumpkin-intro-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  text-align: left;
+}
+
+.pumpkin-intro-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--g-ink);
+  background: var(--g-surface-sunken);
+  padding: 6px 10px;
+  border-radius: var(--g-radius-md);
+}
+
+.pumpkin-intro-icon {
+  font-size: 16px;
+  flex: none;
+}
+
+.pumpkin-repeat-reward {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-sun-soft);
+  color: var(--g-sun-deep);
+  font-size: 14px;
+  font-weight: 800;
+  margin: 2px 0;
+}
+
+.pumpkin-repeat-reward strong {
+  color: var(--g-sun-deep);
+}
+
+.pumpkin-modal-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.pumpkin-modal-actions .gbtn {
+  flex: 1;
+  min-height: 42px;
+  padding: 0 14px;
+}
+
+/* 平板直放／中型容器（高度 ≤ 460px，如 tabletPort ~447px） */
+@container (max-height: 460px) {
+  .pumpkin-modal-card {
+    padding: 10px 16px;
+    gap: 6px;
+    max-height: 96%;
+  }
+  .pumpkin-modal-badge {
+    width: 52px;
+    height: 52px;
+  }
+  .pumpkin-modal-title {
+    font-size: 16px;
+  }
+  .pumpkin-modal-desc {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+  .pumpkin-intro-rules {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px 6px;
+  }
+  .pumpkin-intro-row {
+    padding: 3px 6px;
+    font-size: 11px;
+  }
+  .pumpkin-modal-actions .gbtn {
+    min-height: 34px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+}
+
+/* 矮畫面／手機橫放（容器高 ≤ 320px，如 phoneLand ~245px, phonePort ~205px）：圖片在左、文字按鈕在右，保證五種尺寸一頁看完不捲動 */
+@container (max-height: 320px) {
+  .pumpkin-modal-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    gap: 10px;
+    max-width: min(640px, 98%);
+    max-height: 98%;
+    text-align: left;
+  }
+  .pumpkin-modal-badge {
+    width: 48px;
+    height: 48px;
+    margin: 0;
+  }
+  .pumpkin-modal-body {
+    flex: 1;
+    min-width: 0;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .pumpkin-modal-title {
+    font-size: 13px;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .pumpkin-modal-desc {
+    display: none;
+  }
+  .pumpkin-intro-rules {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 6px;
+  }
+  .pumpkin-intro-row {
+    padding: 2px 5px;
+    font-size: 9.5px;
+    line-height: 1.15;
+    gap: 4px;
+  }
+  .pumpkin-intro-icon {
+    font-size: 11px;
+  }
+  .pumpkin-repeat-reward {
+    padding: 3px 8px;
+    font-size: 11px;
+    margin: 2px 0;
+    gap: 4px;
+  }
+  .pumpkin-modal-actions {
+    margin-top: 2px;
+    gap: 6px;
+  }
+  .pumpkin-modal-actions .gbtn {
+    min-height: 28px;
+    padding: 0 10px;
+    font-size: 11px;
+  }
+}
+
+/* 極矮畫面（容器高 ≤ 215px，如 phonePort 205px）進一步微調 */
+@container (max-height: 215px) {
+  .pumpkin-modal-card {
+    padding: 4px 8px;
+    gap: 8px;
+  }
+  .pumpkin-modal-badge {
+    width: 38px;
+    height: 38px;
+  }
+  .pumpkin-modal-title {
+    font-size: 11.5px;
+  }
+  .pumpkin-intro-row {
+    padding: 1px 4px;
+    font-size: 8.5px;
+    line-height: 1.1;
+  }
+  .pumpkin-modal-actions .gbtn {
+    min-height: 24px;
+    padding: 0 8px;
+    font-size: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen-shake,
+  .lantern-earthquake-bounce,
+  .boss-shudder,
+  .boss-rapid-shudder,
+  .boss-swell-expand,
+  .pumpkin-shatter-piece,
+  .chest-sky-descending,
+  .chest-landing-bounce,
+  .chest-sky-beam,
+  .gstage-me.invulnerable,
+  .g-float,
+  .magic-ring,
+  .magic-shard,
+  .magic-meteor,
+  .candy-drop,
+  .pip-pulse {
+    animation: none !important;
+  }
+}

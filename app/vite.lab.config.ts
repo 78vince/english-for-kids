@@ -12,6 +12,14 @@ export default defineConfig({
     __LAB__: JSON.stringify(true),
   },
   base: "./",
+  plugins: [
+    {
+      name: "lab-html-transform",
+      transformIndexHtml(html) {
+        return html.replace(/<head>/i, `<head><script>window.__LAB__ = true;</script>`);
+      },
+    },
+  ],
   server: {
     host: true,
     port: 5190,
@@ -37,6 +45,7 @@ export default defineConfig({
       input: {
         main: "index.html",
         lab: "lab.html",
+        layoutDemo: "layout-demo.html",
         ...gamePageInputs({ lab: true }),
       },
     },

@@ -330,4 +330,306 @@
 
     return dirt + wrist + palm + thumb + f1 + f2 + f3 + f4 + knuckles;
   };
+
+  /* 辟邪石燈籠 stoneLantern（52×80）：未點亮（暗淡青石）／點亮（暖金聖火光暈與綠色符文） */
+  P.stoneLantern = function (s) {
+    var lit = s === 'lit';
+    var stoneLedge = hue('stone', 'ledge'), stone = hue('stone'), stoneSoft = hue('stone', 'soft'), stoneDeep = hue('stone', 'deep');
+    // 石燈籠基座：梯形台階
+    var base1 = rect(6, 70, 40, 10, 4, stoneLedge);
+    var base2 = rect(10, 64, 32, 7, 3, stone);
+    // 石柱中節
+    var pillar = rpath('M20 64 L22 46 L30 46 L32 64 Z', stoneLedge, 3) + rpath('M22 62 L23 47 L29 47 L30 62 Z', stoneSoft, 2);
+    // 燈座托盤
+    var tray = rect(12, 42, 28, 5, 2.5, stoneLedge) + rect(14, 40, 24, 3, 1.5, stone);
+    // 燈室與石窗
+    var chamber = rect(16, 22, 20, 19, 4, stoneDeep);
+    var fire = '', halo = '';
+    if (lit) {
+      // 1. 光暈：輻射漸層，外實內透明色（圓心處透明保持石燈細節清晰，外圍金光飽滿，最外緣柔和漸層淡出無硬邊）
+      var gid = 'slg' + H.nextId();
+      halo = '<defs><radialGradient id="' + gid + '" cx="50%" cy="50%" r="50%">'
+           + '<stop offset="0%" stop-color="' + hue('sun') + '" stop-opacity="0"/>'
+           + '<stop offset="28%" stop-color="' + hue('sun') + '" stop-opacity="0"/>'
+           + '<stop offset="70%" stop-color="' + hue('sun') + '" stop-opacity=".75"/>'
+           + '<stop offset="88%" stop-color="' + hue('sun', 'soft') + '" stop-opacity=".45"/>'
+           + '<stop offset="100%" stop-color="' + hue('sun') + '" stop-opacity="0"/>'
+           + '</radialGradient></defs>'
+           + circ(26, 31, 46, 'url(#' + gid + ')', { 'class': 'g-glow' });
+
+      // 2. 燈室內部：金黃背景 + 燈芯白色發光
+      var windowBg = rect(17, 23, 18, 17, 3, hue('sun'));
+      var wickGlow = circ(26, 31, 6.5, '#FFFFFF', { opacity: .8, 'class': 'g-glow' });
+      var wick = el('path', {
+        d: 'M26 22 Q29.5 27 28.5 31.5 Q27.5 35 26 35 Q24.5 35 23.5 31.5 Q22.5 27 26 22 Z',
+        fill: '#FFFFFF'
+      }) + circ(26, 31, 2.5, '#FFFDF0');
+      var windowBar = line(26, 23, 26, 38, stoneLedge, 2);
+      fire = windowBg + wickGlow + wick + windowBar;
+    } else {
+      // 未點亮：黑洞幽暗窗
+      fire = rect(18, 24, 16, 15, 3, '#221F35')
+           + line(26, 23, 26, 38, stoneLedge, 2);
+    }
+    // 燈頂屋簷（微翹四角）與寶珠頂
+    var roofLedge = rpath('M4 23 Q26 18 48 23 L46 25 Q26 20 6 25 Z', stoneLedge, 1);
+    var roof = rpath('M6 22 Q26 15 46 22 L41 14 Q26 9 11 14 Z', stone, 3)
+             + rpath('M13 14 Q26 11 39 14 L36 10 Q26 7 16 10 Z', stoneSoft, 2);
+    var finial = rect(25, 4, 2, 7, 1, stoneLedge)
+               + circ(26, 9, 4.5, stoneSoft)
+               + (lit ? (circ(26, 4, 4.5, hue('sun'), { 'class': 'g-twinkle' }) + rpath(star(26, 4, 6, 2.8), '#FFFDF0', 1.5)) : '');
+    return halo + base1 + base2 + pillar + tray + chamber + fire + roof + roofLedge + finial;
+  };
+
+  /* 巨大南瓜怪 giantPumpkin（320×280）：比畫面還大、跳躍砸地的萬聖調皮Boss */
+  P.giantPumpkin = function (s) {
+    var pDeep = hue('peach', 'deep'), pLedge = '#D95B11', pBase = '#FF822E', pLight = '#FFA35C';
+    var leafDeep = hue('leaf', 'deep'), leaf = hue('leaf');
+    var sun = hue('sun'), sunSoft = hue('sun', 'soft');
+
+    // 碎裂狀態 (shatter)：細緻密集散開的許多小碎片
+    if (s === 'shatter') {
+      var shards = '';
+      // 密集散開的橘色南瓜小表皮碎塊（24+ 枚）
+      var pe = [
+        [40, 60, 16, 12, -25], [75, 45, 14, 10, 15], [115, 55, 18, 14, -40], [145, 35, 15, 10, 30],
+        [185, 40, 17, 12, -15], [225, 55, 16, 11, 45], [260, 70, 14, 10, -30], [285, 95, 15, 12, 20],
+        [30, 110, 18, 14, 35], [55, 135, 16, 12, -20], [80, 160, 20, 15, 40], [45, 200, 18, 13, -35],
+        [85, 225, 16, 12, 15], [120, 245, 17, 13, -25], [160, 255, 19, 14, 10], [205, 245, 17, 12, -45],
+        [245, 230, 18, 14, 25], [275, 195, 16, 12, -15], [265, 145, 19, 13, 30], [290, 130, 15, 11, -40],
+        [110, 110, 14, 10, 12], [145, 130, 15, 11, -18], [175, 115, 16, 12, 22], [210, 125, 14, 10, -12]
+      ];
+      for (var i = 0; i < pe.length; i++) {
+        var p = pe[i];
+        var col = (i % 3 === 0) ? pBase : (i % 3 === 1) ? pLedge : pLight;
+        shards += ell(p[0], p[1], p[2], p[3], col, { transform: 'rotate(' + p[4] + ' ' + p[0] + ' ' + p[1] + ')' });
+      }
+      // 綠色南瓜蒂頭碎屑
+      shards += rpath('M150 20 L165 15 L160 30 Z', leafDeep, 2)
+              + rpath('M170 25 L180 20 L175 35 Z', leaf, 2)
+              + rpath('M140 35 L150 30 L146 42 Z', leafDeep, 2);
+      // 金色星星與南瓜籽
+      shards += rpath(star(90, 90, 14, 6), sun, 2)
+              + rpath(star(230, 95, 15, 6), sun, 2)
+              + rpath(star(160, 75, 18, 8), '#FFFDF0', 2)
+              + rpath(star(160, 180, 16, 7), sun, 2)
+              + rpath(star(125, 205, 12, 5), sun, 2)
+              + rpath(star(195, 200, 13, 5.5), sun, 2);
+      var seeds = [[70, 85], [105, 75], [140, 95], [180, 90], [215, 80], [245, 110], [95, 135], [130, 160], [190, 155], [225, 165], [105, 185], [150, 215], [175, 220], [215, 210]];
+      for (var s = 0; s < seeds.length; s++) {
+        shards += ell(seeds[s][0], seeds[s][1], 5, 3, sunSoft, { transform: 'rotate(' + (s * 37) + ' ' + seeds[s][0] + ' ' + seeds[s][1] + ')' });
+      }
+      return shards;
+    }
+
+    var isSquat = s === 'squat';
+    var isSlam = s === 'slam';
+
+    // 蒂頭 (stem) — 接近梯形的蒂頭，深綠色，無深色線框
+    var stem = el('path', {
+      d: 'M144 44 L152 14 Q153 10 157 10 L163 10 Q167 10 168 14 L176 44 Z',
+      fill: leafDeep, stroke: leafDeep, 'stroke-width': 2.5, 'stroke-linejoin': 'round'
+    });
+
+    // 南瓜身軀五大弧形瓣 — 純扁平色塊層次，無外框線條
+    var outerL = ell(64, 158, 48, 92, pLedge);
+    var outerR = ell(256, 158, 48, 92, pLedge);
+    var midL = ell(110, 153, 56, 100, '#EA6C1E');
+    var midR = ell(210, 153, 56, 100, '#EA6C1E');
+    var centerLobe = ell(160, 148, 66, 106, pBase)
+                   + ell(160, 144, 48, 88, pLight, { opacity: .35 });
+
+    // 發光大眼睛（外黃內白，漸層到透明光暈，無線框）
+    var egId = 'eglow' + H.nextId();
+    var egDefs = '<defs><radialGradient id="' + egId + '" cx="50%" cy="50%" r="50%">'
+               + '<stop offset="0%" stop-color="' + (isSquat ? '#FF5533' : '#FFFDF0') + '" stop-opacity=".85"/>'
+               + '<stop offset="30%" stop-color="' + sun + '" stop-opacity=".65"/>'
+               + '<stop offset="65%" stop-color="' + sunSoft + '" stop-opacity=".3"/>'
+               + '<stop offset="100%" stop-color="' + sunSoft + '" stop-opacity="0"/>'
+               + '</radialGradient></defs>';
+    var eyeGlow = egDefs
+                + circ(116, 126, 30, 'url(#' + egId + ')', { 'class': 'g-glow' })
+                + circ(204, 126, 30, 'url(#' + egId + ')', { 'class': 'g-glow' });
+    var eyeOuterCol = isSquat ? '#FF5533' : sun;
+    var eyeL = rpath('M96 138 L138 114 L126 148 Z', eyeOuterCol, 3);
+    var eyeR = rpath('M224 138 L182 114 L194 148 Z', eyeOuterCol, 3);
+    var eyeInner = rpath('M102 136 L134 118 L124 144 Z', '#FFFDF0', 1.5)
+                 + rpath('M218 136 L186 118 L196 144 Z', '#FFFDF0', 1.5);
+
+    // 發光鼻子（倒三角形）
+    var nose = rpath('M153 146 L167 146 L160 134 Z', sun, 3)
+             + rpath('M155 144 L165 144 L160 136 Z', '#FFFDF0', 1.5);
+
+    // 鋸齒發光大嘴（典型南瓜嘴：外黃內白，無深色線框）
+    var mouthGlow = el('path', {
+      d: 'M76 166 Q160 236 244 166 Q232 186 216 180 L204 198 L188 184 L172 202 L150 184 L134 198 L118 180 Q96 186 76 166 Z',
+      fill: sunSoft, opacity: .45, 'class': 'g-glow'
+    });
+    var mouth = el('path', {
+      d: 'M80 168 Q160 232 240 168 Q228 184 214 178 L202 194 L186 182 L170 198 L150 182 L134 194 L120 178 Q98 184 80 168 Z',
+      fill: sun, stroke: sun, 'stroke-width': 2, 'stroke-linejoin': 'round'
+    }) + el('path', {
+      d: 'M88 172 Q160 228 232 172 Q222 183 211 179 L200 192 L186 183 L170 196 L150 183 L134 192 L122 179 Q102 183 88 172 Z',
+      fill: '#FFFDF0', stroke: '#FFFDF0', 'stroke-width': 1.5, 'stroke-linejoin': 'round'
+    });
+
+    // 砸地時的地面衝擊波與煙圈
+    var slamFx = '';
+    if (isSlam) {
+      slamFx = ell(70, 264, 34, 10, '#352D4B', { opacity: .8 })
+             + ell(250, 264, 34, 10, '#352D4B', { opacity: .8 })
+             + circ(40, 256, 12, hue('stone'), { opacity: .6 })
+             + circ(70, 252, 16, hue('stone', 'soft'), { opacity: .7 })
+             + circ(250, 252, 16, hue('stone', 'soft'), { opacity: .7 })
+             + circ(280, 256, 12, hue('stone'), { opacity: .6 });
+    }
+
+    return stem + outerL + outerR + midL + midR + centerLobe + eyeGlow + eyeL + eyeR + eyeInner + nose + mouthGlow + mouth + slamFx;
+  };
+
+  /* 萬聖勝利寶箱 victoryChest（64×52）：擊敗大南瓜後自天空降落的金色獎勵寶箱 */
+  P.victoryChest = function (s) {
+    var open = s === 'open';
+    var gold = hue('sun'), goldLedge = hue('sun', 'ledge'), goldSoft = hue('sun', 'soft');
+    var purple = hue('lilac', 'deep'), purpLedge = hue('lilac');
+
+    // 寶箱底座本體
+    var body = rect(8, 24, 48, 24, 6, purple)
+             + rect(12, 26, 40, 20, 4, purpLedge)
+             + rect(8, 24, 48, 4, 2, goldLedge);
+    // 金色束帶與邊角
+    var straps = rect(18, 24, 6, 24, 1, gold)
+               + rect(40, 24, 6, 24, 1, gold)
+               + circ(21, 36, 1.8, goldLedge) + circ(43, 36, 1.8, goldLedge);
+
+    if (open) {
+      // 寶箱開啟：金光沖天、符咒與金星閃爍
+      var rays = circ(32, 16, 24, goldSoft, { opacity: .8, 'class': 'g-glow' })
+               + rpath(star(32, 12, 10, 4), gold, 1.5)
+               + circ(18, 8, 3, gold) + circ(46, 8, 3.5, gold);
+      // 浮動在寶箱中央的變身符咒（黃紙朱砂紅色奇異符文造型）
+      var prize = rpath('M26 8 L38 8 L38 28 L32 26 L26 28 Z', '#FFDF6D', 1.5)
+                + circ(32, 12, 2.2, '#D82B2B')
+                + line(32, 14, 32, 24, '#D82B2B', 1.4)
+                + line(28, 16, 36, 16, '#D82B2B', 1.2)
+                + line(29, 20, 35, 20, '#D82B2B', 1.2);
+      // 掀開的頂蓋
+      var lidBack = rpath('M6 24 L10 6 L54 6 L58 24 Z', purple, 3)
+                  + rect(12, 8, 40, 5, 2, gold);
+      return lidBack + body + straps + rays + prize;
+    }
+
+    // 寶箱閉合：圓弧寶箱蓋與金色大鎖
+    var lid = rpath('M6 24 C6 10 58 10 58 24 Z', purple, 4)
+            + rpath('M10 22 C10 12 54 12 54 22 Z', purpLedge, 3)
+            + rect(18, 11, 6, 14, 1, gold)
+            + rect(40, 11, 6, 14, 1, gold)
+            + rect(28, 22, 8, 10, 2, gold)
+            + circ(32, 26, 2, purple);
+    return body + straps + lid;
+  };
+
+  /* 變身符咒 zombieTalisman（48×72）：黃紙朱砂紅色奇異符文造型 */
+  P.zombieTalisman = function () {
+    var paper = '#FFDF6D', paperLedge = '#E0B843', paperLight = '#FFF2A8';
+    var cinnabar = '#D82B2B';
+    // 黃紙本體（帶有道符底部凹形紙角）
+    var sheet = rpath('M6 4 L42 4 Q44 4 44 7 L44 64 L24 60 L4 64 L4 7 Q4 4 6 4 Z', paperLedge, 2)
+              + rpath('M7 5 L41 5 Q43 5 43 7 L43 62 L24 58 L5 62 L5 7 Q5 5 7 5 Z', paper, 2)
+              + rect(8, 7, 32, 4, 1.5, paperLight, { opacity: .7 });
+    // 頂部硃砂印首
+    var seal = circ(24, 13, 4, cinnabar) + circ(24, 13, 2, '#FFF0F0');
+    // 兩側護法符文線
+    var sideRunes = line(10, 20, 10, 48, cinnabar, 1.5)
+                  + line(38, 20, 38, 48, cinnabar, 1.5)
+                  + circ(10, 24, 1.2, cinnabar) + circ(38, 24, 1.2, cinnabar)
+                  + circ(10, 44, 1.2, cinnabar) + circ(38, 44, 1.2, cinnabar);
+    // 中央神祕奇異紅符文（敕令頭、蛇行折線符膽、星紋封印）
+    var rune = el('path', {
+      d: 'M18 19 Q24 16 30 19 M24 18 L24 23 M17 23 L31 23 M20 26 L28 26 L19 32 L29 32 L19 38 L24 38 L29 42 L19 46 L29 46 L24 51 L24 55',
+      fill: 'none', stroke: cinnabar, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'
+    }) + circ(24, 35, 2.2, cinnabar) + rpath(star(24, 51, 3.5, 1.8), cinnabar, 1);
+    // 符紙四周微微散發的金色聖光
+    var aura = circ(24, 36, 30, hue('sun', 'soft'), { opacity: .45, 'class': 'g-glow' });
+    return aura + sheet + seal + sideRunes + rune;
+  };
+
+  /* 萬聖傳送門 halloweenPortal（96×136）：夜光墓園地底冒出的巨大拱門，門內旋轉翠綠漩渦光芒 */
+  P.halloweenPortal = function (s) {
+    var isErupt = s === 'erupt';
+    var stone = hue('stone'), stoneLedge = hue('stone', 'ledge'), stoneSoft = hue('stone', 'soft'), stoneDeep = hue('stone', 'deep');
+    var mint = hue('mint'), mintSoft = hue('mint', 'soft'), mintDeep = hue('mint', 'deep');
+    var leaf = hue('leaf');
+
+    // 1. 外圍翠綠靈光暈
+    var gid = 'hpg' + H.nextId();
+    var glowDefs = '<defs><radialGradient id="' + gid + '" cx="50%" cy="58%" r="50%">'
+                 + '<stop offset="0%" stop-color="#E0FFF4" stop-opacity=".95"/>'
+                 + '<stop offset="25%" stop-color="' + mint + '" stop-opacity=".85"/>'
+                 + '<stop offset="55%" stop-color="' + leaf + '" stop-opacity=".65"/>'
+                 + '<stop offset="82%" stop-color="' + mintDeep + '" stop-opacity=".35"/>'
+                 + '<stop offset="100%" stop-color="' + mintDeep + '" stop-opacity="0"/>'
+                 + '</radialGradient></defs>';
+    var outerGlow = ell(48, 76, 44, 54, mintSoft, { opacity: .35, 'class': 'g-glow' });
+
+    // 2. 傳送門深邃黑洞與翠綠旋渦（純淨發光核心，不帶多餘雜亂線條）
+    var portalBg = el('path', {
+      d: 'M22 44 Q48 20 74 44 L74 126 L22 126 Z',
+      fill: '#150F26'
+    });
+    var vortexCore = glowDefs + ell(48, 80, 26, 44, 'url(#' + gid + ')', { 'class': 'g-glow' });
+
+    // 浮動旋轉的綠星與光芒粒子
+    var sparkles = rpath(star(48, 62, 5.5, 2.5, 4), '#FFFFFF', 1)
+                 + circ(38, 94, 2.8, mint, { 'class': 'g-glow' })
+                 + circ(58, 72, 2.4, '#FFFFFF')
+                 + circ(42, 102, 2, mintSoft)
+                 + circ(55, 96, 2.5, mint, { 'class': 'g-glow' });
+
+    // 3. 古老石雕拱門主體（柱基、雙立柱、尖頂拱圈、拱頂寶石）
+    var baseSoil = ell(48, 132, 44, 8, '#241D33')
+                 + ell(48, 128, 38, 7, stoneDeep);
+    var plinths = rect(8, 120, 24, 12, 4, stoneLedge)
+                + rect(64, 120, 24, 12, 4, stoneLedge)
+                + rect(10, 116, 20, 6, 2.5, stone)
+                + rect(66, 116, 20, 6, 2.5, stone);
+
+    var pillars = rect(12, 40, 16, 78, 4, stoneLedge)
+                + rect(14, 42, 12, 74, 3, stone)
+                + rect(68, 40, 16, 78, 4, stoneLedge)
+                + rect(70, 42, 12, 74, 3, stone);
+
+    // 立柱雕刻發光符文
+    var pillarRunes = line(20, 56, 20, 78, mint, 2)
+                    + circ(20, 88, 2.5, mint)
+                    + line(76, 56, 76, 78, mint, 2)
+                    + circ(76, 88, 2.5, mint);
+
+    // 頂部圓弧石拱門與拱心石
+    var archOuter = el('path', {
+      d: 'M10 44 Q10 12 48 8 Q86 12 86 44 L72 46 Q72 24 48 20 Q24 24 24 46 Z',
+      fill: stoneLedge, stroke: stoneLedge, 'stroke-width': 2, 'stroke-linejoin': 'round'
+    });
+    var archInner = el('path', {
+      d: 'M14 44 Q14 16 48 12 Q82 16 82 44 L76 46 Q76 26 48 22 Q20 26 20 46 Z',
+      fill: stone, stroke: stone, 'stroke-width': 1.5, 'stroke-linejoin': 'round'
+    });
+    var keystone = rpath('M41 4 L55 4 L53 24 L43 24 Z', stoneSoft, 2)
+                 + circ(48, 14, 4, mint, { 'class': 'g-glow' })
+                 + circ(48, 14, 2, '#FFFFFF');
+
+    // 4. 破土而出動態額外特效（碎石與煙塵）
+    var eruptFx = '';
+    if (isErupt) {
+      eruptFx = ell(48, 126, 42, 14, '#382F4E', { opacity: .9 })
+              + circ(22, 118, 9, stoneSoft, { opacity: .85 })
+              + circ(74, 120, 10, stoneSoft, { opacity: .85 })
+              + circ(14, 126, 6, stoneLedge)
+              + circ(82, 124, 7, stoneLedge)
+              + rpath('M28 112 L35 106 L33 115 Z', stone, 2)
+              + rpath('M63 110 L70 104 L67 113 Z', stone, 2);
+    }
+
+    return outerGlow + portalBg + vortexCore + sparkles + baseSoil + plinths + pillars + pillarRunes + archOuter + archInner + keystone + eruptFx;
+  };
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -3,24 +3,46 @@
 
 #rocket-app,
 .rocket-page {
-  gap: 8px;
-  padding-left: max(12px, env(safe-area-inset-left));
-  padding-right: max(12px, env(safe-area-inset-right));
-  padding-top: max(8px, env(safe-area-inset-top));
-  padding-bottom: max(8px, env(safe-area-inset-bottom));
-  background: var(--g-surface);
-  position: relative;
+  position: fixed;
+  inset: 0;
   width: 100vw;
   height: 100dvh;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  background: var(--g-surface);
   overflow: hidden;
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
   font-family: var(--g-font-ui);
   color: var(--g-ink);
+}
+
+.rocket-page .gscreen-strip {
+  width: 100%;
+}
+
+.rocket-strip-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 4px;
+}
+
+.rocket-strip-spacer {
+  flex: 1;
+  min-width: 12px;
+}
+
+.gscreen[data-layout="phonePort"] #hudTapsChip {
+  display: none;
+}
+
+.gscreen[data-layout="phonePort"] .rocket-speed-label {
+  display: none;
 }
 
 /* ==================== 
@@ -126,6 +148,8 @@
   box-shadow: var(--g-shadow-lift);
   background: var(--g-space-night-sky-top);
   contain: layout paint;
+  width: 100%;
+  height: 100%;
 }
 
 /* 垂直世界 500vh 背景層 */
@@ -1225,6 +1249,7 @@
   z-index: 90;
   animation: cockpitFadeIn 0.45s ease-out forwards;
   padding: 12px;
+  container-type: size; /* 結算卡依遊戲畫面高度縮放 */
 }
 
 @keyframes cockpitFadeIn {
@@ -1234,8 +1259,9 @@
 
 .cockpit-console-card {
   position: relative;
-  width: 100%;
-  max-width: 480px;
+  /* 卡片寬度依可用高度決定：上方太空艙圖片固定比例 460:205，整張卡剛好放得下、不壓扁圖片 */
+  width: clamp(300px, calc((94cqh - 276px) * 2.244 + 38px), 540px);
+  max-width: 100%;
   max-height: 94%;
   border-radius: var(--g-radius-xl);
   background: var(--g-surface-raised);
@@ -1252,7 +1278,9 @@
 .cockpit-cabin-scene {
   position: relative;
   width: 100%;
-  height: 205px;
+  aspect-ratio: 460 / 205; /* 跟 SVG viewBox 一致，縮放時不變形 */
+  flex: none;
+  container-type: inline-size;
   border-radius: var(--g-radius-lg);
   overflow: hidden;
   border: 4px solid var(--g-stone);
@@ -1276,8 +1304,8 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 144px;
-  height: 144px;
+  width: 31.3cqw; /* 原 144px／460 */
+  height: 31.3cqw;
   border-radius: 50%;
   overflow: hidden;
   background: var(--g-space-night-sky-top);
@@ -1286,10 +1314,10 @@
 
 .cockpit-earth-mini {
   position: absolute;
-  bottom: -65px;
-  right: -25px;
-  width: 140px;
-  height: 140px;
+  bottom: -45%;
+  right: -17%;
+  width: 97%;
+  height: 97%;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, var(--g-sky) 0%, var(--g-sky-deep) 70%, var(--g-space-night-sky-top) 100%);
   box-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
@@ -1298,10 +1326,10 @@
 
 .cockpit-saturn-mini {
   position: absolute;
-  top: 10px;
-  left: 8px;
-  width: 50px;
-  height: 32px;
+  top: 7%;
+  left: 6%;
+  width: 35%;
+  height: 22%;
   opacity: 0.85;
 }
 
@@ -1318,10 +1346,10 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  margin-left: -50px;
-  margin-top: -60px;
-  width: 100px;
-  height: 120px;
+  margin-left: -10.85cqw; /* 原 100×120px／460 */
+  margin-top: -13cqw;
+  width: 21.7cqw;
+  height: 26cqw;
   z-index: 10;
   transform-origin: center center;
   animation: zeroGFloatRotate 7.5s linear infinite;
@@ -1339,7 +1367,7 @@
 
 .zero-g-floating-prop {
   position: absolute;
-  font-size: 16px;
+  font-size: 3.5cqw;
   z-index: 8;
   pointer-events: none;
   animation: floatProp 4s ease-in-out infinite alternate;
@@ -1364,6 +1392,7 @@
 
 /* 下半部：一體化遙測數據面板 */
 .cockpit-telemetry-dashboard {
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -1411,16 +1440,71 @@
   margin-left: 4px;
 }
 
+/* 四個數字排成一列，把高度讓給上方的太空艙圖片 */
 .telemetry-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+/* 遊戲畫面很矮（手機）：圖片放左邊、數字與按鈕放右邊，不用捲動就看得到按鈕 */
+@container (max-height: 360px) {
+  .cockpit-console-card {
+    width: 100%;
+    max-width: 560px;
+    max-height: 100%;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px;
+    gap: 10px;
+    border-width: 3px;
+  }
+  .cockpit-cabin-scene {
+    border-width: 3px;
+  }
+  .cockpit-telemetry-dashboard {
+    flex: 1;
+    min-width: 0;
+    gap: 5px;
+  }
+  .telemetry-title { font-size: 15px; }
+  .telemetry-subtitle { display: none; }
+  .telemetry-time-badge { padding: 3px 8px; font-size: 12px; }
+  .cockpit-cabin-scene { width: 36%; }
+  .telemetry-grid { grid-template-columns: 1fr 1fr; gap: 4px; }
+  .telemetry-item { padding: 2px 4px; line-height: 1.15; }
+  .telemetry-lbl { font-size: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .telemetry-num { font-size: 13px; margin-top: 0; }
+  .telemetry-actions { gap: 6px; margin-top: 0; }
+  .telemetry-actions .gbtn { min-height: 38px; padding: 0 6px; font-size: 13px; white-space: nowrap; }
+}
+@container (max-height: 230px) {
+  .cockpit-console-card { padding: 5px 8px; }
+  .cockpit-telemetry-dashboard { gap: 3px; }
+  .telemetry-title { font-size: 14px; }
+  .telemetry-time-badge { padding: 1px 8px; font-size: 11px; }
+  .telemetry-actions .gbtn { min-height: 32px; }
+}
+@container (max-height: 200px) {
+  .cockpit-console-card { padding: 4px 8px; }
+  .cockpit-telemetry-dashboard { gap: 2px; }
+  .telemetry-grid { gap: 3px; }
+  .telemetry-item { padding: 1px 4px; }
+  .telemetry-title, .telemetry-time-badge { line-height: 1.15; }
+}
+
+/* 卡片很窄（手機）時數字放不下，改回兩欄 */
+@container (max-width: 300px) {
+  .telemetry-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .telemetry-item {
   background: var(--g-surface-sunken);
   border-radius: var(--g-radius-md);
-  padding: 8px 6px;
+  padding: 7px 4px;
+  min-width: 0;
 }
 
 .telemetry-lbl {
@@ -1431,7 +1515,8 @@
 }
 
 .telemetry-num {
-  font-size: 17px;
+  font-size: 16px;
+  white-space: nowrap;
   font-weight: 900;
   color: var(--g-ink);
   display: block;
@@ -1453,24 +1538,17 @@
 }
 
 /* ==================== 
-   底部控制按鈕區（A、B 按鍵完全置中對齊！） 
+   即時手速與交替按鍵提示 
    ==================== */
-.rocket-controls {
-  flex: none;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 16px;
-  min-height: 84px;
-}
-
 .rocket-speed-badge {
-  position: absolute;
-  left: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface-raised);
+  box-shadow: 0 2px 0 var(--g-stone-ledge);
+  white-space: nowrap;
 }
 
 .rocket-speed-label {
@@ -1480,24 +1558,20 @@
 }
 
 .rocket-speed-val {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 900;
   color: var(--g-sky-deep);
 }
 
-.rocket-vpad-pair {
-  position: relative;
-  display: flex;
+.rocket-alt-hint-box {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 22px;
+  min-width: 0;
 }
 
 .rocket-alt-hint {
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
   background: var(--g-rose-deep);
   color: var(--g-surface-raised);
   font-size: 12px;
@@ -1506,24 +1580,18 @@
   border-radius: var(--g-radius-pill);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   white-space: nowrap;
-  pointer-events: none;
   animation: hintPop 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
-  z-index: 60;
+}
+
+.rocket-alt-hint strong {
+  color: var(--g-sun-soft);
+  font-size: 13px;
+  margin: 0 2px;
 }
 
 @keyframes hintPop {
-  0% { transform: translateX(-50%) scale(0.7); opacity: 0; }
-  100% { transform: translateX(-50%) scale(1); opacity: 1; }
-}
-
-.vpad-k.suggest {
-  box-shadow: 0 0 14px var(--g-sun), 0 4px 0 var(--g-sun-ledge) !important;
-  animation: vpadPulse 0.4s ease-in-out infinite alternate;
-}
-
-@keyframes vpadPulse {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.08); }
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 /* ==================== 

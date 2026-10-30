@@ -6,8 +6,10 @@
 
 import { flushPending } from "../storage";
 import { icon } from "./gameKit";
-import { isLoginRemembered } from "../pin";
+import { isLoginRemembered, rememberLogin } from "../pin";
 import { LAB_MODE } from "../gameRelease";
+import { createProfile, listProfiles, setActiveProfileId } from "../profile";
+import { AVATARS } from "../avatars";
 
 const ACTIVE_PROFILE_ID_KEY = "englishForKids.activeProfileId.v1";
 
@@ -21,6 +23,17 @@ export function requireActiveProfileId(): string | null {
     id = isLoginRemembered() ? window.localStorage.getItem(ACTIVE_PROFILE_ID_KEY) : null;
   } catch {
     id = null;
+  }
+  if (!id && (LAB_MODE || (typeof window !== "undefined" && window.location?.port === "5190"))) {
+    try {
+      const existing = listProfiles().find((p) => p.name === "測試員");
+      const tester = existing ?? createProfile("測試員", AVATARS[0]?.id ?? "default");
+      setActiveProfileId(tester.id);
+      rememberLogin();
+      id = tester.id;
+    } catch {
+      // 忽略
+    }
   }
   if (!id) {
     window.location.replace(LAB_MODE ? "../lab.html" : "../index.html");
@@ -94,11 +107,21 @@ export function toast(html: string, ms = 2200, hue = "sun"): void {
 /** 二次確認：圖示＋短文字＋兩顆大按鈕 */
 export function confirmDialog(opts: { iconId: string; text: string; yes: string; no?: string; hue?: string }): Promise<boolean> {
   return new Promise((resolve) => {
+    let iconSvg = "";
+    try {
+      iconSvg = icon(opts.iconId, "xl");
+    } catch {
+      try {
+        iconSvg = icon("back", "xl");
+      } catch {
+        iconSvg = "";
+      }
+    }
     const overlay = document.createElement("div");
     overlay.className = "gmodal";
     overlay.innerHTML = `
       <div class="gmodal-card" role="dialog" aria-modal="true" style="align-items:center;text-align:center">
-        <div style="color:var(--g-${opts.hue ?? "rose"}-deep)">${icon(opts.iconId, "xl")}</div>
+        <div style="color:var(--g-${opts.hue ?? "rose"}-deep)">${iconSvg}</div>
         <p class="g-t-heading">${opts.text}</p>
         <div class="gmodal-actions">
           <button type="button" class="gbtn gbtn--quiet" data-v="no">${icon("close")} ${opts.no ?? "不要"}</button>

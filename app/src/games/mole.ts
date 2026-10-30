@@ -2,7 +2,6 @@
 import { GameArt, GameTokens, prefersReducedMotion, type Look } from "../game/gameKit";
 import { getActiveLook, loadCharacter } from "../game/characterStore";
 import {
-  addRotateHint,
   confirmDialog,
   leaveTo,
   preventZoomGestures,
@@ -15,6 +14,8 @@ import { COIN_ICON } from "./gameIcons";
 import { getTokenBalance, spendTokens } from "../gameTokens";
 import { saveMoleGame, getMoleTitle } from "../game/moleStore";
 import { speakEnglish, unlockSpeech } from "../speech";
+import { VirtualPad } from "../game/virtualPad";
+import { GameScreen } from "../game/gameScreen";
 import "./mole.css";
 
 const MOLE_CFG = (GameTokens as any)?.mole as
@@ -160,6 +161,9 @@ class MoleGame {
   private userLook: Look;
   private rootEl: HTMLElement;
   private sounds = new SoundManager();
+  private pad: VirtualPad | null = null;
+  private screen: GameScreen | null = null;
+  private stageEl: HTMLElement | null = null;
 
   // 遊戲進行狀態
   private isPlaying = false;
@@ -195,7 +199,7 @@ class MoleGame {
   public init() {
     this.renderSkeleton();
     this.cleanups.push(preventZoomGestures());
-    addRotateHint();
+    // 橫放提示：改由 GameScreen 自帶處理，取代舊的 addRotateHint()
     tryFullscreenOnFirstTap();
     this.showRulesModal();
   }
@@ -207,97 +211,129 @@ class MoleGame {
     const balance = getTokenBalance(this.profileId);
     const isReduced = prefersReducedMotion();
 
-    this.rootEl.innerHTML = `
-      <div class="mole-page ${isReduced ? "mole-reduced-motion" : ""}">
-        <!-- 頂部 HUD -->
-        <header class="mole-top">
-          <div class="mole-top-left">
-            <button type="button" class="mole-btn-icon mole-back-btn" title="返回" aria-label="返回">
-              <span aria-hidden="true">‹</span>
-            </button>
-            <div class="mole-who">
-              <div class="mole-who-avatar">${GameArt.avatar(this.userLook, 40)}</div>
-              <div class="mole-who-text">
-                <strong>${charName}</strong>
-              </div>
-            </div>
-          </div>
+    this.rootEl.innerHTML = "";
+    this.rootEl.style.cssText = "position:fixed;inset:0;overflow:hidden;";
 
-          <div class="mole-top-center">
-            <div class="mole-timer-label">
-              <span>剩餘時間</span>
-              <strong id="mole-timer-text">${GAME_DURATION_SEC}s</strong>
-            </div>
-            <div class="mole-timer-bar">
-              <div id="mole-timer-fill" class="mole-timer-fill" style="width: 100%;"></div>
-            </div>
-          </div>
+    // 統一按鍵 v2：點按型遊戲，八個鍵永遠出現且全設為半透明
+    this.pad = new VirtualPad({ v2: true });
+    this.pad.setActive({
+      up: false,
+      down: false,
+      left: false,
+      right: false,
+      a: false,
+      b: false,
+      c: false,
+      d: false,
+    });
 
-          <div class="mole-top-right">
-            <div class="mole-hud-chip">
-              <span>得分</span>
-              <span id="mole-score-val" class="mole-score-val">0</span>
-              <span id="mole-combo-val" class="mole-combo-val" style="display: none;">0x</span>
-            </div>
-            <div class="mole-hud-chip" title="遊戲代幣">
-              ${COIN_ICON(20)}
-              <span id="mole-coin-val">${balance}</span>
-            </div>
-            <button type="button" class="mole-btn-icon mole-sound-btn" title="音效開關" aria-label="音效開關">
-              <span id="mole-sound-icon">🔊</span>
-            </button>
-          </div>
-        </header>
+    // 左側 HUD：返回鍵、頭像＋名字
+    const backBtn = document.createElement("button");
+    backBtn.type = "button";
+    backBtn.className = "mole-btn-icon mole-back-btn";
+    backBtn.title = "返回";
+    backBtn.setAttribute("aria-label", "返回");
+    backBtn.innerHTML = `<span aria-hidden="true">‹</span>`;
+    backBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.handleBack();
+    });
 
-        <!-- 橫式全草地舞台區 -->
-        <main class="mole-stage">
-          <div class="mole-bg-deco">
-            <!-- 雜物石塊、野花、草叢裝飾 -->
-            <div class="mole-deco-item" style="left: 8%; top: 16%; width: 44px;">${GameArt.prop("rock")}</div>
-            <div class="mole-deco-item" style="left: 88%; top: 14%; width: 36px;">${GameArt.prop("rock")}</div>
-            <div class="mole-deco-item" style="left: 12%; top: 48%; width: 28px;">${GameArt.prop("flower", { state: "idle" })}</div>
-            <div class="mole-deco-item" style="left: 88%; top: 46%; width: 32px;">${GameArt.prop("rock")}</div>
-            <div class="mole-deco-item" style="left: 36%; top: 38%; width: 26px;">${GameArt.prop("flower", { state: "idle" })}</div>
-            <div class="mole-deco-item" style="left: 64%; top: 38%; width: 30px;">${GameArt.prop("rock")}</div>
-            <div class="mole-deco-item" style="left: 14%; top: 82%; width: 34px;">${GameArt.prop("rock")}</div>
-            <div class="mole-deco-item" style="left: 88%; top: 80%; width: 28px;">${GameArt.prop("flower", { state: "idle" })}</div>
-            <div class="mole-deco-item" style="left: 48%; top: 90%; width: 26px;">${GameArt.prop("flower", { state: "idle" })}</div>
-            <!-- 草叢微紋理 -->
-            <div class="mole-grass-patch" style="left: 32%; top: 20%;"></div>
-            <div class="mole-grass-patch" style="left: 68%; top: 18%;"></div>
-            <div class="mole-grass-patch" style="left: 48%; top: 60%;"></div>
-            <div class="mole-grass-patch" style="left: 80%; top: 64%;"></div>
-          </div>
-
-          <!-- 主角大本營 -->
-          <div class="mole-player-dock">
-            <div id="mole-player-bubble" class="mole-player-bubble">Ready!</div>
-            <div id="mole-player-svg" class="mole-player-dock-svg">
-              ${GameArt.character({ ...this.userLook, view: "front", facing: "right", pose: "idle" })}
-            </div>
-          </div>
-
-          <!-- 8 個坑洞佈局 -->
-          <div id="mole-field" class="mole-field"></div>
-        </main>
+    const whoEl = document.createElement("div");
+    whoEl.className = "mole-who";
+    whoEl.innerHTML = `
+      <div class="mole-who-avatar">${GameArt.avatar(this.userLook, 40)}</div>
+      <div class="mole-who-text">
+        <strong>${charName}</strong>
       </div>
     `;
 
+    // 右側 HUD：得分、代幣、音效開關
+    const scoreEl = document.createElement("div");
+    scoreEl.className = "mole-hud-chip";
+    scoreEl.innerHTML = `
+      <span>得分</span>
+      <span id="mole-score-val" class="mole-score-val">0</span>
+      <span id="mole-combo-val" class="mole-combo-val" style="display: none;">0x</span>
+    `;
+
+    const coinEl = document.createElement("div");
+    coinEl.className = "mole-hud-chip";
+    coinEl.title = "遊戲代幣";
+    coinEl.innerHTML = `
+      ${COIN_ICON(20)}
+      <span id="mole-coin-val">${balance}</span>
+    `;
+
+    const soundBtn = document.createElement("button");
+    soundBtn.type = "button";
+    soundBtn.className = "mole-btn-icon mole-sound-btn";
+    soundBtn.title = "音效開關";
+    soundBtn.setAttribute("aria-label", "音效開關");
+    soundBtn.innerHTML = `<span id="mole-sound-icon">🔊</span>`;
+    soundBtn.addEventListener("click", () => this.toggleSound());
+
+    // 畫面上方細列（strip）：剩餘時間進度條
+    const stripEl = document.createElement("div");
+    stripEl.className = "mole-strip-bar";
+    stripEl.innerHTML = `
+      <div class="mole-timer-label">
+        <span>剩餘時間</span>
+        <strong id="mole-timer-text">${GAME_DURATION_SEC}s</strong>
+      </div>
+      <div class="mole-timer-bar">
+        <div id="mole-timer-fill" class="mole-timer-fill" style="width: 100%;"></div>
+      </div>
+    `;
+
+    // 統一五種版面容器
+    this.screen = new GameScreen(this.rootEl, {
+      pad: this.pad,
+      hudLeft: [backBtn, whoEl],
+      hudRight: [scoreEl, coinEl, soundBtn],
+      strip: stripEl,
+    });
+
+    // 橫式 16:9 全草地舞台區（放進 screen.canvas）
+    this.stageEl = document.createElement("div");
+    this.stageEl.className = `mole-stage ${isReduced ? "mole-reduced-motion" : ""}`;
+    this.stageEl.innerHTML = `
+      <div class="mole-bg-deco">
+        <div class="mole-deco-item" style="left: 8%; top: 16%; width: 44px;">${GameArt.prop("rock")}</div>
+        <div class="mole-deco-item" style="left: 88%; top: 14%; width: 36px;">${GameArt.prop("rock")}</div>
+        <div class="mole-deco-item" style="left: 12%; top: 48%; width: 28px;">${GameArt.prop("flower", { state: "idle" })}</div>
+        <div class="mole-deco-item" style="left: 88%; top: 46%; width: 32px;">${GameArt.prop("rock")}</div>
+        <div class="mole-deco-item" style="left: 36%; top: 38%; width: 26px;">${GameArt.prop("flower", { state: "idle" })}</div>
+        <div class="mole-deco-item" style="left: 64%; top: 38%; width: 30px;">${GameArt.prop("rock")}</div>
+        <div class="mole-deco-item" style="left: 14%; top: 82%; width: 34px;">${GameArt.prop("rock")}</div>
+        <div class="mole-deco-item" style="left: 88%; top: 80%; width: 28px;">${GameArt.prop("flower", { state: "idle" })}</div>
+        <div class="mole-deco-item" style="left: 48%; top: 90%; width: 26px;">${GameArt.prop("flower", { state: "idle" })}</div>
+        <div class="mole-grass-patch" style="left: 32%; top: 20%;"></div>
+        <div class="mole-grass-patch" style="left: 68%; top: 18%;"></div>
+        <div class="mole-grass-patch" style="left: 48%; top: 60%;"></div>
+        <div class="mole-grass-patch" style="left: 80%; top: 64%;"></div>
+      </div>
+
+      <div class="mole-player-dock">
+        <div id="mole-player-bubble" class="mole-player-bubble">Ready!</div>
+        <div id="mole-player-svg" class="mole-player-dock-svg">
+          ${GameArt.character({ ...this.userLook, view: "front", facing: "right", pose: "idle" })}
+        </div>
+      </div>
+
+      <div id="mole-field" class="mole-field"></div>
+    `;
+
+    this.screen.canvas.appendChild(this.stageEl);
+
     // 取得節點
-    this.timeFillEl = document.getElementById("mole-timer-fill");
-    this.timeTextEl = document.getElementById("mole-timer-text");
-    this.scoreTextEl = document.getElementById("mole-score-val");
-    this.comboTextEl = document.getElementById("mole-combo-val");
-    this.playerDockSvgEl = document.getElementById("mole-player-svg");
-    this.playerBubbleEl = document.getElementById("mole-player-bubble");
-    this.coinValEl = document.getElementById("mole-coin-val");
-
-    // 綁定事件
-    const backBtn = this.rootEl.querySelector(".mole-back-btn");
-    backBtn?.addEventListener("click", () => this.handleBack());
-
-    const soundBtn = this.rootEl.querySelector(".mole-sound-btn");
-    soundBtn?.addEventListener("click", () => this.toggleSound());
+    this.timeFillEl = stripEl.querySelector("#mole-timer-fill");
+    this.timeTextEl = stripEl.querySelector("#mole-timer-text");
+    this.scoreTextEl = scoreEl.querySelector("#mole-score-val");
+    this.comboTextEl = scoreEl.querySelector("#mole-combo-val");
+    this.coinValEl = coinEl.querySelector("#mole-coin-val");
+    this.playerDockSvgEl = this.stageEl.querySelector("#mole-player-svg");
+    this.playerBubbleEl = this.stageEl.querySelector("#mole-player-bubble");
 
     // 生成 8 個坑洞
     this.buildHoles();
@@ -305,7 +341,7 @@ class MoleGame {
 
   // 生成 8 個坑洞 DOM
   private buildHoles() {
-    const fieldEl = document.getElementById("mole-field");
+    const fieldEl = (this.stageEl?.querySelector("#mole-field") || document.getElementById("mole-field")) as HTMLElement | null;
     if (!fieldEl) return;
     fieldEl.innerHTML = "";
     this.holes = [];
@@ -478,11 +514,13 @@ class MoleGame {
     if (this.playerBubbleEl) this.playerBubbleEl.textContent = "Smash!";
 
     // 主時鐘（每 100ms 更新進度條）
-    const startTime = Date.now();
+    let lastTick = Date.now();
     this.gameLoopTimer = window.setInterval(() => {
+      const now = Date.now();
+      const delta = (now - lastTick) / 1000;
+      lastTick = now;
       if (this.isPaused) return;
-      const elapsed = (Date.now() - startTime) / 1000;
-      this.timeRemaining = Math.max(0, GAME_DURATION_SEC - elapsed);
+      this.timeRemaining = Math.max(0, this.timeRemaining - delta);
 
       const ratio = this.timeRemaining / GAME_DURATION_SEC;
       if (this.timeFillEl) {
@@ -814,7 +852,7 @@ class MoleGame {
     if (this.isPlaying) {
       this.isPaused = true;
       const shouldLeave = await confirmDialog({
-        iconId: "warn",
+        iconId: "back",
         text: "現在離開，這場花費的 5 個代幣不會退回喔！確定要離開嗎？",
         yes: "離開",
         no: "繼續玩",
@@ -857,6 +895,9 @@ class MoleGame {
     });
     this.cleanups.forEach((fn) => fn());
     this.cleanups = [];
+    this.screen?.destroy();
+    this.pad?.destroy();
+    this.stageEl?.remove();
   }
 }
 

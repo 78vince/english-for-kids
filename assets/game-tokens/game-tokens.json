@@ -1,8 +1,8 @@
 {
   "meta": {
     "name": "Playground Game Tokens",
-    "version": "2.10.0",
-    "updated": "2026-10-24",
+    "version": "2.12.1",
+    "updated": "2026-10-28",
     "note": "遊戲專用 design token：平緩柔和、全部圓角、無描邊。內容不限英語學習，目標是推動學習動機與樂趣。"
   },
   "color": {
@@ -4763,7 +4763,8 @@
         "mikanhood",
         "bluehood",
         "pumpkinhood",
-        "witchhat"
+        "witchhat",
+        "zombieTalisman"
       ],
       "held": [
         "none",
@@ -4865,6 +4866,7 @@
         "magiccane": "魔拐杖",
         "pumpkinhood": "南瓜萌頭",
         "pumpkinbucket": "南瓜糖果桶",
+        "zombieTalisman": "變身符咒",
         "graveyard": "夜光墓園"
       },
       "faceShape": [
@@ -6706,6 +6708,159 @@
             "label": "退回"
           }
         ]
+      },
+      {
+        "id": "stoneLantern",
+        "label": "辟邪石燈籠",
+        "group": "萬聖節",
+        "size": [
+          52,
+          80
+        ],
+        "states": [
+          {
+            "id": "off",
+            "label": "未點亮"
+          },
+          {
+            "id": "lit",
+            "label": "已點亮"
+          }
+        ],
+        "collider": {
+          "kind": "solid",
+          "box": [
+            6,
+            20,
+            40,
+            60
+          ],
+          "note": "古老辟邪青石燈籠，使用魔拐杖或糖果桶C鍵聖光點亮"
+        }
+      },
+      {
+        "id": "giantPumpkin",
+        "label": "巨大南瓜怪",
+        "group": "萬聖節",
+        "size": [
+          320,
+          280
+        ],
+        "states": [
+          {
+            "id": "idle",
+            "label": "平常"
+          },
+          {
+            "id": "squat",
+            "label": "蓄力"
+          },
+          {
+            "id": "jump",
+            "label": "跳躍"
+          },
+          {
+            "id": "slam",
+            "label": "砸地"
+          },
+          {
+            "id": "shatter",
+            "label": "碎裂"
+          }
+        ],
+        "collider": {
+          "kind": "solid",
+          "box": [
+            20,
+            30,
+            280,
+            250
+          ],
+          "note": "比畫面還大的超巨型調皮南瓜怪，實體不可穿透，跳躍砸地"
+        }
+      },
+      {
+        "id": "victoryChest",
+        "label": "萬聖勝利寶箱",
+        "group": "萬聖節",
+        "size": [
+          64,
+          52
+        ],
+        "states": [
+          {
+            "id": "closed",
+            "label": "未開啟"
+          },
+          {
+            "id": "open",
+            "label": "已開啟"
+          }
+        ],
+        "collider": {
+          "kind": "solid",
+          "box": [
+            6,
+            12,
+            52,
+            40
+          ],
+          "note": "擊敗巨大南瓜怪後從地底升起的金色萬聖勝利寶箱"
+        }
+      },
+      {
+        "id": "zombieTalisman",
+        "label": "變身符咒",
+        "group": "萬聖節",
+        "size": [
+          48,
+          72
+        ],
+        "states": [
+          {
+            "id": "default",
+            "label": "預設"
+          }
+        ],
+        "collider": {
+          "kind": "item",
+          "box": [
+            4,
+            4,
+            40,
+            64
+          ],
+          "note": "黃紙朱砂紅色奇異符文，裝備後變身為殭屍造型"
+        }
+      },
+      {
+        "id": "halloweenPortal",
+        "label": "萬聖傳送門",
+        "group": "萬聖節",
+        "size": [
+          96,
+          136
+        ],
+        "states": [
+          {
+            "id": "erupt",
+            "label": "破土升起"
+          },
+          {
+            "id": "active",
+            "label": "旋轉綠光"
+          }
+        ],
+        "collider": {
+          "kind": "item",
+          "box": [
+            8,
+            10,
+            80,
+            120
+          ],
+          "note": "墓園地底冒出的巨大傳送門，閃爍綠色光芒，通往巨大南瓜怪戰場"
+        }
       }
     ],
     "note": "帶 states 的道具可互動，預覽頁點擊循環切換狀態；hover 放大並列出所有狀態。道具不加不必要的亮點。",
@@ -6729,7 +6884,79 @@
       "半透明度 0.92，不遮住主要玩法區；左右各預留安全區邊距。",
       "鍵盤對應：← → ↑ ↓ ＝ 十字鍵、A／Space／J ＝ A、B／Shift／K ＝ B。"
     ],
-    "chargeGlow": "蓄力（蹲下 ≥1 秒）不用圖示，改為角色身後發光：GameArt.setCharge(svg, true[, full])；滿蓄力時 full＝更亮更快的脈動。見 character.chargeGlow。"
+    "chargeGlow": "蓄力（蹲下 ≥1 秒）不用圖示，改為角色身後發光：GameArt.setCharge(svg, true[, full])；滿蓄力時 full＝更亮更快的脈動。見 character.chargeGlow。",
+    "v2": {
+      "note": "2026-10-28 使用者確認的統一按鍵（docs/GAME-PRODUCTION-SPEC.md §6.3）。新遊戲一律用 v2；舊遊戲依清單逐步改。App：new VirtualPad({ v2: true })＋GameScreen（app/src/game/gameScreen.ts）。",
+      "alwaysShow": true,
+      "inactiveOpacity": 0.35,
+      "inactiveNote": "所有遊戲一律顯示十字鍵上下左右＋A、B、C、D 共 8 顆；這款遊戲沒有對應功能的鍵（或 C／D 沒有道具時）變半透明、灰階，按了不觸發、只輕晃一下。點畫面型遊戲（打地鼠）也照樣顯示，全部半透明。",
+      "labels": "按鍵上只顯示英文字母 A／B／C／D，不加中文、圖示或符號；十字鍵用方向箭頭。",
+      "keys": {
+        "a": {
+          "role": "跳、確定",
+          "color": "sun",
+          "keyboard": [
+            "Space",
+            "J",
+            "A"
+          ]
+        },
+        "b": {
+          "role": "加速（按住）",
+          "color": "rose",
+          "keyboard": [
+            "Shift",
+            "K",
+            "B"
+          ]
+        },
+        "c": {
+          "role": "道具（拿到特定道具才啟用）",
+          "color": "mint",
+          "keyboard": [
+            "L",
+            "C"
+          ]
+        },
+        "d": {
+          "role": "道具（拿到特定道具才啟用）",
+          "color": "lilac",
+          "keyboard": [
+            "I",
+            "D"
+          ]
+        }
+      },
+      "dpadKeyboard": [
+        "ArrowUp",
+        "ArrowDown",
+        "ArrowLeft",
+        "ArrowRight"
+      ],
+      "abcdUnits": {
+        "note": "以按鍵直徑為 1 的左上角座標：A 右上；C 在 A 左邊 1.5 顆、高 0.28 顆；B 在 A 左下；D 在 B 左邊 1.5 顆、高 0.28 顆（使用者圈選定案）。",
+        "c": [
+          0.7,
+          0
+        ],
+        "a": [
+          2.2,
+          0.28
+        ],
+        "d": [
+          0,
+          1.39
+        ],
+        "b": [
+          1.5,
+          1.67
+        ],
+        "box": [
+          3.2,
+          2.67
+        ]
+      }
+    }
   },
   "typography": {
     "family": {
@@ -7849,6 +8076,85 @@
           "note": "爬樹需要 ↓（穿過樹枝下去）；↓ 放在 ← → 的下方或旁邊，大小 56；B＝披風（無持有時灰掉）；↑ 不顯示。"
         }
       }
+    },
+    "screen": {
+      "note": "2026-10-28 五種版面（docs/GAME-PRODUCTION-SPEC.md §6.4）。App：app/src/game/gameScreen.ts 依這裡的數字排版，不要寫死。按鍵只出現在操作區（手機橫放＝左右兩欄；其他＝畫面下方），四周留間距，不蓋遊戲畫面。",
+      "detect": {
+        "desktop": "沒有觸控（pointer: fine 且 hover）且寬度 ≥ desktopMinWidth",
+        "phoneLand": "橫放（寬 > 高）且高度 ≤ phoneLandMaxHeight",
+        "tabletLand": "橫放且高度 > phoneLandMaxHeight",
+        "phonePort": "直放且寬度 < tabletMinWidth",
+        "tabletPort": "直放且寬度 ≥ tabletMinWidth",
+        "phoneLandMaxHeight": 500,
+        "tabletMinWidth": 600,
+        "desktopMinWidth": 1024
+      },
+      "modes": {
+        "phoneLand": {
+          "label": "手機橫放",
+          "dpad": 56,
+          "act": 56,
+          "dpadGap": 4,
+          "rails": {
+            "left": 188,
+            "right": 196
+          },
+          "hud": "左欄上：返回、頭像＋名字；右欄上：代幣、音效、暫停；畫面上方細列：計時＋進度"
+        },
+        "phonePort": {
+          "label": "手機直放",
+          "dpad": 56,
+          "act": 56,
+          "dpadGap": 4,
+          "zonePadding": [
+            16,
+            0
+          ],
+          "hud": "上方資訊列；畫面；下方操作區（十字鍵左、ABCD 右）；顯示「橫放更順手」"
+        },
+        "tabletPort": {
+          "label": "平板直放",
+          "dpad": 72,
+          "act": 80,
+          "dpadGap": 8,
+          "zonePadding": [
+            16,
+            16
+          ],
+          "hud": "同手機直放，按鍵放大"
+        },
+        "tabletLand": {
+          "label": "平板橫放",
+          "dpad": 58,
+          "act": 64,
+          "dpadGap": 5,
+          "zonePadding": [
+            4,
+            24
+          ],
+          "hud": "上方資訊列（計時進度放在資訊列中間）；畫面盡量放大；下方精簡操作區",
+          "stripInHud": true
+        },
+        "desktop": {
+          "label": "電腦",
+          "dpad": 56,
+          "act": 60,
+          "dpadGap": 4,
+          "zonePadding": [
+            4,
+            24
+          ],
+          "canvasMaxWidth": 1100,
+          "hud": "上方資訊列（計時進度放在資訊列中間）；畫面；下方精簡操作區＋最下方一行鍵盤說明",
+          "stripInHud": true
+        }
+      },
+      "canvas": {
+        "aspect": "16 / 9",
+        "radius": 18
+      },
+      "minEdge": 10,
+      "tapGames": "點畫面型遊戲一樣顯示操作區（按鍵全部半透明），版面不變，孩子換遊戲時位置一致。"
     }
   },
   "treeClimb": {
@@ -9858,6 +10164,32 @@
     "messages": {
       "zeroMelon": "西瓜品鑑家 🍉",
       "encouragement": "太棒了！差一點點就過關囉！",
+      "needMoreTokens": "再賺 {n} 個代幣就可以玩囉！"
+    }
+  },
+  "pumpkinBoss": {
+    "label": "巨大南瓜怪大作戰",
+    "cost": 20,
+    "payout": 0,
+    "repeatRewardTokens": 30,
+    "maxHearts": 3,
+    "invulnerableMs": 1800,
+    "lanternsRequired": 5,
+    "bossJumpIntervalMs": 2800,
+    "note": "我的角色 — 夜光墓園巨大南瓜怪大作戰。躲避超高跳躍砸地的比畫面還大的巨型南瓜怪，用手持物聖光點亮 5 座辟邪石燈籠，擊碎大南瓜取得變身符咒！",
+    "dialogues": [
+      "萬聖節快樂！你額頭上的符咒哪裡買的？好帥！",
+      "三百年不見了！你身上的衣服洗過了嗎？",
+      "你有看見我的屁股嗎？剛剛跳太快好像掉了...",
+      "今晚要不要一起去森林討糖果吃？",
+      "隔壁的寶箱今天假牙鬆了，別惹他生氣喔！",
+      "哇！今天的骷髏月亮好圓，好適合曬月光浴！",
+      "借過一下～我的腳趾頭好像被石頭卡住了！",
+      "你也是被剛才那顆超大南瓜嚇醒的嗎？太鬧了吧！"
+    ],
+    "messages": {
+      "encouragement": "差一點點就點亮所有石燈籠了！再挑戰一次吧！",
+      "victory": "太棒了！5 座辟邪石燈籠已全數點亮，擊碎了調皮大南瓜！",
       "needMoreTokens": "再賺 {n} 個代幣就可以玩囉！"
     }
   }

@@ -81,6 +81,18 @@
     "order": 7
   },
   {
+    "id": "pumpkin_boss",
+    "name": "巨大南瓜怪大作戰",
+    "description": "調皮的超大南瓜怪跳躍砸地大鬧墓園！靈活閃避踩踏，使用手持物聖光點亮 5 座辟邪石燈籠，擊碎大南瓜拯救萬聖節！",
+    "icon_placeholder": "🎃",
+    "kind": "character",
+    "page": "games/pumpkin-boss.html",
+    "cost": 20,
+    "payout": 0,
+    "status": "active",
+    "order": 8
+  },
+  {
     "id": "memory_match",
     "name": "翻牌配對",
     "description": "翻開卡片，找出成對的英文單字與圖案。",

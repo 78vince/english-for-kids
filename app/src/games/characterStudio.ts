@@ -47,6 +47,7 @@ import {
 } from "../game/photoStore";
 import { flushPending, getSyncStatus, onSyncStatusChange, serverSyncEnabled, type SyncStatus } from "../storage";
 import { loadRace } from "../game/raceStore";
+import { loadPumpkinBossRecord, savePumpkinBossRecord } from "../game/pumpkinBossStore";
 import { earnTokens, getTokenBalance } from "../gameTokens";
 import {
   findItem,
@@ -67,7 +68,7 @@ import {
 import { getAllBadges } from "../content";
 import { evaluateRuleBadge, type RuleBadgeContext } from "../badgeRules";
 import type { CharacterStudioProfileData } from "../types";
-import { isGamePlayable } from "../gameRelease";
+import { isGamePlayable, LAB_MODE } from "../gameRelease";
 
 const profileId = requireActiveProfileId();
 const app = document.querySelector<HTMLDivElement>("#studio-app")!;
@@ -113,6 +114,9 @@ const NAMES: Record<string, string> = {
   scarf: "圍巾", backpack: "背包", "star-clip": "星星髮夾", goggles: "護目鏡", wings: "翅膀", cape: "披風",
   flag: "旗子", lollipop: "棒棒糖", wand: "魔法棒", book: "書", pinwheel: "風車", bouquet: "小花束",
   twinbun: "雙包頭", meat: "帶骨肉", plunger: "馬桶吸把",
+  zombieTalisman: "變身符咒", witchhat: "女巫帽", pumpkinhood: "南瓜頭套",
+  magiccane: "魔拐杖", pumpkinbucket: "南瓜糖果桶", melonhat: "西瓜帽",
+  mikanhood: "蜜柑頭套", bluehood: "藍兜帽", poopstick: "便便棒",
 };
 // 中文名稱：優先讀 token 的 optionLabels，找不到才用上面的對照表，再找不到顯示 id
 const nameOf = (id: string) => GameArt.options.optionLabels?.[id] ?? NAMES[id] ?? id;
@@ -137,6 +141,16 @@ if (profileId && !isFirstVisit) {
     }
   }
   if (fixed) saveCharacter(profileId, data); // 立刻存回（首頁頭像等其他地方也看得到換掉後的樣子）
+}
+// 巨大南瓜怪變身符咒：若角色外觀存檔已有 zombieTalisman，確保南瓜怪記錄亦自動解鎖同步
+if (profileId) {
+  const hasInLook = data.slots.some((s) => s.look?.accessories?.includes("zombieTalisman"));
+  if (hasInLook) {
+    const pbRec = loadPumpkinBossRecord(profileId);
+    if (!pbRec.hasTalisman) {
+      savePumpkinBossRecord(profileId, { ...pbRec, hasTalisman: true });
+    }
+  }
 }
 let slot: CharacterSlot = data.slots[data.activeSlot];
 let entryLook: Look = clone(slot.look);
@@ -381,10 +395,19 @@ function applyLook(next: Look, record = true): void {
     redoStack = [];
   }
   if (tryOn && tryOn.item.field !== "scene") tryOn = null; // 換別的造型＝結束試穿（舞台會換成正式造型）
+  const wasZombie = isZombieTransformed();
   slot.look = normalizeLook(profileId ? sanitizeLook(profileId, next).look : next);
   // 維持使用者目前選的視角（正／側／背）與面向，只重畫造型；縮圖仍是正面
   stage.setLook(slot.look);
   updateCKeyVisibility();
+  const isNowZombie = isZombieTransformed();
+  if (!wasZombie && isNowZombie) {
+    // 裝備上變身符咒的瞬間，玩家四周冒出一團白煙（卸載時不用）
+    spawnTalismanSmokeEffect();
+  }
+  if (isZombieTransformed()) {
+    releaseMonsterTrapByTalisman();
+  }
   markDirty();
   renderHistoryButtons();
   if (tab === "style") renderTab();
@@ -503,7 +526,14 @@ function stylesHtml(key: keyof Look, values: string[], label: string, mode: "hea
 
 function accessoriesHtml(): string {
   const O = GameArt.options;
+  const pbRec = profileId ? loadPumpkinBossRecord(profileId) : null;
+  const hasInLook = Boolean(
+    slot?.look?.accessories?.includes("zombieTalisman") ||
+      data?.slots?.some((s) => s.look?.accessories?.includes("zombieTalisman"))
+  );
+  const unlockedTalisman = Boolean(pbRec?.hasTalisman || hasInLook || LAB_MODE);
   return `<div class="studio-field"><p class="g-t-label">配件（可以選很多個）</p><div class="studio-thumbs">${O.accessories
+    .filter((a) => a !== "zombieTalisman" || unlockedTalisman)
     .map((a) => {
       const on = slot.look.accessories.includes(a);
       const look = thumbLook("accessories", a);
@@ -1117,13 +1147,80 @@ pad.on((k, v) => {
     handleSpecialAction();
   }
 });
+// 判斷角色是否裝備變身符咒（化身小殭屍造型）
+function isZombieTransformed(): boolean {
+  const look = (stage?.currentLook as Look | undefined) ?? slot?.look;
+  const acc = (look?.accessories as string[]) || [];
+  return acc.includes("zombieTalisman");
+}
+
+// 萬聖節怪物幽默搞笑對話庫
+const HALLOWEEN_DIALOGUES = [
+  "萬聖節快樂！你額頭上的符咒哪裡買的？好帥！",
+  "三百年不見了！你身上的衣服洗過了嗎？",
+  "你有看見我的屁股嗎？剛剛跳太快好像掉了...",
+  "要一起來一顆發光的糖果嗎？",
+  "今天的月亮是骷髏頭造型耶，超浪漫的對吧！",
+  "隔壁的寶箱今天假牙鬆了，別惹他生氣喔！",
+  "借過一下～我的腳趾頭好像被石頭卡住了！",
+  "你也是被剛才那顆超大南瓜嚇醒的嗎？太鬧了吧！",
+];
+let lastMonsterChatAt = 0;
+let activeMonsterBubble: { el: HTMLDivElement; target: HTMLElement; expiresAt: number } | null = null;
+
+function tryMonsterTalk(targetEl: HTMLElement | null | undefined, dist: number): void {
+  const now = performance.now();
+  if (!targetEl || dist > 0.1 || now - lastMonsterChatAt < 3500) return;
+  lastMonsterChatAt = now;
+  const msg = HALLOWEEN_DIALOGUES[Math.floor(Math.random() * HALLOWEEN_DIALOGUES.length)];
+
+  if (activeMonsterBubble) {
+    activeMonsterBubble.el.remove();
+    activeMonsterBubble = null;
+  }
+
+  const bubble = document.createElement("div");
+  bubble.className = "monster-dialog-bubble";
+  bubble.textContent = msg;
+  stage.hud.appendChild(bubble);
+
+  activeMonsterBubble = { el: bubble, target: targetEl, expiresAt: now + 3200 };
+  updateMonsterBubblePos();
+  blip("pop");
+}
+
+function updateMonsterBubblePos(): void {
+  if (!activeMonsterBubble) return;
+  const now = performance.now();
+  if (now >= activeMonsterBubble.expiresAt) {
+    const el = activeMonsterBubble.el;
+    el.classList.add("monster-dialog-bubble--fadeout");
+    setTimeout(() => el.remove(), 250);
+    activeMonsterBubble = null;
+    return;
+  }
+  const { el, target } = activeMonsterBubble;
+  if (!target.isConnected) {
+    el.remove();
+    activeMonsterBubble = null;
+    return;
+  }
+  const tRect = target.getBoundingClientRect();
+  const hudRect = stage.hud.getBoundingClientRect();
+  const cx = tRect.left - hudRect.left + tRect.width / 2;
+  const top = tRect.top - hudRect.top - 12;
+  el.style.left = `${cx.toFixed(1)}px`;
+  el.style.top = `${top.toFixed(1)}px`;
+}
+
 // 視角鈕跟實際視角一致（移動時自動轉側面也會亮「側」）
 stage.onViewChange = () => renderViews();
-// 角色走路速度倍率：被咬住無法行走、被巨手抓住無法行走、被殭屍抱住行動緩慢、颱風天順逆風影響
+// 角色走路速度倍率：被咬住無法行走、被巨手抓住無法行走、被殭屍抱住行動緩慢、變身符咒殭屍步行、颱風天順逆風影響
 stage.speedMult = (mv: number) => {
   if (trappedChest) return 0;
   if (trappedHand) return 0;
   if (huggedZombie) return 0.35;
+  if (isZombieTransformed()) return 0.65; // 變身符咒：一般殭屍行走速度 (0.65x)，不能跑步
   if (stage.sceneId === "forest" && currentWeather === "typhoon") {
     return mv < 0 ? 1.95 : 0.35;
   }
@@ -1282,6 +1379,156 @@ function resolveStruggle(): void {
     blip("pop");
     floatText("彈開殭屍！", 0.5, 0.45, "mint");
   }
+}
+
+/** 被怪物纏住時，即時換上變身符咒，纏住效果立即解除 */
+function releaseMonsterTrapByTalisman(): void {
+  if (!struggleTarget && !trappedChest && !trappedHand && !huggedZombie) return;
+
+  struggleTarget = null;
+  struggleProgressMs = 0;
+  lastStruggleKey = null;
+  lastStruggleTapAt = 0;
+  removeStruggleHud();
+  stage.allowJump = true;
+  stage.allowCrouch = true;
+
+  if (trappedChest) {
+    const chest = trappedChest;
+    trappedChest = null;
+    chestCooldownUntil = performance.now() + 6000;
+    stage.setPropState(chest, "closed");
+    tryMonsterTalk(chest.el, 0);
+  }
+
+  if (trappedHand) {
+    const hand = trappedHand;
+    trappedHand = null;
+    hand.cooldownUntil = performance.now() + 10000;
+    stage.setPropState(hand, "retreat");
+    if (hand.el) hand.el.classList.add("studio-hand-retreat");
+    setTimeout(() => {
+      if (hand.state === "retreat") {
+        if (hand.el) hand.el.classList.remove("studio-hand-retreat");
+        stage.setPropState(hand, "hidden");
+        hand.x = Number((0.5 + Math.random() * 5.0).toFixed(2));
+        stage.positionProps();
+      }
+    }, 1200);
+  }
+
+  if (huggedZombie) {
+    const z = huggedZombie;
+    huggedZombie = null;
+    z.hugCooldownUntil = performance.now() + 6000;
+    z.state = "wave";
+    z.el.innerHTML = GameArt.prop("zombie", { state: "wave" });
+    tryMonsterTalk(z.el, 0);
+  }
+
+  if (stage.charEl) stage.charEl.style.transform = "translateX(-50%)";
+  stage.positionProps();
+  blip("coin");
+  floatText("✨ 換上符咒！怪物認出同伴鬆開了！", 0.5, 0.38, "mint");
+}
+
+/** 裝備變身符咒瞬間：玩家四周冒出一團白煙（卸載裝備時不用） */
+function spawnTalismanSmokeEffect(): void {
+  if (prefersReducedMotion() || !stage.charEl) return;
+
+  const charRect = stage.charEl.getBoundingClientRect();
+  const hudRect = stage.hud.getBoundingClientRect();
+  const cx = charRect.left - hudRect.left + charRect.width / 2;
+  const cy = charRect.top - hudRect.top + charRect.height / 2;
+
+  const container = document.createElement("div");
+  container.className = "talisman-smoke-container";
+
+  // 1. 中心核心煙團 (Core puff)
+  const core = document.createElement("div");
+  core.className = "talisman-smoke-core";
+  core.style.left = `${cx}px`;
+  core.style.top = `${cy}px`;
+  core.innerHTML = `
+    <svg width="120" height="120" viewBox="0 0 120 120" overflow="visible">
+      <defs>
+        <filter id="smokeShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="var(--g-stone-ledge)" flood-opacity="0.35" />
+        </filter>
+      </defs>
+      <g filter="url(#smokeShadow)">
+        <circle cx="60" cy="60" r="38" fill="var(--g-surface-raised)" />
+        <circle cx="44" cy="46" r="28" fill="var(--g-surface-raised)" />
+        <circle cx="76" cy="46" r="28" fill="var(--g-surface-raised)" />
+        <circle cx="40" cy="70" r="26" fill="var(--g-surface-raised)" />
+        <circle cx="80" cy="70" r="26" fill="var(--g-surface-raised)" />
+        <circle cx="60" cy="38" r="24" fill="var(--g-stone-soft)" opacity="0.6" />
+        <circle cx="60" cy="60" r="28" fill="var(--g-surface-raised)" />
+      </g>
+    </svg>
+  `;
+  container.appendChild(core);
+
+  // 2. 圍繞玩家四周向外爆發的白煙團 (10 枚環狀噴散煙球)
+  const puffCount = 10;
+  const puffRadius = 55;
+  for (let i = 0; i < puffCount; i++) {
+    const angle = (i * (360 / puffCount) + (Math.random() - 0.5) * 20) * (Math.PI / 180);
+    const dist = puffRadius + (Math.random() - 0.5) * 20;
+    const tx = Math.round(Math.cos(angle) * dist);
+    const ty = Math.round(Math.sin(angle) * dist * 0.85);
+    const size = Math.round(36 + Math.random() * 26);
+
+    const puff = document.createElement("div");
+    puff.className = "talisman-smoke-puff";
+    puff.style.left = `${cx}px`;
+    puff.style.top = `${cy}px`;
+    puff.style.setProperty("--tx", `${tx}px`);
+    puff.style.setProperty("--ty", `${ty}px`);
+    puff.style.animationDelay = `${(i * 0.02).toFixed(2)}s`;
+
+    puff.innerHTML = `
+      <svg width="${size}" height="${size}" viewBox="0 0 60 60" overflow="visible">
+        <circle cx="30" cy="30" r="25" fill="var(--g-surface-raised)" />
+        <circle cx="24" cy="24" r="14" fill="var(--g-stone-soft)" opacity="0.5" />
+      </svg>
+    `;
+    container.appendChild(puff);
+  }
+
+  // 3. 飄逸小煙圈 (6 枚向上飄揚)
+  const wispCount = 6;
+  for (let i = 0; i < wispCount; i++) {
+    const angle = ((i * 60 + 30 + (Math.random() - 0.5) * 30) * Math.PI) / 180;
+    const dist = 35 + Math.random() * 30;
+    const tx = Math.round(Math.cos(angle) * dist);
+    const ty = Math.round(Math.sin(angle) * dist * 0.6 - 20);
+
+    const wisp = document.createElement("div");
+    wisp.className = "talisman-smoke-wisp";
+    wisp.style.left = `${cx}px`;
+    wisp.style.top = `${cy}px`;
+    wisp.style.setProperty("--tx", `${tx}px`);
+    wisp.style.setProperty("--ty", `${ty}px`);
+    wisp.style.animationDelay = `${(0.06 + i * 0.03).toFixed(2)}s`;
+
+    const wispSize = 18 + Math.random() * 12;
+    wisp.innerHTML = `
+      <svg width="${wispSize}" height="${wispSize}" viewBox="0 0 30 30" overflow="visible">
+        <circle cx="15" cy="15" r="12" fill="var(--g-surface-raised)" opacity="0.9" />
+        <circle cx="15" cy="15" r="6" fill="var(--g-sun-soft)" opacity="0.75" />
+      </svg>
+    `;
+    container.appendChild(wisp);
+  }
+
+  stage.hud.appendChild(container);
+  blip("pop");
+  blip("coin");
+
+  window.setTimeout(() => {
+    container.remove();
+  }, 950);
 }
 
 // ---- 特殊手持物技能（魔拐杖：四射流星與閃光；南瓜糖果桶：天降糖果雨） ----
@@ -1705,8 +1952,8 @@ async function deleteSlot(i: number): Promise<void> {
 
 // ---- 試玩小場域（不計分）：禮物方塊、彈簧、花苞、寶箱、營火、金幣、地底巨手 ----
 interface PlayProp extends StageProp {
-  // rock＝圓石（碰到跌倒）、solid＝可踩踏（石頭方塊、草地方塊、木頭、樹墩）、giantHand＝地底冒出抓人的巨手
-  kind: "gift" | "spring" | "flower" | "chest" | "campfire" | "rock" | "solid" | "blackhole" | "giantHand";
+  // rock＝圓石（碰到跌倒）、solid＝可踩踏（石頭方塊、草地方塊、木頭、樹墩）、giantHand＝地底冒出抓人的巨手、halloweenPortal＝萬聖巨大傳送門
+  kind: "gift" | "spring" | "flower" | "chest" | "campfire" | "rock" | "solid" | "blackhole" | "giantHand" | "halloweenPortal";
   resetAt?: number;
   wander?: boolean;
   cooldownUntil?: number;
@@ -2385,7 +2632,12 @@ function updateSceneCreatures(now: number, dt: number): void {
           // 碰觸角色判定：未被咬住、未被抱住且非逃跑狀態
           const screenX = stage.propScreenX({ id: "zombie", x: z.x });
           const distToCharPx = Math.abs(screenX - charCx);
-          if (distToCharPx < 28 && stage.jumpHeight < 30 && !trappedChest && !huggedZombie && (!z.fleeingUntil || now >= z.fleeingUntil)) {
+          if (isZombieTransformed()) {
+            // 變身殭屍：同類好朋友，殭屍不抱人！靠近時觸發聊天對話彩蛋
+            if (distToCharPx < 45) {
+              tryMonsterTalk(z.el, distToCharPx / W);
+            }
+          } else if (distToCharPx < 28 && stage.jumpHeight < 30 && !trappedChest && !huggedZombie && (!z.fleeingUntil || now >= z.fleeingUntil)) {
             huggedZombie = z;
             struggleTarget = "zombie";
             struggleProgressMs = 0;
@@ -2484,10 +2736,389 @@ function triggerGraveyardBatSwarm(): void {
   }, 10000);
 }
 
+// ---- 萬聖限定：巨大南瓜怪大作戰傳送門 ----
+type HalloweenPortalPhase = "none" | "moonGlow" | "emerged";
+let halloweenPortalPhase: HalloweenPortalPhase = "none";
+let moonGlowStartAt = 0;
+let halloweenPortalProp: PlayProp | null = null;
+let halloweenPortalModalEl: HTMLElement | null = null;
+let halloweenPortalCooldownUntil = 0;
+let halloweenNoticeEl: HTMLElement | null = null;
+let halloweenNoticeTimer = 0;
+let portalNavArrowEl: HTMLDivElement | null = null;
+
+function showHalloweenNotice(text: string, durationMs = 6000): void {
+  cleanupHalloweenNotice();
+  const el = document.createElement("div");
+  el.className = "halloween-costume-notice";
+  el.textContent = text;
+  stage.hud.appendChild(el);
+  halloweenNoticeEl = el;
+
+  halloweenNoticeTimer = window.setTimeout(() => {
+    cleanupHalloweenNotice();
+  }, durationMs);
+}
+
+function cleanupHalloweenNotice(): void {
+  if (halloweenNoticeTimer) {
+    clearTimeout(halloweenNoticeTimer);
+    halloweenNoticeTimer = 0;
+  }
+  if (halloweenNoticeEl) {
+    halloweenNoticeEl.remove();
+    halloweenNoticeEl = null;
+  }
+}
+
+function updatePortalNavArrow(): void {
+  // 只有在傳送門已觸發（moonGlow 或 emerged）、且裝備齊全未貼符咒、彈窗未開啟時顯示指引
+  if (
+    halloweenPortalPhase === "none" ||
+    halloweenPortalModalEl ||
+    isZombieTransformed() ||
+    !hasHalloweenPortalCostume()
+  ) {
+    hidePortalNavArrow();
+    return;
+  }
+
+  const W = stage.width;
+  const targetX = halloweenPortalProp
+    ? stage.propScreenX(halloweenPortalProp)
+    : stage.propScreenX({ x: 2.2 } as StageProp);
+  const charScreenX = stage.width * stage.charX;
+  const dist = Math.abs(targetX - charScreenX) / W;
+
+  // 若角色已經走到傳送門旁（接觸中），隱藏指引箭頭
+  if (dist < 0.08) {
+    hidePortalNavArrow();
+    return;
+  }
+
+  if (!portalNavArrowEl) {
+    portalNavArrowEl = document.createElement("div");
+    portalNavArrowEl.className = "portal-nav-arrow";
+    stage.hud.appendChild(portalNavArrowEl);
+  }
+
+  // 判斷傳送門在畫面左側、右側，或已在畫面中
+  if (targetX > W - 80) {
+    // 傳送門在右側
+    portalNavArrowEl.className = "portal-nav-arrow portal-nav-arrow--right";
+    portalNavArrowEl.innerHTML = `<span class="portal-nav-text">傳送門</span><span class="portal-nav-icon">➔</span>`;
+    portalNavArrowEl.style.left = "";
+    portalNavArrowEl.style.right = "18px";
+    portalNavArrowEl.style.top = "46%";
+  } else if (targetX < 80) {
+    // 傳送門在左側
+    portalNavArrowEl.className = "portal-nav-arrow portal-nav-arrow--left";
+    portalNavArrowEl.innerHTML = `<span class="portal-nav-icon">⬅</span><span class="portal-nav-text">傳送門</span>`;
+    portalNavArrowEl.style.right = "";
+    portalNavArrowEl.style.left = "18px";
+    portalNavArrowEl.style.top = "46%";
+  } else {
+    // 傳送門在畫面可視區：懸浮在傳送門上方直指傳送門
+    portalNavArrowEl.className = "portal-nav-arrow portal-nav-arrow--down";
+    portalNavArrowEl.innerHTML = `<span class="portal-nav-text">萬聖傳送門</span><span class="portal-nav-icon">▼</span>`;
+    portalNavArrowEl.style.right = "";
+    portalNavArrowEl.style.left = `${Math.round(targetX)}px`;
+    portalNavArrowEl.style.top = "18%";
+  }
+}
+
+function hidePortalNavArrow(): void {
+  if (portalNavArrowEl) {
+    portalNavArrowEl.remove();
+    portalNavArrowEl = null;
+  }
+}
+
+/** 活動期限判定：活動只到 10/31 為止，11/1 則不再觸發此關卡（實驗室模式下永遠開放測試） */
+function isHalloweenActive(): boolean {
+  if (LAB_MODE || (typeof window !== "undefined" && window.location?.port === "5190")) {
+    return true;
+  }
+  const now = new Date();
+  const month = now.getMonth() + 1;
+  // 11/1 起關閉（11 月及 12 月）
+  if (month >= 11) return false;
+  return true;
+}
+
+/** 裝備條件判定：巫師帽＋魔拐杖 或 南瓜萌頭＋南瓜糖果桶 二擇一 */
+function hasHalloweenPortalCostume(): boolean {
+  const l = (stage.currentLook as Look) ?? slot.look;
+  const accs = l.accessories || [];
+  const isSetA = accs.includes("witchhat") && l.held === "magiccane";
+  const isSetB = accs.includes("pumpkinhood") && l.held === "pumpkinbucket";
+  return isSetA || isSetB;
+}
+
+/** 夜光墓園夜晚判定 */
+function isGraveyardNight(): boolean {
+  if (stage.sceneId !== "graveyard") return false;
+  return stage.el.classList.contains("gstage--night") || slot.scene?.time === "night";
+}
+
+function cleanupHalloweenPortal(): void {
+  cleanupHalloweenNotice();
+  hidePortalNavArrow();
+  if (halloweenPortalModalEl) {
+    halloweenPortalModalEl.remove();
+    halloweenPortalModalEl = null;
+  }
+  const moonEl = stage.moonEl;
+  if (moonEl) {
+    moonEl.classList.remove("moon-mystic-glow");
+  }
+  if (halloweenPortalProp) {
+    playProps = playProps.filter((p) => p !== halloweenPortalProp);
+    stage.setProps(playProps);
+    halloweenPortalProp = null;
+  }
+  halloweenPortalPhase = "none";
+  moonGlowStartAt = 0;
+}
+
+function updateHalloweenPortal(now: number): void {
+  // 非墓園或活動已過期：清理重置
+  if (stage.sceneId !== "graveyard" || !isHalloweenActive()) {
+    if (halloweenPortalPhase !== "none") cleanupHalloweenPortal();
+    return;
+  }
+
+  const condMet = isGraveyardNight() && hasHalloweenPortalCostume() && !isZombieTransformed();
+
+  if (halloweenPortalPhase === "none") {
+    if (condMet) {
+      halloweenPortalPhase = "moonGlow";
+      moonGlowStartAt = now;
+      const moonEl = stage.moonEl;
+      if (moonEl) moonEl.classList.add("moon-mystic-glow");
+      blip("coin");
+      showHalloweenNotice("骷髏月亮感應到萬聖裝扮，開始閃爍發光！", 6000);
+    }
+  } else if (halloweenPortalPhase === "moonGlow") {
+    // 閃爍發光 10 秒期間若條件中斷（更換裝備或切換時間），取消儀式
+    if (!condMet) {
+      cleanupHalloweenNotice();
+      hidePortalNavArrow();
+      const moonEl = stage.moonEl;
+      if (moonEl) moonEl.classList.remove("moon-mystic-glow");
+      halloweenPortalPhase = "none";
+      moonGlowStartAt = 0;
+      return;
+    }
+
+    // 持續確保月亮發光
+    const moonEl = stage.moonEl;
+    if (moonEl && !moonEl.classList.contains("moon-mystic-glow")) {
+      moonEl.classList.add("moon-mystic-glow");
+    }
+
+    // 閃爍滿 10 秒（10000ms）後，地底冒出巨大的傳送門
+    if (now - moonGlowStartAt >= 10000) {
+      cleanupHalloweenNotice();
+      halloweenPortalPhase = "emerged";
+      stage.bounce(0.5);
+      blip("pop");
+      blip("jump");
+
+      // 產生傳送門道具（放置在 x = 2.2）
+      const portal: PlayProp = {
+        id: "halloweenPortal",
+        kind: "halloweenPortal",
+        x: 2.2,
+        state: "erupt",
+        scale: 1.35,
+        front: true,
+      };
+      halloweenPortalProp = portal;
+      playProps.push(portal);
+      stage.setProps(playProps);
+
+      if (portal.el) {
+        portal.el.classList.add("studio-portal-burst");
+      }
+      floatText("⚡ 轟隆隆！地底冒出一座神祕萬聖傳送門！", 0.5, 0.38, "mint");
+
+      setTimeout(() => {
+        if (halloweenPortalProp) {
+          stage.setPropState(halloweenPortalProp, "active");
+          if (halloweenPortalProp.el) {
+            halloweenPortalProp.el.classList.remove("studio-portal-burst");
+            halloweenPortalProp.el.classList.add("studio-portal-active");
+          }
+        }
+      }, 700);
+    }
+  } else if (halloweenPortalPhase === "emerged") {
+    if (!halloweenPortalProp) return;
+    // 檢測玩家是否碰觸傳送門
+    if (!halloweenPortalModalEl && now > halloweenPortalCooldownUntil) {
+      const dist = stage.distanceTo(halloweenPortalProp);
+      if (dist < 0.08) {
+        showHalloweenPortalModal();
+      }
+    }
+  }
+
+  // 實時更新指向傳送門的閃爍箭頭
+  updatePortalNavArrow();
+}
+
+function retreatPlayerFromPortal(): void {
+  if (halloweenPortalProp) {
+    const portalScreenX = stage.propScreenX(halloweenPortalProp);
+    const charScreenX = stage.width * stage.charX;
+    // 若角色在傳送門左側則向左後退，若在右側則向右後退
+    const retreatDir = charScreenX <= portalScreenX ? -1 : 1;
+    const ch = stage.height * stage.charH;
+    const charWidthPx = (ch * 120) / 170;
+    const retreatDistPx = charWidthPx * 2.2; // 後退約兩步
+    stage.offset += retreatDir * retreatDistPx;
+    stage.positionProps();
+    stage.perform("trip");
+    setTimeout(() => stage.perform(null), 450);
+  }
+}
+
+function showHalloweenPortalModal(): void {
+  if (halloweenPortalModalEl) return;
+  hidePortalNavArrow();
+
+  // 1. 就算裝備具全，貼上變身符咒後，也不能進入傳送門
+  if (isZombieTransformed()) {
+    blip("trip");
+    floatText("🧟 貼著變身符咒，無法進入傳送門！", 0.5, 0.42, "rose");
+    halloweenPortalCooldownUntil = performance.now() + 1800;
+    retreatPlayerFromPortal();
+
+    const modal = document.createElement("div");
+    modal.className = "halloween-portal-overlay";
+    modal.innerHTML = `
+      <div class="halloween-portal-card">
+        <div class="halloween-portal-badge">${GameArt.prop("zombieTalisman")}</div>
+        <h2 class="halloween-portal-title">無法進入傳送門</h2>
+        <p class="halloween-portal-desc">
+          你現在貼著【變身符咒】化身為小殭屍，傳送門的辟邪聖光排斥著殭屍同伴！<br>
+          請先前往造型選單取下符咒，恢復冒險者身分再來挑戰！
+        </p>
+        <div class="halloween-portal-actions">
+          <button type="button" class="gbtn gbtn-sun gbtn-md" id="btn-portal-blocked">我知道了</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    halloweenPortalModalEl = modal;
+
+    modal.querySelector("#btn-portal-blocked")?.addEventListener("click", () => {
+      modal.remove();
+      halloweenPortalModalEl = null;
+    });
+    return;
+  }
+
+  // 2. 裝備不具全，也不能進入傳送門
+  if (!hasHalloweenPortalCostume()) {
+    blip("trip");
+    floatText("🧙 裝備不齊全，無法進入傳送門！", 0.5, 0.42, "stone");
+    halloweenPortalCooldownUntil = performance.now() + 1800;
+    retreatPlayerFromPortal();
+
+    const modal = document.createElement("div");
+    modal.className = "halloween-portal-overlay";
+    modal.innerHTML = `
+      <div class="halloween-portal-card">
+        <div class="halloween-portal-badge">${GameArt.prop("halloweenPortal", { state: "active" })}</div>
+        <h2 class="halloween-portal-title">裝備不齊全</h2>
+        <p class="halloween-portal-desc">
+          身上的萬聖裝扮不齊全，無法與傳送門產生聖光共鳴！<br>
+          請穿戴完整裝扮：<br>
+          <strong>【巫師帽＋魔拐杖】</strong> 或 <strong>【南瓜萌頭＋南瓜糖果桶】</strong> 再來挑戰！
+        </p>
+        <div class="halloween-portal-actions">
+          <button type="button" class="gbtn gbtn-sun gbtn-md" id="btn-portal-blocked">我知道了</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    halloweenPortalModalEl = modal;
+
+    modal.querySelector("#btn-portal-blocked")?.addEventListener("click", () => {
+      modal.remove();
+      halloweenPortalModalEl = null;
+    });
+    return;
+  }
+
+  // 3. 裝備具全且未貼符咒：詢問是否接受挑戰
+  blip("pop");
+  const modal = document.createElement("div");
+  modal.className = "halloween-portal-overlay";
+  modal.innerHTML = `
+    <div class="halloween-portal-card">
+      <div class="halloween-portal-badge">${GameArt.prop("halloweenPortal", { state: "active" })}</div>
+      <h2 class="halloween-portal-title">萬聖限定：巨大南瓜怪大作戰！</h2>
+      <p class="halloween-portal-desc">
+        夜光墓園地底冒出了一顆比畫面還大的調皮南瓜怪，正在四處跳躍砸地大鬧墓園！<br>
+        勇敢的冒險者，要接受挑戰前往討伐南瓜怪、解救墓園同伴嗎？<br>
+        <span class="portal-cost-tag">每次挑戰花費 20 遊戲幣</span>
+      </p>
+      <div class="halloween-portal-actions">
+        <button type="button" class="gbtn gbtn-stone gbtn-md" id="btn-portal-decline">暫時不要</button>
+        <button type="button" class="gbtn gbtn-mint gbtn-md" id="btn-portal-accept">接受挑戰 (20 幣)</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  halloweenPortalModalEl = modal;
+
+  // 暫時不要：讓玩家後退兩步，關閉 pop，待玩家再次碰觸傳送門時，再次詢問
+  modal.querySelector("#btn-portal-decline")?.addEventListener("click", () => {
+    modal.remove();
+    halloweenPortalModalEl = null;
+    halloweenPortalCooldownUntil = performance.now() + 1800;
+    retreatPlayerFromPortal();
+  });
+
+  // 接受挑戰：檢查代幣與裝備並傳送
+  modal.querySelector("#btn-portal-accept")?.addEventListener("click", () => {
+    if (isZombieTransformed()) {
+      toast("身上貼著變身符咒，無法進入傳送門！", 2500, "rose");
+      modal.remove();
+      halloweenPortalModalEl = null;
+      retreatPlayerFromPortal();
+      return;
+    }
+    if (!hasHalloweenPortalCostume()) {
+      toast("裝備不齊全，無法進入傳送門！", 2500, "stone");
+      modal.remove();
+      halloweenPortalModalEl = null;
+      retreatPlayerFromPortal();
+      return;
+    }
+    const isLab = LAB_MODE || (typeof window !== "undefined" && window.location?.port === "5190");
+    const bal = profileId ? getTokenBalance(profileId) : 0;
+    if (!isLab && bal < 20) {
+      toast(`再賺 ${20 - bal} 個代幣就可以挑戰囉！去學習吧！`, 2500, "sun");
+      return;
+    }
+    modal.remove();
+    halloweenPortalModalEl = null;
+    blip("coin");
+    void flushPending().finally(() => {
+      window.location.assign(`pumpkin-boss.html?from=studio`);
+    });
+  });
+}
+
 function placeProps(): void {
   stage.propPeriod = FIELD_PERIOD;
-  // 切換或重設場景時清理蝙蝠群並重設計時
+  // 切換或重設場景時清理蝙蝠群與傳送門並重設計時
   cleanupBatSwarm();
+  cleanupHalloweenPortal();
   graveyardStayStartAt = performance.now();
   lastBatSwarmAt = 0;
   // 清除掙脫狀態
@@ -2850,10 +3481,16 @@ stage.onTick = () => {
   const now = performance.now();
   const dt = Math.min(0.05, Math.max(0.001, (now - lastCreatureTick) / 1000));
   lastCreatureTick = now;
+  stage.allowRun = !isZombieTransformed();
+  if (isZombieTransformed() && (struggleTarget || trappedChest || trappedHand || huggedZombie)) {
+    releaseMonsterTrapByTalisman();
+  }
   updateCharge(now);
   updateStudioZoom(now);
   updateSceneCreatures(now, dt);
   updateMovingProps(now);
+  updateMonsterBubblePos();
+  updateHalloweenPortal(now);
 
   // 墓園場景停留超過 180 秒（3 分鐘）：群蝠飛過佔據畫面 10 秒
   if (stage.sceneId === "graveyard") {
@@ -2938,8 +3575,10 @@ stage.onTick = () => {
     }
     if (p.kind === "chest") {
       if (stage.sceneId === "graveyard") {
-        // 墓園咬人寶箱（尺寸加大為 3 倍大，感應範圍相應放大）
-        if (p.state === "closed" && dist < 0.12 && stage.jumpHeight < 65 && now > chestCooldownUntil && !trappedChest && !huggedZombie) {
+        if (isZombieTransformed()) {
+          // 變身殭屍：寶箱不咬同類，靠近時觸發聊天對話彩蛋
+          if (dist < 0.1) tryMonsterTalk(p.el, dist);
+        } else if (p.state === "closed" && dist < 0.12 && stage.jumpHeight < 65 && now > chestCooldownUntil && !trappedChest && !huggedZombie) {
           trappedChest = p;
           struggleTarget = "chest";
           struggleProgressMs = 0;
@@ -2963,9 +3602,9 @@ stage.onTick = () => {
     }
     if (p.kind === "giantHand") {
       if (stage.sceneId === "graveyard") {
-        // 在不特定的地點隱藏於地底（條件觸發前看不出異樣）
-        // 當使用者經過該地點時（dist < 0.055 且在地面上 stage.jumpHeight < 25），突襲冒出抓住角色！
-        if (p.state === "hidden" && dist < 0.055 && stage.jumpHeight < 25 && (!p.cooldownUntil || now > p.cooldownUntil) && !struggleTarget) {
+        if (isZombieTransformed()) {
+          // 變身殭屍：地底巨手不攻擊同類
+        } else if (p.state === "hidden" && dist < 0.055 && stage.jumpHeight < 25 && (!p.cooldownUntil || now > p.cooldownUntil) && !struggleTarget) {
           // 立即將巨手位置精準對齊在角色的正中心
           p.x = stage.offset / stage.width;
           stage.positionProps();
@@ -3334,8 +3973,18 @@ function init(): void {
   preventZoomGestures();
   if (window.matchMedia("(orientation: portrait) and (max-width: 700px)").matches) addRotateHint();
   void refreshAlbum();
+  try {
+    if (sessionStorage.getItem("justEquippedTalisman") === "1") {
+      sessionStorage.removeItem("justEquippedTalisman");
+      setTimeout(() => {
+        spawnTalismanSmokeEffect();
+      }, 400);
+    }
+  } catch {
+    // 忽略
+  }
 }
 init();
 // 自動化測試用（網址加 ?debug=1 才掛出來）
-if (new URLSearchParams(location.search).has("debug")) (window as any).__studio = { stage, pad, get data() { return data; }, triggerBatSwarm: triggerGraveyardBatSwarm };
+if (new URLSearchParams(location.search).has("debug")) (window as any).__studio = { stage, pad, get data() { return data; }, triggerBatSwarm: triggerGraveyardBatSwarm, triggerSmoke: spawnTalismanSmokeEffect };
 (window as any).__triggerBatSwarm = triggerGraveyardBatSwarm;
