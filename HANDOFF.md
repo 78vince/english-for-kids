@@ -2480,3 +2480,10 @@ Stage C 短文理解畫面裡，點英文短文中的單字或片語，會在字
     - 沒有 `/api` 請求、無 console error。
 - **尚未上傳 GitHub Pages**：§9.225 與這一節都還沒 commit。請雙擊 `上傳更新.command`（會一起上傳）。
 - 之後 LetsGo 改了遊戲：雙擊 `同步遊戲.command` 即可。新遊戲在 LetsGo 上架（`active`）後才會被帶過來。
+
+### §9.227 同步遊戲失敗修正：角色小鎮的 townShop.ts、店長女聲（2026-11-09，App 端）
+- **問題**：雙擊 `同步遊戲.command` 失敗——`app/src/games/town.ts 需要 app/src/games/townShop.ts，公開版沒有這個檔案`。同步程式每款遊戲只帶 `<名稱>.ts／.css／<名稱>Boot.ts`，角色小鎮另外拆出的店內畫面 `townShop.ts` 沒被帶到。
+- **修正 `scripts/sync-games-from-letsgo.mjs`**：新增步驟 2b——已同步遊戲在 `games/` 資料夾裡 import 的輔助模組（`./xxx`、`./xxx.css`）一起複製，會一路往下追；`gameIcons.ts` 是公開版自己的，排除。
+- 接著出現 `townShop.ts 需要 speech.ts 的 speakEnglishFemale`：公開版 `speech.ts`（不在同步範圍）新增 `speakEnglishFemale()`，唸法同 `speakEnglish()`，聲音用會話練習「我的回答」那組女聲（`pickUserDialogueVoice()`，會套用使用者在語音設定選的聲音）。
+- **結果**：同步 86 個檔案（game-tokens v2.39.0；我的角色、角色小鎮、賽跑、爬樹、火箭發射、打地鼠、巨大南瓜怪大作戰、蟑螂數獨），檢查全過。南瓜怪、蟑螂數獨在遊戲室用通用卡片（`myCharacterCards.ts` 沒有專屬 DETAIL，之後要顯示個人紀錄再加）。
+- **驗證**（Linux 複本）：`tsc --noEmit`、`npm run build`、45 支 verify 全過。Playwright（站台放在 `/english-for-kids/` 子路徑）：遊戲室卡片齊全；角色小鎮、工作室、賽跑、爬樹、火箭、打地鼠、蟑螂數獨開啟正常；南瓜怪在沒有穿齊裝備時提示後返回遊戲室（遊戲設計如此）；零個 `/api` 請求、無 console error。尚未上傳（請用 `上傳更新.command`）。

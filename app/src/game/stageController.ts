@@ -166,6 +166,13 @@ export class StageController {
   allowJump = true;
   /** 可以跑步（按住 B 鍵）；變身殭屍時關閉 */
   allowRun = true;
+  /** 背景圖層拉滿格子（preserveAspectRatio none），配合頁面 CSS 疊 1px 消除平鋪接縫；預設關（角色小鎮開） */
+  stretchLayers = false;
+
+  /** 有邊界的世界（角色小鎮）：角色在世界中的位置（offset／舞台寬）限制在 [min, max]；null＝無限捲動（既有遊戲） */
+  bounds: [number, number] | null = null;
+  /** 鏡頭中心可移動的範圍（單位＝舞台寬，與 bounds 同座標）；角色走到街道盡頭時鏡頭停住、角色繼續走到畫面邊緣。null＝鏡頭永遠跟著角色（既有遊戲） */
+  camRange: [number, number] | null = null;
 
   /** 跳躍／落地／每幀／道具靠近等事件（給關卡邏輯用） */
   onJump: () => void = () => {};
@@ -250,6 +257,20 @@ export class StageController {
   onWarp: (phase: "in" | "out", from: StageProp, to: StageProp) => void = () => {};
   /** 行走速度倍率回呼（例如順風加速、逆風減速）：傳入移動方向 mv（-1 為往左、1 為往右），回傳倍率 */
   speedMult: ((mv: number) => number) | null = null;
+  /** 淹水深度（離地高度／舞台高；0＝沒淹水）。關卡每幀設定（工作室森林下大雨太久）；水深超過身體 floodFloatSubmerge 就浮起來 */
+  floodH = 0;
+  /** 身體泡進水裡多少比例會浮起來（浮著時腳底＝水面－身高×此值） */
+  floodFloatSubmerge = 0.42;
+  /** 浮起來時每秒最多上升多少（舞台高比例） */
+  floodRiseH = 0.25;
+  /** 浮在水上時的移動速度倍率 */
+  floodWalkMult = 0.7;
+  /** 浮在水上的上下晃動幅度（舞台高比例）與週期（ms；只影響畫面） */
+  floodBobH = 0.008;
+  floodBobMs = 1800;
+  /** 空中（或浮在水上）時的水平風速（舞台寬／秒，負＝往左）；null＝沒有風。颱風天跳起來會被吹走 */
+  airWind: ((floating: boolean) => number) | null = null;
+  private floating = false;
   private runJump = false;
   private last = 0;
   private drift = 0;
@@ -381,6 +402,8 @@ export class StageController {
       d.dataset.layer = n;
       d.style.zIndex = String(Z[n] ?? 6);
       d.innerHTML = html;
+      // 背景平鋪不留縫：每張圖拉滿自己的格子（不保留長寬比的左右空白），搭配 CSS 多畫 1px 疊住下一張
+      if (this.stretchLayers) d.querySelectorAll("svg").forEach((v) => v.setAttribute("preserveAspectRatio", "none"));
       if (night) d.style.opacity = "0";
       this.world.insertBefore(d, this.propLayer);
       return d;
@@ -451,6 +474,8 @@ export class StageController {
     this.standOn = null;
     this.stunUntil = 0;
     this.tumble = 0;
+    this.floating = false;
+    this.floodH = 0;
     if (this.flyLayer) this.clearFlyers();
     if (this.space) {
       this.air = true;
@@ -533,6 +558,12 @@ export class StageController {
     this.onViewChange(v);
   }
 
+  /** 角色面向（1＝右、-1＝左；側面時鏡像） */
+  setFacing(d: 1 | -1): void {
+    this.dir = d;
+    this.flip();
+  }
+
   /** 角色在畫面上的水平位置（舞台寬比例） */
   setCharX(x: number): void {
     this.charX = x;
@@ -594,6 +625,7 @@ export class StageController {
       }
     }
     if (this.air) return this.water ? (this.vy < 0 ? "jump" : "fly") : this.vy < 0 ? "jump" : "fall";
+    if (this.floating) return d.left || d.right ? "fly" : this.idlePose;
     if (d.down && this.allowCrouch) return "crouch";
     if (this.autoRun) return this.autoRun() > 0 ? "run" : this.idlePose;
     if (d.left || d.right) return (d.b && this.allowRun) ? "run" : "walk";
@@ -754,6 +786,18 @@ export class StageController {
   /** 加強跳（蓄力、彈簧）最高點的上限（離地高度／舞台高）；小螢幕時普通跳本身就比較高，避免頭頂衝出舞台 */
   boostPeakCap = 0.52;
 
+  /** 是否浮在淹水的水面上 */
+  get isFloating(): boolean {
+    return this.floating;
+  }
+
+  /** 淹水時腳底浮著的高度（離地 px）；水還沒深到能浮起來回傳 -1 */
+  private get floatLine(): number {
+    if (this.floodH <= 0 || this.space) return -1;
+    const v = (this.floodH - this.charH * this.floodFloatSubmerge) * this.height;
+    return v > 0 ? v : -1;
+  }
+
   /** 是否在水裡（海底世界的漂浮機制） */
   get inWater(): boolean {
     return this.water !== null;
@@ -787,7 +831,7 @@ export class StageController {
 
   /** 目前是否蹲著（地面上按住 ↓） */
   get isCrouching(): boolean {
-    return this.allowCrouch && !this.air && this.pad.down.down;
+    return this.allowCrouch && !this.air && !this.floating && this.pad.down.down;
   }
 
   /** 起跳：最高點離地＝普通跳 × mult（mult > 1 時不超過 boostPeakCap，也不低於普通跳）；
@@ -801,6 +845,7 @@ export class StageController {
     // 高度從腳下的支撐面（地面或方塊上緣）算起
     const rise = Math.max(h0 * 0.2, peak - Math.max(0, this.jy - this.supportY));
     this.air = true;
+    this.floating = false;
     this.runJump = this.pad.down.b;
     this.vy = -Math.sqrt(2 * g * rise);
     this.oneShot = null;
@@ -845,22 +890,28 @@ export class StageController {
     const W = this.width;
     const H = this.height;
     if (!this.frozen) this.physics(dt, ts);
+    if (this.camRange) this.updateCamera();
     const sup = this.supportY;
     const spin = this.space ? ` rotate(${this.rot.toFixed(1)}deg) scale(${this.warpScale.toFixed(3)})` : "";
-    this.me.style.transform = `translateX(-50%) translateY(${-this.jy}px)${spin}`;
+    // 浮在淹水的水面上：輕輕上下晃（只影響畫面）
+    const bob = this.floating && !this.air && !this.reduced ? Math.sin((ts / this.floodBobMs) * Math.PI * 2) * this.floodBobH * H : 0;
+    this.me.style.transform = `translateX(-50%) translateY(${(-this.jy - bob).toFixed(2)}px)${spin}`;
     const hh = Math.min(1, Math.max(0, this.jy - sup) / (H * 0.4));
     this.shadow.style.transform = `translateX(-50%) translateY(${-sup}px) scale(${(1 - 0.4 * hh).toFixed(3)},1)`;
     // 太空：飄著時沒有影子（站在小行星上才有）
-    this.shadow.style.opacity = this.space && this.air ? "0" : (1 - 0.45 * hh).toFixed(2);
+    this.shadow.style.opacity = (this.space && this.air) || this.floodH > 0.005 ? "0" : (1 - 0.45 * hh).toFixed(2);
 
     const per = W;
+    // 鏡頭範圍（camRange）：背景跟著「鏡頭」捲動，而不是跟著角色；沒設定時鏡頭＝角色（既有遊戲）
+    const camOff = this.camRange ? this.offset - (this.charX - 0.5) * W : this.offset;
     for (const n of this.info.layers) {
       const f0 = this.info.parallax[n];
       const e = this.layers[n];
       if (!f0 || !e) continue;
       const f = this.reduced ? 1 : f0;
-      const off = this.offset * f + (n === "clouds" ? this.drift : 0);
-      const x = -(((off % per) + per) % per);
+      const off = camOff * f + (n === "clouds" ? this.drift : 0);
+      // 取整數像素：小數位移會讓平鋪的兩張背景之間露出細縫
+      const x = -Math.round(((off % per) + per) % per);
       if (e.day) e.day.style.transform = `translateX(${x}px)`;
       if (e.night) e.night.style.transform = `translateX(${x}px)`;
     }
@@ -997,9 +1048,11 @@ export class StageController {
       if (mv && (this.air || !this.isCrouching)) {
         const sm = this.speedMult ? this.speedMult(mv) : 1;
         const canSprint = d.b && this.allowRun;
-        const spd = W * (this.air ? (this.runJump ? RUN : WALK) : canSprint ? RUN : WALK) * (this.water ? this.water.walkMult : 1) * sm;
+        const spd = W * (this.air ? (this.runJump ? RUN : WALK) : canSprint ? RUN : WALK) * (this.water ? this.water.walkMult : 1) * (this.floating ? this.floodWalkMult : 1) * sm;
         dx = mv * spd * dt;
       }
+      // 颱風：跳起來（或浮在水上）會被風吹走
+      if (this.airWind && !stunned && (this.air || this.floating)) dx += this.airWind(this.floating && !this.air) * W * dt;
     }
     if (dx) {
       const [l, r] = this.charSpan();
@@ -1023,6 +1076,7 @@ export class StageController {
         }
         this.dash.left = 0; // 被擋住時彈簧衝刺作廢
       } else if (!blocker) this.blockedBy = null;
+      if (dx && this.bounds) dx = this.clampDx(dx);
       if (dx) {
         this.offset += dx;
         this.onMove();
@@ -1086,10 +1140,17 @@ export class StageController {
         }
         this.jy = Math.max(0, next);
       } else {
-        // 往下：腳底穿過上緣 → 站上（地面＝0）
-        const sup = this.supportAt(prev, cols, 0.5);
-        if (next <= sup) {
-          this.jy = sup;
+        // 往下：腳底穿過上緣 → 站上（地面＝0）；淹水夠深時落到水面就浮著
+        const supP = this.supportAt(prev, cols, 0.5);
+        const fl = this.floatLine;
+        if (fl > supP && next <= fl) {
+          this.jy = Math.max(supP, Math.min(fl, next));
+          this.air = false;
+          this.vy = 0;
+          this.floating = true;
+          this.onLand();
+        } else if (next <= supP) {
+          this.jy = supP;
           this.air = false;
           this.vy = 0;
           if (!(d.left || d.right) && !this.trip && !this.autoRun) this.shot("land", 240);
@@ -1097,15 +1158,23 @@ export class StageController {
         } else this.jy = next;
       }
     } else {
-      // 地面上：走出平台邊緣 → 下落
+      // 地面上：走出平台邊緣 → 下落；淹水夠深 → 慢慢浮起來、跟著水面升降
       const sup = this.supportAt(this.jy, cols, 1);
-      if (sup < this.jy - 1) {
-        this.air = true;
-        this.vy = 0;
-        this.runJump = d.b && this.allowRun;
-      } else this.jy = sup;
+      const fl = this.floatLine;
+      if (fl > sup && fl > this.jy - 0.02 * this.height) {
+        const rise = this.floodRiseH * this.height * dt;
+        this.jy = this.jy < fl ? Math.min(fl, this.jy + rise) : fl;
+        this.floating = true;
+      } else {
+        this.floating = false;
+        if (sup < this.jy - 1) {
+          this.air = true;
+          this.vy = 0;
+          this.runJump = d.b && this.allowRun;
+        } else this.jy = sup;
+      }
     }
-    this.supportY = this.supportAt(this.jy, cols, 1);
+    this.supportY = this.floating ? this.jy : this.supportAt(this.jy, cols, 1);
 
     // 5) 絆倒結束 → 回到待機
     if (this.trip && ts >= this.trip.end) {
@@ -1189,6 +1258,7 @@ export class StageController {
         if (hardBlock) this.svx = 0;
         else if (this.air) this.svx *= Math.exp(-3 * dt);
       }
+      if (dx && this.bounds) dx = this.clampDx(dx);
       if (dx) {
         this.offset += dx;
         this.onMove();
@@ -1680,6 +1750,42 @@ export class StageController {
       p.el.innerHTML = GameArt.prop(p.id, { state });
       if (p.wUnits != null) p.el.querySelector("svg")?.setAttribute("preserveAspectRatio", "none");
     }
+  }
+
+  /** 角色在世界中的位置（單位＝舞台寬；與 StageProp.x 同座標） */
+  get worldX(): number {
+    return this.offset / this.width;
+  }
+
+  /** 直接把角色放到世界中的某個位置（單位＝舞台寬；有 bounds 時會夾在範圍內） */
+  setWorldX(x: number): void {
+    const b = this.bounds;
+    const v = b ? Math.max(b[0], Math.min(b[1], x)) : x;
+    this.offset = v * this.width;
+    if (this.camRange) this.updateCamera();
+    this.positionProps();
+    this.onMove();
+  }
+
+  /** camRange：鏡頭中心夾在範圍內，角色在畫面上的位置（charX）跟著偏移 */
+  private updateCamera(): void {
+    const r = this.camRange;
+    if (!r) return;
+    const cx = this.offset / this.width;
+    const center = Math.max(r[0], Math.min(r[1], cx));
+    const x = 0.5 + (cx - center);
+    if (Math.abs(x - this.charX) < 1e-5) return;
+    this.charX = x;
+    this.me.style.left = this.shadow.style.left = `${this.charX * 100}%`;
+  }
+
+  /** bounds：把這一步的位移夾在範圍內 */
+  private clampDx(dx: number): number {
+    const b = this.bounds;
+    if (!b) return dx;
+    const W = this.width;
+    const next = Math.max(b[0] * W, Math.min(b[1] * W, this.offset + dx));
+    return next - this.offset;
   }
 
   /** 道具在畫面上的 x（px，中心）；角色固定在畫面中央 */

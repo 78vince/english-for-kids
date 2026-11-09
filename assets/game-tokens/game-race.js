@@ -1,7 +1,7 @@
 /* game-race.js — 賽跑素材（v0.8）：對手動物（烏龜／兔子／鴕鳥）與賽跑道具。
  * GameArt.animal(kind, {pose, t, facing}) → SVG 字串（側視、預設朝右；facing:'left' 鏡像）。kind：turtle | rabbit | ostrich
  * GameArt.animateAnimal(svgEl, pose) → { setPose, stop }（啟動與換姿勢時同步套用 t=0，避免殘影）
- * GameArt.animalPoses = ['idle','run','sleep','stumble','cheer','sad']；GameArt.animalKinds = [...]
+ * GameArt.animalPoses = ['idle','run','sleep','stumble','cheer','sad','peck']（peck：鴕鳥低頭吃地上的小蟲，地上會出現小蟲）；GameArt.animalKinds = [...]
  * 泰迪熊裁判＝GameArt.character({species:'bear', …})，不在這裡畫。
  * 道具（speedShoe、boostCan、bubble、windZone、mud、branch、hive、warnSign、startGate、finishLine、mileFlag、trophy）登錄在 game-tokens.json props.list，這裡只提供 P[id]。 */
 (function (g) {
@@ -119,6 +119,10 @@
       set('root', { r: (kind === 'ostrich' ? 38 : 55) * s, y: -5 * sin(2 * PI * e), x: 4 * e });
       if (kind === 'turtle') { set('head', { sx: .6 + .4 * (1 - s), sy: .6 + .4 * (1 - s) }); }
       legs(30 * s, legN);
+    } else if (pose === 'peck') {   /* 低頭啄小蟲：身體前傾、脖子彎到地面、頭一下一下啄（約 0.45 秒一下） */
+      per = 450; s = Math.abs(sin(PI * t / per)); o.fx = 'bug';
+      if (kind === 'ostrich') { set('root', { r: 9, y: 4 }); set('neck', { r: 122 + 12 * s, sy: 1.32 }); set('head', { r: -78 - 8 * s, sy: .76 }); set('wing', { r: -6 }); set('tailF', { r: -12 }); set('legA', { r: -6 }); set('legB', { r: -12 }); }
+      else { set('root', { r: 20 }); set('head', { r: 30 * s }); }
     } else if (pose === 'cheer') {
       per = 640; s = sin(2 * PI * t / per); sa = Math.abs(s); o.eyes = 'happy';
       if (kind !== 'rabbit') { set('root', { y: -(kind === 'turtle' ? 5 : 10) * sa }); legs(10 * s, legN); }
@@ -203,6 +207,8 @@
     var pose = o.pose || 'idle', pm = poseOf(kind, pose, o.t || 0), C = COL()[kind];
     var inner = kind === 'turtle' ? drawTurtle(pm.parts, C) : kind === 'rabbit' ? drawRabbit(pm.parts, C) : drawOstrich(pm.parts, C);
     inner = part(kind, pm.parts, 'root', inner);
+    /* 地上的小蟲（peck 姿勢才顯示；畫在 root 外面，身體前傾時小蟲留在地上） */
+    inner += '<g data-fx="bug" style="display:none">' + ell(vb[0] + 8, vb[1] - 4, 7, 5, hue('rose')) + circ(vb[0] + 15, vb[1] - 5, 3, N.ink) + circ(vb[0] + 6, vb[1] - 6, 1.4, N.ink) + circ(vb[0] + 10, vb[1] - 3, 1.4, N.ink) + el('path', { d: 'M' + (vb[0] + 8) + ' ' + (vb[1] - 9) + ' v9', stroke: N.ink, 'stroke-width': 1, 'stroke-linecap': 'round' }) + '</g>';
     if (o.facing === 'left') inner = '<g transform="translate(' + vb[0] + ' 0) scale(-1 1)">' + inner + '</g>';
     var s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + vb[0] + ' ' + vb[1] + '" class="g-animal g-animal-' + kind + '" data-kind="' + kind + '" style="overflow:visible" fill="none">' + inner + '</svg>';
     return applyDisplay(s, pm);
@@ -210,14 +216,14 @@
   /* 靜態字串渲染：眼睛／特效的 display 直接寫進字串 */
   function applyDisplay(s, pm) {
     ['normal', 'closed', 'x', 'happy'].forEach(function (k) { s = s.split('<g class="eyes-' + k + '" style="display:none">').join('<g class="eyes-' + k + '"' + (k === pm.eyes ? '' : ' style="display:none"') + '>').split('<g class="eyes-' + k + '">').join('<g class="eyes-' + k + '"' + (k === pm.eyes ? '' : ' style="display:none"') + '>'); });
-    ['zzz', 'stars', 'tear'].forEach(function (k) { s = s.split('<g data-fx="' + k + '" style="display:none">').join('<g data-fx="' + k + '"' + (k === pm.fx ? '' : ' style="display:none"') + '>'); });
+    ['zzz', 'stars', 'tear', 'bug'].forEach(function (k) { s = s.split('<g data-fx="' + k + '" style="display:none">').join('<g data-fx="' + k + '"' + (k === pm.fx ? '' : ' style="display:none"') + '>'); });
     return s;
   }
   function applyAnimalPose(svgEl, pose, t, reduced) {
     var kind = svgEl.getAttribute('data-kind'), pm = poseOf(kind, pose, reduced ? 0 : t), q, ps = svgEl.querySelectorAll('[data-part]');
     for (q = 0; q < ps.length; q++) { var n = ps[q].getAttribute('data-part'); ps[q].setAttribute('transform', tfStr(pm.parts[n], +ps[q].getAttribute('data-px'), +ps[q].getAttribute('data-py'))); }
     ['normal', 'closed', 'x', 'happy'].forEach(function (k) { var e1 = svgEl.querySelectorAll('.eyes-' + k); for (var i = 0; i < e1.length; i++) e1[i].style.display = k === pm.eyes ? '' : 'none'; });
-    var fx = svgEl.querySelectorAll('[data-fx]'); for (q = 0; q < fx.length; q++) fx[q].style.display = (!reduced || pm.fx === 'zzz') && fx[q].getAttribute('data-fx') === pm.fx ? '' : 'none';
+    var fx = svgEl.querySelectorAll('[data-fx]'); for (q = 0; q < fx.length; q++) fx[q].style.display = (!reduced || pm.fx === 'zzz' || pm.fx === 'bug') && fx[q].getAttribute('data-fx') === pm.fx ? '' : 'none';
   }
   function animateAnimal(svgEl, pose) {
     var mq = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
@@ -242,5 +248,5 @@
     return size ? s.replace('<svg ', '<svg width="' + size + '" height="' + size + '" ') : s;
   }
   A.animalAvatar = animalAvatar;
-  A.animal = animal; A.animateAnimal = animateAnimal; A.animalKinds = Object.keys(VB); A.animalPoses = ['idle', 'run', 'sleep', 'stumble', 'cheer', 'sad']; A.animalViewBox = VB;
+  A.animal = animal; A.animateAnimal = animateAnimal; A.animalKinds = Object.keys(VB); A.animalPoses = ['idle', 'run', 'sleep', 'stumble', 'cheer', 'sad', 'peck']; A.animalViewBox = VB;
 })(typeof window !== 'undefined' ? window : globalThis);

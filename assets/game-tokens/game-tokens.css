@@ -99,6 +99,9 @@
   --g-forest-day-firefly: #FFF3C4;
   --g-forest-day-canopy-top: #6FB57F;
   --g-forest-day-canopy-top2: #86C894;
+  --g-forest-day-flood-water: #8FCBE3;
+  --g-forest-day-flood-water-deep: #5FA6C8;
+  --g-forest-day-flood-foam: #EAF7FC;
   --g-forest-night-sky-top: #2F3A66;
   --g-forest-night-sky-bottom: #5E6CA6;
   --g-forest-night-celestial: #F3EEC8;
@@ -127,6 +130,9 @@
   --g-forest-night-firefly: #FFEFA0;
   --g-forest-night-canopy-top: #34606C;
   --g-forest-night-canopy-top2: #3F6C78;
+  --g-forest-night-flood-water: #4E6E9E;
+  --g-forest-night-flood-water-deep: #3A5687;
+  --g-forest-night-flood-foam: #A9BEE0;
   --g-studio-day-sky-top: #F4ECFA;
   --g-studio-day-sky-bottom: #FFEFE3;
   --g-studio-day-bokeh-a: #FFFFFF;

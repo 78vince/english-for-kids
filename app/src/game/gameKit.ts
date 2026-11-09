@@ -18,7 +18,7 @@ import "../../../assets/game-tokens/game-export.js";
 import "../../../assets/game-tokens/game-icons.js";
 
 /** App 預期的 token 版本；內容端升版後若 API 有變，這裡跟著改。 */
-export const EXPECTED_GAME_TOKENS_VERSION = "2.12.1";
+export const EXPECTED_GAME_TOKENS_VERSION = "2.39.0";
 
 export type View = "front" | "side" | "back";
 export type Facing = "left" | "right";
@@ -151,8 +151,40 @@ export interface SceneInfo {
   celestial: { hidden?: boolean; cycleMs: number };
   /** 場景物理（v2.1 海底世界）：water＝漂浮機制。倍率相對於地面；…H 為舞台高比例 */
   physics?: WaterPhysics | SpacePhysics;
+  /** 森林天氣（v2.13.0）：雨量等級、淹水、颱風風力 */
+  weather?: SceneWeather;
   day: Record<string, unknown> & { label?: string };
   night: Record<string, unknown> & { label?: string };
+}
+
+export interface RainLevel {
+  id: string;
+  label: string;
+  streaks: number;
+  opacity: number;
+  /** 雨絲落下一次的秒數倍率（越小越快） */
+  speed: number;
+  /** 天空變暗程度（0–1） */
+  tint: number;
+  /** 每秒水位變化（舞台高比例；負＝排水） */
+  floodRateH: number;
+  /** 連續下滿這麼久才開始積水 */
+  floodAfterMs: number;
+}
+export interface SceneWeather {
+  rain: { default: number; levels: RainLevel[]; typhoonExtraStreaks: number };
+  flood: {
+    maxH: number;
+    sunnyDrainH: number;
+    floatSubmerge: number;
+    riseH: number;
+    walkMult: number;
+    bobH: number;
+    bobMs: number;
+    noticeH: number;
+    campfireOutH: number;
+  };
+  typhoon: { walkTail: number; walkHead: number; jumpWindW: number; floatDriftW: number; gustAmp: number; gustMs: number };
 }
 
 export interface SceneLayers {
@@ -206,10 +238,31 @@ export interface ExportOptions {
   shadow?: boolean;
   shift?: number;
   props?: { id: string; x: number; state?: string; h?: number; y?: number; front?: boolean }[];
+  /** 月亮樣式（不給就依場景：墓園＝骷髏） */
+  moonState?: string;
+  /** 不畫的場景圖層（角色小鎮街道：用自己的街景，v2.25） */
+  hideLayers?: string[];
+  /** 遊戲頁自己畫在舞台上的圖層（生物、水面、雨），拍照一併畫進去；規格見 game-export.js 檔頭 */
+  extras?: ExportExtra[];
+}
+
+export interface ExportExtra {
+  svg: string;
+  /** under＝遠景前一層（小鎮街景、建築，v2.25）；back＝角色後；front＝角色前；top＝最上層 */
+  z?: "under" | "back" | "front" | "top";
+  x?: number;
+  y?: number;
+  h?: number;
+  ar?: number;
+  box?: [number, number, number, number];
+  flip?: boolean;
+  opacity?: number;
 }
 
 export interface GameArtApi {
   character(opts: Partial<Look> & { view?: View; facing?: Facing; pose?: string | null; t?: number }): string;
+  /** 只畫一件配件或手持物（不畫人物），商店縮圖用；held 'none' 回傳空字串 */
+  itemIcon(field: "accessories" | "held", id: string): string;
   animate(svg: SVGElement, pose: string): PoseController;
   randomLook(rnd?: () => number): Look;
   presets: Record<string, Look>;
@@ -230,6 +283,8 @@ export interface GameArtApi {
   animalViewBox: Record<string, [number, number]>;
   scene(id: string, w: number, h: number, o?: { time?: SceneTime; u?: number; layers?: string[] }): string;
   sceneLayers(id: string, time: SceneTime, w: number, h: number): SceneLayers & Record<string, string>;
+  /** 角色小鎮街景：遠景＋地面（不是獨立場景） */
+  townLayers(time: SceneTime, w: number, h: number): { far: string; ground: string };
   skyAt(id: string, u: number): SkyState;
   uFromDate(d?: Date): number;
   scenes: string[];

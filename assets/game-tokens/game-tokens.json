@@ -1,8 +1,8 @@
 {
   "meta": {
     "name": "Playground Game Tokens",
-    "version": "2.12.1",
-    "updated": "2026-10-28",
+    "version": "2.39.0",
+    "updated": "2026-11-06",
     "note": "遊戲專用 design token：平緩柔和、全部圓角、無描邊。內容不限英語學習，目標是推動學習動機與樂趣。"
   },
   "color": {
@@ -170,7 +170,10 @@
             "flowerC": "#BDAEE8",
             "firefly": "#FFF3C4",
             "canopyTop": "#6FB57F",
-            "canopyTop2": "#86C894"
+            "canopyTop2": "#86C894",
+            "floodWater": "#8FCBE3",
+            "floodWaterDeep": "#5FA6C8",
+            "floodFoam": "#EAF7FC"
           },
           "night": {
             "label": "夜晚",
@@ -202,7 +205,10 @@
             "flowerC": "#9A8CD0",
             "firefly": "#FFEFA0",
             "canopyTop": "#34606C",
-            "canopyTop2": "#3F6C78"
+            "canopyTop2": "#3F6C78",
+            "floodWater": "#4E6E9E",
+            "floodWaterDeep": "#3A5687",
+            "floodFoam": "#A9BEE0"
           },
           "celestial": {
             "note": "太陽、月亮是獨立物件（props.sun / props.moon），不畫在天空層裡，以便做日升月落。u∈[0,1)：0＝日出、0.25＝正午、0.5＝日落／月出、0.75＝午夜、1＝月落。",
@@ -263,6 +269,77 @@
               "sunrise": "06:00",
               "sunset": "18:00",
               "note": "「系統時間」模式依裝置時鐘換算 u"
+            }
+          },
+          "weather": {
+            "note": "森林天氣（v2.13.0，我的角色工作室）：雨天／颱風天可以調雨量；雨下太大太久會淹水（水位慢慢上升），水深超過身體一半角色會浮起來；颱風天跳起來（或浮在水上）會被風往左吹。H＝舞台高比例，W＝舞台寬比例。",
+            "rain": {
+              "default": 1,
+              "levels": [
+                {
+                  "id": "light",
+                  "label": "小雨",
+                  "streaks": 14,
+                  "opacity": 0.55,
+                  "speed": 1.0,
+                  "tint": 0.1,
+                  "floodRateH": -0.012,
+                  "floodAfterMs": 0
+                },
+                {
+                  "id": "moderate",
+                  "label": "中雨",
+                  "streaks": 26,
+                  "opacity": 0.75,
+                  "speed": 0.8,
+                  "tint": 0.16,
+                  "floodRateH": -0.006,
+                  "floodAfterMs": 0
+                },
+                {
+                  "id": "heavy",
+                  "label": "大雨",
+                  "streaks": 44,
+                  "opacity": 0.85,
+                  "speed": 0.6,
+                  "tint": 0.24,
+                  "floodRateH": 0.0045,
+                  "floodAfterMs": 15000
+                },
+                {
+                  "id": "torrential",
+                  "label": "豪雨",
+                  "streaks": 64,
+                  "opacity": 0.95,
+                  "speed": 0.45,
+                  "tint": 0.32,
+                  "floodRateH": 0.009,
+                  "floodAfterMs": 8000
+                }
+              ],
+              "typhoonExtraStreaks": 10,
+              "note": "floodRateH：每秒水位變化（舞台高比例；負的＝排水）。大雨、豪雨要連續下滿 floodAfterMs 才開始積水；換成小雨／中雨或晴天就慢慢退水。"
+            },
+            "flood": {
+              "maxH": 0.4,
+              "sunnyDrainH": 0.02,
+              "floatSubmerge": 0.42,
+              "riseH": 0.25,
+              "walkMult": 0.7,
+              "bobH": 0.008,
+              "bobMs": 1800,
+              "noticeH": 0.02,
+              "campfireOutH": 0.03,
+              "note": "maxH＝最高水位（離地，舞台高比例）。水深超過身體 floatSubmerge（42%，大約到肚子）就浮起來：腳底浮到「水面－身高×floatSubmerge」；riseH＝每秒最多上浮多少；walkMult＝漂浮時移動速度倍率；bob＝浮在水上的上下晃動。noticeH＝開始淹水的提示水位；campfireOutH＝營火被淹熄的水位。"
+            },
+            "typhoon": {
+              "walkTail": 1.95,
+              "walkHead": 0.35,
+              "jumpWindW": -0.42,
+              "floatDriftW": -0.07,
+              "gustAmp": 0.35,
+              "gustMs": 2600,
+              "note": "walkTail／walkHead＝在地上順風（往左）／逆風走的速度倍率（沿用原本數值）。jumpWindW＝跳起來在空中時每秒被風吹動的距離（舞台寬比例；負的＝往左）；floatDriftW＝浮在水上時被吹動的速度；gustAmp＝陣風強弱起伏（±35%），gustMs＝陣風週期。"
             }
           }
         },
@@ -4730,7 +4807,13 @@
         "dress",
         "jacket",
         "stripe",
-        "sundress"
+        "sundress",
+        "raincoat",
+        "jersey",
+        "pajamas",
+        "wetsuit",
+        "spacesuit",
+        "dino"
       ],
       "outfitColor": [
         "sky",
@@ -4867,7 +4950,13 @@
         "pumpkinhood": "南瓜萌頭",
         "pumpkinbucket": "南瓜糖果桶",
         "zombieTalisman": "變身符咒",
-        "graveyard": "夜光墓園"
+        "graveyard": "夜光墓園",
+        "raincoat": "雨衣",
+        "jersey": "運動服",
+        "pajamas": "星星睡衣",
+        "wetsuit": "潛水衣",
+        "spacesuit": "太空服",
+        "dino": "恐龍裝"
       },
       "faceShape": [
         "round",
@@ -6861,6 +6950,1037 @@
           ],
           "note": "墓園地底冒出的巨大傳送門，閃爍綠色光芒，通往巨大南瓜怪戰場"
         }
+      },
+      {
+        "id": "shopCounter",
+        "label": "櫃檯",
+        "group": "商店",
+        "size": [
+          240,
+          100
+        ],
+        "states": [
+          {
+            "id": "rose",
+            "label": "玫瑰粉"
+          },
+          {
+            "id": "sky",
+            "label": "天空藍"
+          },
+          {
+            "id": "lilac",
+            "label": "紫丁香"
+          },
+          {
+            "id": "peach",
+            "label": "蜜桃"
+          }
+        ]
+      },
+      {
+        "id": "cashRegister",
+        "label": "收銀機",
+        "group": "商店",
+        "size": [
+          72,
+          60
+        ]
+      },
+      {
+        "id": "shoppingBag",
+        "label": "購物袋",
+        "group": "商店",
+        "size": [
+          44,
+          52
+        ],
+        "states": [
+          {
+            "id": "peach",
+            "label": "蜜桃"
+          },
+          {
+            "id": "sky",
+            "label": "天空藍"
+          },
+          {
+            "id": "rose",
+            "label": "玫瑰粉"
+          },
+          {
+            "id": "mint",
+            "label": "薄荷綠"
+          }
+        ]
+      },
+      {
+        "id": "pottedPlant",
+        "label": "盆栽",
+        "group": "商店",
+        "size": [
+          50,
+          80
+        ]
+      },
+      {
+        "id": "shopWindow",
+        "label": "店內窗戶",
+        "group": "商店",
+        "size": [
+          120,
+          100
+        ],
+        "states": [
+          {
+            "id": "rose",
+            "label": "粉窗簾"
+          },
+          {
+            "id": "sky",
+            "label": "藍窗簾"
+          },
+          {
+            "id": "lilac",
+            "label": "紫窗簾"
+          },
+          {
+            "id": "sun",
+            "label": "黃窗簾"
+          },
+          {
+            "id": "mint",
+            "label": "綠窗簾"
+          }
+        ]
+      },
+      {
+        "id": "salonMirror",
+        "label": "化妝鏡台",
+        "group": "商店",
+        "size": [
+          90,
+          140
+        ]
+      },
+      {
+        "id": "clothesRack",
+        "label": "衣架",
+        "group": "商店",
+        "size": [
+          180,
+          130
+        ]
+      },
+      {
+        "id": "accShelf",
+        "label": "配件架",
+        "group": "商店",
+        "size": [
+          160,
+          132
+        ]
+      },
+      {
+        "id": "toyShelf",
+        "label": "玩具架",
+        "group": "商店",
+        "size": [
+          160,
+          132
+        ]
+      },
+      {
+        "id": "townHome",
+        "label": "我的家",
+        "group": "小鎮",
+        "size": [
+          200,
+          270
+        ],
+        "states": [
+          {
+            "id": "day",
+            "label": "白天"
+          },
+          {
+            "id": "night",
+            "label": "夜晚（窗戶亮燈）"
+          }
+        ]
+      },
+      {
+        "id": "townSalon",
+        "label": "造型店",
+        "group": "小鎮",
+        "size": [
+          200,
+          280
+        ],
+        "states": [
+          {
+            "id": "day",
+            "label": "白天"
+          },
+          {
+            "id": "night",
+            "label": "夜晚（窗戶亮燈）"
+          }
+        ]
+      },
+      {
+        "id": "townClothes",
+        "label": "服裝店",
+        "group": "小鎮",
+        "size": [
+          210,
+          236
+        ],
+        "states": [
+          {
+            "id": "day",
+            "label": "白天"
+          },
+          {
+            "id": "night",
+            "label": "夜晚（窗戶亮燈）"
+          }
+        ]
+      },
+      {
+        "id": "townAcc",
+        "label": "配件店",
+        "group": "小鎮",
+        "size": [
+          200,
+          290
+        ],
+        "states": [
+          {
+            "id": "day",
+            "label": "白天"
+          },
+          {
+            "id": "night",
+            "label": "夜晚（窗戶亮燈）"
+          }
+        ]
+      },
+      {
+        "id": "townPhoto",
+        "label": "照相館",
+        "group": "小鎮",
+        "size": [
+          200,
+          290
+        ],
+        "states": [
+          {
+            "id": "day",
+            "label": "白天"
+          },
+          {
+            "id": "night",
+            "label": "夜晚（窗戶亮燈）"
+          }
+        ]
+      },
+      {
+        "id": "townGallery",
+        "label": "美術館",
+        "group": "小鎮",
+        "size": [
+          220,
+          290
+        ],
+        "states": [
+          {
+            "id": "day",
+            "label": "白天"
+          },
+          {
+            "id": "night",
+            "label": "夜晚（窗戶亮燈）"
+          }
+        ]
+      },
+      {
+        "id": "townToy",
+        "label": "道具店",
+        "group": "小鎮",
+        "size": [
+          200,
+          300
+        ],
+        "states": [
+          {
+            "id": "day",
+            "label": "白天"
+          },
+          {
+            "id": "night",
+            "label": "夜晚（窗戶亮燈）"
+          }
+        ]
+      },
+      {
+        "id": "townStage",
+        "label": "廣場舞台",
+        "group": "小鎮",
+        "size": [
+          220,
+          220
+        ],
+        "states": [
+          {
+            "id": "day",
+            "label": "白天"
+          },
+          {
+            "id": "night",
+            "label": "夜晚（窗戶亮燈）"
+          }
+        ]
+      },
+      {
+        "id": "streetLamp",
+        "label": "路燈",
+        "group": "小鎮",
+        "size": [
+          40,
+          160
+        ],
+        "states": [
+          {
+            "id": "day",
+            "label": "白天"
+          },
+          {
+            "id": "night",
+            "label": "夜晚（窗戶亮燈）"
+          }
+        ]
+      },
+      {
+        "id": "townGate",
+        "label": "小鎮城門",
+        "group": "小鎮",
+        "size": [
+          200,
+          230
+        ],
+        "states": [
+          {
+            "id": "forest",
+            "label": "森林大門"
+          },
+          {
+            "id": "lake",
+            "label": "湖"
+          },
+          {
+            "id": "graveyard",
+            "label": "夜光墓園大門"
+          },
+          {
+            "id": "portal",
+            "label": "回小鎮的傳送門"
+          }
+        ]
+      },
+      {
+        "id": "townForestBack",
+        "label": "森林入口後方的樹林",
+        "group": "小鎮",
+        "size": [
+          460,
+          260
+        ]
+      },
+      {
+        "id": "townLakeBack",
+        "label": "湖（入口後方）",
+        "group": "小鎮",
+        "size": [
+          480,
+          150
+        ]
+      },
+      {
+        "id": "townGraveBack",
+        "label": "墓園入口後方的墓碑",
+        "group": "小鎮",
+        "size": [
+          460,
+          200
+        ]
+      },
+      {
+        "id": "townLab",
+        "label": "神秘的房間（奇怪的實驗室）",
+        "group": "小鎮",
+        "size": [
+          240,
+          300
+        ],
+        "states": [
+          {
+            "id": "day",
+            "label": "白天"
+          },
+          {
+            "id": "night",
+            "label": "夜晚（窗戶亮燈）"
+          }
+        ]
+      },
+      {
+        "id": "homeBed",
+        "label": "床",
+        "group": "商店",
+        "size": [
+          200,
+          110
+        ]
+      },
+      {
+        "id": "homeCloset",
+        "label": "衣櫃",
+        "group": "商店",
+        "size": [
+          120,
+          190
+        ],
+        "states": [
+          {
+            "id": "default",
+            "label": "預設"
+          },
+          {
+            "id": "white",
+            "label": "白色"
+          },
+          {
+            "id": "trunk",
+            "label": "樹幹"
+          },
+          {
+            "id": "chest",
+            "label": "寶箱"
+          },
+          {
+            "id": "capsule",
+            "label": "太空艙"
+          }
+        ]
+      },
+      {
+        "id": "homeRug",
+        "label": "地毯",
+        "group": "商店",
+        "size": [
+          220,
+          40
+        ],
+        "states": [
+          {
+            "id": "default",
+            "label": "預設"
+          },
+          {
+            "id": "checker",
+            "label": "格子"
+          },
+          {
+            "id": "rainbow",
+            "label": "彩虹"
+          },
+          {
+            "id": "grass",
+            "label": "草皮"
+          },
+          {
+            "id": "starfish",
+            "label": "海星"
+          },
+          {
+            "id": "planet",
+            "label": "行星"
+          },
+          {
+            "id": "donut",
+            "label": "甜甜圈"
+          }
+        ]
+      },
+      {
+        "id": "homeLamp",
+        "label": "立燈",
+        "group": "商店",
+        "size": [
+          50,
+          150
+        ],
+        "states": [
+          {
+            "id": "default",
+            "label": "預設"
+          },
+          {
+            "id": "mushroom",
+            "label": "蘑菇燈"
+          },
+          {
+            "id": "lighthouse",
+            "label": "燈塔燈"
+          },
+          {
+            "id": "moon",
+            "label": "月亮燈"
+          },
+          {
+            "id": "icecream",
+            "label": "冰淇淋燈"
+          }
+        ]
+      },
+      {
+        "id": "homePicture",
+        "label": "掛畫",
+        "group": "商店",
+        "size": [
+          70,
+          60
+        ]
+      },
+      {
+        "id": "photoCamera",
+        "label": "三腳架相機",
+        "group": "商店",
+        "size": [
+          80,
+          150
+        ]
+      },
+      {
+        "id": "photoLight",
+        "label": "柔光傘燈",
+        "group": "商店",
+        "size": [
+          90,
+          160
+        ]
+      },
+      {
+        "id": "galleryDoor",
+        "label": "美術館出口大門",
+        "group": "商店",
+        "size": [
+          160,
+          230
+        ]
+      },
+      {
+        "id": "galleryBench",
+        "label": "美術館長椅",
+        "group": "商店",
+        "size": [
+          200,
+          60
+        ]
+      },
+      {
+        "id": "galleryRope",
+        "label": "紅龍柱圍欄",
+        "group": "商店",
+        "size": [
+          150,
+          80
+        ]
+      },
+      {
+        "id": "galleryLamp",
+        "label": "畫作投射燈",
+        "group": "商店",
+        "size": [
+          60,
+          30
+        ]
+      },
+      {
+        "id": "slipper",
+        "label": "超神拖鞋",
+        "group": "蟑螂數獨",
+        "size": [
+          48,
+          48
+        ],
+        "states": [
+          "idle",
+          "slap",
+          "lift"
+        ]
+      },
+      {
+        "id": "cockroach",
+        "label": "呆萌小強",
+        "group": "蟑螂數獨",
+        "size": [
+          48,
+          48
+        ],
+        "states": [
+          "idle",
+          "dizzy"
+        ]
+      },
+      {
+        "id": "slapFx",
+        "label": "拍打煙霧",
+        "group": "蟑螂數獨",
+        "size": [
+          48,
+          48
+        ]
+      },
+      {
+        "id": "tileCross",
+        "label": "安全叉號",
+        "group": "蟑螂數獨",
+        "size": [
+          48,
+          48
+        ]
+      },
+      {
+        "id": "homeWindowFrame",
+        "label": "窗框（我的家）",
+        "group": "我的家",
+        "size": [
+          120,
+          100
+        ],
+        "states": [
+          {
+            "id": "default",
+            "label": "方窗"
+          },
+          {
+            "id": "round",
+            "label": "圓窗"
+          },
+          {
+            "id": "arch",
+            "label": "拱形窗"
+          },
+          {
+            "id": "porthole",
+            "label": "船艙圓窗"
+          },
+          {
+            "id": "capsule",
+            "label": "太空艙窗"
+          }
+        ]
+      },
+      {
+        "id": "homeCurtains",
+        "label": "窗簾",
+        "group": "我的家",
+        "size": [
+          136,
+          110
+        ],
+        "states": [
+          {
+            "id": "sky",
+            "label": "藍"
+          },
+          {
+            "id": "rose",
+            "label": "粉"
+          },
+          {
+            "id": "mint",
+            "label": "綠"
+          },
+          {
+            "id": "sun",
+            "label": "黃"
+          },
+          {
+            "id": "lilac",
+            "label": "紫"
+          },
+          {
+            "id": "lace",
+            "label": "蕾絲"
+          },
+          {
+            "id": "vine",
+            "label": "藤蔓"
+          },
+          {
+            "id": "seaweed",
+            "label": "海草"
+          },
+          {
+            "id": "stars",
+            "label": "星星"
+          },
+          {
+            "id": "candy",
+            "label": "糖果條紋"
+          }
+        ]
+      },
+      {
+        "id": "homeShelf",
+        "label": "置物架",
+        "group": "我的家",
+        "size": [
+          200,
+          26
+        ],
+        "states": [
+          {
+            "id": "default",
+            "label": "預設"
+          },
+          {
+            "id": "white",
+            "label": "白色"
+          },
+          {
+            "id": "branch",
+            "label": "樹枝"
+          },
+          {
+            "id": "sea",
+            "label": "海洋"
+          },
+          {
+            "id": "planet",
+            "label": "行星"
+          },
+          {
+            "id": "cookie",
+            "label": "餅乾"
+          }
+        ]
+      },
+      {
+        "id": "homeFrame",
+        "label": "畫框（自畫像）",
+        "group": "我的家",
+        "size": [
+          70,
+          70
+        ]
+      },
+      {
+        "id": "homeWreath",
+        "label": "花圈",
+        "group": "我的家",
+        "size": [
+          70,
+          70
+        ]
+      },
+      {
+        "id": "homeStars",
+        "label": "星星吊飾",
+        "group": "我的家",
+        "size": [
+          70,
+          90
+        ]
+      },
+      {
+        "id": "homeBigPlant",
+        "label": "大盆栽",
+        "group": "我的家",
+        "size": [
+          70,
+          150
+        ]
+      },
+      {
+        "id": "homeBedBunk",
+        "label": "雙層床",
+        "group": "我的家",
+        "size": [
+          200,
+          170
+        ]
+      },
+      {
+        "id": "homeBedTree",
+        "label": "樹屋床",
+        "group": "我的家",
+        "size": [
+          200,
+          150
+        ]
+      },
+      {
+        "id": "homeBedShell",
+        "label": "貝殼床",
+        "group": "我的家",
+        "size": [
+          200,
+          120
+        ]
+      },
+      {
+        "id": "townFurniture",
+        "label": "家具店",
+        "group": "小鎮",
+        "size": [
+          220,
+          290
+        ],
+        "states": [
+          {
+            "id": "day",
+            "label": "白天"
+          },
+          {
+            "id": "night",
+            "label": "夜晚（窗戶亮燈）"
+          }
+        ]
+      },
+      {
+        "id": "homeCeiling",
+        "label": "吊燈",
+        "group": "我的家",
+        "size": [
+          70,
+          110
+        ],
+        "states": [
+          {
+            "id": "round",
+            "label": "圓燈罩"
+          },
+          {
+            "id": "star",
+            "label": "星星"
+          },
+          {
+            "id": "jelly",
+            "label": "水母"
+          },
+          {
+            "id": "planet",
+            "label": "行星"
+          },
+          {
+            "id": "candy",
+            "label": "糖果"
+          }
+        ]
+      },
+      {
+        "id": "homePic",
+        "label": "掛畫",
+        "group": "我的家",
+        "size": [
+          70,
+          60
+        ],
+        "states": [
+          {
+            "id": "rainbow",
+            "label": "彩虹"
+          },
+          {
+            "id": "dino",
+            "label": "恐龍"
+          },
+          {
+            "id": "rocket",
+            "label": "火箭"
+          },
+          {
+            "id": "cat",
+            "label": "貓咪"
+          },
+          {
+            "id": "dolphin",
+            "label": "海豚"
+          },
+          {
+            "id": "cake",
+            "label": "蛋糕"
+          }
+        ]
+      },
+      {
+        "id": "homeHang",
+        "label": "掛飾",
+        "group": "我的家",
+        "size": [
+          70,
+          90
+        ],
+        "states": [
+          {
+            "id": "bunting",
+            "label": "旗子串"
+          },
+          {
+            "id": "dream",
+            "label": "捕夢網"
+          },
+          {
+            "id": "clock",
+            "label": "掛鐘"
+          }
+        ]
+      },
+      {
+        "id": "homeSmall",
+        "label": "小擺飾",
+        "group": "我的家",
+        "size": [
+          50,
+          56
+        ],
+        "states": [
+          {
+            "id": "clock",
+            "label": "鬧鐘"
+          },
+          {
+            "id": "globe",
+            "label": "地球儀"
+          },
+          {
+            "id": "fish",
+            "label": "魚缸"
+          },
+          {
+            "id": "snow",
+            "label": "雪花球"
+          },
+          {
+            "id": "hourglass",
+            "label": "沙漏"
+          },
+          {
+            "id": "trophy",
+            "label": "獎盃"
+          },
+          {
+            "id": "dino",
+            "label": "恐龍模型"
+          },
+          {
+            "id": "cactus",
+            "label": "仙人掌"
+          }
+        ]
+      },
+      {
+        "id": "homeBigDeco",
+        "label": "大擺飾",
+        "group": "我的家",
+        "size": [
+          70,
+          150
+        ],
+        "states": [
+          {
+            "id": "sunflower",
+            "label": "向日葵"
+          },
+          {
+            "id": "coral",
+            "label": "珊瑚"
+          },
+          {
+            "id": "clock",
+            "label": "落地鐘"
+          },
+          {
+            "id": "globe",
+            "label": "大地球儀"
+          },
+          {
+            "id": "dino",
+            "label": "大恐龍"
+          }
+        ]
+      },
+      {
+        "id": "homeToy",
+        "label": "玩具",
+        "group": "我的家",
+        "size": [
+          80,
+          70
+        ],
+        "states": [
+          {
+            "id": "blocks",
+            "label": "積木"
+          },
+          {
+            "id": "robot",
+            "label": "機器人"
+          },
+          {
+            "id": "train",
+            "label": "玩具火車"
+          }
+        ]
+      },
+      {
+        "id": "homeBedRocket",
+        "label": "火箭床",
+        "group": "我的家",
+        "size": [
+          200,
+          130
+        ]
+      },
+      {
+        "id": "homeBedCake",
+        "label": "蛋糕床",
+        "group": "我的家",
+        "size": [
+          200,
+          120
+        ]
+      },
+      {
+        "id": "homePet",
+        "label": "寵物",
+        "group": "我的家",
+        "size": [
+          90,
+          72
+        ],
+        "states": [
+          {
+            "id": "orange",
+            "label": "橘貓"
+          },
+          {
+            "id": "siamese",
+            "label": "暹羅貓"
+          },
+          {
+            "id": "blackdog",
+            "label": "黑狗"
+          },
+          {
+            "id": "whitedog",
+            "label": "白狗"
+          }
+        ]
       }
     ],
     "note": "帶 states 的道具可互動，預覽頁點擊循環切換狀態；hover 放大並列出所有狀態。道具不加不必要的亮點。",
@@ -7404,13 +8524,13 @@
         "airMs": 900
       },
       "pace": {
-        "hold": 1.1,
+        "hold": 1.6,
         "tap": 1.6,
         "back": 0.85,
         "tapCount": 3,
         "tapWindowMs": 900,
         "tapKeepMs": 450,
-        "note": "方向鍵步調：按住 → 略快、連續點 → 明顯變快（tapWindowMs 內點 tapCount 次以上、最後一次在 tapKeepMs 內）、按住 ← 略慢；速度＝基準 × 加速道具（取最大）× 減速相乘 × 步調"
+        "note": "方向鍵步調（2026-11-04 起）：按住 → 就加速（hold 1.6，不用連點）、按住 ← 略慢；tap 保留與 hold 相同。速度＝基準 × 加速道具（取最大）× 減速相乘 × 步調"
       }
     },
     "effects": {
@@ -7602,10 +8722,6 @@
             ]
           },
           {
-            "id": "rock",
-            "x": 2250
-          },
-          {
             "id": "boostCan",
             "x": 2430
           },
@@ -7621,10 +8737,6 @@
             "id": "mud",
             "x": 2950,
             "w": 110
-          },
-          {
-            "id": "rock",
-            "x": 3100
           }
         ]
       },
@@ -7655,10 +8767,6 @@
           {
             "id": "spring",
             "x": 960
-          },
-          {
-            "id": "rock",
-            "x": 1010
           },
           {
             "id": "speedShoe",
@@ -7709,10 +8817,6 @@
             "x": 2400
           },
           {
-            "id": "rock",
-            "x": 2610
-          },
-          {
             "id": "boostCan",
             "x": 2750
           },
@@ -7752,10 +8856,6 @@
           {
             "id": "speedShoe",
             "x": 720
-          },
-          {
-            "id": "rock",
-            "x": 900
           },
           {
             "id": "boostCan",
@@ -7826,20 +8926,12 @@
             "x": 2620
           },
           {
-            "id": "rock",
-            "x": 2700
-          },
-          {
             "id": "speedShoe",
             "x": 2850
           },
           {
             "id": "rock",
             "x": 3000
-          },
-          {
-            "id": "rock",
-            "x": 3150
           },
           {
             "id": "speedShoe",
@@ -7932,6 +9024,9 @@
         "l4u3": 1.25,
         "l4u4": 1.25,
         "l4u5": 1.5,
+        "l4u6": 1.25,
+        "l4u7": 1.25,
+        "l4u8": 1.25,
         "l1u1": 1.25,
         "l1u2": 1.25,
         "l1u3": 1.25,
@@ -9989,10 +11084,13 @@
         "label": "傳奇宇航員",
         "minAltitude": 30000
       }
-    ]
+    ],
+    "sameKeyThrust": 1,
+    "hintAfterSameKeys": 4,
+    "alternateNote": "2026-11-04 放寬：連按同一鍵也有推力（sameKeyThrust 倍，連擊不歸零也不增加）；A、B 輪流按才會累積連擊加成（最高 2.2 倍）。連按同一鍵 hintAfterSameKeys 次以上才溫和提示「輪流按會更快」。"
   },
   "shop": {
-    "note": "造型商店（2026-10-20）：用遊戲代幣購買新款式。原本的款式全部免費；這裡列的才需要購買。field＝Look 欄位（accessories 為陣列）或 scene。價格區間：一般 20–40、稀有 80–150、場景 150–200。refundWindowMs 內可以退回（全額退代幣）。",
+    "note": "造型商店（2026-10-20）：用遊戲代幣購買新款式。原本的款式全部免費；這裡列的才需要購買。field＝Look 欄位（accessories 為陣列）或 scene。價格區間：一般 20–40、稀有 80–150、場景 150–200。refundWindowMs 內可以退回（全額退代幣）。 field＝furniture 的是家具店（我的家・佈置）的家具，value＝home.catalog 的 id。",
     "refundWindowMs": 600000,
     "sceneTrial": {
       "seconds": 30,
@@ -10095,6 +11193,601 @@
         "value": "graveyard",
         "price": 180,
         "tier": "scene"
+      },
+      {
+        "id": "outfit:raincoat",
+        "field": "outfit",
+        "value": "raincoat",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "outfit:jersey",
+        "field": "outfit",
+        "value": "jersey",
+        "price": 25,
+        "tier": "common"
+      },
+      {
+        "id": "outfit:pajamas",
+        "field": "outfit",
+        "value": "pajamas",
+        "price": 25,
+        "tier": "common"
+      },
+      {
+        "id": "outfit:wetsuit",
+        "field": "outfit",
+        "value": "wetsuit",
+        "price": 120,
+        "tier": "rare"
+      },
+      {
+        "id": "outfit:spacesuit",
+        "field": "outfit",
+        "value": "spacesuit",
+        "price": 150,
+        "tier": "rare"
+      },
+      {
+        "id": "outfit:dino",
+        "field": "outfit",
+        "value": "dino",
+        "price": 150,
+        "tier": "rare"
+      },
+      {
+        "id": "furniture:wall-stripes",
+        "field": "furniture",
+        "value": "wall-stripes",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:wall-dots",
+        "field": "furniture",
+        "value": "wall-dots",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:wall-clouds",
+        "field": "furniture",
+        "value": "wall-clouds",
+        "price": 35,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:wall-leaves",
+        "field": "furniture",
+        "value": "wall-leaves",
+        "price": 35,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:wall-waves",
+        "field": "furniture",
+        "value": "wall-waves",
+        "price": 35,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:floor-tiles",
+        "field": "furniture",
+        "value": "floor-tiles",
+        "price": 35,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:floor-grass",
+        "field": "furniture",
+        "value": "floor-grass",
+        "price": 40,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:floor-sand",
+        "field": "furniture",
+        "value": "floor-sand",
+        "price": 40,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:curt-lace",
+        "field": "furniture",
+        "value": "curt-lace",
+        "price": 25,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:curt-vine",
+        "field": "furniture",
+        "value": "curt-vine",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:curt-seaweed",
+        "field": "furniture",
+        "value": "curt-seaweed",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:bed-bunk",
+        "field": "furniture",
+        "value": "bed-bunk",
+        "price": 40,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:bed-tree",
+        "field": "furniture",
+        "value": "bed-tree",
+        "price": 120,
+        "tier": "rare"
+      },
+      {
+        "id": "furniture:bed-shell",
+        "field": "furniture",
+        "value": "bed-shell",
+        "price": 120,
+        "tier": "rare"
+      },
+      {
+        "id": "furniture:closet-white",
+        "field": "furniture",
+        "value": "closet-white",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:closet-trunk",
+        "field": "furniture",
+        "value": "closet-trunk",
+        "price": 40,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:closet-chest",
+        "field": "furniture",
+        "value": "closet-chest",
+        "price": 90,
+        "tier": "rare"
+      },
+      {
+        "id": "furniture:rug-checker",
+        "field": "furniture",
+        "value": "rug-checker",
+        "price": 25,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:rug-rainbow",
+        "field": "furniture",
+        "value": "rug-rainbow",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:rug-grass",
+        "field": "furniture",
+        "value": "rug-grass",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:rug-starfish",
+        "field": "furniture",
+        "value": "rug-starfish",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:shelf-white",
+        "field": "furniture",
+        "value": "shelf-white",
+        "price": 25,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:shelf-branch",
+        "field": "furniture",
+        "value": "shelf-branch",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:shelf-sea",
+        "field": "furniture",
+        "value": "shelf-sea",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:ceiling-round",
+        "field": "furniture",
+        "value": "ceiling-round",
+        "price": 25,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:ceiling-star",
+        "field": "furniture",
+        "value": "ceiling-star",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:ceiling-jelly",
+        "field": "furniture",
+        "value": "ceiling-jelly",
+        "price": 80,
+        "tier": "rare"
+      },
+      {
+        "id": "furniture:ceiling-planet",
+        "field": "furniture",
+        "value": "ceiling-planet",
+        "price": 80,
+        "tier": "rare"
+      },
+      {
+        "id": "furniture:ceiling-candy",
+        "field": "furniture",
+        "value": "ceiling-candy",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:lamp-mushroom",
+        "field": "furniture",
+        "value": "lamp-mushroom",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:lamp-lighthouse",
+        "field": "furniture",
+        "value": "lamp-lighthouse",
+        "price": 35,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:lamp-moon",
+        "field": "furniture",
+        "value": "lamp-moon",
+        "price": 35,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:lamp-icecream",
+        "field": "furniture",
+        "value": "lamp-icecream",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:pic-rainbow",
+        "field": "furniture",
+        "value": "pic-rainbow",
+        "price": 20,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:pic-dino",
+        "field": "furniture",
+        "value": "pic-dino",
+        "price": 20,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:pic-rocket",
+        "field": "furniture",
+        "value": "pic-rocket",
+        "price": 20,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:pic-cat",
+        "field": "furniture",
+        "value": "pic-cat",
+        "price": 20,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:pic-dolphin",
+        "field": "furniture",
+        "value": "pic-dolphin",
+        "price": 20,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:pic-cake",
+        "field": "furniture",
+        "value": "pic-cake",
+        "price": 20,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:hang-bunting",
+        "field": "furniture",
+        "value": "hang-bunting",
+        "price": 25,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:hang-dream",
+        "field": "furniture",
+        "value": "hang-dream",
+        "price": 25,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:hang-clock",
+        "field": "furniture",
+        "value": "hang-clock",
+        "price": 25,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:small-clock",
+        "field": "furniture",
+        "value": "small-clock",
+        "price": 20,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:small-globe",
+        "field": "furniture",
+        "value": "small-globe",
+        "price": 25,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:small-fish",
+        "field": "furniture",
+        "value": "small-fish",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:small-snow",
+        "field": "furniture",
+        "value": "small-snow",
+        "price": 25,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:small-hourglass",
+        "field": "furniture",
+        "value": "small-hourglass",
+        "price": 20,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:small-trophy",
+        "field": "furniture",
+        "value": "small-trophy",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:small-dino",
+        "field": "furniture",
+        "value": "small-dino",
+        "price": 25,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:small-cactus",
+        "field": "furniture",
+        "value": "small-cactus",
+        "price": 20,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:big-sunflower",
+        "field": "furniture",
+        "value": "big-sunflower",
+        "price": 25,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:big-coral",
+        "field": "furniture",
+        "value": "big-coral",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:big-clock",
+        "field": "furniture",
+        "value": "big-clock",
+        "price": 35,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:big-globe",
+        "field": "furniture",
+        "value": "big-globe",
+        "price": 35,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:big-dino",
+        "field": "furniture",
+        "value": "big-dino",
+        "price": 90,
+        "tier": "rare"
+      },
+      {
+        "id": "furniture:toy-blocks",
+        "field": "furniture",
+        "value": "toy-blocks",
+        "price": 20,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:toy-robot",
+        "field": "furniture",
+        "value": "toy-robot",
+        "price": 25,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:toy-train",
+        "field": "furniture",
+        "value": "toy-train",
+        "price": 25,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:curt-stars",
+        "field": "furniture",
+        "value": "curt-stars",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:curt-candy",
+        "field": "furniture",
+        "value": "curt-candy",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:bed-rocket",
+        "field": "furniture",
+        "value": "bed-rocket",
+        "price": 150,
+        "tier": "rare"
+      },
+      {
+        "id": "furniture:bed-cake",
+        "field": "furniture",
+        "value": "bed-cake",
+        "price": 120,
+        "tier": "rare"
+      },
+      {
+        "id": "furniture:closet-capsule",
+        "field": "furniture",
+        "value": "closet-capsule",
+        "price": 100,
+        "tier": "rare"
+      },
+      {
+        "id": "furniture:rug-planet",
+        "field": "furniture",
+        "value": "rug-planet",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:rug-donut",
+        "field": "furniture",
+        "value": "rug-donut",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:shelf-planet",
+        "field": "furniture",
+        "value": "shelf-planet",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:shelf-cookie",
+        "field": "furniture",
+        "value": "shelf-cookie",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:wall-starry",
+        "field": "furniture",
+        "value": "wall-starry",
+        "price": 100,
+        "tier": "rare"
+      },
+      {
+        "id": "furniture:wall-candy",
+        "field": "furniture",
+        "value": "wall-candy",
+        "price": 35,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:floor-glass",
+        "field": "furniture",
+        "value": "floor-glass",
+        "price": 100,
+        "tier": "rare"
+      },
+      {
+        "id": "furniture:floor-cookie",
+        "field": "furniture",
+        "value": "floor-cookie",
+        "price": 40,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:pet-orange",
+        "field": "furniture",
+        "value": "pet-orange",
+        "price": 40,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:pet-siamese",
+        "field": "furniture",
+        "value": "pet-siamese",
+        "price": 40,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:pet-blackdog",
+        "field": "furniture",
+        "value": "pet-blackdog",
+        "price": 40,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:pet-whitedog",
+        "field": "furniture",
+        "value": "pet-whitedog",
+        "price": 40,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:win-round",
+        "field": "furniture",
+        "value": "win-round",
+        "price": 30,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:win-arch",
+        "field": "furniture",
+        "value": "win-arch",
+        "price": 35,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:win-porthole",
+        "field": "furniture",
+        "value": "win-porthole",
+        "price": 40,
+        "tier": "common"
+      },
+      {
+        "id": "furniture:win-capsule",
+        "field": "furniture",
+        "value": "win-capsule",
+        "price": 90,
+        "tier": "rare"
       }
     ]
   },
@@ -10191,6 +11884,2537 @@
       "encouragement": "差一點點就點亮所有石燈籠了！再挑戰一次吧！",
       "victory": "太棒了！5 座辟邪石燈籠已全數點亮，擊碎了調皮大南瓜！",
       "needMoreTokens": "再賺 {n} 個代幣就可以玩囉！"
+    }
+  },
+  "town": {
+    "note": "角色小鎮（docs/plan-game-town.md）。座標單位＝舞台寬；角色在世界中的位置＝stage.offset／舞台寬。街道 0～length，兩端是街道盡頭（樹籬），角色可走範圍 bounds、鏡頭中心範圍 camRange（走到盡頭鏡頭停住、角色繼續走到畫面邊緣）。只有 ↑（或點建築）會進門；進門前角色轉背面原地走 enterMs 毫秒。第一階段：建築是色塊佔位；第二階段（2a）起有 shop 的地點（造型店、服裝店、配件店、道具店）在小鎮裡開店內畫面，其他地點仍暫接角色工作室對應分頁（link）。shop.sections.type：thumb（縮圖，mode head／body）、swatch（色票，src skin／hair／hue）、pants（褲子顏色＋同衣服）、acc（配件多選）。 kind mystery＋locked：還沒開放的地點，按 ↑ 會敲門、顯示 lockedText，不會進去（神秘的房間，之後做成奇怪造型的房子）。shop.sections 的 art: item＝縮圖只畫道具不畫人物（GameArt.itemIcon）；acc 的 items 是這一區的配件清單，\"rest\"＝其他沒分到的配件。 v2.18.0：街景（遠景屋頂、人行道、馬路）由 GameArt.townLayers 畫，顏色 town.colors（借森林天空，不是獨立場景，不進 GameArt.scenes）；建築用 props（places[].prop／propState，state day／night），路燈 lamps；timeMode system＝跟裝置時間換日夜。 v2.19.0：backdrops＝城門後方的大背景（森林樹林、湖、墓碑），frontDecor＝前面的樹叢（scale 倍率）；神秘的房間 prop townLab。 v2.20.0：建築不放招牌，名稱（英文＋中文）只在角色靠近時的提示泡泡顯示，泡泡貼在建築上緣；建築改成誇張造型（假髮屋頂、巨大 T 恤、大禮帽＋大眼鏡、復古相機屋頂、玩具箱）。 v2.22.0：神秘的房間（實驗室傳送門）通往宇宙空間。",
+    "sceneId": "forest",
+    "hideLayers": [
+      "far",
+      "mid",
+      "ground",
+      "near",
+      "canopy"
+    ],
+    "time": 0.3,
+    "charH": 0.3,
+    "length": 3.96,
+    "bounds": [
+      0.07,
+      3.89
+    ],
+    "startX": 0.82,
+    "enterRange": 0.08,
+    "places": [
+      {
+        "id": "forestGate",
+        "label": "森林",
+        "en": "FOREST",
+        "x": 0.32,
+        "kind": "portal",
+        "hue": "leaf",
+        "say": "Let's go to the forest!",
+        "link": {
+          "tab": "scene",
+          "scene": "forest"
+        },
+        "prop": "townGate",
+        "propState": "forest"
+      },
+      {
+        "id": "home",
+        "label": "我的家",
+        "en": "MY HOME",
+        "x": 0.66,
+        "kind": "home",
+        "hue": "peach",
+        "say": "Welcome home!",
+        "link": {
+          "tab": "style",
+          "cat": "body"
+        },
+        "prop": "townHome",
+        "shop": {
+          "mode": "home",
+          "hello": "Welcome home!",
+          "zhHello": "歡迎回家！",
+          "lines": {
+            "bye": {
+              "en": "See you later!",
+              "zh": "待會見！"
+            }
+          },
+          "interior": {
+            "decor": [
+              {
+                "prop": "shopWindow",
+                "state": "sky",
+                "left": 6,
+                "bottom": 54,
+                "width": 28
+              },
+              {
+                "prop": "homePicture",
+                "left": 40,
+                "bottom": 62,
+                "width": 13
+              },
+              {
+                "prop": "homeCloset",
+                "left": 73,
+                "bottom": 26,
+                "width": 25
+              },
+              {
+                "prop": "homeBed",
+                "left": 2,
+                "bottom": 20,
+                "width": 44
+              },
+              {
+                "prop": "homeLamp",
+                "left": 47,
+                "bottom": 26,
+                "width": 9
+              },
+              {
+                "prop": "homeRug",
+                "left": 28,
+                "bottom": 2,
+                "width": 46
+              },
+              {
+                "prop": "pottedPlant",
+                "left": 92,
+                "bottom": 22,
+                "width": 7
+              }
+            ]
+          },
+          "sections": [
+            {
+              "field": "skin",
+              "type": "swatch",
+              "label": "膚色",
+              "src": "skin"
+            },
+            {
+              "field": "hairStyle",
+              "type": "thumb",
+              "label": "髮型",
+              "mode": "head"
+            },
+            {
+              "field": "hairColor",
+              "type": "swatch",
+              "label": "髮色",
+              "src": "hair"
+            },
+            {
+              "field": "faceShape",
+              "type": "thumb",
+              "label": "臉型",
+              "mode": "head"
+            },
+            {
+              "field": "eyes",
+              "type": "thumb",
+              "label": "眼睛",
+              "mode": "head"
+            },
+            {
+              "field": "brows",
+              "type": "thumb",
+              "label": "眉毛",
+              "mode": "head"
+            },
+            {
+              "field": "mouth",
+              "type": "thumb",
+              "label": "嘴巴",
+              "mode": "head"
+            },
+            {
+              "field": "outfit",
+              "type": "thumb",
+              "label": "衣服",
+              "mode": "body"
+            },
+            {
+              "field": "outfitColor",
+              "type": "swatch",
+              "label": "衣服顏色",
+              "src": "hue"
+            },
+            {
+              "field": "pantsColor",
+              "type": "pants",
+              "label": "褲子顏色"
+            },
+            {
+              "field": "accessories",
+              "type": "acc",
+              "art": "item",
+              "label": "配件・帽子與頭套",
+              "items": [
+                "cap",
+                "melonhat",
+                "witchhat",
+                "mikanhood",
+                "bluehood",
+                "pumpkinhood"
+              ]
+            },
+            {
+              "field": "accessories",
+              "type": "acc",
+              "art": "item",
+              "label": "配件・眼鏡與耳機",
+              "items": [
+                "glasses-round",
+                "glasses-soft",
+                "goggles",
+                "headphones"
+              ]
+            },
+            {
+              "field": "accessories",
+              "type": "acc",
+              "art": "item",
+              "label": "配件・背在身上",
+              "items": [
+                "backpack",
+                "wings",
+                "cape"
+              ]
+            },
+            {
+              "field": "accessories",
+              "type": "acc",
+              "art": "item",
+              "label": "配件・特別的",
+              "items": [
+                "zombieTalisman"
+              ]
+            },
+            {
+              "field": "accessories",
+              "type": "acc",
+              "art": "item",
+              "label": "配件・其他",
+              "items": "rest"
+            },
+            {
+              "field": "held",
+              "type": "thumb",
+              "label": "手上拿的東西",
+              "mode": "body",
+              "art": "item"
+            }
+          ]
+        }
+      },
+      {
+        "id": "salon",
+        "label": "造型店",
+        "en": "HAIR SALON",
+        "x": 0.98,
+        "kind": "shop",
+        "hue": "rose",
+        "say": "Hello! Welcome to the hair salon.",
+        "link": {
+          "tab": "style",
+          "cat": "hair"
+        },
+        "shop": {
+          "keeper": {
+            "name": "Mia",
+            "look": {
+              "species": "kid",
+              "skin": "peach",
+              "hairStyle": "twintail",
+              "hairColor": "rose",
+              "eyes": "lash",
+              "mouth": "smile",
+              "faceShape": "oval",
+              "brows": "arch",
+              "outfit": "dress",
+              "outfitColor": "rose",
+              "pantsColor": "match",
+              "accessories": [
+                "glasses-soft"
+              ],
+              "held": "none"
+            }
+          },
+          "zhHello": "哈囉！歡迎來到造型店。",
+          "sections": [
+            {
+              "field": "skin",
+              "type": "swatch",
+              "label": "膚色",
+              "src": "skin"
+            },
+            {
+              "field": "hairStyle",
+              "type": "thumb",
+              "label": "髮型",
+              "mode": "head"
+            },
+            {
+              "field": "hairColor",
+              "type": "swatch",
+              "label": "髮色",
+              "src": "hair"
+            },
+            {
+              "field": "faceShape",
+              "type": "thumb",
+              "label": "臉型",
+              "mode": "head"
+            },
+            {
+              "field": "eyes",
+              "type": "thumb",
+              "label": "眼睛",
+              "mode": "head"
+            },
+            {
+              "field": "brows",
+              "type": "thumb",
+              "label": "眉毛",
+              "mode": "head"
+            },
+            {
+              "field": "mouth",
+              "type": "thumb",
+              "label": "嘴巴",
+              "mode": "head"
+            }
+          ],
+          "interior": {
+            "counter": "rose",
+            "decor": [
+              {
+                "prop": "shopWindow",
+                "state": "rose",
+                "left": 4,
+                "bottom": 52,
+                "width": 30
+              },
+              {
+                "prop": "salonMirror",
+                "left": 52,
+                "bottom": 28,
+                "width": 20
+              },
+              {
+                "prop": "salonMirror",
+                "left": 76,
+                "bottom": 28,
+                "width": 20
+              },
+              {
+                "prop": "pottedPlant",
+                "left": 89,
+                "bottom": 22,
+                "width": 8
+              }
+            ]
+          }
+        },
+        "prop": "townSalon"
+      },
+      {
+        "id": "clothes",
+        "label": "服裝店",
+        "en": "CLOTHES SHOP",
+        "x": 1.3,
+        "kind": "shop",
+        "hue": "sky",
+        "say": "Hello! Welcome to the clothes shop.",
+        "link": {
+          "tab": "style",
+          "cat": "outfit"
+        },
+        "shop": {
+          "keeper": {
+            "name": "Leo",
+            "look": {
+              "species": "kid",
+              "skin": "sand",
+              "hairStyle": "sidepart",
+              "hairColor": "chestnut",
+              "eyes": "dot",
+              "mouth": "smile",
+              "faceShape": "square",
+              "brows": "thick",
+              "outfit": "jacket",
+              "outfitColor": "sky",
+              "pantsColor": "ink",
+              "accessories": [],
+              "held": "none"
+            }
+          },
+          "zhHello": "哈囉！歡迎來到服裝店。",
+          "sections": [
+            {
+              "field": "outfit",
+              "type": "thumb",
+              "label": "衣服",
+              "mode": "body"
+            },
+            {
+              "field": "outfitColor",
+              "type": "swatch",
+              "label": "衣服顏色",
+              "src": "hue"
+            },
+            {
+              "field": "pantsColor",
+              "type": "pants",
+              "label": "褲子顏色"
+            }
+          ],
+          "interior": {
+            "counter": "sky",
+            "decor": [
+              {
+                "prop": "shopWindow",
+                "state": "sky",
+                "left": 4,
+                "bottom": 52,
+                "width": 30
+              },
+              {
+                "prop": "clothesRack",
+                "left": 50,
+                "bottom": 28,
+                "width": 46
+              },
+              {
+                "prop": "pottedPlant",
+                "left": 89,
+                "bottom": 22,
+                "width": 8
+              }
+            ]
+          }
+        },
+        "prop": "townClothes"
+      },
+      {
+        "id": "acc",
+        "label": "配件店",
+        "en": "ACCESSORY SHOP",
+        "x": 1.62,
+        "kind": "shop",
+        "hue": "lilac",
+        "say": "Hello! Welcome to the accessory shop.",
+        "link": {
+          "tab": "style",
+          "cat": "acc"
+        },
+        "shop": {
+          "keeper": {
+            "name": "Nina",
+            "look": {
+              "species": "kid",
+              "skin": "honey",
+              "hairStyle": "bob",
+              "hairColor": "ink",
+              "eyes": "happy",
+              "mouth": "open",
+              "faceShape": "round",
+              "brows": "thin",
+              "outfit": "overalls",
+              "outfitColor": "lilac",
+              "pantsColor": "match",
+              "accessories": [
+                "glasses-round",
+                "witchhat"
+              ],
+              "held": "none"
+            }
+          },
+          "zhHello": "哈囉！歡迎來到配件店。",
+          "sections": [
+            {
+              "field": "accessories",
+              "type": "acc",
+              "art": "item",
+              "label": "帽子與頭套",
+              "items": [
+                "cap",
+                "melonhat",
+                "witchhat",
+                "mikanhood",
+                "bluehood",
+                "pumpkinhood"
+              ]
+            },
+            {
+              "field": "accessories",
+              "type": "acc",
+              "art": "item",
+              "label": "眼鏡與耳機",
+              "items": [
+                "glasses-round",
+                "glasses-soft",
+                "goggles",
+                "headphones"
+              ]
+            },
+            {
+              "field": "accessories",
+              "type": "acc",
+              "art": "item",
+              "label": "背在身上",
+              "items": [
+                "backpack",
+                "wings",
+                "cape"
+              ]
+            },
+            {
+              "field": "accessories",
+              "type": "acc",
+              "art": "item",
+              "label": "特別的",
+              "items": [
+                "zombieTalisman"
+              ]
+            },
+            {
+              "field": "accessories",
+              "type": "acc",
+              "art": "item",
+              "label": "其他",
+              "items": "rest"
+            }
+          ],
+          "interior": {
+            "counter": "lilac",
+            "decor": [
+              {
+                "prop": "shopWindow",
+                "state": "lilac",
+                "left": 4,
+                "bottom": 52,
+                "width": 30
+              },
+              {
+                "prop": "accShelf",
+                "left": 54,
+                "bottom": 30,
+                "width": 40
+              },
+              {
+                "prop": "pottedPlant",
+                "left": 89,
+                "bottom": 22,
+                "width": 8
+              }
+            ]
+          }
+        },
+        "prop": "townAcc"
+      },
+      {
+        "id": "plaza",
+        "label": "廣場舞台",
+        "en": "STAGE",
+        "x": 1.96,
+        "kind": "stage",
+        "hue": "sun",
+        "say": "Let's dance!",
+        "link": {
+          "tab": "pose"
+        },
+        "prop": "townStage",
+        "stage": {
+          "hello": {
+            "en": "Let's dance!",
+            "zh": "一起來跳舞！"
+          },
+          "text": {
+            "title": "廣場舞台",
+            "hint": "按一下讓角色表演，再按一次或走動就停下",
+            "seq": "連播",
+            "leave": "離開舞台",
+            "enterHint": "按 ↑ 上舞台"
+          }
+        },
+        "hidden": true
+      },
+      {
+        "id": "furniture",
+        "label": "家具店",
+        "en": "FURNITURE STORE",
+        "x": 1.96,
+        "kind": "shop",
+        "hue": "wood",
+        "say": "Hello! Welcome to the furniture store.",
+        "prop": "townFurniture",
+        "shop": {
+          "mode": "furniture",
+          "keeper": {
+            "name": "Bruno",
+            "look": {
+              "species": "bear",
+              "fur": "honey-bear",
+              "outfit": "overalls",
+              "outfitColor": "sun",
+              "pantsColor": "match",
+              "accessories": [],
+              "held": "none"
+            }
+          },
+          "zhHello": "哈囉！歡迎來到家具店。一起來佈置吧！",
+          "sections": [],
+          "interior": {
+            "decor": []
+          }
+        }
+      },
+      {
+        "id": "photo",
+        "label": "美術館",
+        "en": "ART GALLERY",
+        "x": 2.3,
+        "kind": "gallery",
+        "hue": "lilac",
+        "say": "Welcome to my gallery!",
+        "link": {
+          "tab": "album"
+        },
+        "prop": "townGallery",
+        "gallery": {
+          "note": "美術館：使用者拍的照片像畫作一樣掛在展廳牆上；拍越多、展廳越長。x 單位＝舞台寬",
+          "exitX": 0.4,
+          "firstX": 1.0,
+          "spacing": 0.46,
+          "roomSize": 6,
+          "frameH": 0.34,
+          "frameCenterY": 0.4,
+          "frames": [
+            "gold",
+            "wood",
+            "white",
+            "lilac"
+          ],
+          "decorEvery": 2,
+          "text": {
+            "title": "我的美術館",
+            "titleEn": "MY ART GALLERY",
+            "count": "收藏 {n} 件作品",
+            "room": "第 {n} 展廳",
+            "empty": "還沒有作品！到街上或場景，按右上角的相機拍照，照片就會掛在這裡。",
+            "viewHint": "按 ↑ 看看這幅作品",
+            "exitHint": "按 ↑ 回小鎮",
+            "hello": "歡迎來到你的美術館！",
+            "deleted": "這幅作品收起來了",
+            "full": "美術館滿了（{max} 件），先收起幾件舊作品吧"
+          }
+        }
+      },
+      {
+        "id": "toy",
+        "label": "道具店",
+        "en": "TOY SHOP",
+        "x": 2.62,
+        "kind": "shop",
+        "hue": "peach",
+        "say": "Hello! Welcome to the toy shop.",
+        "link": {
+          "tab": "style",
+          "cat": "held"
+        },
+        "shop": {
+          "keeper": {
+            "name": "Max",
+            "look": {
+              "species": "kid",
+              "skin": "cocoa",
+              "hairStyle": "spiky",
+              "hairColor": "caramel",
+              "eyes": "dot",
+              "mouth": "teeth",
+              "faceShape": "round",
+              "brows": "thick",
+              "outfit": "stripe",
+              "outfitColor": "sun",
+              "pantsColor": "sky",
+              "accessories": [
+                "goggles"
+              ],
+              "held": "none"
+            }
+          },
+          "zhHello": "哈囉！歡迎來到道具店。",
+          "sections": [
+            {
+              "field": "held",
+              "type": "thumb",
+              "label": "手上拿的東西",
+              "mode": "body",
+              "art": "item"
+            }
+          ],
+          "interior": {
+            "counter": "peach",
+            "decor": [
+              {
+                "prop": "shopWindow",
+                "state": "sun",
+                "left": 4,
+                "bottom": 52,
+                "width": 30
+              },
+              {
+                "prop": "toyShelf",
+                "left": 54,
+                "bottom": 30,
+                "width": 40
+              },
+              {
+                "prop": "pottedPlant",
+                "left": 89,
+                "bottom": 22,
+                "width": 8
+              }
+            ]
+          }
+        },
+        "prop": "townToy"
+      },
+      {
+        "id": "lake",
+        "label": "湖",
+        "en": "LAKE",
+        "x": 2.96,
+        "kind": "portal",
+        "hue": "sky",
+        "say": "Let's swim in the lake!",
+        "link": {
+          "tab": "scene",
+          "scene": "ocean"
+        },
+        "prop": "townGate",
+        "propState": "lake"
+      },
+      {
+        "id": "mystery",
+        "label": "神秘的房間",
+        "en": "MYSTERY ROOM",
+        "x": 3.3,
+        "kind": "mystery",
+        "hue": "lilac",
+        "say": "Let's go to space!",
+        "link": {
+          "tab": "scene",
+          "scene": "space"
+        },
+        "prop": "townLab"
+      },
+      {
+        "id": "graveyardGate",
+        "label": "夜光墓園",
+        "en": "GRAVEYARD",
+        "x": 3.64,
+        "kind": "portal",
+        "hue": "lilac",
+        "say": "Spooky! Let's go to the graveyard.",
+        "link": {
+          "tab": "scene",
+          "scene": "graveyard"
+        },
+        "prop": "townGate",
+        "propState": "graveyard"
+      }
+    ],
+    "text": {
+      "enter": "進去",
+      "walkHint": "走到門口按 ↑ 進去，也可以直接點房子",
+      "comingSoon": "第一階段：進去會先打開角色工作室的對應頁面",
+      "enterHint": "按 ↑ 進去",
+      "knockHint": "按 ↑ 敲門"
+    },
+    "camRange": [
+      0.5,
+      3.46
+    ],
+    "enterMs": 1000,
+    "shopLines": {
+      "tryOn": {
+        "en": "You look great!",
+        "zh": "你看起來好棒！"
+      },
+      "buy": {
+        "en": "Thank you! Enjoy it!",
+        "zh": "謝謝你！好好享受喔！"
+      },
+      "wear": {
+        "en": "Nice choice!",
+        "zh": "選得好！"
+      },
+      "bye": {
+        "en": "Bye-bye! Come again!",
+        "zh": "掰掰！歡迎再來！"
+      },
+      "needMore": {
+        "en": "Keep learning and come back!",
+        "zh": "再去學習賺代幣，再回來喔！"
+      }
+    },
+    "interiorNote": "店內畫面：正方形舞台（底部對齊、左右置中，多出來的牆與地板延伸），地板線在舞台高 28%；decor 的 left／bottom／width 是舞台寬高的百分比（left＝左緣）。店長（人物＋裝扮系統做的角色，keeper.look）站在櫃檯後面，櫃檯上有收銀機與購物袋。",
+    "lamps": [
+      0.82,
+      1.14,
+      1.46,
+      1.79,
+      2.13,
+      2.46
+    ],
+    "timeMode": "system",
+    "colors": {
+      "day": {
+        "farHill": "#CFE9D8",
+        "farHill2": "#BEE0CB",
+        "houseFar": "#F3EADF",
+        "roofA": "#F2B8A6",
+        "roofB": "#A9C9E8",
+        "roofC": "#C9B8E8",
+        "windowFar": "#D8ECF7",
+        "windowLit": "#FFE9A8",
+        "treeFar": "#A9D6B5",
+        "sidewalk": "#E9DCCB",
+        "sidewalkTile": "#F3E9DC",
+        "curb": "#CDBBA6",
+        "road": "#BFB6AE",
+        "roadLine": "#F5EFE6",
+        "roadStone": "#ADA39A"
+      },
+      "night": {
+        "farHill": "#4F5C8E",
+        "farHill2": "#46528A",
+        "houseFar": "#5B6696",
+        "roofA": "#7A6A98",
+        "roofB": "#4E6A9A",
+        "roofC": "#6A5E9A",
+        "windowFar": "#6A76A6",
+        "windowLit": "#FFE39A",
+        "treeFar": "#43507F",
+        "sidewalk": "#6E6A8E",
+        "sidewalkTile": "#787498",
+        "curb": "#5E5A80",
+        "road": "#55527A",
+        "roadLine": "#8A87AE",
+        "roadStone": "#4C4970"
+      }
+    },
+    "backdrops": [
+      {
+        "prop": "townForestBack",
+        "x": -0.12
+      },
+      {
+        "prop": "townForestBack",
+        "x": 0.3
+      },
+      {
+        "prop": "townLakeBack",
+        "x": 2.96
+      },
+      {
+        "prop": "townGraveBack",
+        "x": 3.64
+      }
+    ],
+    "frontDecor": [
+      {
+        "prop": "bush",
+        "x": 0.1,
+        "scale": 1.6
+      },
+      {
+        "prop": "bush",
+        "x": 0.5,
+        "scale": 1.4
+      }
+    ],
+    "sfx": {
+      "note": "小鎮音效（Web Audio 合成，townSfx.ts）：走路每 walkMs、跑步每 runMs 一步；靠近地點先叮一聲再唸英文名稱；進門開門聲＋原地走路腳步。",
+      "walkMs": 320,
+      "runMs": 200,
+      "runSpeed": 0.6,
+      "volume": 0.5
+    },
+    "enterFx": {
+      "note": "進門：角色縮小到 scale 並淡出（enterMs 內完成）；有門的建築門往左打開",
+      "scale": 0.8
+    },
+    "scenes": {
+      "note": "從城門進入的主題場景（v2.24.0，第三階段）：在小鎮頁裡直接換場景；出口門在 exitX，走到出口按 ↑（海底、宇宙用畫面上的「回小鎮」按鈕，因為 ↑ 是游泳／飛行）回小鎮。沒買的場景先問：買下來或試玩 30 秒（shop.sceneTrial）。",
+      "exitX": 0.4,
+      "startX": 0.75,
+      "exits": {
+        "forest": "forest",
+        "ocean": "lake",
+        "graveyard": "graveyard",
+        "space": "portal"
+      },
+      "upExit": [
+        "forest",
+        "graveyard"
+      ],
+      "text": {
+        "back": "回小鎮",
+        "backEn": "BACK TO TOWN",
+        "exitHint": "按 ↑ 回小鎮",
+        "trialEnd": "試玩時間到囉！回到小鎮"
+      }
+    },
+    "camera": {
+      "aspect": "16:9",
+      "text": {
+        "open": "拍照",
+        "close": "關閉相機",
+        "shutter": "按下快門",
+        "countdown": "倒數",
+        "tapSkip": "點一下直接拍",
+        "fail": "這台裝置拍照失敗了"
+      }
+    }
+  },
+  "roachSudoku": {
+    "label": "蟑螂數獨",
+    "cost": 5,
+    "payout": 0,
+    "autoAssist": true,
+    "maxHearts": 3,
+    "note": "我的角色 — 蟑螂數獨。仔細觀察房間地板色塊分區，手持拖鞋找出隱藏的小強並覆蓋！每行、每列、每個色塊剛好 1 隻蟑螂且互不相鄰。",
+    "stages": [
+      {
+        "id": "stage_1",
+        "label": "臥室地毯",
+        "en": "Bedroom Rug",
+        "size": 4,
+        "roaches": 4
+      },
+      {
+        "id": "stage_2",
+        "label": "溫馨客廳",
+        "en": "Living Room",
+        "size": 5,
+        "roaches": 5
+      },
+      {
+        "id": "stage_3",
+        "label": "美食廚房",
+        "en": "Kitchen Tiles",
+        "size": 6,
+        "roaches": 6
+      },
+      {
+        "id": "stage_4",
+        "label": "閣樓書房",
+        "en": "Attic Study",
+        "size": 7,
+        "roaches": 7
+      },
+      {
+        "id": "stage_5",
+        "label": "神秘地下室",
+        "en": "Secret Basement",
+        "size": 8,
+        "roaches": 8
+      }
+    ],
+    "titles": [
+      {
+        "stagesCleared": 1,
+        "title": "地板見習生",
+        "en": "Floor Trainee"
+      },
+      {
+        "stagesCleared": 2,
+        "title": "神準拖鞋手",
+        "en": "Slipper Sharpshooter"
+      },
+      {
+        "stagesCleared": 3,
+        "title": "小強剋星",
+        "en": "Roach Nemesis"
+      },
+      {
+        "stagesCleared": 5,
+        "title": "終極家政大師",
+        "en": "Master of Cleanliness"
+      }
+    ],
+    "messages": {
+      "victory": "太棒了！所有的小強都被拖鞋降伏啦！",
+      "encouragement": "小強身手太靈活溜走啦！動動腦，下次一定抓得到！",
+      "needMoreTokens": "再賺 {n} 個代幣就可以玩囉！",
+      "ruleRegion": "每個色塊 1 隻",
+      "ruleLine": "每行每列 1 隻",
+      "ruleAdjacent": "蟑螂不能相鄰",
+      "readyToSlap": "啪！拍打驗收",
+      "conflictAdjacent": "這兩隻小強靠太近囉！",
+      "conflictLine": "這一行/列有重複的拖鞋喔！",
+      "conflictRegion": "這個色塊有重複的拖鞋喔！"
+    }
+  },
+  "home": {
+    "note": "我的家・佈置（docs/plan-town-home-furniture.md）。slots＝房間裡固定的位置（left／bottom／width＝正方形舞台的百分比，z＝圖層），catalog＝每一款家具（沒有 price＝免費），defaults＝預設房間（＝原本的房間）。features：正式 App 預設關，遊戲實驗室一律打開。存檔 levelUnitReview.home.v1.<profileId>（一個使用者一個家，3 個角色共用）。",
+    "features": {
+      "decorate": true,
+      "store": true,
+      "play": true
+    },
+    "categories": [
+      {
+        "id": "wallpaper",
+        "zh": "壁紙",
+        "en": "wallpaper"
+      },
+      {
+        "id": "floor",
+        "zh": "地板",
+        "en": "floor"
+      },
+      {
+        "id": "window",
+        "zh": "窗戶",
+        "en": "window"
+      },
+      {
+        "id": "view",
+        "zh": "窗外",
+        "en": "view"
+      },
+      {
+        "id": "curtains",
+        "zh": "窗簾",
+        "en": "curtains"
+      },
+      {
+        "id": "wall",
+        "zh": "掛飾",
+        "en": "wall decoration"
+      },
+      {
+        "id": "bed",
+        "zh": "床",
+        "en": "bed"
+      },
+      {
+        "id": "closet",
+        "zh": "衣櫃",
+        "en": "closet"
+      },
+      {
+        "id": "rug",
+        "zh": "地毯",
+        "en": "rug"
+      },
+      {
+        "id": "ceiling",
+        "zh": "吊燈",
+        "en": "ceiling light"
+      },
+      {
+        "id": "lamp",
+        "zh": "燈飾",
+        "en": "lamp"
+      },
+      {
+        "id": "shelf",
+        "zh": "置物架",
+        "en": "shelf"
+      },
+      {
+        "id": "smalldeco",
+        "zh": "小擺飾",
+        "en": "small decoration"
+      },
+      {
+        "id": "bigdeco",
+        "zh": "大擺飾",
+        "en": "big decoration"
+      },
+      {
+        "id": "toy",
+        "zh": "玩具",
+        "en": "toy"
+      },
+      {
+        "id": "pet",
+        "zh": "寵物",
+        "en": "pet"
+      }
+    ],
+    "slots": [
+      {
+        "id": "wallpaper",
+        "cat": "wallpaper",
+        "kind": "wall"
+      },
+      {
+        "id": "floor",
+        "cat": "floor",
+        "kind": "floor"
+      },
+      {
+        "id": "view",
+        "cat": "view",
+        "kind": "view",
+        "left": 7.9,
+        "bottom": 55.9,
+        "width": 24.3,
+        "height": 19.6,
+        "z": 1
+      },
+      {
+        "id": "window",
+        "cat": "window",
+        "left": 6,
+        "bottom": 54,
+        "width": 28,
+        "z": 2
+      },
+      {
+        "id": "curtains",
+        "cat": "curtains",
+        "left": 3,
+        "bottom": 51,
+        "width": 34,
+        "z": 3
+      },
+      {
+        "id": "wall1",
+        "cat": "wall",
+        "left": 40,
+        "bottom": 62,
+        "width": 13,
+        "z": 2,
+        "label": "掛飾 1"
+      },
+      {
+        "id": "wall2",
+        "cat": "wall",
+        "left": 54,
+        "bottom": 70,
+        "width": 12,
+        "z": 2,
+        "label": "掛飾 2"
+      },
+      {
+        "id": "ceiling",
+        "cat": "ceiling",
+        "left": 42,
+        "top": 0,
+        "width": 14,
+        "z": 4
+      },
+      {
+        "id": "shelf",
+        "cat": "shelf",
+        "left": 69,
+        "bottom": 72,
+        "width": 29,
+        "z": 2
+      },
+      {
+        "id": "small1",
+        "cat": "smalldeco",
+        "left": 70.5,
+        "bottom": 75.6,
+        "width": 8,
+        "z": 3,
+        "label": "小擺飾 1"
+      },
+      {
+        "id": "small2",
+        "cat": "smalldeco",
+        "left": 79.5,
+        "bottom": 75.6,
+        "width": 8,
+        "z": 3,
+        "label": "小擺飾 2"
+      },
+      {
+        "id": "small3",
+        "cat": "smalldeco",
+        "left": 88.5,
+        "bottom": 75.6,
+        "width": 8,
+        "z": 3,
+        "label": "小擺飾 3"
+      },
+      {
+        "id": "closet",
+        "cat": "closet",
+        "left": 73,
+        "bottom": 26,
+        "width": 25,
+        "z": 3
+      },
+      {
+        "id": "bed",
+        "cat": "bed",
+        "left": 2,
+        "bottom": 20,
+        "width": 44,
+        "z": 4
+      },
+      {
+        "id": "lamp",
+        "cat": "lamp",
+        "left": 47,
+        "bottom": 26,
+        "width": 9,
+        "z": 3
+      },
+      {
+        "id": "rug",
+        "cat": "rug",
+        "left": 28,
+        "bottom": 2,
+        "width": 46,
+        "z": 1
+      },
+      {
+        "id": "bigdeco",
+        "cat": "bigdeco",
+        "left": 87,
+        "bottom": 20,
+        "width": 12,
+        "z": 4
+      },
+      {
+        "id": "toy1",
+        "cat": "toy",
+        "left": 5,
+        "bottom": 3,
+        "width": 14,
+        "z": 6,
+        "label": "玩具"
+      },
+      {
+        "id": "pet",
+        "cat": "pet",
+        "left": 79,
+        "bottom": 3,
+        "width": 17,
+        "z": 6,
+        "label": "寵物"
+      }
+    ],
+    "catalog": [
+      {
+        "id": "wall-peach",
+        "cat": "wallpaper",
+        "zh": "蜜桃色",
+        "en": "peach wall",
+        "color": "peach"
+      },
+      {
+        "id": "wall-sky",
+        "cat": "wallpaper",
+        "zh": "天空藍",
+        "en": "blue wall",
+        "color": "sky"
+      },
+      {
+        "id": "wall-mint",
+        "cat": "wallpaper",
+        "zh": "薄荷綠",
+        "en": "green wall",
+        "color": "mint"
+      },
+      {
+        "id": "wall-sun",
+        "cat": "wallpaper",
+        "zh": "陽光黃",
+        "en": "yellow wall",
+        "color": "sun"
+      },
+      {
+        "id": "wall-lilac",
+        "cat": "wallpaper",
+        "zh": "薰衣草紫",
+        "en": "purple wall",
+        "color": "lilac"
+      },
+      {
+        "id": "wall-rose",
+        "cat": "wallpaper",
+        "zh": "玫瑰粉",
+        "en": "pink wall",
+        "color": "rose"
+      },
+      {
+        "id": "floor-wood",
+        "cat": "floor",
+        "zh": "淺木頭",
+        "en": "light wood floor",
+        "color": "wood",
+        "tone": "soft"
+      },
+      {
+        "id": "floor-oak",
+        "cat": "floor",
+        "zh": "深木頭",
+        "en": "dark wood floor",
+        "color": "wood",
+        "tone": "base"
+      },
+      {
+        "id": "floor-stone",
+        "cat": "floor",
+        "zh": "灰石子",
+        "en": "gray floor",
+        "color": "stone",
+        "tone": "soft"
+      },
+      {
+        "id": "win-square",
+        "cat": "window",
+        "zh": "方窗",
+        "en": "window",
+        "prop": "homeWindowFrame"
+      },
+      {
+        "id": "view-sky",
+        "cat": "view",
+        "zh": "天空",
+        "en": "sky",
+        "sky": true
+      },
+      {
+        "id": "view-forest",
+        "cat": "view",
+        "zh": "森林",
+        "en": "forest",
+        "scene": "forest"
+      },
+      {
+        "id": "view-ocean",
+        "cat": "view",
+        "zh": "海底世界",
+        "en": "ocean",
+        "scene": "ocean"
+      },
+      {
+        "id": "view-space",
+        "cat": "view",
+        "zh": "宇宙空間",
+        "en": "space",
+        "scene": "space"
+      },
+      {
+        "id": "view-graveyard",
+        "cat": "view",
+        "zh": "夜光墓園",
+        "en": "graveyard",
+        "scene": "graveyard"
+      },
+      {
+        "id": "curt-none",
+        "cat": "curtains",
+        "zh": "不要窗簾",
+        "en": "no curtains",
+        "none": true
+      },
+      {
+        "id": "curt-sky",
+        "cat": "curtains",
+        "zh": "藍色窗簾",
+        "en": "blue curtains",
+        "prop": "homeCurtains",
+        "state": "sky"
+      },
+      {
+        "id": "curt-rose",
+        "cat": "curtains",
+        "zh": "粉色窗簾",
+        "en": "pink curtains",
+        "prop": "homeCurtains",
+        "state": "rose"
+      },
+      {
+        "id": "curt-mint",
+        "cat": "curtains",
+        "zh": "綠色窗簾",
+        "en": "green curtains",
+        "prop": "homeCurtains",
+        "state": "mint"
+      },
+      {
+        "id": "curt-sun",
+        "cat": "curtains",
+        "zh": "黃色窗簾",
+        "en": "yellow curtains",
+        "prop": "homeCurtains",
+        "state": "sun"
+      },
+      {
+        "id": "curt-lilac",
+        "cat": "curtains",
+        "zh": "紫色窗簾",
+        "en": "purple curtains",
+        "prop": "homeCurtains",
+        "state": "lilac"
+      },
+      {
+        "id": "pic-none",
+        "cat": "wall",
+        "zh": "不掛",
+        "en": "nothing",
+        "none": true
+      },
+      {
+        "id": "pic-house",
+        "cat": "wall",
+        "zh": "小房子",
+        "en": "house picture",
+        "prop": "homePicture"
+      },
+      {
+        "id": "pic-me",
+        "cat": "wall",
+        "zh": "我的自畫像",
+        "en": "my picture",
+        "portrait": true
+      },
+      {
+        "id": "bed-basic",
+        "cat": "bed",
+        "zh": "單人床",
+        "en": "bed",
+        "prop": "homeBed",
+        "lie": {
+          "x": 25,
+          "bottom": 26,
+          "scale": 0.82,
+          "cover": 0.4
+        }
+      },
+      {
+        "id": "closet-wood",
+        "cat": "closet",
+        "zh": "木衣櫃",
+        "en": "closet",
+        "prop": "homeCloset"
+      },
+      {
+        "id": "rug-lilac",
+        "cat": "rug",
+        "zh": "紫色圓地毯",
+        "en": "rug",
+        "prop": "homeRug"
+      },
+      {
+        "id": "ceiling-none",
+        "cat": "ceiling",
+        "zh": "不要吊燈",
+        "en": "no ceiling light",
+        "none": true
+      },
+      {
+        "id": "lamp-floor",
+        "cat": "lamp",
+        "zh": "立燈",
+        "en": "lamp",
+        "prop": "homeLamp",
+        "glow": true
+      },
+      {
+        "id": "toy-none",
+        "cat": "toy",
+        "zh": "空著",
+        "en": "empty",
+        "none": true
+      },
+      {
+        "id": "hang-wreath",
+        "cat": "wall",
+        "zh": "花圈",
+        "en": "wreath",
+        "prop": "homeWreath"
+      },
+      {
+        "id": "hang-stars",
+        "cat": "wall",
+        "zh": "星星吊飾",
+        "en": "star mobile",
+        "prop": "homeStars"
+      },
+      {
+        "id": "shelf-none",
+        "cat": "shelf",
+        "zh": "不放",
+        "en": "no shelf",
+        "none": true
+      },
+      {
+        "id": "shelf-wood",
+        "cat": "shelf",
+        "zh": "木頭置物架",
+        "en": "wooden shelf",
+        "prop": "homeShelf"
+      },
+      {
+        "id": "small-none",
+        "cat": "smalldeco",
+        "zh": "空著",
+        "en": "empty",
+        "none": true
+      },
+      {
+        "id": "small-plant",
+        "cat": "smalldeco",
+        "zh": "小盆栽",
+        "en": "little plant",
+        "prop": "pottedPlant"
+      },
+      {
+        "id": "big-none",
+        "cat": "bigdeco",
+        "zh": "空著",
+        "en": "empty",
+        "none": true
+      },
+      {
+        "id": "big-plant",
+        "cat": "bigdeco",
+        "zh": "大盆栽",
+        "en": "big plant",
+        "prop": "homeBigPlant"
+      },
+      {
+        "id": "wall-stripes",
+        "cat": "wallpaper",
+        "zh": "條紋壁紙",
+        "en": "striped wallpaper",
+        "price": 30,
+        "tier": "common",
+        "theme": "cozy",
+        "pattern": "stripes",
+        "color": "sky"
+      },
+      {
+        "id": "wall-dots",
+        "cat": "wallpaper",
+        "zh": "圓點壁紙",
+        "en": "polka-dot wallpaper",
+        "price": 30,
+        "tier": "common",
+        "theme": "cozy",
+        "pattern": "dots",
+        "color": "rose"
+      },
+      {
+        "id": "wall-clouds",
+        "cat": "wallpaper",
+        "zh": "雲朵壁紙",
+        "en": "cloud wallpaper",
+        "price": 35,
+        "tier": "common",
+        "theme": "cozy",
+        "pattern": "clouds",
+        "color": "sky"
+      },
+      {
+        "id": "wall-leaves",
+        "cat": "wallpaper",
+        "zh": "樹葉壁紙",
+        "en": "leaf wallpaper",
+        "price": 35,
+        "tier": "common",
+        "theme": "forest",
+        "pattern": "leaves",
+        "color": "mint"
+      },
+      {
+        "id": "wall-waves",
+        "cat": "wallpaper",
+        "zh": "海浪壁紙",
+        "en": "wave wallpaper",
+        "price": 35,
+        "tier": "common",
+        "theme": "ocean",
+        "pattern": "waves",
+        "color": "sky"
+      },
+      {
+        "id": "floor-tiles",
+        "cat": "floor",
+        "zh": "格子磁磚",
+        "en": "tile floor",
+        "price": 35,
+        "tier": "common",
+        "theme": "cozy",
+        "pattern": "tiles",
+        "color": "stone"
+      },
+      {
+        "id": "floor-grass",
+        "cat": "floor",
+        "zh": "草地",
+        "en": "grass floor",
+        "price": 40,
+        "tier": "common",
+        "theme": "forest",
+        "pattern": "grass",
+        "color": "leaf"
+      },
+      {
+        "id": "floor-sand",
+        "cat": "floor",
+        "zh": "沙灘",
+        "en": "sand floor",
+        "price": 40,
+        "tier": "common",
+        "theme": "ocean",
+        "pattern": "sand",
+        "color": "sun"
+      },
+      {
+        "id": "curt-lace",
+        "cat": "curtains",
+        "zh": "蕾絲窗簾",
+        "en": "lace curtains",
+        "price": 25,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeCurtains",
+        "state": "lace"
+      },
+      {
+        "id": "curt-vine",
+        "cat": "curtains",
+        "zh": "藤蔓簾",
+        "en": "vine curtains",
+        "price": 30,
+        "tier": "common",
+        "theme": "forest",
+        "prop": "homeCurtains",
+        "state": "vine"
+      },
+      {
+        "id": "curt-seaweed",
+        "cat": "curtains",
+        "zh": "海草簾",
+        "en": "seaweed curtains",
+        "price": 30,
+        "tier": "common",
+        "theme": "ocean",
+        "prop": "homeCurtains",
+        "state": "seaweed"
+      },
+      {
+        "id": "bed-bunk",
+        "cat": "bed",
+        "zh": "雙層床",
+        "en": "bunk bed",
+        "price": 40,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeBedBunk",
+        "lie": {
+          "x": 24,
+          "bottom": 49,
+          "scale": 0.7,
+          "cover": 0.3
+        }
+      },
+      {
+        "id": "bed-tree",
+        "cat": "bed",
+        "zh": "樹屋床",
+        "en": "tree house bed",
+        "price": 120,
+        "tier": "rare",
+        "theme": "forest",
+        "prop": "homeBedTree",
+        "lie": {
+          "x": 25,
+          "bottom": 27,
+          "scale": 0.72,
+          "cover": 0.35
+        }
+      },
+      {
+        "id": "bed-shell",
+        "cat": "bed",
+        "zh": "貝殼床",
+        "en": "shell bed",
+        "price": 120,
+        "tier": "rare",
+        "theme": "ocean",
+        "prop": "homeBedShell",
+        "lie": {
+          "x": 25,
+          "bottom": 33,
+          "scale": 0.8,
+          "cover": 0.45
+        }
+      },
+      {
+        "id": "closet-white",
+        "cat": "closet",
+        "zh": "白色衣櫃",
+        "en": "white closet",
+        "price": 30,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeCloset",
+        "state": "white"
+      },
+      {
+        "id": "closet-trunk",
+        "cat": "closet",
+        "zh": "樹幹衣櫃",
+        "en": "tree trunk closet",
+        "price": 40,
+        "tier": "common",
+        "theme": "forest",
+        "prop": "homeCloset",
+        "state": "trunk"
+      },
+      {
+        "id": "closet-chest",
+        "cat": "closet",
+        "zh": "寶箱衣櫃",
+        "en": "treasure chest closet",
+        "price": 90,
+        "tier": "rare",
+        "theme": "ocean",
+        "prop": "homeCloset",
+        "state": "chest"
+      },
+      {
+        "id": "rug-checker",
+        "cat": "rug",
+        "zh": "格子地毯",
+        "en": "checked rug",
+        "price": 25,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeRug",
+        "state": "checker"
+      },
+      {
+        "id": "rug-rainbow",
+        "cat": "rug",
+        "zh": "彩虹地毯",
+        "en": "rainbow rug",
+        "price": 30,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeRug",
+        "state": "rainbow"
+      },
+      {
+        "id": "rug-grass",
+        "cat": "rug",
+        "zh": "草皮地毯",
+        "en": "grass rug",
+        "price": 30,
+        "tier": "common",
+        "theme": "forest",
+        "prop": "homeRug",
+        "state": "grass"
+      },
+      {
+        "id": "rug-starfish",
+        "cat": "rug",
+        "zh": "海星地毯",
+        "en": "starfish rug",
+        "price": 30,
+        "tier": "common",
+        "theme": "ocean",
+        "prop": "homeRug",
+        "state": "starfish"
+      },
+      {
+        "id": "shelf-white",
+        "cat": "shelf",
+        "zh": "白色置物架",
+        "en": "white shelf",
+        "price": 25,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeShelf",
+        "state": "white"
+      },
+      {
+        "id": "shelf-branch",
+        "cat": "shelf",
+        "zh": "樹枝置物架",
+        "en": "branch shelf",
+        "price": 30,
+        "tier": "common",
+        "theme": "forest",
+        "prop": "homeShelf",
+        "state": "branch"
+      },
+      {
+        "id": "shelf-sea",
+        "cat": "shelf",
+        "zh": "海洋置物架",
+        "en": "ocean shelf",
+        "price": 30,
+        "tier": "common",
+        "theme": "ocean",
+        "prop": "homeShelf",
+        "state": "sea"
+      },
+      {
+        "id": "ceiling-round",
+        "cat": "ceiling",
+        "zh": "圓燈罩吊燈",
+        "en": "round ceiling light",
+        "price": 25,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeCeiling",
+        "state": "round",
+        "glow": true
+      },
+      {
+        "id": "ceiling-star",
+        "cat": "ceiling",
+        "zh": "星星吊燈",
+        "en": "star light",
+        "price": 30,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeCeiling",
+        "state": "star",
+        "glow": true
+      },
+      {
+        "id": "ceiling-jelly",
+        "cat": "ceiling",
+        "zh": "水母燈",
+        "en": "jellyfish light",
+        "price": 80,
+        "tier": "rare",
+        "theme": "ocean",
+        "prop": "homeCeiling",
+        "state": "jelly",
+        "glow": true
+      },
+      {
+        "id": "ceiling-planet",
+        "cat": "ceiling",
+        "zh": "行星吊燈",
+        "en": "planet light",
+        "price": 80,
+        "tier": "rare",
+        "theme": "space",
+        "prop": "homeCeiling",
+        "state": "planet",
+        "glow": true
+      },
+      {
+        "id": "ceiling-candy",
+        "cat": "ceiling",
+        "zh": "糖果燈",
+        "en": "candy light",
+        "price": 30,
+        "tier": "common",
+        "theme": "dessert",
+        "prop": "homeCeiling",
+        "state": "candy",
+        "glow": true
+      },
+      {
+        "id": "lamp-mushroom",
+        "cat": "lamp",
+        "zh": "蘑菇燈",
+        "en": "mushroom lamp",
+        "price": 30,
+        "tier": "common",
+        "theme": "forest",
+        "prop": "homeLamp",
+        "state": "mushroom",
+        "glow": true
+      },
+      {
+        "id": "lamp-lighthouse",
+        "cat": "lamp",
+        "zh": "燈塔燈",
+        "en": "lighthouse lamp",
+        "price": 35,
+        "tier": "common",
+        "theme": "ocean",
+        "prop": "homeLamp",
+        "state": "lighthouse",
+        "glow": true
+      },
+      {
+        "id": "lamp-moon",
+        "cat": "lamp",
+        "zh": "月亮燈",
+        "en": "moon lamp",
+        "price": 35,
+        "tier": "common",
+        "theme": "space",
+        "prop": "homeLamp",
+        "state": "moon",
+        "glow": true
+      },
+      {
+        "id": "lamp-icecream",
+        "cat": "lamp",
+        "zh": "冰淇淋燈",
+        "en": "ice cream lamp",
+        "price": 30,
+        "tier": "common",
+        "theme": "dessert",
+        "prop": "homeLamp",
+        "state": "icecream",
+        "glow": true
+      },
+      {
+        "id": "pic-rainbow",
+        "cat": "wall",
+        "zh": "彩虹畫",
+        "en": "rainbow picture",
+        "price": 20,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homePic",
+        "state": "rainbow"
+      },
+      {
+        "id": "pic-dino",
+        "cat": "wall",
+        "zh": "恐龍畫",
+        "en": "dinosaur picture",
+        "price": 20,
+        "tier": "common",
+        "theme": "forest",
+        "prop": "homePic",
+        "state": "dino"
+      },
+      {
+        "id": "pic-rocket",
+        "cat": "wall",
+        "zh": "火箭畫",
+        "en": "rocket picture",
+        "price": 20,
+        "tier": "common",
+        "theme": "space",
+        "prop": "homePic",
+        "state": "rocket"
+      },
+      {
+        "id": "pic-cat",
+        "cat": "wall",
+        "zh": "貓咪畫",
+        "en": "cat picture",
+        "price": 20,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homePic",
+        "state": "cat"
+      },
+      {
+        "id": "pic-dolphin",
+        "cat": "wall",
+        "zh": "海豚畫",
+        "en": "dolphin picture",
+        "price": 20,
+        "tier": "common",
+        "theme": "ocean",
+        "prop": "homePic",
+        "state": "dolphin"
+      },
+      {
+        "id": "pic-cake",
+        "cat": "wall",
+        "zh": "蛋糕畫",
+        "en": "cake picture",
+        "price": 20,
+        "tier": "common",
+        "theme": "dessert",
+        "prop": "homePic",
+        "state": "cake"
+      },
+      {
+        "id": "hang-bunting",
+        "cat": "wall",
+        "zh": "旗子串",
+        "en": "bunting",
+        "price": 25,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeHang",
+        "state": "bunting"
+      },
+      {
+        "id": "hang-dream",
+        "cat": "wall",
+        "zh": "捕夢網",
+        "en": "dream catcher",
+        "price": 25,
+        "tier": "common",
+        "theme": "forest",
+        "prop": "homeHang",
+        "state": "dream"
+      },
+      {
+        "id": "hang-clock",
+        "cat": "wall",
+        "zh": "掛鐘",
+        "en": "wall clock",
+        "price": 25,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeHang",
+        "state": "clock"
+      },
+      {
+        "id": "small-clock",
+        "cat": "smalldeco",
+        "zh": "鬧鐘",
+        "en": "alarm clock",
+        "price": 20,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeSmall",
+        "state": "clock"
+      },
+      {
+        "id": "small-globe",
+        "cat": "smalldeco",
+        "zh": "地球儀",
+        "en": "globe",
+        "price": 25,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeSmall",
+        "state": "globe"
+      },
+      {
+        "id": "small-fish",
+        "cat": "smalldeco",
+        "zh": "魚缸",
+        "en": "fish bowl",
+        "price": 30,
+        "tier": "common",
+        "theme": "ocean",
+        "prop": "homeSmall",
+        "state": "fish"
+      },
+      {
+        "id": "small-snow",
+        "cat": "smalldeco",
+        "zh": "雪花球",
+        "en": "snow globe",
+        "price": 25,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeSmall",
+        "state": "snow"
+      },
+      {
+        "id": "small-hourglass",
+        "cat": "smalldeco",
+        "zh": "沙漏",
+        "en": "hourglass",
+        "price": 20,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeSmall",
+        "state": "hourglass"
+      },
+      {
+        "id": "small-trophy",
+        "cat": "smalldeco",
+        "zh": "獎盃",
+        "en": "trophy",
+        "price": 30,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeSmall",
+        "state": "trophy"
+      },
+      {
+        "id": "small-dino",
+        "cat": "smalldeco",
+        "zh": "恐龍模型",
+        "en": "toy dinosaur",
+        "price": 25,
+        "tier": "common",
+        "theme": "forest",
+        "prop": "homeSmall",
+        "state": "dino"
+      },
+      {
+        "id": "small-cactus",
+        "cat": "smalldeco",
+        "zh": "仙人掌",
+        "en": "cactus",
+        "price": 20,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeSmall",
+        "state": "cactus"
+      },
+      {
+        "id": "big-sunflower",
+        "cat": "bigdeco",
+        "zh": "向日葵盆栽",
+        "en": "sunflower",
+        "price": 25,
+        "tier": "common",
+        "theme": "forest",
+        "prop": "homeBigDeco",
+        "state": "sunflower"
+      },
+      {
+        "id": "big-coral",
+        "cat": "bigdeco",
+        "zh": "珊瑚",
+        "en": "coral",
+        "price": 30,
+        "tier": "common",
+        "theme": "ocean",
+        "prop": "homeBigDeco",
+        "state": "coral"
+      },
+      {
+        "id": "big-clock",
+        "cat": "bigdeco",
+        "zh": "落地鐘",
+        "en": "grandfather clock",
+        "price": 35,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeBigDeco",
+        "state": "clock"
+      },
+      {
+        "id": "big-globe",
+        "cat": "bigdeco",
+        "zh": "大地球儀",
+        "en": "big globe",
+        "price": 35,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeBigDeco",
+        "state": "globe"
+      },
+      {
+        "id": "big-dino",
+        "cat": "bigdeco",
+        "zh": "大恐龍模型",
+        "en": "big dinosaur",
+        "price": 90,
+        "tier": "rare",
+        "theme": "forest",
+        "prop": "homeBigDeco",
+        "state": "dino"
+      },
+      {
+        "id": "toy-blocks",
+        "cat": "toy",
+        "zh": "積木",
+        "en": "blocks",
+        "price": 20,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeToy",
+        "state": "blocks"
+      },
+      {
+        "id": "toy-robot",
+        "cat": "toy",
+        "zh": "機器人",
+        "en": "robot",
+        "price": 25,
+        "tier": "common",
+        "theme": "space",
+        "prop": "homeToy",
+        "state": "robot"
+      },
+      {
+        "id": "toy-train",
+        "cat": "toy",
+        "zh": "玩具火車",
+        "en": "toy train",
+        "price": 25,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeToy",
+        "state": "train"
+      },
+      {
+        "id": "curt-stars",
+        "cat": "curtains",
+        "zh": "星星窗簾",
+        "en": "star curtains",
+        "price": 30,
+        "tier": "common",
+        "theme": "space",
+        "prop": "homeCurtains",
+        "state": "stars"
+      },
+      {
+        "id": "curt-candy",
+        "cat": "curtains",
+        "zh": "糖果條紋窗簾",
+        "en": "candy curtains",
+        "price": 30,
+        "tier": "common",
+        "theme": "dessert",
+        "prop": "homeCurtains",
+        "state": "candy"
+      },
+      {
+        "id": "bed-rocket",
+        "cat": "bed",
+        "zh": "火箭床",
+        "en": "rocket bed",
+        "price": 150,
+        "tier": "rare",
+        "theme": "space",
+        "prop": "homeBedRocket",
+        "lie": {
+          "x": 25,
+          "bottom": 31,
+          "scale": 0.78,
+          "cover": 0.33
+        }
+      },
+      {
+        "id": "bed-cake",
+        "cat": "bed",
+        "zh": "蛋糕床",
+        "en": "cake bed",
+        "price": 120,
+        "tier": "rare",
+        "theme": "dessert",
+        "prop": "homeBedCake",
+        "lie": {
+          "x": 25,
+          "bottom": 29,
+          "scale": 0.8,
+          "cover": 0.41
+        }
+      },
+      {
+        "id": "closet-capsule",
+        "cat": "closet",
+        "zh": "太空艙衣櫃",
+        "en": "space pod closet",
+        "price": 100,
+        "tier": "rare",
+        "theme": "space",
+        "prop": "homeCloset",
+        "state": "capsule"
+      },
+      {
+        "id": "rug-planet",
+        "cat": "rug",
+        "zh": "行星地毯",
+        "en": "planet rug",
+        "price": 30,
+        "tier": "common",
+        "theme": "space",
+        "prop": "homeRug",
+        "state": "planet"
+      },
+      {
+        "id": "rug-donut",
+        "cat": "rug",
+        "zh": "甜甜圈地毯",
+        "en": "donut rug",
+        "price": 30,
+        "tier": "common",
+        "theme": "dessert",
+        "prop": "homeRug",
+        "state": "donut"
+      },
+      {
+        "id": "shelf-planet",
+        "cat": "shelf",
+        "zh": "行星置物架",
+        "en": "planet shelf",
+        "price": 30,
+        "tier": "common",
+        "theme": "space",
+        "prop": "homeShelf",
+        "state": "planet"
+      },
+      {
+        "id": "shelf-cookie",
+        "cat": "shelf",
+        "zh": "餅乾置物架",
+        "en": "cookie shelf",
+        "price": 30,
+        "tier": "common",
+        "theme": "dessert",
+        "prop": "homeShelf",
+        "state": "cookie"
+      },
+      {
+        "id": "wall-starry",
+        "cat": "wallpaper",
+        "zh": "星空壁紙",
+        "en": "starry wallpaper",
+        "price": 100,
+        "tier": "rare",
+        "theme": "space",
+        "pattern": "starry",
+        "color": "lilac"
+      },
+      {
+        "id": "wall-candy",
+        "cat": "wallpaper",
+        "zh": "糖果條紋壁紙",
+        "en": "candy wallpaper",
+        "price": 35,
+        "tier": "common",
+        "theme": "dessert",
+        "pattern": "candy",
+        "color": "rose"
+      },
+      {
+        "id": "floor-glass",
+        "cat": "floor",
+        "zh": "星光玻璃地板",
+        "en": "starlight floor",
+        "price": 100,
+        "tier": "rare",
+        "theme": "space",
+        "pattern": "glass",
+        "color": "lilac"
+      },
+      {
+        "id": "floor-cookie",
+        "cat": "floor",
+        "zh": "餅乾地板",
+        "en": "cookie floor",
+        "price": 40,
+        "tier": "common",
+        "theme": "dessert",
+        "pattern": "cookie",
+        "color": "wood"
+      },
+      {
+        "id": "pet-none",
+        "cat": "pet",
+        "zh": "沒有寵物",
+        "en": "no pet",
+        "none": true
+      },
+      {
+        "id": "pet-orange",
+        "cat": "pet",
+        "zh": "橘貓",
+        "en": "orange cat",
+        "price": 40,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homePet",
+        "state": "orange"
+      },
+      {
+        "id": "pet-siamese",
+        "cat": "pet",
+        "zh": "暹羅貓",
+        "en": "Siamese cat",
+        "price": 40,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homePet",
+        "state": "siamese"
+      },
+      {
+        "id": "pet-blackdog",
+        "cat": "pet",
+        "zh": "黑狗",
+        "en": "black dog",
+        "price": 40,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homePet",
+        "state": "blackdog"
+      },
+      {
+        "id": "pet-whitedog",
+        "cat": "pet",
+        "zh": "白狗",
+        "en": "white dog",
+        "price": 40,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homePet",
+        "state": "whitedog"
+      },
+      {
+        "id": "win-round",
+        "cat": "window",
+        "zh": "圓窗",
+        "en": "round window",
+        "price": 30,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeWindowFrame",
+        "state": "round",
+        "glass": "round"
+      },
+      {
+        "id": "win-arch",
+        "cat": "window",
+        "zh": "拱形窗",
+        "en": "arched window",
+        "price": 35,
+        "tier": "common",
+        "theme": "cozy",
+        "prop": "homeWindowFrame",
+        "state": "arch",
+        "glass": "arch"
+      },
+      {
+        "id": "win-porthole",
+        "cat": "window",
+        "zh": "船艙圓窗",
+        "en": "porthole",
+        "price": 40,
+        "tier": "common",
+        "theme": "ocean",
+        "prop": "homeWindowFrame",
+        "state": "porthole",
+        "glass": "porthole"
+      },
+      {
+        "id": "win-capsule",
+        "cat": "window",
+        "zh": "太空艙窗",
+        "en": "space window",
+        "price": 90,
+        "tier": "rare",
+        "theme": "space",
+        "prop": "homeWindowFrame",
+        "state": "capsule",
+        "glass": "capsule"
+      }
+    ],
+    "defaults": {
+      "wallpaper": "wall-peach",
+      "floor": "floor-wood",
+      "window": "win-square",
+      "view": "view-sky",
+      "curtains": "curt-sky",
+      "ceiling": "ceiling-none",
+      "closet": "closet-wood",
+      "bed": "bed-basic",
+      "lamp": "lamp-floor",
+      "rug": "rug-lilac",
+      "toy1": "toy-none",
+      "wall1": "pic-house",
+      "wall2": "pic-none",
+      "shelf": "shelf-none",
+      "small1": "small-none",
+      "small2": "small-none",
+      "small3": "small-none",
+      "bigdeco": "big-plant",
+      "pet": "pet-none"
+    },
+    "text": {
+      "decorateTab": "佈置",
+      "hint": "點房間裡的東西，或先選上面的類別，再選款式。",
+      "more": "想要更多款式？到小鎮的家具店看看吧！",
+      "slotPick": "放在哪裡？",
+      "needShelf": "先放一個置物架，才能擺小擺飾喔！",
+      "photo": "拍照",
+      "storeHint": "點一款家具，先擺進房間看看；喜歡再買。",
+      "owned": "已擁有",
+      "put": "放進我的家",
+      "putAsk": "要放進我的家嗎？",
+      "tryOn": "試擺中"
+    },
+    "themes": {
+      "cozy": "溫暖小屋",
+      "forest": "森林",
+      "ocean": "海洋",
+      "space": "太空",
+      "dessert": "甜點"
+    },
+    "storeLines": {
+      "tryOn": {
+        "en": "It looks nice in your room!",
+        "zh": "放在你的房間很好看！"
+      },
+      "buy": {
+        "en": "Thank you! Enjoy your new room!",
+        "zh": "謝謝你！好好享受新房間！"
+      },
+      "put": {
+        "en": "All set!",
+        "zh": "放好囉！"
+      }
+    },
+    "play": {
+      "note": "我的家・在家玩：角色在房間裡左右走（x＝房間寬 %），走到家具前按 ↑ 或點家具做動作。lie＝每款床躺下的位置（x、bottom＝身體中心與床墊高度，房間 %；scale＝角色大小；cover 已不用：不蓋被子）。床按 ↑，地毯、玩具、寵物按 ↓（actions.key；玩具、寵物轉正面做 pose 開心的動作）。按鍵用統一按鍵 v2（C、D 沒用到＝半透明）。跑＝Shift／K／B 按住（runMult 倍速），跳＝空白／J／A（jumpV 起跳速度、gravity 重力，單位：房間高度 %／秒）",
+      "speed": 28,
+      "runMult": 1.8,
+      "jumpV": 95,
+      "gravity": 320,
+      "minX": 8,
+      "maxX": 92,
+      "startX": 60,
+      "actions": {
+        "bed": {
+          "slot": "bed",
+          "label": "睡覺",
+          "icon": "moon",
+          "pose": "sleep",
+          "key": "up"
+        },
+        "rug": {
+          "slot": "rug",
+          "label": "坐下",
+          "icon": "user",
+          "pose": "sitGround",
+          "key": "down"
+        },
+        "toy": {
+          "slot": "toy1",
+          "label": "一起玩",
+          "icon": "star",
+          "pose": "cheer",
+          "key": "down"
+        },
+        "pet": {
+          "slot": "pet",
+          "label": "摸摸牠",
+          "icon": "heart",
+          "pose": "victory",
+          "key": "down"
+        }
+      },
+      "text": {
+        "tidy": "整理房間",
+        "play": "在家玩",
+        "pose": "動作",
+        "photo": "拍照",
+        "leave": "離開",
+        "walkL": "往左走",
+        "walkR": "往右走",
+        "run": "跑（按住）",
+        "jump": "跳",
+        "hint": "走到家具前按 ↑／↓ 或點家具"
+      }
     }
   }
 }

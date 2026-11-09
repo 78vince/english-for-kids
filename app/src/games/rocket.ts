@@ -1,4 +1,4 @@
-// 火箭發射遊戲（每場扣 5 代幣、嚴格 A/B 輪流交替推進、精準座落底座表面、背景太空艙一體化）
+// 火箭發射遊戲（每場扣 5 代幣、A/B 輪流交替推進更快（同鍵也能推進，2026-11-04 放寬）、精準座落底座表面、背景太空艙一體化）
 import { GameArt, GameTokens, icon, prefersReducedMotion, type Look } from "../game/gameKit";
 import { getActiveLook, loadCharacter } from "../game/characterStore";
 import {
@@ -164,6 +164,8 @@ class RocketGame {
 
   private lastPressedKey: "a" | "b" | null = null;
   private comboCount = 0;
+  /** 連按同一鍵的次數（超過 token hintAfterSameKeys 才提示輪流按） */
+  private sameKeyRun = 0;
   private tapTimestamps: number[] = [];
   private altHintTimer = 0;
   private isSmokeBillowing = false;
@@ -802,7 +804,7 @@ class RocketGame {
         <!-- 開場倒數 5-4-3-2-1-FIRE 覆蓋層 -->
         <div class="rocket-countdown-overlay" id="countdownOverlay">
           <div class="rocket-countdown-number" id="countdownNum">🚀</div>
-          <div class="rocket-countdown-tip" id="countdownTip">連續快速交替點按 A 與 B 發射！</div>
+          <div class="rocket-countdown-tip" id="countdownTip">快速點按 A、B 發射！輪流按更快！</div>
           <button type="button" class="rocket-start-btn" id="btnStartCountdown">點擊開始發射 🚀</button>
         </div>
     `;
@@ -906,7 +908,7 @@ class RocketGame {
     if (btnStart) btnStart.style.display = "none";
 
     const tip = document.querySelector<HTMLElement>("#countdownTip");
-    if (tip) tip.textContent = "連續快速交替點按 A 與 B 發射！";
+    if (tip) tip.textContent = "快速點按 A、B 發射！輪流按更快！";
 
     this.runCountdownSequence();
   }
@@ -963,6 +965,7 @@ class RocketGame {
     this.peakCPS = 0;
     this.lastPressedKey = null;
     this.comboCount = 0;
+    this.sameKeyRun = 0;
     this.tapTimestamps = [];
     this.isSmokeBillowing = false;
     const launchSmoke = document.querySelector<HTMLElement>("#launchSmoke");
@@ -975,40 +978,42 @@ class RocketGame {
   }
 
   /**
-   * 核心推進判斷：
-   * 如果沒有 A、B 輪流按，火箭就「不能推進」（推力為 0）！
+   * 核心推進判斷（2026-11-04 放寬）：
+   * 每一下都有推力；A、B 輪流按才會累積連擊加成（越輪流越快）。
+   * 連按同一鍵：推力 × token rocket.sameKeyThrust（預設 1），連擊不歸零也不增加；
+   * 連按同一鍵 hintAfterSameKeys 次以上才溫和提示「輪流按會更快」。
    */
   private registerTap(key: "a" | "b") {
-    // 檢查是否連續按同一個鍵（未輪流交替）
-    if (this.lastPressedKey !== null && this.lastPressedKey === key) {
-      this.comboCount = 0;
-      sounds.playMissTap();
-      this.showAlternateHint(key === "a" ? "b" : "a");
-      return; // 推進力 = 0！火箭完全不推進！
-    }
-
-    // 順利交替點按（A -> B 或 B -> A，或第一下）
+    const RK = (GameTokens as unknown as { rocket?: { sameKeyThrust?: number; hintAfterSameKeys?: number } }).rocket ?? {};
+    const sameKey = this.lastPressedKey !== null && this.lastPressedKey === key;
     this.lastPressedKey = key;
     this.totalTaps++;
     const now = performance.now();
     this.tapTimestamps.push(now);
 
-    this.comboCount++;
-    sounds.playTap(true, this.comboCount);
+    let mult = 1;
+    if (sameKey) {
+      this.sameKeyRun++;
+      mult = RK.sameKeyThrust ?? 1;
+      sounds.playTap(false, this.comboCount);
+      if (this.sameKeyRun >= (RK.hintAfterSameKeys ?? 4)) this.showAlternateHint(key === "a" ? "b" : "a");
+    } else {
+      this.sameKeyRun = 0;
+      this.comboCount++;
+      sounds.playTap(true, this.comboCount);
+      this.clearAlternateHint();
+    }
 
     // 依交替連擊給予推力（連擊越高推力加成越強，最大 2.2 倍）
     const boost = Math.min(2.2, 1.0 + this.comboCount * 0.06);
-    const impulse = 85 * boost;
+    const impulse = 85 * boost * mult;
     this.velocity = Math.max(0, this.velocity) + impulse;
-
-    // 清除可能殘留的提示
-    this.clearAlternateHint();
   }
 
   private showAlternateHint(suggestKey: "a" | "b") {
     const hintBox = document.querySelector<HTMLElement>("#rocketAltHintBox");
     if (hintBox) {
-      hintBox.innerHTML = `<span class="rocket-alt-hint">請按 <strong>${suggestKey.toUpperCase()}</strong> 鍵！要輪流按！</span>`;
+      hintBox.innerHTML = `<span class="rocket-alt-hint">換按 <strong>${suggestKey.toUpperCase()}</strong>，A、B 輪流按會更快！</span>`;
       window.clearTimeout(this.altHintTimer);
       this.altHintTimer = window.setTimeout(() => {
         this.clearAlternateHint();

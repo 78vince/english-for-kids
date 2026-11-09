@@ -4,7 +4,7 @@
 
 import "../game/gamePage.css";
 import "./characterStudio.css";
-import { GameArt, GameTokens, icon, normalizeLook, prefersReducedMotion, type Look, type View } from "../game/gameKit";
+import { GameArt, GameTokens, icon, normalizeLook, prefersReducedMotion, type Look, type RainLevel, type SceneWeather, type View, type ExportExtra } from "../game/gameKit";
 import { VirtualPad } from "../game/virtualPad";
 import { StageController, type StageProp, type TimeMode } from "../game/stageController";
 import { performablePoses, SEQUENCE_ONLY_POSES } from "../game/gameKit";
@@ -22,6 +22,7 @@ import {
   type CharacterData,
   type CharacterSlot,
   type SlotScene,
+  normalizeRain,
 } from "../game/characterStore";
 import {
   addRotateHint,
@@ -904,7 +905,9 @@ function sceneTabHtml(): string {
       <button type="button" data-weather="sunny" aria-pressed="${currentWeather === "sunny"}">${icon("sun", "sm")}晴天</button>
       <button type="button" data-weather="rainy" aria-pressed="${currentWeather === "rainy"}">${icon("rain", "sm")}雨天</button>
       <button type="button" data-weather="typhoon" aria-pressed="${currentWeather === "typhoon"}">${icon("wind", "sm")}颱風天</button>
-    </div>` : "";
+    </div>${currentWeather !== "sunny" ? `
+    <label class="studio-range studio-range--rain"><span class="g-t-caption">雨量：<strong class="studio-rain-label">${rainLevel().label}</strong>　雨下太大太久會淹水喔</span>
+      <input type="range" min="0" max="${rainLevels().length - 1}" step="1" value="${currentRain}" data-rain aria-label="雨量" aria-valuetext="${rainLevel().label}" /></label>` : ""}` : "";
   return `<div class="studio-scenes">${thumbs}</div>
     <p class="g-t-label">時間</p>
     <div class="studio-seg" role="group">
@@ -917,7 +920,7 @@ function sceneTabHtml(): string {
     ${weatherSection}`;
 }
 function applySceneSetting(s: SlotScene): void {
-  slot.scene = s.id === "forest" ? { ...s, weather: currentWeather } : { ...s };
+  slot.scene = s.id === "forest" ? { ...s, weather: currentWeather, rain: currentRain } : { ...s };
   slot.sceneTimes = { ...(slot.sceneTimes ?? {}), [s.id]: slot.scene };
   stage.setTime(timeModeOf(s));
   markDirty();
@@ -926,6 +929,8 @@ async function switchScene(id: string): Promise<void> {
   if (id === stage.sceneId) return;
   const remembered = slot.sceneTimes?.[id] ?? { id, time: "day" as const, useSystemTime: false, weather: "sunny" as const };
   currentWeather = id === "forest" ? (remembered.weather ?? "sunny") : "sunny";
+  currentRain = normalizeRain(remembered.rain) ?? defaultRain();
+  resetFlood();
   await stage.setScene(id);
   renderWeatherVisual();
   applySceneSetting({ ...remembered, id, weather: currentWeather });
@@ -1111,6 +1116,14 @@ body.addEventListener("click", async (e) => {
 });
 body.addEventListener("input", (e) => {
   const el = e.target as HTMLInputElement;
+  if (el.hasAttribute("data-rain")) {
+    setRain(Number(el.value));
+    const lab = body.querySelector(".studio-rain-label");
+    if (lab) lab.textContent = rainLevel().label;
+    el.setAttribute("aria-valuetext", rainLevel().label);
+    applySceneSetting(currentSceneSetting());
+    return;
+  }
   if (!el.hasAttribute("data-u")) return;
   const u = Number(el.value) / 999;
   const night = u > 0.5 && u < 1;
@@ -1222,9 +1235,22 @@ stage.speedMult = (mv: number) => {
   if (huggedZombie) return 0.35;
   if (isZombieTransformed()) return 0.65; // 變身符咒：一般殭屍行走速度 (0.65x)，不能跑步
   if (stage.sceneId === "forest" && currentWeather === "typhoon") {
-    return mv < 0 ? 1.95 : 0.35;
+    const T = forestWeather()?.typhoon;
+    return mv < 0 ? T?.walkTail ?? 1.95 : T?.walkHead ?? 0.35;
   }
   return 1;
+};
+// 颱風天：跳起來（或浮在水上）會被風往左吹，風力有陣風起伏
+stage.airWind = (floating: boolean) => {
+  if (stage.sceneId !== "forest" || currentWeather !== "typhoon") return 0;
+  const T = forestWeather()?.typhoon;
+  if (!T) return 0;
+  const gust = 1 + T.gustAmp * Math.sin((performance.now() / T.gustMs) * Math.PI * 2);
+  if (!floating && !windNoticeShown) {
+    windNoticeShown = true;
+    toast(`${icon("wind")} 哇！跳起來被強風吹走了～`, 2200, "peach");
+  }
+  return (floating ? T.floatDriftW : T.jumpWindW) * gust;
 };
 
 // ---- 掙脫機制（會咬人的寶箱、緊緊抱人的可愛殭屍、地底突襲冒出的巨手） ----
@@ -2075,13 +2101,129 @@ let spaceHintShown = false;
 type WeatherType = "sunny" | "rainy" | "typhoon";
 let currentWeather: WeatherType = "sunny";
 let weatherLayer: HTMLDivElement | null = null;
+let floodLayer: HTMLDivElement | null = null;
+
+// ---- 雨量與淹水（數值：GameArt.sceneInfo.forest.weather） ----
+function forestWeather(): SceneWeather | undefined {
+  return GameArt.sceneInfo.forest?.weather;
+}
+function rainLevels(): RainLevel[] {
+  return forestWeather()?.rain.levels ?? [];
+}
+function defaultRain(): number {
+  return forestWeather()?.rain.default ?? 0;
+}
+let currentRain = defaultRain();
+function rainLevel(): RainLevel {
+  const L = rainLevels();
+  return L[Math.max(0, Math.min(L.length - 1, currentRain))] ?? { id: "moderate", label: "中雨", streaks: 24, opacity: 0.75, speed: 1, tint: 0.16, floodRateH: 0, floodAfterMs: 0 };
+}
+/** 目前水位（離地高度／舞台高） */
+let floodLevel = 0;
+/** 大雨／豪雨從什麼時候開始連續下（performance.now；0＝沒有） */
+let heavyRainSince = 0;
+let floodNoticeShown = false;
+let floatNoticeShown = false;
+let windNoticeShown = false;
+let wasFloating = false;
+
+function resetFlood(): void {
+  floodLevel = 0;
+  heavyRainSince = 0;
+  floodNoticeShown = false;
+  floatNoticeShown = false;
+  wasFloating = false;
+  stage.floodH = 0;
+  renderFlood();
+}
+
+function setRain(level: number): void {
+  const n = rainLevels().length;
+  const v = Math.max(0, Math.min(n - 1, Math.round(level)));
+  if (v === currentRain) return;
+  currentRain = v;
+  heavyRainSince = 0; // 換雨量：重新計算「下多久」
+  renderWeatherVisual();
+}
+
+/** 每幀：依天氣與雨量讓水位上升或退去，交給舞台做漂浮 */
+function updateFlood(now: number, dt: number): void {
+  const W = forestWeather();
+  if (!W || stage.sceneId !== "forest") {
+    if (floodLevel > 0) resetFlood();
+    return;
+  }
+  let rate: number;
+  if (currentWeather === "sunny") {
+    rate = -W.flood.sunnyDrainH;
+    heavyRainSince = 0;
+  } else {
+    const L = rainLevel();
+    if (L.floodRateH > 0) {
+      if (!heavyRainSince) heavyRainSince = now;
+      rate = now - heavyRainSince >= L.floodAfterMs ? L.floodRateH : 0;
+    } else {
+      heavyRainSince = 0;
+      rate = L.floodRateH;
+    }
+  }
+  const before = floodLevel;
+  floodLevel = Math.max(0, Math.min(W.flood.maxH, floodLevel + rate * dt));
+  if (floodLevel !== before || stage.floodH !== floodLevel) {
+    stage.floodH = floodLevel;
+    renderFlood();
+  }
+  if (floodLevel >= W.flood.noticeH && !floodNoticeShown) {
+    floodNoticeShown = true;
+    toast(`${icon("rain")} 雨下太大太久，森林開始淹水了！`, 2600, "sky");
+  }
+  if (floodLevel <= 0 && before > 0) {
+    floodNoticeShown = false;
+    floatNoticeShown = false;
+    toast(`${icon("sun")} 水退了，又可以在地上走路囉！`, 2200, "sun");
+  }
+  if (floodLevel >= W.flood.campfireOutH) {
+    const campfire = playProps.find((p) => p.kind === "campfire");
+    if (campfire && campfire.state === "lit") {
+      stage.setPropState(campfire, "out");
+      campfireLitUntil = 0;
+    }
+  }
+  const floating = stage.isFloating;
+  if (floating && !wasFloating && !floatNoticeShown) {
+    floatNoticeShown = true;
+    toast(`${icon("sparkle")} 水太深了，你浮起來了！按 A 可以從水裡跳起來`, 3000, "sky");
+  }
+  wasFloating = floating;
+}
+
+/** 淹水水面：腳底線（0.88）往上 floodLevel，蓋住角色下半身 */
+function renderFlood(): void {
+  if (!floodLayer) return;
+  const show = stage.sceneId === "forest" && floodLevel > 0.001;
+  floodLayer.hidden = !show;
+  if (!show) return;
+  floodLayer.style.top = `${((0.88 - floodLevel) * 100).toFixed(2)}%`;
+}
 
 function initWeatherLayer(): void {
   if (weatherLayer) weatherLayer.remove();
+  if (floodLayer) floodLayer.remove();
+  floodLayer = document.createElement("div");
+  floodLayer.className = "gstage-flood";
+  floodLayer.hidden = true;
+  floodLayer.innerHTML = `<div class="gstage-flood-wave"></div>`;
+  stage.world.appendChild(floodLayer);
   weatherLayer = document.createElement("div");
   weatherLayer.className = `gstage-weather gstage-weather--${currentWeather}`;
   stage.world.appendChild(weatherLayer);
+  stage.floodFloatSubmerge = forestWeather()?.flood.floatSubmerge ?? stage.floodFloatSubmerge;
+  stage.floodRiseH = forestWeather()?.flood.riseH ?? stage.floodRiseH;
+  stage.floodWalkMult = forestWeather()?.flood.walkMult ?? stage.floodWalkMult;
+  stage.floodBobH = forestWeather()?.flood.bobH ?? stage.floodBobH;
+  stage.floodBobMs = forestWeather()?.flood.bobMs ?? stage.floodBobMs;
   renderWeatherVisual();
+  renderFlood();
 }
 
 function renderWeatherVisual(): void {
@@ -2103,12 +2245,18 @@ function renderWeatherVisual(): void {
     return;
   }
 
-  // 雨絲粒子（24-36 條）
-  const count = currentWeather === "typhoon" ? 36 : 24;
+  // 雨絲粒子：數量、濃淡、速度、天色依雨量等級（token）
+  const L = rainLevel();
+  const typhoon = currentWeather === "typhoon";
+  const count = L.streaks + (typhoon ? forestWeather()?.rain.typhoonExtraStreaks ?? 0 : 0);
+  const dur = (typhoon ? 0.42 : 0.75) * L.speed;
+  weatherLayer.style.setProperty("--rain-tint", String(Math.min(0.6, L.tint + (typhoon ? 0.1 : 0))));
+  weatherLayer.style.setProperty("--rain-opacity", String(L.opacity));
+  weatherLayer.style.setProperty("--rain-dur", `${dur.toFixed(2)}s`);
   let rainHtml = '<div class="g-rain-layer">';
   for (let i = 0; i < count; i++) {
     const left = ((i * 100) / count + (i % 3) * 2.5).toFixed(1);
-    const delay = (-(i * 0.07)).toFixed(2);
+    const delay = (-((i * 0.37) % 1) * dur).toFixed(2);
     rainHtml += `<div class="g-rain-streak" style="left:${left}%;animation-delay:${delay}s"></div>`;
   }
   rainHtml += "</div>";
@@ -2135,6 +2283,8 @@ function renderWeatherVisual(): void {
 function setWeather(w: WeatherType, showToast = true): void {
   if (stage.sceneId !== "forest") return;
   currentWeather = w;
+  heavyRainSince = 0;
+  if (w !== "typhoon") windNoticeShown = false;
   renderWeatherVisual();
   if (w === "typhoon") {
     campfireLitUntil = 0;
@@ -2146,9 +2296,9 @@ function setWeather(w: WeatherType, showToast = true): void {
     for (const bat of forestBats) if (bat.el) bat.el.style.display = "none";
   }
   if (showToast) {
-    if (w === "sunny") toast("☀️ 晴天：陽光普照，適合大自然探索！", 2400, "sun");
-    else if (w === "rainy") toast("🌧️ 雨天：綿綿細雨，火堆燃燒時間會變短喔～", 2600, "sky");
-    else if (w === "typhoon") toast("💨 颱風天：暴風雨狂吹！順風飛馳加速、逆風寸步難行！", 3000, "peach");
+    if (w === "sunny") toast(`${icon("sun")} 晴天：陽光普照，${floodLevel > 0 ? "積水會慢慢退掉～" : "適合大自然探索！"}`, 2400, "sun");
+    else if (w === "rainy") toast(`${icon("rain")} 雨天：可以調雨量，雨下太大太久會淹水喔～`, 2600, "sky");
+    else if (w === "typhoon") toast(`${icon("wind")} 颱風天：順風飛馳、逆風難行，跳起來會被風吹走！`, 3000, "peach");
   }
 }
 
@@ -3162,7 +3312,11 @@ function placeProps(): void {
       p.el.setAttribute("aria-label", "營火：點一下點亮或熄滅");
       p.el.addEventListener("click", () => {
         if (stage.sceneId === "forest" && currentWeather === "typhoon") {
-          toast("💨 風雨太大了，無法生火！", 2000, "stone");
+          toast(`${icon("wind")} 風雨太大了，無法生火！`, 2000, "stone");
+          return;
+        }
+        if (stage.sceneId === "forest" && floodLevel >= (forestWeather()?.flood.campfireOutH ?? 1)) {
+          toast(`${icon("rain")} 營火泡在水裡，點不著了！`, 2000, "sky");
           return;
         }
         if (p.state === "lit") {
@@ -3183,7 +3337,7 @@ function placeProps(): void {
       p.el.setAttribute("aria-label", "花朵");
       p.el.addEventListener("click", () => {
         if (stage.sceneId === "forest" && currentWeather === "typhoon") {
-          toast("💨 風雨太強了，花朵緊閉無法盛開！", 2000, "stone");
+          toast(`${icon("wind")} 風雨太強了，花朵緊閉無法盛開！`, 2000, "stone");
           return;
         }
       });
@@ -3488,6 +3642,7 @@ stage.onTick = () => {
   updateCharge(now);
   updateStudioZoom(now);
   updateSceneCreatures(now, dt);
+  updateFlood(now, dt);
   updateMovingProps(now);
   updateMonsterBubblePos();
   updateHalloweenPortal(now);
@@ -3715,7 +3870,7 @@ async function takePhoto(): Promise<void> {
   await countdown();
   stage.freeze(true); // 角色定格目前動作
   // 腳底與影子位置跟舞台一致（跳起來、在海底游泳、站在方塊上拍，照片裡也在同樣的高度）
-  const opts = { ...stage.exportState(), aspect: aspect(), charX: 0.5 };
+  const opts = { ...stage.exportState(), aspect: aspect(), charX: 0.5, extras: photoExtras() };
   const flash = document.createElement("div");
   flash.className = "studio-flash";
   stage.hud.appendChild(flash);
@@ -3734,6 +3889,74 @@ async function takePhoto(): Promise<void> {
   if (!blob) return;
   const night = stage.skyState.night > 0.5;
   showPhotoPreview(blob, { aspect: opts.aspect as Aspect, sceneId: opts.scene, time: night ? "night" : "day" });
+}
+
+/** 拍照時把工作室自己畫在舞台上的東西也帶進照片（GameArt.exportPNG 只會重畫場景、角色與道具）：
+ *  森林蜜蜂／蝙蝠、墓園小殭屍等生物，淹水水面，雨天／颱風天的雨與天色。位置用舞台當下的實際位置換算。 */
+function photoExtras(): ExportExtra[] {
+  const out: ExportExtra[] = [];
+  const sr = stage.el.getBoundingClientRect();
+  if (sr.width < 1 || sr.height < 1) return out;
+  const ser = new XMLSerializer();
+  // 生物（DOM 裡的 SVG，含目前姿勢）
+  stage.el.querySelectorAll<HTMLElement>(".gstage-creature").forEach((el) => {
+    const svg = el.querySelector("svg");
+    if (!svg) return;
+    const cs = getComputedStyle(el);
+    if (cs.display === "none" || cs.visibility === "hidden" || Number(cs.opacity) === 0) return;
+    const r = el.getBoundingClientRect();
+    if (r.width < 1 || r.height < 1 || r.right < sr.left || r.left > sr.right) return;
+    const m = new DOMMatrixReadOnly(cs.transform === "none" ? undefined : cs.transform);
+    out.push({
+      svg: ser.serializeToString(svg),
+      z: Number(cs.zIndex) > 8 ? "front" : "back",
+      x: (r.left + r.width / 2 - sr.left) / sr.width,
+      y: (r.bottom - sr.top) / sr.height,
+      h: r.height / sr.height,
+      ar: r.width / r.height,
+      flip: m.a < 0,
+      opacity: Number(cs.opacity),
+    });
+  });
+  // 淹水水面（蓋住角色下半身）
+  if (floodLayer && !floodLayer.hidden && stage.sceneId === "forest" && floodLevel > 0.001) {
+    const night = stage.skyState.night > 0.5;
+    const root = getComputedStyle(document.documentElement);
+    const v = (n: string) => root.getPropertyValue(`--g-forest-${night ? "night" : "day"}-${n}`).trim() || "#7FB7D9";
+    const foam = v("flood-foam");
+    let waves = "";
+    for (let i = 0; i < 50; i++) waves += `<ellipse cx="${i * 2 + 1}" cy="1.2" rx="1" ry="1.2" fill="${foam}"/>`;
+    out.push({
+      svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="pfw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${v("flood-water")}"/><stop offset="1" stop-color="${v("flood-water-deep")}"/></linearGradient></defs><rect x="0" y="1.2" width="100" height="98.8" fill="url(#pfw)"/>${waves}</svg>`,
+      z: "top",
+      box: [0, 0.88 - floodLevel - 0.01, 1, 1],
+      opacity: 0.78,
+    });
+  }
+  // 雨天／颱風天：天色變暗＋雨絲（照片是定格，所以雨絲畫成斜線）
+  if (stage.sceneId === "forest" && (currentWeather === "rainy" || currentWeather === "typhoon") && weatherLayer) {
+    const typhoon = currentWeather === "typhoon";
+    const wcs = getComputedStyle(weatherLayer);
+    const tint = Number(wcs.getPropertyValue("--rain-tint")) || 0.16;
+    const op = Number(wcs.getPropertyValue("--rain-opacity")) || 0.75;
+    const root = getComputedStyle(document.documentElement);
+    const dark = root.getPropertyValue("--g-forest-night-sky-top").trim() || "#1E2A44";
+    const streak = typhoon ? "#FFFFFF" : root.getPropertyValue("--g-sky-soft").trim() || "#D6ECF8";
+    const n = weatherLayer.querySelectorAll(".g-rain-streak").length || 24;
+    const dx = typhoon ? -3.2 : -1.5; // 斜度（同畫面雨絲旋轉 34°／18°）
+    let lines = "";
+    for (let i = 0; i < n * 3; i++) {
+      const x = ((i * 37) % 100) + (i % 3) * 1.3;
+      const y = ((i * 53) % 96) - 4;
+      lines += `<line x1="${x.toFixed(1)}" y1="${y}" x2="${(x + dx).toFixed(1)}" y2="${y + 6}" />`;
+    }
+    out.push({
+      svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="${dark}" opacity="${Math.min(0.6, tint)}"/><g stroke="${streak}" stroke-width="0.25" stroke-linecap="round" opacity="${op}">${lines}</g></svg>`,
+      z: "top",
+      box: [0, 0, 1, 1],
+    });
+  }
+  return out;
 }
 
 function photoModal(inner: string): HTMLDivElement {
@@ -3934,6 +4157,24 @@ function finishTour(): void {
   }
 }
 
+// ---- 深連結（角色小鎮第一階段：從小鎮的店／城門進來，直接打開對應分頁；docs/plan-game-town.md §12）----
+// ?tab=style&cat=outfit、?tab=pose、?tab=album、?tab=scene&scene=forest（沒買過的場景只打開場景分頁，由孩子自己買或試玩）
+function applyDeepLink(): void {
+  const q = new URLSearchParams(location.search);
+  const t = q.get("tab");
+  const c = q.get("cat");
+  const sc = q.get("scene");
+  if (t && TABS.some((x) => x.id === t)) tab = t as TabId;
+  if (c && STYLE_CATS.some((x) => x.id === c)) {
+    tab = "style";
+    styleCat = c as StyleCat;
+  }
+  if (sc && GameArt.sceneInfo[sc]) {
+    tab = "scene";
+    if (profileId && sanitizeSceneId(profileId, sc) === sc) void switchScene(sc);
+  }
+}
+
 // ---- 啟動 ----
 function init(): void {
   if (!profileId) return;
@@ -3942,9 +4183,11 @@ function init(): void {
     isFirstVisit = false;
   }
   currentWeather = slot.scene.id === "forest" ? (slot.scene.weather ?? "sunny") : "sunny";
+  currentRain = normalizeRain(slot.scene.rain) ?? defaultRain();
   initWeatherLayer();
   stage.setTime(timeModeOf(slot.scene));
   placeProps();
+  applyDeepLink();
   renderTabs();
   renderTab();
   renderName();

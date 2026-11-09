@@ -6,11 +6,11 @@ var T = JSON.parse(fs.readFileSync(path.join(__dirname, 'game-tokens.json'), 'ut
 if (process.env.RACE_OVERRIDE) { var OV = JSON.parse(process.env.RACE_OVERRIDE); (function m(a, b) { Object.keys(b).forEach(function (k) { if (b[k] && typeof b[k] === 'object' && !Array.isArray(b[k])) m(a[k] = a[k] || {}, b[k]); else a[k] = b[k]; }); })(R, OV); }
 var N = +process.argv[2] || 3000, DT = 0.02;
 var SKILLS = {
-  novice:  { clear: .55, col: .55, plat: .05, smartCan: false, hold: .3, tap: 0, label: '新手' },
-  average: { clear: .80, col: .75, plat: .25, smartCan: false, hold: .5, tap: .15, label: '一般' },
-  good:    { clear: .92, col: .90, plat: .55, smartCan: false, hold: .6, tap: .3, label: '熟練' },
-  expert:  { clear: 1.0, col: 1.0, plat: 1.0, smartCan: false, hold: .5, tap: .5, label: '滿分' },
-  tapper:  { clear: .92, col: .90, plat: .55, smartCan: false, hold: 0, tap: 1, label: '連點（熟練）' }
+  /* hold／tap＝按住 →／連點 → 的時間比例。2026-11-04 起按住 → 就加速，孩子大多一直按著，所以 hold 提高、tap 不再有額外效果 */
+  novice:  { clear: .55, col: .55, plat: .05, smartCan: false, hold: .6, tap: 0, label: '新手' },
+  average: { clear: .80, col: .75, plat: .25, smartCan: false, hold: .8, tap: 0, label: '一般' },
+  good:    { clear: .92, col: .90, plat: .55, smartCan: false, hold: .9, tap: 0, label: '熟練' },
+  expert:  { clear: 1.0, col: 1.0, plat: 1.0, smartCan: false, hold: 1, tap: 0, label: '滿分' }
 };
 function rnd() { return Math.random(); }
 
@@ -61,7 +61,7 @@ function runPlayer(stage, S) {
       var ahead = o.x < x, use = S.smartCan ? (x > 2900 || (!ahead && x > 1500 && (o.x - x) > 150)) : true;
       if (use) { can = 0; boost = { until: t + R.effects.boostCan.sec, mult: R.effects.boostCan.mult }; }
     }
-    var pc = R.player.pace || { hold: 1, tap: 1 }, pace = 1 + (pc.hold - 1) * S.hold + (pc.tap - 1) * S.tap;   /* 步調：依各熟練度的『按住 → 時間比例』與『連點時間比例』估平均倍率（方向鍵步調，v1.5） */
+    var pc = R.player.pace || { hold: 1, tap: 1 }, pace = 1 + (pc.hold - 1) * S.hold + (pc.tap - pc.hold) * S.tap;   /* 步調：依各熟練度的『按住 → 時間比例』與『連點時間比例』估平均倍率（方向鍵步調，v1.5） */
     var v = base * pace * (boost.until > t ? boost.mult : 1);
     slows = slows.filter(function (s) { return s.until > t; }); slows.forEach(function (s) { v *= s.mult; });
     zones.forEach(function (z) { if (x >= z.x0 && x <= z.x1) v *= z.mult; });
@@ -73,6 +73,8 @@ function runPlayer(stage, S) {
       if (opp.sprint && (t % opp.sprint.everySec) < opp.sprint.sec) ov = opp.sprint.speed;
       if (opp.nap) { o.cd -= DT; if (o.sleep > 0) { o.sleep -= DT; ov = 0; } else if (o.cd <= 0 && o.x - x > opp.nap.lead && pTime === null) { o.sleep = opp.nap.sec; o.cd = opp.nap.cooldownSec + opp.nap.sec; } }
       if (opp.stumble && o.stIdx < opp.stumble.length && o.x >= opp.stumble[o.stIdx].x) { o.stall = opp.stumble[o.stIdx].sec; o.stIdx++; }
+      if (opp.peck && (o.pkIdx || 0) < opp.peck.length && o.x >= opp.peck[o.pkIdx || 0].x) { o.peck = opp.peck[o.pkIdx || 0].sec; o.pkIdx = (o.pkIdx || 0) + 1; }
+      if (o.peck > 0) { o.peck -= DT; ov = 0; }   /* 低頭吃小蟲：停下來 */
       if (o.stall > 0) { o.stall -= DT; ov *= .15; }
       o.x += ov * DT; if (o.x >= L) oTime = t;
     }

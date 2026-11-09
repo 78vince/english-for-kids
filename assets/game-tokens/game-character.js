@@ -110,9 +110,15 @@
     if (isZombie) o.held = 'none';
     var skin = isZombie ? hue('mint') : bear ? (C.fur[o.fur] || C.fur.bear) : C.skin[o.skin], skinFar = mix(skin, N.ink, .12);
     var hair = C.hair[o.hairColor], oc = hue(o.outfitColor), ocl = hue(o.outfitColor, 'ledge'), ocFar = mix(oc, N.ink, .1);
-    var pc = o.pantsColor === 'match' ? oc : o.pantsColor === 'ink' ? N.ink : hue(o.pantsColor), pcFar = mix(pc, N.ink, .1);
-    var sundr = o.outfit === 'sundress', dress = o.outfit === 'dress' || sundr, hood = o.outfit === 'hoodie', jacket = o.outfit === 'jacket', longSl = hood || jacket;
-    var shoe = hue(dress ? o.outfitColor : 'stone', 'deep'), sole = N['surface-raised'];
+    /* 商店衣服（v2.22.0）：雨衣 raincoat、運動服 jersey、星星睡衣 pajamas、潛水衣 wetsuit、太空服 spacesuit、恐龍裝 dino。
+     * 連身款（睡衣、潛水衣、太空服、恐龍裝）褲子跟衣服同色；太空服本體固定淺灰白，衣服顏色當配色（oa）。 */
+    var OF = o.outfit, oa = hue(o.outfitColor), oSoft = hue(o.outfitColor, 'soft');
+    var space = OF === 'spacesuit', dino = OF === 'dino', fullSuit = OF === 'pajamas' || OF === 'wetsuit' || space || dino;
+    if (space) { oc = hue('stone', 'soft'); ocl = hue('stone', 'ledge'); ocFar = mix(oc, N.ink, .1); }
+    var pc = fullSuit ? oc : o.pantsColor === 'match' ? oc : o.pantsColor === 'ink' ? N.ink : hue(o.pantsColor), pcFar = mix(pc, N.ink, .1);
+    var sundr = o.outfit === 'sundress', dress = o.outfit === 'dress' || sundr, hood = o.outfit === 'hoodie', jacket = o.outfit === 'jacket';
+    var longSl = hood || jacket || OF === 'raincoat' || fullSuit;
+    var shoe = space ? hue('stone', 'deep') : hue(dress ? o.outfitColor : 'stone', 'deep'), sole = N['surface-raised'];
     var PX = o.pose ? poseTransforms(view, o.pose, o.t || 0) : { tf: {}, eyesX: false, fx: null, legsFront: false };
     var part = function (name, inner) { var at = { 'data-part': name }; if (PX.tf[name]) at.transform = PX.tf[name]; return el('g', at, inner); };
     var ey = bear ? 40 : 44, my = bear ? 56 : 54;
@@ -186,6 +192,37 @@
         var x0 = v === 'side' ? 46 : 40, w0 = v === 'side' ? 28 : 40;
         r += rect(x0, 86, w0, 5, 2.5, od, { opacity: .85 }) + rect(x0, 96, w0, 5, 2.5, od, { opacity: .85 }) + rect(x0, 106, w0, 5, 2.5, od, { opacity: .85 });
       }
+      if (OF === 'raincoat') {   /* 雨衣：長到膝蓋的 A 字外套、牛角扣、口袋 */
+        if (v === 'front') r += line(60, 80, 60, 130, od, 2.6) + rect(55, 88, 10, 4, 2, N['surface-raised']) + rect(55, 100, 10, 4, 2, N['surface-raised']) + rect(55, 112, 10, 4, 2, N['surface-raised']) + rect(40, 114, 12, 9, 3, od) + rect(68, 114, 12, 9, 3, od);
+        else if (v === 'side') r += rect(60, 112, 12, 9, 3, od) + line(76, 80, 78, 130, od, 2.6);
+        else r += ell(60, 82, 18, 10, od);
+      }
+      if (OF === 'jersey') {   /* 運動服：兩側白邊、號碼「1」 */
+        var jx = v === 'side' ? 44 : 38, jw = v === 'side' ? 32 : 44, wc = N['surface-raised'];
+        r += rect(jx, 76, 5, 42, 2.5, wc) + rect(jx + jw - 5, 76, 5, 42, 2.5, wc);
+        if (v !== 'side') r += rect(57, 86, 7, 22, 3, wc) + rect(53, 86, 9, 6, 3, wc) + rect(52, 104, 17, 6, 3, wc);
+        else r += rect(58, 90, 7, 16, 3, wc);
+      }
+      if (OF === 'pajamas') {   /* 星星睡衣：圓領、扣子、滿身小星星 */
+        var SP = v === 'side' ? [[54, 92], [66, 104], [56, 116]] : [[46, 90], [72, 94], [52, 108], [70, 114], [60, 100]];
+        SP.forEach(function (q) { r += rpath(star(q[0], q[1], 4.6, 2.2), hue('sun'), 1.5); });
+        if (v === 'front') r += ell(60, 77, 12, 5, od) + circ(60, 86, 1.8, od) + circ(60, 96, 1.8, od);
+      }
+      if (OF === 'wetsuit') {   /* 潛水衣：中間拉鍊、兩側色塊 */
+        if (v === 'front') r += line(60, 78, 60, 118, od, 2.6) + rect(38, 92, 8, 26, 4, od, { opacity: .8 }) + rect(74, 92, 8, 26, 4, od, { opacity: .8 }) + circ(60, 79, 2.4, hue('sun'));
+        else if (v === 'side') r += rect(44, 92, 8, 26, 4, od, { opacity: .8 });
+        else r += line(60, 78, 60, 116, od, 2.6);
+      }
+      if (space) {   /* 太空服：胸前控制面板、腰帶、肩上徽章（配色＝衣服顏色） */
+        if (v === 'front') r += rect(49, 86, 22, 15, 4, hue('stone', 'deep')) + circ(54, 93, 2.2, hue('rose')) + circ(60, 93, 2.2, hue('sun')) + circ(66, 93, 2.2, hue('mint')) + rect(38, 108, 44, 6, 3, oa) + circ(44, 82, 4, oa);
+        else if (v === 'side') r += rect(44, 108, 32, 6, 3, oa) + circ(66, 84, 4, oa);
+        else r += rect(42, 80, 36, 30, 10, hue('stone')) + rect(48, 86, 24, 6, 3, oa) + rect(38, 112, 44, 6, 3, oa);
+      }
+      if (dino) {   /* 恐龍裝：淺色肚子（前面）、背上尖刺（側面、背面） */
+        if (v === 'front') r += ell(60, 102, 14, 17, oSoft) + rect(52, 94, 16, 3, 1.5, od, { opacity: .5 }) + rect(51, 102, 18, 3, 1.5, od, { opacity: .5 }) + rect(52, 110, 16, 3, 1.5, od, { opacity: .5 });
+        else if (v === 'side') { [80, 92, 104].forEach(function (y) { r += rpath('M44 ' + (y - 6) + ' L34 ' + y + ' L44 ' + (y + 6) + ' Z', od, 3); }); r += ell(66, 104, 9, 14, oSoft); }
+        else [80, 92, 104, 116].forEach(function (y) { r += rpath('M54 ' + y + ' L60 ' + (y - 9) + ' L66 ' + y + ' Z', od, 3); });
+      }
       if (sundr) {
         var D = v === 'side' ? [[56, 94], [66, 102], [52, 110], [70, 117], [60, 124]] : [[52, 94], [68, 98], [58, 110], [74, 115], [46, 120], [62, 125]];
         D.forEach(function (p) { r += circ(p[0], p[1], 2.5, hue('sun')); });
@@ -198,6 +235,8 @@
       if (dress) r += rpath('M44 80 Q60 74 76 80 L86 128 Q60 136 34 128 Z', oc, 8) + rect(46, 110, 28, 5, 2.5, ocl, { opacity: .6 });
       else if (o.outfit === 'overalls') r += rect(38, 74, 44, 48, 16, oc) + rect(46, 90, 28, 32, 10, pc) + rect(46, 78, 6, 16, 3, pc) + rect(68, 78, 6, 16, 3, pc) + circ(49, 94, 2.6, hue('sun')) + circ(71, 94, 2.6, hue('sun'));
       else if (hood) r += ell(60, 76, 22, 9, ocl) + rect(38, 74, 44, 48, 16, oc) + rect(47, 100, 26, 12, 6, ocl, { opacity: .75 });
+      else if (OF === 'raincoat') r += ell(60, 76, 20, 8, ocl) + rpath('M42 78 Q60 72 78 78 L84 132 Q60 138 36 132 Z', oc, 8);
+      else if (space) r += rect(35, 72, 50, 50, 18, oc);
       else r += rect(38, 74, 44, 46, 16, oc);
       r += outfitDeco('front');
       return r;
@@ -207,6 +246,8 @@
       if (dress) return rpath('M44 80 Q60 74 76 80 L86 128 Q60 136 34 128 Z', oc, 8) + rect(54, 82, 12, 5, 2.5, ocl, { opacity: .6 }) + rect(46, 110, 28, 5, 2.5, ocl, { opacity: .6 });
       if (o.outfit === 'overalls') return rect(38, 74, 44, 48, 16, oc) + rect(46, 90, 28, 32, 10, pc) + rect(48, 76, 6, 20, 3, pc, { transform: 'rotate(-14 51 86)' }) + rect(66, 76, 6, 20, 3, pc, { transform: 'rotate(14 69 86)' });
       if (hood) return rect(38, 74, 44, 48, 16, oc) + ell(60, 82, 19, 12, ocl);
+      if (OF === 'raincoat') return rpath('M42 78 Q60 72 78 78 L84 132 Q60 138 36 132 Z', oc, 8);
+      if (space) return rect(35, 72, 50, 50, 18, oc);
       return rect(38, 74, 44, 46, 16, oc);
     }
     function wingPath(x0, dir, k) {   /* 羽毛翅膀：5 片長羽由下往上疊，白／淺藍交錯 */
@@ -214,8 +255,14 @@
       Fd.forEach(function (f, i) { var len = 50 * k * f[2]; out += el('g', { transform: 'translate(' + x0 + ' 90) rotate(' + (dir * f[0]) + ')' }, ell(0, -len * .5, f[1] * .62 * k, len * .5, i % 2 ? hue('sky', 'soft') : N['surface-raised'])); });
       return out;
     }
+    /* 恐龍尾巴：會左右輕輕搖（SVG animateTransform；拍照匯出是靜止的那一格） */
+    function dinoTail(d, cx, cy) {
+      return el('g', {}, el('path', { d: d, fill: oc, stroke: oc, 'stroke-width': 6, 'stroke-linejoin': 'round' }) + '<animateTransform attributeName="transform" type="rotate" values="-7 ' + cx + ' ' + cy + ';7 ' + cx + ' ' + cy + ';-7 ' + cx + ' ' + cy + '" dur="1.4s" repeatCount="indefinite"/>');
+    }
     function behind() {
       var r = '';
+      if (dino && side) r += dinoTail('M48 102 Q22 108 8 132 Q30 126 50 122 Z', 48, 112);
+      else if (dino && !back) r += dinoTail('M76 112 Q98 116 108 134 Q90 132 74 126 Z', 76, 118);
       if (side) {
         if (has('cape')) r += rpath('M52 80 Q38 100 28 132 Q48 140 64 112 L64 80 Z', CC.cape, 6);
         if (has('wings')) r += wingPath(58, -1, .85);
@@ -227,6 +274,7 @@
     }
     function backOver() {
       var r = bear ? circ(60, 113, 8, C.fur['bear-belly']) : '';
+      if (dino) r += dinoTail('M52 112 Q56 146 60 156 Q66 146 68 112 Z', 60, 114);
       if (has('wings')) r += wingPath(46, -1, 1) + wingPath(74, 1, 1);
       if (has('cape')) r += rpath('M40 78 L80 78 L90 128 Q60 136 30 128 Z', CC.cape, 6) + rect(42, 78, 36, 6, 3, CC.capeLedge) + circ(60, 84, 3.4, hue('sun'));
       if (has('backpack')) r += rect(42, 80, 36, 34, 13, hue('peach')) + rect(48, 98, 24, 11, 5, hue('peach', 'ledge')) + rect(50, 78, 6, 12, 3, hue('peach', 'ledge')) + rect(64, 78, 6, 12, 3, hue('peach', 'ledge'));
@@ -237,6 +285,8 @@
       if (dress) r += rpath('M46 80 Q58 74 72 80 L82 128 Q58 136 38 128 Z', oc, 8) + rect(44, 110, 32, 5, 2.5, ocl, { opacity: .6 });
       else if (o.outfit === 'overalls') r += rect(44, 74, 32, 48, 14, oc) + rect(48, 90, 28, 32, 10, pc) + rect(54, 78, 7, 16, 3, pc) + circ(60, 94, 2.6, hue('sun'));
       else if (hood) r += ell(46, 80, 9, 12, ocl) + rect(44, 74, 32, 48, 14, oc) + rect(52, 100, 20, 12, 6, ocl, { opacity: .75 });
+      else if (OF === 'raincoat') r += ell(46, 80, 9, 12, ocl) + rpath('M46 78 Q58 74 74 78 L82 132 Q58 138 38 132 Z', oc, 8);
+      else if (space) r += rect(41, 72, 38, 50, 16, oc) + rect(36, 80, 10, 30, 5, hue('stone'));
       else r += rect(44, 74, 32, 46, 14, oc);
       return r + outfitDeco('side');
     }
@@ -365,19 +415,9 @@
       if (st === 'sidepart' && v === 'side') out += el('path', { d: 'M76 16 Q78 24 74 32', stroke: mix(hair, N.ink, .28), 'stroke-width': 2.2, 'stroke-linecap': 'round' });
       return out;
     }
-    function headFront() {
+    /* 正面頭部配件（頭套、眼鏡、帽子…）；headFront 與 itemIcon（只畫配件）共用 */
+    function accFront() {
       var h = '';
-      if (bear) h += circ(36, 20, 11, skin) + circ(84, 20, 11, skin) + circ(36, 20, 5.5, hue('rose'), { opacity: .75 }) + circ(84, 20, 5.5, hue('rose'), { opacity: .75 }) + circ(60, 42, 27, skin) + ell(60, 51, 14, 10.5, C.fur['bear-belly']) + ell(60, 46, 4.8, 3.4, F.nose);
-      else {
-        var bk = '';
-        if (o.hairStyle === 'bob') bk = rect(30, 16, 60, 50, 24, hair);
-        if (o.hairStyle === 'twinbun') bk = circ(38, 19, 10.5, hair) + circ(82, 19, 10.5, hair);
-        if (o.hairStyle === 'twintail') bk = ell(26, 54, 9, 21, hair, { transform: 'rotate(8 26 54)' }) + ell(94, 54, 9, 21, hair, { transform: 'rotate(-8 94 54)' }) + circ(31, 33, 4, hue('rose')) + circ(89, 33, 4, hue('rose'));
-        if (HOOD) bk = el('path', { d: mikanHole('front'), fill: skin });   /* 正面開口內補膚色底：窄臉型（橢圓臉）太陽穴兩側不會露縫 */
-        h += bk + circ(60 - FS.hw, 45, 5, skin) + circ(60 + FS.hw, 45, 5, skin) + faceBase(60);
-        h += hairCap('front');
-      }
-      h += circ(46, ey + 9, 4.4, F.cheek, { opacity: PX.blush ? .95 : .55, 'class': 'cheek', 'data-base': '.55' }) + circ(74, ey + 9, 4.4, F.cheek, { opacity: PX.blush ? .95 : .55, 'class': 'cheek', 'data-base': '.55' }) + eyeSet(0, true) + mouthAt(60, my) + browsSvg(false, 0, bear ? -4 : 0);
       if (HOOD) h += mikanHood('front');
       if (has('glasses-round')) h += circ(49.5, ey, 8, 'none', { stroke: N['ink-soft'], 'stroke-width': 2.6 }) + circ(70.5, ey, 8, 'none', { stroke: N['ink-soft'], 'stroke-width': 2.6 }) + line(57.5, ey, 62.5, ey, N['ink-soft'], 2.6);
       if (has('glasses-soft')) h += rect(40, ey - 7, 19, 14, 6, 'none', { stroke: hue('rose', 'deep'), 'stroke-width': 2.6 }) + rect(61, ey - 7, 19, 14, 6, 'none', { stroke: hue('rose', 'deep'), 'stroke-width': 2.6 }) + line(59, ey, 61, ey, hue('rose', 'deep'), 2.6);
@@ -401,6 +441,35 @@
       }
       if (has('headphones')) h += el('path', { d: 'M33 44 Q33 12 60 12 Q87 12 87 44', stroke: hue('stone', 'deep'), 'stroke-width': 5, 'stroke-linecap': 'round' }) + rect(26, 36, 12, 20, 6, hue('lilac')) + rect(82, 36, 12, 20, 6, hue('lilac'));
       if (has('goggles')) h += line(34, 28, 86, 28, hue('stone', 'deep'), 4.5) + circ(48, 24, 8.5, hue('sky', 'soft'), { stroke: hue('stone', 'deep'), 'stroke-width': 3 }) + circ(72, 24, 8.5, hue('sky', 'soft'), { stroke: hue('stone', 'deep'), 'stroke-width': 3 });
+      return h;
+    }
+    /* 只畫一件配件／手持物（商店選單縮圖，不畫人物；v2.17.0）。viewBox 依物件裁成正方形 */
+    function itemOnlySvg() {
+      var IVB = { 'glasses-round': [38, 32, 44, 24], 'glasses-soft': [36, 32, 48, 24], cap: [31, 4, 65, 38], melonhat: [27, 2, 66, 38], witchhat: [12, -34, 96, 74], zombieTalisman: [48, 12, 24, 34],
+        headphones: [22, 8, 76, 52], goggles: [32, 13, 56, 22], mikanhood: [24, -24, 72, 98], bluehood: [24, -24, 72, 98], pumpkinhood: [26, -6, 68, 78], backpack: [38, 74, 44, 44], cape: [26, 74, 68, 66], wings: [-2, 30, 124, 92],
+        flag: [-4, -54, 28, 64], lollipop: [-15, -57, 30, 66], wand: [-4, -44, 32, 52], pinwheel: [-18, -56, 36, 66], plunger: [-16, -58, 32, 98], poopstick: [-10, -58, 30, 72], meat: [-17, -40, 34, 54], magiccane: [-10, -90, 40, 142], pumpkinbucket: [-22, 4, 44, 46] };
+      var heldMode = o.itemOnly === 'held', id = heldMode ? o.held : acc[0], inner2 = '';
+      if (heldMode) inner2 = heldItem();
+      else if (id === 'backpack' || id === 'cape' || id === 'wings') inner2 = backOver();
+      else inner2 = accFront();
+      var b = IVB[id] || (heldMode ? [-24, -60, 48, 72] : [20, -30, 80, 100]), m = Math.max(b[2], b[3]) + 8;
+      var x = b[0] + b[2] / 2 - m / 2, y = b[1] + b[3] / 2 - m / 2;
+      return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + [x, y, m, m].map(function (n) { return +n.toFixed(2); }).join(' ') + '" class="g-item g-item-' + id + '">' + inner2 + '</svg>';
+    }
+    function headFront() {
+      var h = '';
+      if (bear) h += circ(36, 20, 11, skin) + circ(84, 20, 11, skin) + circ(36, 20, 5.5, hue('rose'), { opacity: .75 }) + circ(84, 20, 5.5, hue('rose'), { opacity: .75 }) + circ(60, 42, 27, skin) + ell(60, 51, 14, 10.5, C.fur['bear-belly']) + ell(60, 46, 4.8, 3.4, F.nose);
+      else {
+        var bk = '';
+        if (o.hairStyle === 'bob') bk = rect(30, 16, 60, 50, 24, hair);
+        if (o.hairStyle === 'twinbun') bk = circ(38, 19, 10.5, hair) + circ(82, 19, 10.5, hair);
+        if (o.hairStyle === 'twintail') bk = ell(26, 54, 9, 21, hair, { transform: 'rotate(8 26 54)' }) + ell(94, 54, 9, 21, hair, { transform: 'rotate(-8 94 54)' }) + circ(31, 33, 4, hue('rose')) + circ(89, 33, 4, hue('rose'));
+        if (HOOD) bk = el('path', { d: mikanHole('front'), fill: skin });   /* 正面開口內補膚色底：窄臉型（橢圓臉）太陽穴兩側不會露縫 */
+        h += bk + circ(60 - FS.hw, 45, 5, skin) + circ(60 + FS.hw, 45, 5, skin) + faceBase(60);
+        h += hairCap('front');
+      }
+      h += circ(46, ey + 9, 4.4, F.cheek, { opacity: PX.blush ? .95 : .55, 'class': 'cheek', 'data-base': '.55' }) + circ(74, ey + 9, 4.4, F.cheek, { opacity: PX.blush ? .95 : .55, 'class': 'cheek', 'data-base': '.55' }) + eyeSet(0, true) + mouthAt(60, my) + browsSvg(false, 0, bear ? -4 : 0);
+      h += accFront();
       return h;
     }
     function headSide() {
@@ -530,6 +599,7 @@
     r += fxg('1', fx) + fxg('zzz', sh8(zz)) + fxg('think', sh8(tk)) + fxg('bang', sh8(bg));
     var inner = part('shadow', ell(60, 165, 28, 4.5, T.depth.shadow.ground)) + part('root', r);
     if (side && o.facing === 'left') inner = '<g transform="translate(120 0) scale(-1 1)">' + inner + '</g>';
+    if (o.itemOnly) return itemOnlySvg();
     return svg(120, 170, inner, 'g-char g-char-' + view, { overflow: 'visible', 'data-view': view, 'data-mouth': o.mouth });
   }
 
@@ -589,6 +659,11 @@
   A.sequenceAt = sequenceAt; A.sequences = Object.keys(T.motion.sequences || {}).filter(function (k) { return k !== 'note'; });
 
   A.setCharge = function (svgEl, on, full) { var g = svgEl && svgEl.querySelector('.g-glow'); if (!g) return; g.style.display = on ? '' : 'none'; g.classList.toggle('full', !!(on && full)); };
+  /* 只畫一件配件或手持物（不畫人物）：itemIcon('accessories', 'cap')、itemIcon('held', 'wand')；held 'none' 回傳空字串 */
+  A.itemIcon = function (field, id) {
+    if (field === 'held') return id && id !== 'none' ? character({ held: id, accessories: [], itemOnly: 'held', view: 'front' }) : '';
+    return character({ accessories: [id], held: 'none', itemOnly: 'accessories', view: 'front' });
+  };
   A.character = character; A.animate = animate; A.applyPose = applyPose; A.poseTransforms = poseTransforms; A.randomLook = randomLook;
   A.presets = T.character.presets; A.options = T.character.options; A.poses = Object.keys(T.motion.poses); A.views = Object.keys(T.character.views);
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -13,7 +13,10 @@ import { AVATARS } from "../avatars";
 
 const ACTIVE_PROFILE_ID_KEY = "englishForKids.activeProfileId.v1";
 
-export type ReturnTarget = "home" | "gameRoom" | "lab";
+export type ReturnTarget = "home" | "gameRoom" | "lab" | "town";
+
+/** 角色小鎮：進店前記下小鎮自己的返回目標（town.html?from=…），從工作室返回小鎮時帶回去 */
+export const TOWN_FROM_KEY = "townFrom";
 
 /** 目前登入的使用者（每台設備各自記，不同步）；沒有就回主頁選人 */
 export function requireActiveProfileId(): string | null {
@@ -46,6 +49,7 @@ export function requireActiveProfileId(): string | null {
 export function returnTarget(): ReturnTarget {
   const from = new URLSearchParams(window.location.search).get("from");
   if (from === "lab" && LAB_MODE) return "lab";
+  if (from === "town") return "town";
   return from === "home" ? "home" : "gameRoom";
 }
 
@@ -64,6 +68,16 @@ export async function leaveTo(target: ReturnTarget = returnTarget(), beforeLeave
     await Promise.race([flushPending(), new Promise((r) => setTimeout(r, 2000))]);
   } catch {
     // 離線也照樣離開，佇列留在本機稍後補傳
+  }
+  if (target === "town") {
+    let back = "gameRoom";
+    try {
+      back = sessionStorage.getItem(TOWN_FROM_KEY) || "gameRoom";
+    } catch {
+      // 忽略
+    }
+    window.location.assign(`town.html?from=${encodeURIComponent(back)}`);
+    return;
   }
   window.location.assign(target === "lab" ? "../lab.html" : `../index.html#${target}`);
 }

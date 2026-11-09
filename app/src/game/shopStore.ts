@@ -11,7 +11,7 @@ import { earnTokens, getTokenBalance, spendTokens } from "../gameTokens";
 import { LAB_MODE } from "../gameRelease";
 
 export const WARDROBE_KEY_PREFIX = "englishForKids.wardrobe.v1";
-export type ShopField = "hairStyle" | "mouth" | "eyes" | "brows" | "faceShape" | "outfit" | "accessories" | "held" | "scene";
+export type ShopField = "hairStyle" | "mouth" | "eyes" | "brows" | "faceShape" | "outfit" | "accessories" | "held" | "scene" | "furniture";
 const LOOK_FIELDS: ShopField[] = ["hairStyle", "mouth", "eyes", "brows", "faceShape", "outfit", "accessories", "held"];
 
 export interface ShopItem {

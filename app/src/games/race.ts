@@ -62,6 +62,8 @@ interface RaceTokens {
       sprint?: { everySec: number; sec: number; speed: number };
       nap?: { lead: number; sec: number; cooldownSec: number };
       stumble?: { x: number; sec: number }[];
+      /** 停下來低頭吃小蟲（鴕鳥，姿勢 peck） */
+      peck?: { x: number; sec: number }[];
     }
   >;
   stages: RaceStage[];
@@ -271,7 +273,7 @@ function renderMenu(): void {
     </div>
     <div class="race-cards">${cards}</div>
     <div class="race-menu-foot">
-      <p class="g-t-caption">操作：自動往前跑。<b>A</b>（或 ↑、空白鍵）＝跳、<b>C</b>（或 L、C 鍵）＝使用道具（加速罐）。按住 <b>→</b> 跑快一點、連續點 <b>→</b> 衝刺、按 <b>←</b> 慢一點。</p>
+      <p class="g-t-caption">操作：自動往前跑。<b>A</b>（或 ↑、空白鍵）＝跳、<b>C</b>（或 L、C 鍵）＝使用道具（加速罐）。一直按住 <b>→</b> 就會加速衝刺、按 <b>←</b> 慢一點。</p>
     </div>`;
 
   menu.querySelectorAll<HTMLButtonElement>(".race-card").forEach((b) =>
@@ -347,7 +349,7 @@ interface RaceState {
   st: RaceStage;
   phase: Phase;
   time: number;
-  opp: { kind: string; x: number; pose: string; napUntil: number; napCooldown: number; stumbleUntil: number; stumbled: Set<number>; finishTime: number | null };
+  opp: { kind: string; x: number; pose: string; napUntil: number; napCooldown: number; stumbleUntil: number; stumbled: Set<number>; peckUntil: number; pecked: Set<number>; finishTime: number | null };
   boosts: Effect[];
   slows: Effect[];
   shield: boolean;
@@ -513,8 +515,8 @@ function paceMult(): number {
   forwardTaps = forwardTaps.filter((t) => now - t < PACE.tapWindowMs);
   const d = pad.down;
   const last = forwardTaps[forwardTaps.length - 1] ?? 0;
+  if (d.right && !d.left) return PACE.hold; // 按住 → 就加速（2026-11-04 起不用連點；token pace.hold）
   if (forwardTaps.length >= PACE.tapCount && now - last < PACE.tapKeepMs) return PACE.tap;
-  if (d.right && !d.left) return PACE.hold;
   if (d.left && !d.right) return PACE.back;
   return 1;
 }
@@ -695,6 +697,18 @@ function updateOpponent(dt: number, running: boolean): void {
   if (t < o.stumbleUntil) {
     v *= 0.15;
     pose = "stumble";
+  }
+  // 低頭吃小蟲：停下來（鴕鳥，兩次）
+  for (const [i, s] of (cfg.peck ?? []).entries()) {
+    if (!o.pecked.has(i) && o.x >= s.x && t >= o.stumbleUntil) {
+      o.pecked.add(i);
+      o.peckUntil = t + s.sec;
+      if (S.phase === "running") toast(`${escapeHtml(animalName(o.kind))}停下來吃小蟲了，快追！`, 1600, "leaf");
+    }
+  }
+  if (t < o.peckUntil) {
+    v = 0;
+    pose = "peck";
   }
   o.x += v * dt;
   setOppPose(pose);
@@ -1006,7 +1020,7 @@ function startRace(st: RaceStage): void {
     st,
     phase: "countdown",
     time: 0,
-    opp: { kind: st.opponent, x: START_X, pose: "idle", napUntil: 0, napCooldown: 0, stumbleUntil: 0, stumbled: new Set(), finishTime: null },
+    opp: { kind: st.opponent, x: START_X, pose: "idle", napUntil: 0, napCooldown: 0, stumbleUntil: 0, stumbled: new Set(), peckUntil: 0, pecked: new Set(), finishTime: null },
     boosts: [],
     slows: [],
     shield: false,
@@ -1174,7 +1188,7 @@ function showResult(r: Result): void {
     .join("");
   const tip =
     !r.win && race.losses >= 3
-      ? `<div class="race-tip g-bubble g-h-mint">${icon("info", "sm")} 小提示：把加速罐留到最後衝刺；一直連點 → 可以衝得更快！</div>`
+      ? `<div class="race-tip g-bubble g-h-mint">${icon("info", "sm")} 小提示：把加速罐留到最後衝刺；一路按住 → 就能衝得更快！</div>`
       : "";
 
   const overlay = document.createElement("div");

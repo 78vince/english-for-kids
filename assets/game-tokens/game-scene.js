@@ -423,6 +423,39 @@
     return svg(w, h, s, 'g-scene g-scene-' + id + ' g-' + time, { preserveAspectRatio: 'xMidYMid slice' });
   }
 
+  /* 角色小鎮的街景（v2.18.0）：不是獨立場景（不進 GameArt.scenes，不影響工作室與徽章），
+   * 天空／雲／太陽月亮沿用森林；這裡只畫遠景（丘陵＋遠方屋頂）與地面（人行道＋馬路）。顏色在 T.town.colors.day/night。
+   * GameArt.townLayers(time, w, h) → { far, ground }（各為 SVG，水平可無縫平鋪） */
+  function townLayers(time, w, h) {
+    var S = T.town.colors[time || 'day'], night = time === 'night'; w = w || 960; h = h || 540;
+    var gy = Math.round(h * .8), u = h / 540, r = rng(31), s = '', i;
+    /* 遠景：兩層丘陵＋一排遠方小房子（三角屋頂、亮著的小窗） */
+    s += rpath(wave(w, gy - h * .2, h * .04, 2, .3, gy, 12), S.farHill, 0);
+    var NH = 9;
+    for (i = 0; i < NH; i++) {
+      var hx = (i + .2 + r() * .6) * w / NH, hw = (34 + r() * 22) * u, hh = (26 + r() * 22) * u, by = gy - h * (.075 + r() * .03), rc = [S.roofA, S.roofB, S.roofC][i % 3];
+      s += wrap(w, hx, hw * 1.5, function (x) {
+        return rect(x - hw / 2, by - hh, hw, hh + 10 * u, 5 * u, S.houseFar) + rpath('M' + (x - hw / 2 - 5 * u) + ' ' + (by - hh + 2 * u) + ' L' + x + ' ' + (by - hh - hw * .45) + ' L' + (x + hw / 2 + 5 * u) + ' ' + (by - hh + 2 * u) + ' Z', rc, 6 * u)
+          + rect(x - 5 * u, by - hh * .6, 10 * u, 10 * u, 3 * u, night ? S.windowLit : S.windowFar);
+      });
+      if (i % 2) s += wrap(w, hx + hw, 30 * u, function (x) { var tr = (12 + r() * 6) * u; return rect(x - 2.5 * u, by - 18 * u, 5 * u, 24 * u, 2.5 * u, S.treeFar) + circ(x, by - 22 * u, tr, S.treeFar); });
+    }
+    s += rpath(wave(w, gy - h * .045, h * .02, 3, .7, gy, 12), S.farHill2, 0);
+    var far = s;
+    /* 地面：人行道（地面線～0.86）＋路緣＋馬路（中間虛線、小石子） */
+    var walkB = Math.round(h * .862);
+    s = rect(-4, gy - 3 * u, w + 8, walkB - gy + 3 * u, 0, S.sidewalk);
+    for (i = 0; i * 48 * u < w; i++) s += rect(i * 48 * u + 2 * u, gy + 4 * u, 44 * u, walkB - gy - 10 * u, 6 * u, S.sidewalkTile);
+    s += rect(-4, walkB - 6 * u, w + 8, 10 * u, 0, S.curb) + rect(-4, walkB + 2 * u, w + 8, h - walkB, 0, S.road);
+    var ly = Math.round(h * .94);
+    for (i = 0; i * 96 * u < w; i++) s += rect(i * 96 * u + 24 * u, ly, 48 * u, 6 * u, 3 * u, S.roadLine);
+    r = rng(57);
+    for (i = 0; i < 16; i++) s += wrap(w, r() * w, 20, function (x) { return ell(x, walkB + 16 * u + r() * (h - walkB - 22 * u), (4 + r() * 6) * u, (2.4 + r() * 2) * u, S.roadStone); });
+    /* 平鋪接縫：底色左右各多畫 4px，SVG overflow visible，兩片重疊就不會露出細縫 */
+    return { far: svg(w, h, far, 'g-layer g-layer-townFar', { overflow: 'visible' }), ground: svg(w, h, s, 'g-layer g-layer-townGround', { overflow: 'visible' }), _groundY: gy };
+  }
+  A.townLayers = townLayers;
+
   A.scene = scene; A.sceneLayers = layers; A.skyAt = skyAt; A.uFromDate = function (d) { d = d || new Date(); var h = d.getHours() + d.getMinutes() / 60 + d.getSeconds() / 3600, r = F_RISE, st = F_SET; if (h >= r && h < st) return (h - r) / (st - r) * .5; var n = h >= st ? h - st : h + 24 - st; return .5 + n / (24 - (st - r)) * .5; };
   A.scenes = Object.keys(C.world.scene); A.sceneTimes = ['day', 'night']; A.sceneInfo = C.world.scene;
 })(typeof window !== 'undefined' ? window : globalThis);

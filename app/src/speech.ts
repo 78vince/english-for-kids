@@ -347,6 +347,19 @@ function pickUserDialogueVoice(): SpeechSynthesisVoice | undefined {
   return pickPreferredVoice();
 }
 
+/** 角色小鎮店長等「女生角色」的台詞（2026-11-09，LetsGo 同步的 townShop.ts 會用到）：
+ * 跟 speakEnglish() 一樣的唸法，聲音改用會話練習「我的回答」那一組女聲。 */
+export function speakEnglishFemale(text: string): void {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  window.speechSynthesis.cancel();
+  const spokenText = AMBIGUOUS_STANDALONE_WORDS[text] ?? text;
+  const utterance = new SpeechSynthesisUtterance(spokenText);
+  utterance.lang = "en-US";
+  utterance.voice = pickUserDialogueVoice() ?? null;
+  utterance.rate = currentRate();
+  window.speechSynthesis.speak(utterance);
+}
+
 export interface DialogueSpeechOptions {
   persona: "boy" | "girl";
   onEnd?: () => void;

@@ -11,6 +11,17 @@
     "order": 0
   },
   {
+    "id": "town",
+    "name": "角色小鎮",
+    "description": "帶著自己的角色在小鎮散步，走進店裡換造型、回家換角色，從城門去森林、海底、墓園和宇宙。",
+    "icon_placeholder": "🏘️",
+    "kind": "studio",
+    "page": "games/town.html",
+    "cost": 0,
+    "status": "active",
+    "order": 0
+  },
+  {
     "id": "crossword",
     "name": "填字遊戲",
     "description": "拖曳字母填滿空格，找出隱藏在網格裡的英文單字。",
@@ -91,6 +102,18 @@
     "payout": 0,
     "status": "active",
     "order": 8
+  },
+  {
+    "id": "roach_sudoku",
+    "name": "蟑螂數獨",
+    "description": "仔細觀察房間地板色塊分區，手持拖鞋找出隱藏的小強並覆蓋！每行、每列、每個色塊剛好 1 隻蟑螂且互不相鄰。",
+    "icon_placeholder": "🩴",
+    "kind": "character",
+    "page": "games/roach-sudoku.html",
+    "cost": 5,
+    "payout": 0,
+    "status": "active",
+    "order": 9
   },
   {
     "id": "memory_match",

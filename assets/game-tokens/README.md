@@ -33,6 +33,78 @@
 - 拍照二期：相框、貼紙、日期戳記。
 - 通過後規劃平台遊戲本體。
 
+## game-export.js 修正（2026-10-31，token 版本不變）
+- 墓園骷髏月亮拍成圓月亮：`H_nest` 參數位置錯（狀態被當成透明度），已修正；可用 `moonState` 指定。
+- 新增 `extras`：遊戲頁自己畫在舞台上的圖層（生物、水面、雨）拍照時一併畫進去，規格見檔頭。
+
+## v2.39.0（2026-11-09）在家玩上架
+- `home.features.play` 改 `true`（使用者確認上架）：正式 App 進我的家直接進「在家玩」。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.39.0。
+
+## v2.38.0（2026-11-09）在家玩：統一按鍵、玩具寵物改 ↓、相機
+- `home.play.actions.toy／pet.key` 改 `down`（只有床用 ↑）；寵物 `pose` 改 `victory`（玩具、寵物都轉正面做開心的動作）。
+- 在家玩改用統一按鍵 v2（十字鍵＋ABCD，C、D 半透明）；拍照改成相機（取景框、面向、動作、倒數），文案沿用 `town.camera.text`。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.38.0。
+
+## v2.37.0（2026-11-09）在家玩：臉朝上躺、↓ 坐地毯、跑跳
+- `home.play` 加 `runMult`（跑步倍速）、`jumpV`／`gravity`（跳，單位：房間高度 %／秒）；`actions.*.key`（`up`＝↑：床、玩具、寵物；`down`＝↓：地毯）；文案 `run`、`jump`，`hint` 改「走到家具前按 ↑／↓ 或點家具」。
+- 床的 `lie.cover` 不再使用（使用者要求不蓋被子），保留欄位相容。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.37.0。
+
+## v2.36.0（2026-11-08）我的家・在家玩
+- `home.features.play`（預設 false：正式 App 不出現；遊戲實驗室打開）。
+- `home.play`：在家玩的走路速度、左右邊界、起始位置；家具動作 `actions`（床＝睡覺、地毯＝坐下、玩具＝一起玩、寵物＝摸摸牠：對應的位置、按鈕文字、圖示、角色動作）；按鈕文案。
+- `home.catalog` 每款床加 `lie`（躺下的位置 x／bottom、角色大小 scale、被子從床寬的哪裡開始蓋 cover）。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.36.0。
+
+## v2.35.0（2026-11-06）我的家佈置＋家具店上架
+- 使用者同意上架：`home.features.decorate`／`store` 改為 true，家具店地點拿掉 `labOnly`，正式 App 的廣場舞台空地變成家具店。
+
+## v2.34.0（2026-11-06）窗戶款式
+- `homeWindowFrame` 加狀態 round／arch／porthole／capsule（default＝原本方窗）；目錄新增圓窗 30、拱形窗 35、船艙圓窗（海洋）40、太空艙窗（太空）＊90，`glass` 欄位＝玻璃形狀。
+- 窗外景色依玻璃形狀裁切（`homeStore.windowGlass`：房間用 CSS `clip-path: polygon()`，照片用 SVG `<clipPath>`），窗框外不會露出方形的天空。
+
+## v2.33.1（2026-11-06）玩具刪除海灘球、泰迪熊
+- `homeToy` 只剩 blocks／robot／train；目錄、商店同步刪除。
+
+## v2.33.0（2026-11-06）寵物、玩具重畫
+- 新道具 `homePet`（orange 橘貓／siamese 暹羅貓／blackdog 黑狗／whitedog 白狗，90×72，坐姿臉朝左）；`home` 新類別 `pet`（寵物），原本第 2 個玩具位置 `toy2` 改成 `pet`（left 79%、寬 17%）。寵物每隻 40。
+- `homeToy` 重畫泰迪熊（縫線、肉球、鈕扣眼、蝴蝶結、肚子愛心）、海灘球（瓜瓣分色、頂蓋、光影）、機器人（螢幕臉、彈簧脖子、儀表、關節、鉗子手）；拿掉搖搖馬、風箏。
+
+## v2.32.0（2026-11-06）家具店第 3 階段：吊燈、燈飾、掛飾、小擺飾、大擺飾、玩具＋太空／甜點主題
+- 新道具：`homeCeiling`（圓燈罩／星星／水母／行星／糖果）、`homePic`（彩虹／恐龍／火箭／貓咪／海豚／蛋糕）、`homeHang`（旗子串／捕夢網／掛鐘）、`homeSmall`（鬧鐘／地球儀／魚缸／雪花球／沙漏／獎盃／恐龍模型／仙人掌）、`homeBigDeco`（向日葵／珊瑚／落地鐘／大地球儀／大恐龍）、`homeToy`（泰迪熊／積木／海灘球／機器人／火車／搖搖馬／風箏）、`homeBedRocket`、`homeBedCake`。
+- 既有道具新狀態：`homeLamp`（default／mushroom／lighthouse／moon／icecream）、`homeCurtains`（stars／candy）、`homeCloset`（capsule）、`homeRug`（planet／donut）、`homeShelf`（planet／cookie）。
+- `home.catalog` 付費款 24 → 75（新增 51 件）、`home.themes` 加 space／dessert、`shop.items` 同步；吊燈與燈飾 `glow: true`（晚上會亮）；玩具位置寬 11% → 14%。
+- 新花紋（`homeStore.patternTile`）：starry、candy、glass、cookie。
+
+## v2.31.1（2026-11-06）家具造型修改（使用者回饋）
+- `homeBedTree`：樹葉屋頂改成像雲朵一樣由很多小圓弧組成（深綠後層＋綠色前層＋亮綠弧線高光）。
+- `homeBedShell`：床頭改成置中、寬大的扇貝（9 片放射肋條、扇形波浪邊、同心紋、珍珠）。
+- `homeBedBunk`：樓梯兩根側桿延伸到地板，踏板等距排到最底，往左移不再壓到床柱。
+- `homeRug:grass`：草葉分四排（後排矮、前排高）、深淺交錯、外圈草邊與小花。
+- `homeRug:starfish`：整張地毯就是一顆五角海星，依地板透視壓扁（後面的腳較窄、較短），有厚度、疣點與中心。
+
+## v2.31.0（2026-11-06）家具店（第 2 階段）
+- 新建築 `townFurniture`（家具店），第一批付費家具 24 件：`homeBedBunk`／`homeBedTree`／`homeBedShell`，衣櫃、地毯、窗簾、置物架新狀態，壁紙／地板花紋；`shop.items` 加 `furniture:<id>`。
+
+## v2.30.0（2026-11-06）我的家・佈置：掛飾、置物架、小擺飾／大擺飾
+- `home` 類別調整（使用者回饋）：掛畫 → **掛飾**（`wall`，掛畫＋掛飾都能放：小房子、自畫像、花圈、星星吊飾）；新增**置物架**（`shelf`，可以不放；之後家具店會賣更多款）；擺飾 → **小擺飾**（`smalldeco`，放在置物架上，小盆栽列入）；地上的盆栽 → **大擺飾**（`bigdeco`，大盆栽列入）。位置 id 改為 wall1／wall2、shelf、small1–3、bigdeco。
+- 新道具：`homeWreath`、`homeStars`、`homeBigPlant`。
+
+## v2.29.0（2026-11-06）我的家・佈置（第 1 階段）
+- 新增 `home` 區塊：`features`（decorate／store，正式 App 預設關、實驗室打開）、`categories`（14 類）、`slots`（房間固定位置）、`catalog`（第 1 階段全免費：壁紙 6 色、地板 3 種、窗外景色、窗簾 5 色＋不要、掛畫小房子／自畫像、原本的床／衣櫃／地毯／立燈／盆栽）、`defaults`（＝原本的房間）、`text`。
+- 新道具：`homeWindowFrame`（透明玻璃窗框）、`homeCurtains`（state＝色相）、`homeShelf`、`homeFrame`。
+
+## v2.28.0（2026-11-04）角色小鎮：照相館改成美術館
+- `town.places[photo]`：改成美術館（`kind: gallery`、`label` 美術館、`en` ART GALLERY、`prop` townGallery），拿掉 `shop`（照相館）與 `hidden`；新增 `gallery`：出口位置、第一幅作品位置、作品間距、每間展廳幾件、畫框高度與位置、畫框樣式輪替（gold／wood／white／lilac）、長椅與紅龍柱間隔、文案。
+- 新增道具 `townGallery`（美術館建築：山牆掛畫、四根柱子、台階、拱門、兩側布條；day／night）、`galleryDoor`（展廳出口大門）、`galleryBench`（長椅）、`galleryRope`（紅龍柱圍欄）、`galleryLamp`（畫作投射燈）。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.28.0。
+
+## v2.27.1（2026-11-04）取消鴕鳥吃小蟲
+- 移除 `race.opponents.ostrich.peck`（使用者要求取消）。`game-race.js` 的 `peck` 姿勢與 `race.ts` 的 peck 處理保留（沒設定就不會發生），之後要用再加回 token 即可。
+
+## v2.27.0（2026-11-04）賽跑、火箭降低難度
+- `race.stages[].items`：圓石減少（第 1 場 4→2、第 2 場 5→3、第 3 場 7→4）。
+- `race.player.pace.hold` 1.1→1.6：按住 → 就加速（不用連點；tap 同值）。
+- `race.opponents.ostrich.peck`：比賽中兩次（x 1100、2300）停下來低頭吃小蟲各 1.5 秒；`game-race.js` 新增動物姿勢 `peck`（鴕鳥低頭啄、地上出現小蟲）。
+- `rocket.sameKeyThrust`（1）、`hintAfterSameKeys`（4）：連按同一鍵也有推力，A、B 輪流按才累積連擊加成。
+- `race-sim.js`：玩家模型改成「按住 → 的時間比例」、加入鴕鳥吃小蟲。
+
 ## v0.5 規則（角色比例與動作）
 - 頭：kid 半徑約 30、bear 約 30.5，下巴在 y=75；脖子只在正面露出約 6px。手掌半徑 8.2；鞋＝上緣半圓弧、下緣平貼 groundY=164。
 - 正面手臂不再壓扁：`swing` 前擺→手臂往身體中線轉（僅 `spread` 小時），上臂長度不變；`bend` 永遠朝身體中線／頭的方向折。
@@ -152,6 +224,10 @@
 ## v1.8.0 — 手機橫式版面規格（`layout.landscapePhone`）
 - 三欄（左欄 144／遊戲畫面 16:9／右欄 96）、按鍵尺寸（← 56、→ 72、A 72、B 56）、HUD 搬到側欄、計時＋進度條改上方細列、過關對話框橫式雙欄。數值給 App 讀，不改繪圖檔。
 
+## v2.26.0（2026-11-04）蟑螂數獨：道具與數值
+- 新增道具（`props.list` group「蟑螂數獨」、`game-props.js`）：`slipper`（超神拖鞋，支援 idle / slap / lift 狀態）、`cockroach`（呆萌小強，支援 idle / dizzy 狀態）、`slapFx`（拍打煙霧粒子）、`tileCross`（安全叉號）。
+- 新增 `roachSudoku` 數值區塊：5 關房間規格（4x4 至 8x8）、每場花費 5 代幣、payout 0、3 顆愛心、自動補助、結算稱號與中英文提示文案。
+
 ## v2.0.0 — 爬樹（`treeClimb`、`game-tree.js`、`tree-sim.js`）
 - 載入順序：tokens → art → props → race → **tree** → character → scene → export → icons。
 - `GameArt.treeBuild(levelId, seed)`：回傳保證可通關的樹枝陣列（`{side,len,style,alt,kind,x0,x1,id}`；左側枝由 App 鏡像）。`treeCompose(camAlt,w,h,{branches,sprites})` 為靜態合成；實際遊玩請用 `treeChunk(layer,idx)` 分層捲動（視差 far .5／mid .75／trunk 1／near 1.15）。`treeSkyAt`、`treeZoneAt`、`treeTrunkHalf` 供天色與分區查詢。
@@ -216,6 +292,74 @@
 
 
 
+
+## v2.25.1（2026-11-04）角色小鎮：照相館、廣場舞台先不開放
+- `town.places[]` 新增 `hidden: true`（街上不顯示這棟、不能進去；功能保留）：照相館 `photo`、廣場舞台 `plaza` 先隱藏。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.25.1。
+
+## v2.25.0（2026-11-04）角色小鎮：照相館、廣場舞台、隨手拍
+- `town.places[photo].shop`：`mode: photo`（照相館：店長 Pia、紀念照＋相簿）、`photo.scene`（紀念照用攝影棚 `studio`）、`photo.poses`（紀念照可選的動作）、`photo.lines`、`photo.text`、`interior.decor`。
+- `town.places[plaza].stage`：廣場舞台的招呼語與文案（站上舞台表演動作、連播）。
+- `town.camera`：街上與場景裡的相機（照片比例、文案）。
+- 新增道具 `photoCamera`（三腳架相機）、`photoLight`（柔光傘燈）；`shopWindow` 新增 state `mint`。
+- `GameArt.exportSVG`／`exportPNG` 新增 `hideLayers`（不畫指定的場景圖層）與 extras 的 `z: 'under'`（畫在遠景前一層、場景其他圖層之下），小鎮街上拍照時把自己的街景與建築畫進照片。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.25.0。
+
+## v2.24.0（2026-11-04）角色小鎮：在小鎮裡進入主題場景（第三階段 3a）
+- `town.scenes`：出口位置、各場景的出口門樣式（`townGate` 新增 state `portal`＝回小鎮的傳送門）、哪些場景可以按 ↑ 出去（森林、墓園；海底與宇宙的 ↑ 是游泳／飛行，用「回小鎮」按鈕）、文案。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.24.0。
+
+## v2.23.0（2026-11-04）角色小鎮：我的家
+- `town.places[home].shop`：`mode: home`（沒有店長、櫃檯、購買）、`hello`／`zhHello`、`lines.bye`、`sections`（衣櫃：四間店的全部分區）、`interior.decor`。
+- 新增室內道具 `homeBed`（床）、`homeCloset`（衣櫃）、`homeRug`（地毯）、`homeLamp`（立燈）、`homePicture`（掛畫）。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.23.0。
+
+## v2.22.0（2026-11-02）六件付費衣服、神秘的房間通往宇宙空間
+- `character.options.outfit` 新增 `raincoat`（雨衣，A 字長外套＋牛角扣）、`jersey`（運動服，白邊＋號碼 1）、`pajamas`（星星睡衣）、`wetsuit`（潛水衣，拉鍊＋側邊色塊）、`spacesuit`（太空服，本體淺灰白、衣服顏色當配色、胸前控制面板、背面維生背包）、`dino`（恐龍裝，淺色肚子、背上尖刺、會搖的尾巴）；三視角都有。連身款（睡衣、潛水衣、太空服、恐龍裝）褲子跟衣服同色；新款都是長袖。
+- `shop.items`：雨衣 30、運動服 25、星星睡衣 25（一般）；潛水衣 120、太空服 150、恐龍裝 150（稀有）。只改外觀，沒有遊戲效果。
+- `town.places` 神秘的房間取消鎖定，連到宇宙空間（`link.scene: space`）。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.22.0。
+
+## v2.21.0（2026-11-02）開門動畫、傳送門、音效
+- 建築的門（`archDoor`）拆成「門後亮著的室內」＋`.g-door` 門片群組，App 進門時加 `is-open` 讓門往左打開。
+- `townClothes` 衣身往下展開成 A 字；`townLab` 門改成發光的傳送門（`.g-portal`，CSS 呼吸發光），加底部基座。
+- `town.sfx`（腳步間隔、跑步判定速度、音量）、`town.enterFx.scale`（進門縮小到 0.8 並淡出）。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.21.0。
+
+## v2.20.1（2026-11-02）建築細修
+- `townSalon` 拿掉鏡子窗；`townClothes` 拿掉衣架與窗戶、星星改成彩虹（兩端小雲），尺寸改 210×236；`townPhoto` 牆改紅磚牆、門改棕色。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.20.1。
+
+## v2.20.0（2026-11-02）小鎮建築誇張造型
+- 重畫 `townHome`（冒煙煙囪、愛心窗、信箱）、`townSalon`（屋頂是一頂捲捲假髮＋蝴蝶結、鏡子窗、大剪刀、旋轉燈）、`townClothes`（整棟是一件巨大 T 恤＋衣架掛勾）、`townAcc`（超大歪禮帽插羽毛＋整面大眼鏡窗）、`townPhoto`（屋頂是復古相機）、`townToy`（巨大玩具箱，頂上冒出火箭、小熊、彈簧小丑、球、風車、積木）；`townLab` 所有筆畫收進 viewBox。尺寸改成 200～240 寬、270～300 高。
+- 建築上不再畫招牌（名稱改由提示泡泡顯示）；`town.text.knockHint`。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.20.0。
+
+## v2.19.0（2026-11-02）小鎮入口背景、木造拱門、奇怪的實驗室
+- `townGate` forest 改成木造拱門（中間空心）；lake 拿掉門內的小船（湖移到背景）。
+- 新增 `townForestBack`（深色樹林＋兩側樹叢）、`townLakeBack`（大片湖面、沙岸、蘆葦、荷葉、小船）、`townGraveBack`（小山丘上 12 座墓碑、枯樹、南瓜）、`townLab`（神秘的房間：歪塔、圓頂望遠鏡、冒泡玻璃槽、管線、天線電球；day／night）。
+- `town.backdrops`、`town.frontDecor`；路燈拿掉擋在入口背景前的 4 盞；街景 SVG 左右多畫一點並 overflow visible（消除接縫）。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.19.0。
+
+## v2.18.0（2026-11-02）角色小鎮正式建築與街景（第二階段 2b）
+- 新增小鎮建築道具（group「小鎮」，state day／night，夜晚窗戶亮燈）：`townHome`、`townSalon`、`townClothes`、`townAcc`、`townPhoto`、`townToy`、`townStage`（廣場舞台）、`townGate`（forest／lake／graveyard）、`streetLamp`。
+- `GameArt.townLayers(time, w, h)`（`game-scene.js`）：小鎮遠景（丘陵＋遠方小房子）與地面（人行道磚＋路緣＋馬路虛線）；顏色 `town.colors.day/night`。不是獨立場景，不進 `GameArt.scenes`（工作室場景清單、「環遊世界」徽章不受影響）。
+- `town.places[].prop／propState`、`town.lamps`（路燈位置）、`town.timeMode: system`（跟裝置時間換日夜）、`hideLayers` 加 far、ground。神秘的房間仍是佔位造型（之後做奇怪造型的房子）。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.18.0。
+
+## v2.17.0（2026-10-31）配件分類、道具縮圖、神秘的房間
+- `GameArt.itemIcon(field, id)`（`game-character.js`）：只畫一件配件或手持物、不畫人物（正面頭部配件抽成 `accFront()` 與 `headFront` 共用；背包、翅膀、披風用背面造型），viewBox 依物件裁成正方形。
+- `town` 配件店 `sections` 分成「帽子與頭套／眼鏡與耳機／背在身上／特別的／其他」（`items`，"rest"＝沒分到的）；配件店、道具店 `art: "item"`。
+- `town.places`：火箭發射台改成「神秘的房間」（`kind: mystery`、`locked`、`lockedText`），之後做成奇怪造型的房子。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.17.0。
+
+## v2.16.0（2026-10-31）角色小鎮：店長改成人物、店內背景
+- 新增商店道具（`props.list` group「商店」、`game-props.js`）：`shopCounter`（櫃檯，state＝店的色相）、`cashRegister`（收銀機）、`shoppingBag`（購物袋）、`pottedPlant`（盆栽）、`shopWindow`（店內窗戶，state＝窗簾色）、`salonMirror`（化妝鏡台）、`clothesRack`（衣架）、`accShelf`（配件架）、`toyShelf`（玩具架）。
+- `town.places[].shop.keeper` 改成人物：`name`＋完整 `look`（造型店 Mia、服裝店 Leo、配件店 Nina、道具店 Max），不再用動物；新增 `shop.interior`（櫃檯色、牆上／地上擺設的位置）與 `town.interiorNote`。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.16.0。
+
+## v2.15.0（2026-10-31）角色小鎮：店內畫面（第二階段 2a）
+- `town.places[].shop`（造型店、服裝店、配件店、道具店）：店長 `keeper`（`animal` 或 `preset`）、中文招呼語 `zhHello`、店內款式分區 `sections`（thumb／swatch／pants／acc）。
+- `town.shopLines`：店長台詞（試穿、買下、換上、離開、代幣不夠），英文＋中文。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.15.0。
+
+## v2.14.1（2026-10-31）角色小鎮：只用 ↑ 進門、間距縮小、街道盡頭
+- `town`：建築間距約 0.33 個畫面寬（原 0.5），街長 3.96；新增 `camRange`（鏡頭範圍）讓角色能走到街道兩端的盡頭（樹籬）、`enterMs`（進門前背面走路 1000ms）、`text.enterHint`。`walkHint` 改成只提 ↑。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.14.1。
+
+## v2.14.0（2026-10-30）角色小鎮（第一階段）
+- 新增 `town` 區塊（`docs/plan-game-town.md`）：街道長度、角色可走範圍 `bounds`、起點、進門距離、11 個地點（森林大門、我的家、造型店、服裝店、配件店、廣場舞台、照相館、道具店、湖、火箭發射台、夜光墓園大門）的位置、色相、英文招牌、招呼語與第一階段暫接的工作室分頁 `link`。
+- 第一階段街景借用森林的天空／遠景／地面（`hideLayers` 隱藏 mid、near、canopy）；正式 `town` 場景與建築道具第二階段補。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.14.0。
+
+## v2.13.0（2026-10-30）森林天氣：雨量、淹水、颱風吹飛
+- `color.world.scene.forest.weather`：`rain.levels`（小雨／中雨／大雨／豪雨：雨絲數、濃淡、速度、天色、每秒水位變化、開始積水前要下多久）、`flood`（最高水位、晴天退水、漂浮深度、上浮速度、漂浮移動倍率、晃動）、`typhoon`（順逆風走路倍率、跳起來被吹的風速、漂浮漂流、陣風）。
+- `forest.day/night` 新增 `floodWater`、`floodWaterDeep`、`floodFoam`（CSS `--g-forest-{day,night}-flood-*`）。App 端 `EXPECTED_GAME_TOKENS_VERSION` 同步 2.13.0。
 
 ## v2.12.1（2026-10-28）平板橫放放大遊戲畫面
 - `layout.screen.modes.tabletLand`：按鍵 dpad 58／act 64、操作區上下間距 4；`tabletLand`、`desktop` 新增 `stripInHud: true`（計時進度移到資訊列中間，不再自己佔一列）。iPad 1180×820 遊戲畫面約 693×390 → 約 960×540。

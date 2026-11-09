@@ -5,7 +5,8 @@
 // 同步範圍（課程內容一律不碰）：
 //   1. 遊戲清單：LetsGo content/games/games.json 裡 kind = studio／character、status = active 的遊戲
 //      （開發中 in_development 的不會帶過來；公開版自己的學習小遊戲 learning 類維持公開版的設定）
-//   2. 這些遊戲的程式：app/src/games/<名稱>.ts／.css／<名稱>Boot.ts、app/games/<頁面>.html
+//   2. 這些遊戲的程式：app/src/games/<名稱>.ts／.css／<名稱>Boot.ts、app/games/<頁面>.html，
+//      以及它們在 games/ 裡 import 的輔助模組（例如 townShop.ts；gameIcons.ts 除外）
 //   3. 共用遊戲框架 app/src/game/*、美術／數值套件 assets/game-tokens/*
 //   4. 遊戲室共用模組：gameTokens.ts（代幣規則）、gameRelease.ts（上架閘門）、gamePages.ts（建置清單）、
 //      遊戲實驗室（lab.html、src/lab/*、vite.lab.config.ts）、content/schema/game.schema.json
@@ -70,6 +71,24 @@ for (const g of synced) {
   }
   if (fs.existsSync(L(`app/src/games/${name}Boot.ts`))) copy(L(`app/src/games/${name}Boot.ts`), P(`app/src/games/${name}Boot.ts`));
   copy(L("app", g.page), P("app", g.page));
+}
+
+// ---- 2b. 遊戲自己的輔助模組（2026-11-09）----
+// 例如角色小鎮 town.ts 會 import "./townShop"：同一個 games/ 資料夾裡、被已同步遊戲 import 的檔案一起帶過來
+// （會一路往下追，townShop 再 import 的也會帶）。gameIcons.ts 是公開版自己的，不帶。
+const GAMES_DIR_KEEP_PUBLIC = new Set(["gameIcons"]);
+for (let i = 0; i < copied.length; i++) {
+  const rel = copied[i];
+  if (!/^app\/src\/games\/[^/]+\.ts$/.test(rel.split(path.sep).join("/"))) continue;
+  const src = fs.readFileSync(P(rel), "utf-8");
+  for (const m of src.matchAll(/(?:from|import)\s+"\.\/([A-Za-z0-9_-]+)(\.css)?"/g)) {
+    const base = m[1];
+    if (GAMES_DIR_KEEP_PUBLIC.has(base)) continue;
+    const file = m[2] ? `${base}.css` : `${base}.ts`;
+    const to = P(`app/src/games/${file}`);
+    if (copied.includes(path.relative(PUBLIC_DIR, to))) continue;
+    if (fs.existsSync(L(`app/src/games/${file}`))) copy(L(`app/src/games/${file}`), to);
+  }
 }
 
 // ---- 3. 框架與美術套件 ----

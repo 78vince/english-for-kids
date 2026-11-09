@@ -6,7 +6,12 @@
  *           shadowY:0~1（腳下支撐面＝陰影位置；跳起來、在水裡浮著時比 feetY 低，影子留在地面／方塊上並變小變淡，預設＝feetY）,
  *           rot:度（宇宙空間的身體旋轉，繞身體中心）, scale:0~1（被黑洞吸進去時縮小）, shadow:false（不畫影子：飄在太空中）,
  *           shift:0~∞（背景水平位移，單位＝畫面寬；依各圖層視差係數換算）,
- *           props:[{id, x:0~1, state, h:0~1（高度占比，預設 .16）, front:true|false}] }
+ *           props:[{id, x:0~1, state, h:0~1（高度占比，預設 .16）, front:true|false}],
+ *           moonState:'skull'|'round'（不給就依場景：墓園骷髏月亮）,
+ *           hideLayers:['far',…]（不畫這些場景圖層；角色小鎮的街道用自己的街景，v2.25）,
+ *           extras:[{svg:'<svg viewBox…>…</svg>', z:'under'（場景圖層最底下、天空上面：小鎮街景與建築，v2.25）|'back'（角色後）|'front'（角色前）|'top'（最上層：水面、雨）,
+ *                    x:0~1 中心, y:0~1 底部, h:0~1 高, ar:寬高比 ｜ box:[x0,y0,x1,y1]（0~1，整塊拉伸，例如水面、雨）,
+ *                    flip:true（左右翻轉）, opacity:0~1}]（遊戲頁自己畫在舞台上的東西，拍照時一併畫進去） }
  * GameArt.exportPNG(opts) → Promise<Blob>（僅瀏覽器）
  * GameArt.avatar(look, size) → 頭像 SVG（頭部裁切）
  * 設計原因：整個舞台都是 SVG，拍照時重組成單一 SVG 再光柵化，畫質與螢幕解析度無關，也不需要截圖整個畫面。 */
@@ -59,6 +64,19 @@
       var ocy = (feet - charPx * .435).toFixed(1), sc = o.scale != null ? Math.max(0, o.scale) : 1;
       charSvg = '<g transform="translate(' + cx.toFixed(1) + ' ' + ocy + ') rotate(' + (+(o.rot || 0)).toFixed(1) + ') scale(' + sc.toFixed(3) + ') translate(' + (-cx).toFixed(1) + ' ' + (-ocy) + ')">' + charSvg + '</g>';
     }
+    /* extras：遊戲頁自己加在舞台上的圖層（角色工作室的生物、淹水水面、雨），規格見檔頭 */
+    var xu = '', xb = '', xf = '', xt = '', hide = o.hideLayers || [];
+    (o.extras || []).forEach(function (e) {
+      if (!e || !e.svg) return;
+      var svg = String(e.svg).replace(/^\s*<svg\b([^>]*)>/, function (m, a) { return '<svg' + a.replace(/\s(width|height|x|y|style|class|overflow|preserveAspectRatio)="[^"]*"/g, '') + '>'; });
+      var x, y, w, h;
+      if (e.box) { x = e.box[0] * W; y = e.box[1] * Hh; w = (e.box[2] - e.box[0]) * W; h = (e.box[3] - e.box[1]) * Hh; }
+      else { h = (e.h || .1) * Hh; w = h * (e.ar || 1); x = (e.x != null ? e.x : .5) * W - w / 2; y = (e.y != null ? e.y : .88) * Hh - h; }
+      var el = svg.replace('<svg', '<svg overflow="visible"' + (e.box ? ' preserveAspectRatio="none"' : '') + ' x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + w.toFixed(1) + '" height="' + h.toFixed(1) + '"');
+      if (e.flip) el = '<g transform="translate(' + (2 * x + w).toFixed(1) + ' 0) scale(-1 1)">' + el + '</g>';
+      if (e.opacity != null && e.opacity < 1) el = '<g opacity="' + Math.max(0, e.opacity).toFixed(3) + '">' + el + '</g>';
+      if (e.z === 'top') xt += el; else if (e.z === 'front') xf += el; else if (e.z === 'under') xu += el; else xb += el;
+    });
     var props = (o.props || []).slice(), pb = '', pf = '', seat = A.seatFor && A.seatFor(o.pose || 'idle');
     if (seat && o.seat !== false) props.push({ id: seat.prop, x: cx / W + seat.dx * charPx / 170 / W, y: feet / Hh, h: seat.hUnits / 170 * charPx / Hh, front: false });
     props.forEach(function (p) {
@@ -67,23 +85,25 @@
     });
     /* 道具與角色畫在 near（前景灌木）之後、canopy 之前，拍照時腳底不被灌木蓋住；無 near 的場景退回 ground 之後 */
     var anchor = F.layers.indexOf('near') >= 0 ? 'near' : 'ground';
+    var xuDone = false; /* 'under' 畫在遠景（far）前面一層：雲、天空、太陽月亮之上，場景其他圖層之下 */
     F.layers.forEach(function (n) {
       if (n === 'sky') return;
-      var d = Ld._inner[n], nt = Ln._inner[n], s = '';
+      var d = hide.indexOf(n) >= 0 ? '' : Ld._inner[n], nt = hide.indexOf(n) >= 0 ? '' : Ln._inner[n], s = '';
       if (n === 'stars') {
         s += lay(n, nt, K.night);
-        if (K.sun.visible && F.celestial && !F.celestial.hidden) s += H_nest('sun', K.sun, W, Hh, K.sun.color, 1, 1 - K.night * .0);
+        if (K.sun.visible && F.celestial && !F.celestial.hidden) s += H_nest('sun', K.sun, W, Hh, 1);
         var moonState = id === 'graveyard' ? 'skull' : 'round';
-        if (K.moon.visible && F.celestial && !F.celestial.hidden) s += H_nest('moon', K.moon, W, Hh, null, 1.1, 1, moonState);
+        if (K.moon.visible && F.celestial && !F.celestial.hidden) s += H_nest('moon', K.moon, W, Hh, 1.1, o.moonState || moonState);
       } else { s += lay(n, d, 1) + (nt ? lay(n, nt, K.night) : ''); }
+      if (!xuDone && (n === 'far' || n === anchor)) { s = xu + s; xuDone = true; }
       if (n === 'near' || n === 'canopy') front += s; else body += s;
-      if (n === anchor) { var cg = pb + shadowSvg + '<g' + (K.night > .5 ? ' filter="url(#' + fid + ')"' : '') + '>' + charSvg + '</g>' + pf; if (n === 'near') front += cg; else body += cg; }
+      if (n === anchor) { var cg = pb + xb + shadowSvg + '<g' + (K.night > .5 ? ' filter="url(#' + fid + ')"' : '') + '>' + charSvg + '</g>' + pf + xf; if (n === 'near') front += cg; else body += cg; }
     });
-    function H_nest(pid, obj, w, h, color, k, st) {
+    function H_nest(pid, obj, w, h, k, st) {
       var px = obj.size * h * k, s = A.prop(pid, st ? { state: st } : {}).replace('<svg ', '<svg x="' + (obj.x * w - px / 2).toFixed(1) + '" y="' + (obj.y * h - px / 2).toFixed(1) + '" width="' + px.toFixed(1) + '" height="' + px.toFixed(1) + '" ');
       return s;
     }
-    var out = '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + Hh + '" viewBox="0 0 ' + W + ' ' + Hh + '" fill="none">' + sky + body + front + '</svg>';
+    var out = '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + Hh + '" viewBox="0 0 ' + W + ' ' + Hh + '" fill="none">' + sky + body + front + xt + '</svg>';
     return expandVars(out, K.sun && K.sun.color);
   }
 

@@ -21,6 +21,8 @@ export interface SlotScene {
   u?: number;
   /** 天氣：晴天、雨天、颱風天 */
   weather?: "sunny" | "rainy" | "typhoon";
+  /** 雨量等級（森林雨天／颱風天；GameArt.sceneInfo.forest.weather.rain.levels 的索引） */
+  rain?: number;
 }
 
 export interface CharacterSlot {
@@ -104,6 +106,12 @@ export function validateName(raw: string): { ok: true; name: string } | { ok: fa
   return { ok: true, name };
 }
 
+/** 雨量等級：整數、在 levels 範圍內；壞資料回傳 undefined（用預設） */
+export function normalizeRain(v: unknown): number | undefined {
+  const n = GameArt.sceneInfo.forest?.weather?.rain.levels.length ?? 0;
+  return typeof v === "number" && Number.isInteger(v) && v >= 0 && v < n ? v : undefined;
+}
+
 function normalizeSlot(raw: any): CharacterSlot | null {
   if (!raw || typeof raw !== "object") return null;
   const s = newSlot(undefined);
@@ -119,6 +127,8 @@ function normalizeSlot(raw: any): CharacterSlot | null {
       time: scene.time === "night" ? "night" : "day",
       useSystemTime: !!scene.useSystemTime,
       u: typeof scene.u === "number" ? scene.u : undefined,
+      weather: scene.weather === "rainy" || scene.weather === "typhoon" ? scene.weather : "sunny",
+      rain: normalizeRain(scene.rain),
     },
     sceneTimes: raw.sceneTimes && typeof raw.sceneTimes === "object" ? raw.sceneTimes : {},
     coverPhotoId: typeof raw.coverPhotoId === "string" ? raw.coverPhotoId : null,

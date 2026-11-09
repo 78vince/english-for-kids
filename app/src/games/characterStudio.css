@@ -732,11 +732,19 @@
   overflow: hidden;
   transition: background-color var(--g-dur-slow) var(--g-ease-soft);
 }
-.gstage-weather--rainy {
-  background: rgba(45, 65, 95, 0.16);
-}
+.gstage-weather--rainy,
 .gstage-weather--typhoon {
-  background: rgba(30, 50, 75, 0.28);
+  background: transparent;
+}
+/* 雨量越大天色越暗（--rain-tint 由雨量等級決定） */
+.gstage-weather--rainy::before,
+.gstage-weather--typhoon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--g-forest-night-sky-top);
+  opacity: var(--rain-tint, 0.16);
+  transition: opacity var(--g-dur-slow) var(--g-ease-soft);
 }
 /* 雨滴 */
 .g-rain-layer {
@@ -750,18 +758,18 @@
   width: 2px;
   height: 38px;
   background: linear-gradient(to bottom, transparent, var(--g-sky-soft));
-  opacity: 0.75;
+  opacity: var(--rain-opacity, 0.75);
   border-radius: 1px;
   transform: rotate(18deg);
-  animation: g-rain-anim 0.75s linear infinite;
+  animation: g-rain-anim var(--rain-dur, 0.75s) linear infinite;
 }
 .gstage-weather--typhoon .g-rain-streak {
   width: 2.5px;
   height: 48px;
   background: linear-gradient(to bottom, transparent, #FFFFFF);
   transform: rotate(34deg);
-  animation-duration: 0.42s;
-  opacity: 0.85;
+  animation-duration: var(--rain-dur, 0.42s);
+  opacity: var(--rain-opacity, 0.85);
 }
 @keyframes g-rain-anim {
   0% { transform: translateY(0) rotate(18deg); opacity: 0; }
@@ -775,6 +783,44 @@
   0% { transform: translate(60px, 0) rotate(34deg); opacity: 0; }
   20% { opacity: 0.9; }
   100% { transform: translate(-140px, calc(100vh + 80px)) rotate(34deg); opacity: 0.9; }
+}
+/* 淹水：腳底線往上的水面（蓋住角色下半身，在雨絲後面） */
+.gstage-flood {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9;
+  pointer-events: none;
+  background: linear-gradient(to bottom, var(--g-forest-day-flood-water), var(--g-forest-day-flood-water-deep));
+  opacity: 0.78;
+  transition: top 0.2s linear;
+}
+.gstage-flood[hidden] {
+  display: none;
+}
+.gstage--night .gstage-flood {
+  background: linear-gradient(to bottom, var(--g-forest-night-flood-water), var(--g-forest-night-flood-water-deep));
+}
+.gstage-flood-wave {
+  position: absolute;
+  left: -40px;
+  right: -40px;
+  top: -5px;
+  height: 10px;
+  border-radius: var(--g-radius-pill);
+  background: radial-gradient(ellipse 20px 5px at 20px 5px, var(--g-forest-day-flood-foam) 70%, transparent 72%) 0 0 / 40px 10px repeat-x;
+  animation: g-flood-wave 2.4s linear infinite;
+}
+.gstage--night .gstage-flood-wave {
+  background-image: radial-gradient(ellipse 20px 5px at 20px 5px, var(--g-forest-night-flood-foam) 70%, transparent 72%);
+}
+@keyframes g-flood-wave {
+  from { transform: translateX(0); }
+  to { transform: translateX(-40px); }
+}
+.gstage--typhoon .gstage-flood-wave {
+  animation-duration: 0.9s;
 }
 /* 颱風強風流線 */
 .g-wind-layer {
@@ -806,7 +852,7 @@
   100% { transform: skewX(-2.5deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .g-rain-streak, .g-wind-gust, .gstage--typhoon .g-layer-canopy, .gstage--typhoon .g-layer-mid {
+  .g-rain-streak, .g-wind-gust, .gstage-flood-wave, .gstage--typhoon .g-layer-canopy, .gstage--typhoon .g-layer-mid {
     animation: none;
   }
 }

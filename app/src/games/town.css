@@ -1,0 +1,3060 @@
+/* 角色小鎮（第一階段）— 只用 --g-* token；全圓角、無描邊；建築以 em 為單位（1em＝舞台高 1%，town.ts 設定） */
+#town-app {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--g-surface);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+.town-who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.town-who-avatar svg {
+  display: block;
+  width: 40px;
+  height: 40px;
+}
+.town-who-text strong {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.town-coins {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 借用森林場景時隱藏的圖層（tokens town.hideLayers） */
+.town-hide-mid .gstage-lay[data-layer="mid"],
+.town-hide-near .gstage-lay[data-layer="near"],
+.town-hide-canopy .gstage-lay[data-layer="canopy"],
+.town-hide-far .gstage-lay[data-layer="far"],
+.town-hide-ground .gstage-lay[data-layer="ground"],
+.town-hide-clouds .gstage-lay[data-layer="clouds"] {
+  display: none;
+}
+
+.town-blds {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.town-bld {
+  position: absolute;
+  left: 0;
+  bottom: 15%;
+  width: 32em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+  cursor: pointer;
+  font-family: var(--g-font-ui);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 一般建築：屋頂＋牆面＋招牌＋窗戶與門 */
+.town-roof {
+  width: 34em;
+  height: 8em;
+  background: var(--hd);
+  border-radius: 5em 5em 1.2em 1.2em;
+}
+.town-body {
+  width: 29em;
+  height: 30em;
+  margin-top: -0.6em;
+  background: var(--hs);
+  border-radius: 0 0 1.6em 1.6em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 2em;
+}
+.town-sign {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+  padding: 1em 2.2em;
+  border-radius: 99em;
+  background: var(--g-surface);
+  color: var(--g-ink);
+  transition: background var(--g-dur-fast) var(--g-ease-soft);
+}
+.town-en {
+  font-weight: 800;
+  font-size: 2.6em;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  line-height: 1.1;
+}
+.town-zh {
+  font-weight: 700;
+  font-size: 2em;
+  color: var(--g-ink-soft);
+  white-space: nowrap;
+  line-height: 1.1;
+}
+.town-row {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+}
+.town-win {
+  width: 6em;
+  height: 6em;
+  margin-bottom: 7em;
+  border-radius: 1.6em;
+  background: var(--g-sky-soft);
+}
+.town-door {
+  width: 8.5em;
+  height: 13.5em;
+  border-radius: 4.25em 4.25em 0.8em 0.8em;
+  background: var(--hd);
+  transition: background var(--g-dur-fast) var(--g-ease-soft);
+}
+
+/* 城門／入口：招牌＋拱門 */
+.town-sign--gate {
+  background: var(--hs);
+  margin-bottom: 1em;
+}
+.town-gate {
+  width: 30em;
+  height: 30em;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.town-pillar {
+  width: 5em;
+  height: 100%;
+  border-radius: 2.5em 2.5em 0.8em 0.8em;
+  background: var(--h);
+}
+.town-arch {
+  align-self: flex-start;
+  width: 22em;
+  height: 6em;
+  margin: 2em -1.5em 0;
+  border-radius: 3em;
+  background: var(--hd);
+}
+
+/* 站在門口：招牌與門亮起 */
+.town-bld.is-near .town-sign {
+  background: var(--g-sun-soft);
+}
+.town-bld.is-near .town-door {
+  background: var(--g-sun);
+}
+.town-bld.is-near .town-pillar {
+  background: var(--g-sun);
+}
+
+.gstage-hud .town-bubble {
+  position: absolute;
+  left: 50%;
+  top: 14%;
+  transform: translate(-50%, -100%);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+/* 泡泡內容：英文店名（大）、中文、按鍵提示 */
+.town-pop-en {
+  font-family: var(--g-font-ui);
+  font-size: var(--g-text-md);
+  letter-spacing: 0.03em;
+}
+.town-pop-zh {
+  font-size: var(--g-text-sm);
+  color: var(--g-ink-soft);
+}
+.town-pop-hint {
+  margin-top: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .town-sign,
+  .town-door {
+    transition: none;
+  }
+}
+
+.gstage-hud .town-bubble[hidden] {
+  display: none;
+}
+
+/* 街道盡頭：樹籬（中心放在街道兩端；超出街道的那一半不會進畫面） */
+.town-end {
+  position: absolute;
+  left: 0;
+  bottom: 13%;
+  width: 30em;
+  height: 30em;
+  pointer-events: none;
+}
+.town-bush {
+  position: absolute;
+  bottom: 0;
+  border-radius: 50% 50% 2em 2em;
+  background: var(--g-leaf);
+}
+.town-bush--a {
+  left: 0;
+  width: 16em;
+  height: 22em;
+  background: var(--g-leaf-deep);
+}
+.town-bush--b {
+  left: 8em;
+  width: 15em;
+  height: 30em;
+}
+.town-bush--c {
+  right: 0;
+  width: 14em;
+  height: 20em;
+  background: var(--g-leaf-deep);
+}
+
+/* ================= 店內畫面（townShop.ts） ================= */
+.tshop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  grid-template-columns: 42% 58%;
+  background: var(--g-surface);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  animation: tshop-in var(--g-dur-base) var(--g-ease-soft);
+}
+.tshop--leaving {
+  opacity: 0;
+  transition: opacity var(--g-dur-base) var(--g-ease-soft);
+}
+@keyframes tshop-in {
+  from {
+    opacity: 0;
+  }
+}
+@media (orientation: portrait) {
+  .tshop {
+    grid-template-columns: 100%;
+    grid-template-rows: 38% 62%;
+  }
+}
+
+/* 店裡（左）：正方形舞台底部對齊、左右置中；牆（店的色相 soft）與地板延伸到整個區塊 */
+.tshop-room {
+  position: relative;
+  overflow: hidden;
+  margin: 12px;
+  border-radius: var(--g-radius-xl);
+  background: var(--hs);
+  container-type: size;
+}
+.tshop-floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(min(100cqw, 100cqh) * 0.28);
+  background: var(--g-wood-soft);
+}
+.tshop-scene {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: min(100cqw, 100cqh);
+  height: min(100cqw, 100cqh);
+  transform: translateX(-50%);
+  font-size: calc(min(100cqw, 100cqh) / 100);
+}
+.tshop-prop {
+  position: absolute;
+  line-height: 0;
+}
+.tshop-prop svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.tshop-sign {
+  position: absolute;
+  top: 3%;
+  left: 26%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.4em 3.6em;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface);
+  color: var(--g-ink);
+  font-size: 1em;
+  white-space: nowrap;
+}
+.tshop-sign .town-en {
+  font-size: 4.4em;
+}
+.tshop-sign .town-zh {
+  font-size: 3.4em;
+}
+.tshop-keeper {
+  position: absolute;
+  left: 11%;
+  bottom: 26%;
+  height: 42%;
+  aspect-ratio: 120 / 170;
+}
+.tshop-keeper svg,
+.tshop-me svg {
+  width: 100%;
+  height: 100%;
+}
+/* 店長說話：在店長右上方（舞台 44% 起，寬的區塊可以延伸到右邊） */
+.tshop .tshop-say {
+  position: absolute;
+  left: calc(50cqw - min(100cqw, 100cqh) * 0.06);
+  top: 10px;
+  max-width: min(360px, calc(50cqw + min(100cqw, 100cqh) * 0.06 - 10px));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+.tshop-say-name {
+  margin-bottom: 2px;
+}
+.tshop-say-en {
+  font-family: var(--g-font-ui);
+  font-size: var(--g-text-md);
+}
+.tshop-say-zh {
+  font-size: var(--g-text-sm);
+  color: var(--g-ink-soft);
+}
+@container (max-height: 440px) {
+  .tshop .tshop-say {
+    padding: 6px 10px;
+  }
+  .tshop-say-en {
+    font-size: var(--g-text-sm);
+  }
+  .tshop-say-zh {
+    font-size: var(--g-text-xs);
+  }
+}
+.tshop-me {
+  position: absolute;
+  left: 74%;
+  bottom: 4%;
+  height: 48%;
+  aspect-ratio: 120 / 170;
+  transform: translateX(-50%);
+}
+
+/* 款式（右） */
+.tshop-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 12px 12px 0 0;
+}
+@media (orientation: portrait) {
+  .tshop-panel {
+    padding: 0 12px;
+  }
+}
+.tshop-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+}
+.tshop-coins {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: auto;
+}
+.tshop-revert[disabled] {
+  opacity: 0.4;
+}
+.tshop-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  padding: 4px 4px 16px;
+}
+.tshop-field {
+  margin-bottom: 14px;
+}
+.tshop-field > .g-t-label {
+  margin: 0 0 6px;
+}
+.tshop-thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 8px;
+}
+.tshop-thumb {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-height: 56px;
+  padding: 6px 4px;
+  border: 0;
+  border-radius: var(--g-radius-md);
+  background: var(--g-surface-sunken);
+  color: var(--g-ink);
+  cursor: pointer;
+}
+.tshop-thumb svg {
+  width: 100%;
+  height: 84px;
+}
+.tshop-thumbs--head .tshop-thumb svg {
+  height: 64px;
+}
+.tshop-thumb[aria-pressed="true"] {
+  background: var(--g-sky-soft);
+  outline: 3px solid var(--g-sky-deep);
+  outline-offset: -3px;
+}
+.tshop-thumb--locked > svg {
+  opacity: 0.72;
+}
+.tshop-thumb--trying {
+  outline: 3px dashed var(--g-sun-ledge);
+  outline-offset: -3px;
+}
+.tshop-price {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 1px 6px 1px 2px;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-sun-soft);
+  font-size: 12px;
+  font-weight: 800;
+}
+.tshop-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.tshop-swatch {
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.tshop-swatch[aria-pressed="true"],
+.tshop-match[aria-pressed="true"] {
+  outline: 3px solid var(--g-ink);
+  outline-offset: 3px;
+}
+.tshop-match {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 48px;
+  padding: 0 14px 0 8px;
+  border: 0;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface-sunken);
+  color: var(--g-ink);
+  font-weight: 700;
+  cursor: pointer;
+}
+.tshop-match i {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+.tshop-recent {
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: var(--g-radius-md);
+  background: var(--g-surface-sunken);
+}
+.tshop-recent-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+.tshop-recent-row .g-t-caption {
+  margin-right: auto;
+}
+.tshop-recent-btn {
+  min-height: 40px;
+  padding: 0 12px;
+}
+.tshop-bar {
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  margin: 0 -12px 0 0;
+  border-radius: var(--g-radius-md) var(--g-radius-md) 0 0;
+  background: var(--g-sun-soft);
+}
+.tshop-bar p {
+  margin: 0 0 4px;
+}
+.tshop-bar-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.tshop-bar .gbtn[disabled] {
+  opacity: 0.45;
+}
+@media (max-height: 500px) {
+  .tshop-head .gbtn {
+    min-height: 44px;
+    padding: 0 14px;
+  }
+  .tshop-thumb svg {
+    height: 64px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tshop {
+    animation: none;
+  }
+}
+
+/* 道具縮圖（只畫道具，不畫人物） */
+.tshop-thumbs--item .tshop-thumb svg {
+  height: 64px;
+  padding: 4px;
+}
+.tshop-none {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  color: var(--g-ink-faint);
+}
+
+/* 神秘的房間（佔位：歪屋頂、門上問號；之後換成奇怪造型的房子） */
+.town-bld--mystery .town-roof {
+  transform: rotate(-7deg) translateY(1em);
+  border-radius: 7em 2em 1.2em 3em;
+}
+.town-bld--mystery .town-body {
+  border-radius: 3em 0.8em 1.6em 2.4em;
+}
+.town-bld--mystery .town-win {
+  border-radius: 50%;
+  background: var(--g-lilac-soft);
+}
+.town-q {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 7em;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--g-sun);
+}
+
+/* ================= 第二階段 2b：正式建築（token 道具）、路燈 ================= */
+.town-bld--art {
+  display: block;
+}
+.town-art {
+  line-height: 0;
+}
+.town-art svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.town-sign--on {
+  position: absolute;
+  top: 31%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.town-bld--townGate .town-sign--on {
+  top: 2%;
+}
+.town-bld--townStage .town-sign--on {
+  top: 22%;
+}
+.town-bld--townHome .town-sign--on {
+  top: 33%;
+}
+.town-bld--art.is-near .town-art {
+  filter: brightness(1.06);
+}
+.town-lamp {
+  position: absolute;
+  left: 0;
+  bottom: 15%;
+  line-height: 0;
+  pointer-events: none;
+}
+.town-lamp svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* 城門後方的大背景、前面的樹叢（v2.19.0） */
+.town-deco {
+  position: absolute;
+  left: 0;
+  bottom: 15%;
+  line-height: 0;
+  pointer-events: none;
+}
+.town-deco--front {
+  bottom: 12%;
+}
+.town-deco svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.town-bld--townLab .town-sign--on {
+  top: 40%;
+  left: 54%;
+}
+.gstage-hud .town-bubble::after {
+  left: 50%;
+  margin-left: -8px;
+}
+
+/* ================= v2.21.0：進門動畫（縮小淡出、開門）、傳送門發光 ================= */
+.town-stage .gstage-me {
+  transform-origin: 50% 100%;
+  transition: scale 0.4s var(--g-ease-soft), opacity 0.4s var(--g-ease-soft);
+}
+.town-stage.is-entering .gstage-me {
+  scale: var(--town-enter-scale, 0.8);
+  opacity: 0;
+  transition: scale var(--town-enter-ms, 1000ms) ease-in, opacity var(--town-enter-ms, 1000ms) ease-in;
+}
+.town-stage.is-entering .gstage-shadow {
+  opacity: 0 !important;
+  transition: opacity var(--town-enter-ms, 1000ms) ease-in;
+}
+.town-bld .g-door {
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+  transition: transform 0.45s var(--g-ease-soft);
+}
+.town-bld.is-open .g-door {
+  transform: scaleX(0.12);
+}
+@keyframes town-portal-glow {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.town-bld .g-portal-halo {
+  animation: town-portal-glow 1.8s ease-in-out infinite;
+}
+.town-bld.is-open .g-portal {
+  filter: brightness(1.2);
+}
+@media (prefers-reduced-motion: reduce) {
+  .town-bld .g-portal-halo {
+    animation: none;
+  }
+  .town-bld .g-door,
+  .town-stage .gstage-me {
+    transition: none;
+  }
+}
+
+/* 店內：角色轉身（前／右／後／左）——放在店裡畫面正下方，不蓋住角色 */
+.tshop-left {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+.tshop-left .tshop-room {
+  flex: 1;
+  min-height: 0;
+  margin-bottom: 6px;
+}
+.tshop-turn {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0 12px 10px;
+  padding: 4px;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface-raised);
+  box-shadow: var(--g-shadow-tile);
+}
+.tshop-turn .tshop-turn-btn {
+  width: 40px;
+  height: 40px;
+  box-shadow: none;
+}
+.tshop-dir {
+  min-width: 40px;
+  height: 36px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: var(--g-radius-pill);
+  background: transparent;
+  color: var(--g-ink-soft);
+  font: var(--g-weight-heavy) var(--g-text-sm) / 1 var(--g-font-ui);
+  cursor: pointer;
+}
+.tshop-dir[aria-pressed="true"] {
+  background: var(--g-sky-soft);
+  color: var(--g-sky-deep);
+}
+@media (max-height: 500px) {
+  .tshop-turn {
+    margin-bottom: 6px;
+  }
+  .tshop-turn .tshop-turn-btn {
+    width: 34px;
+    height: 34px;
+  }
+  .tshop-dir {
+    min-width: 32px;
+    height: 30px;
+  }
+}
+
+/* ================= 我的家（townShop.ts mode: home） ================= */
+.tshop--home .tshop-me {
+  left: 60%;
+  bottom: 5%;
+}
+.tshop--home .tshop-sign {
+  left: 22%; /* 2026-11-06：放在窗戶上方，讓出中間給吊燈、右邊給置物架（佈置） */
+}
+.tshop-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.tshop-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface-sunken);
+  color: var(--g-ink-soft);
+  font: var(--g-weight-heavy) var(--g-text-sm) / 1 var(--g-font-ui);
+  cursor: pointer;
+}
+.tshop-tab[aria-selected="true"] {
+  background: var(--g-sky-soft);
+  color: var(--g-sky-deep);
+}
+.tshop-note {
+  margin: 0 0 10px;
+  color: var(--g-ink-soft);
+}
+.tshop-slots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.tshop-slot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 6px 10px;
+  border: 0;
+  border-radius: var(--g-radius-md);
+  background: var(--g-surface-sunken);
+  color: var(--g-ink);
+}
+.tshop-slot--on {
+  background: var(--g-sky-soft);
+  outline: 3px solid var(--g-sky-deep);
+  outline-offset: -3px;
+}
+.tshop-slot--empty {
+  justify-content: center;
+  min-height: 160px;
+  color: var(--g-ink-soft);
+  cursor: pointer;
+}
+.tshop-slot-pick {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.tshop-slot-pick svg {
+  display: block;
+  width: 100%;
+  height: 120px;
+}
+.tshop-slot-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+  min-height: 32px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface-raised);
+  color: var(--g-ink);
+  font: var(--g-weight-bold) var(--g-text-sm) / 1.2 var(--g-font-ui);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.tshop-slot-name .g-icon {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  color: var(--g-ink-soft);
+}
+.tshop-slot-tag {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+}
+.tshop-slot-del {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--g-surface-raised);
+  color: var(--g-rose-deep);
+  cursor: pointer;
+}
+.tshop-rename {
+  width: 100%;
+  max-width: 12em;
+  min-height: 32px;
+  padding: 2px 8px;
+  border: 2px solid var(--g-sky-deep);
+  border-radius: var(--g-radius-sm);
+  background: var(--g-surface);
+  color: var(--g-ink);
+  font: var(--g-weight-bold) var(--g-text-sm) / 1.2 var(--g-font-ui);
+}
+@media (max-height: 500px) {
+  .tshop-slot-pick svg {
+    height: 84px;
+  }
+  .tshop-slot--empty {
+    min-height: 120px;
+  }
+}
+
+/* ================= 主題場景（第三階段 3a） ================= */
+.town-in-scene .town-blds,
+.town-in-scene .town-lay {
+  display: none;
+}
+.gstage-hud .town-back-town {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  min-height: 44px;
+  padding: 0 14px;
+  pointer-events: auto;
+}
+.gstage-hud .town-back-town[hidden],
+.gstage-hud .town-trial[hidden] {
+  display: none;
+}
+.gstage-hud .town-trial {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+.town-lay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 200%;
+  display: flex;
+  will-change: transform;
+  pointer-events: none;
+}
+.town-lay svg {
+  width: 50%;
+  height: 100%;
+  display: block;
+  flex: none;
+}
+
+/* ================= 主題場景互動（第三階段 3b-1，scenePlay.ts） ================= */
+.town-stage .gstage-props {
+  pointer-events: none;
+}
+.town-stage .gstage-prop--click {
+  pointer-events: auto;
+  cursor: pointer;
+}
+.scene-float {
+  position: absolute;
+  transform: translateX(-50%);
+}
+.scene-bubbles {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.scene-bubbles i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--g-surface-raised);
+  opacity: 0.9;
+  animation: scene-bubble 1.1s ease-out forwards;
+}
+.scene-bubbles i:nth-child(2) {
+  left: 10px;
+  width: 7px;
+  height: 7px;
+  animation-delay: 0.12s;
+}
+.scene-bubbles i:nth-child(3) {
+  left: -8px;
+  width: 6px;
+  height: 6px;
+  animation-delay: 0.24s;
+}
+@keyframes scene-bubble {
+  from {
+    transform: translateY(0);
+    opacity: 0.95;
+  }
+  to {
+    transform: translateY(-60px);
+    opacity: 0;
+  }
+}
+.scene-bubbles--space i {
+  border: 0;
+  background: var(--g-sun-soft);
+  animation: scene-puff 0.8s ease-out forwards;
+}
+@keyframes scene-puff {
+  from {
+    transform: scale(0.6);
+    opacity: 0.95;
+  }
+  to {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+
+/* ================= 森林天氣與生物（第三階段 3b-2，scenePlay.ts；從工作室搬來） ================= */
+.gstage-creature {
+  z-index: 9;
+  pointer-events: none;
+}
+.gstage-creature svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* ---- 手動天氣系統（晴天、雨天、颱風天） ---- */
+.gstage-weather {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+  transition: background-color var(--g-dur-slow) var(--g-ease-soft);
+}
+.gstage-weather--rainy,
+.gstage-weather--typhoon {
+  background: transparent;
+}
+/* 雨量越大天色越暗（--rain-tint 由雨量等級決定） */
+.gstage-weather--rainy::before,
+.gstage-weather--typhoon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--g-forest-night-sky-top);
+  opacity: var(--rain-tint, 0.16);
+  transition: opacity var(--g-dur-slow) var(--g-ease-soft);
+}
+/* 雨滴 */
+.g-rain-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.g-rain-streak {
+  position: absolute;
+  top: -60px;
+  width: 2px;
+  height: 38px;
+  background: linear-gradient(to bottom, transparent, var(--g-sky-soft));
+  opacity: var(--rain-opacity, 0.75);
+  border-radius: 1px;
+  transform: rotate(18deg);
+  animation: g-rain-anim var(--rain-dur, 0.75s) linear infinite;
+}
+.gstage-weather--typhoon .g-rain-streak {
+  width: 2.5px;
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, #FFFFFF);
+  transform: rotate(34deg);
+  animation-duration: var(--rain-dur, 0.42s);
+  opacity: var(--rain-opacity, 0.85);
+}
+@keyframes g-rain-anim {
+  0% { transform: translateY(0) rotate(18deg); opacity: 0; }
+  20% { opacity: 0.8; }
+  100% { transform: translateY(calc(100vh + 80px)) rotate(18deg); opacity: 0.8; }
+}
+.gstage-weather--typhoon .g-rain-streak {
+  animation-name: g-typhoon-rain-anim;
+}
+@keyframes g-typhoon-rain-anim {
+  0% { transform: translate(60px, 0) rotate(34deg); opacity: 0; }
+  20% { opacity: 0.9; }
+  100% { transform: translate(-140px, calc(100vh + 80px)) rotate(34deg); opacity: 0.9; }
+}
+/* 淹水：腳底線往上的水面（蓋住角色下半身，在雨絲後面） */
+.gstage-flood {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9;
+  pointer-events: none;
+  background: linear-gradient(to bottom, var(--g-forest-day-flood-water), var(--g-forest-day-flood-water-deep));
+  opacity: 0.78;
+  transition: top 0.2s linear;
+}
+.gstage-flood[hidden] {
+  display: none;
+}
+.gstage--night .gstage-flood {
+  background: linear-gradient(to bottom, var(--g-forest-night-flood-water), var(--g-forest-night-flood-water-deep));
+}
+.gstage-flood-wave {
+  position: absolute;
+  left: -40px;
+  right: -40px;
+  top: -5px;
+  height: 10px;
+  border-radius: var(--g-radius-pill);
+  background: radial-gradient(ellipse 20px 5px at 20px 5px, var(--g-forest-day-flood-foam) 70%, transparent 72%) 0 0 / 40px 10px repeat-x;
+  animation: g-flood-wave 2.4s linear infinite;
+}
+.gstage--night .gstage-flood-wave {
+  background-image: radial-gradient(ellipse 20px 5px at 20px 5px, var(--g-forest-night-flood-foam) 70%, transparent 72%);
+}
+@keyframes g-flood-wave {
+  from { transform: translateX(0); }
+  to { transform: translateX(-40px); }
+}
+.gstage--typhoon .gstage-flood-wave {
+  animation-duration: 0.9s;
+}
+/* 颱風強風流線 */
+.g-wind-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.g-wind-gust {
+  position: absolute;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.55), transparent);
+  animation: g-gust-anim 1.2s ease-in-out infinite;
+}
+@keyframes g-gust-anim {
+  0% { transform: translateX(110vw); opacity: 0; }
+  20% { opacity: 0.7; }
+  80% { opacity: 0.7; }
+  100% { transform: translateX(-40vw); opacity: 0; }
+}
+/* 颱風時樹木晃動效果 */
+.gstage--typhoon .g-layer-canopy,
+.gstage--typhoon .g-layer-mid {
+  transform-origin: 50% 100%;
+  animation: g-typhoon-sway 1.6s ease-in-out infinite alternate;
+}
+@keyframes g-typhoon-sway {
+  0% { transform: skewX(0deg); }
+  100% { transform: skewX(-2.5deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .g-rain-streak, .g-wind-gust, .gstage-flood-wave, .gstage--typhoon .g-layer-canopy, .gstage--typhoon .g-layer-mid {
+    animation: none;
+  }
+}
+
+/* 天氣面板（小朋友自己切換）：左上一列（2026-11-04 使用者要求，減少遮擋）；樣式同工作室 .studio-seg／.studio-range */
+.gstage-hud .scene-weather-ui {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  max-width: calc(100% - 240px);
+  padding: 4px;
+  border-radius: var(--g-radius-lg);
+  background: var(--g-surface-raised);
+  box-shadow: var(--g-shadow-tile);
+  color: var(--g-ink);
+  pointer-events: auto;
+}
+/* 試玩中（左上有倒數）：往下一點；相機開著：先收起來（照片也不會拍到） */
+.gstage-hud:has(.town-trial:not([hidden])) .scene-weather-ui {
+  top: 56px;
+}
+.gstage-hud:has(.town-cam-pose:not([hidden])) .scene-weather-ui {
+  display: none;
+}
+.scene-seg {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface-sunken);
+}
+.scene-seg button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--g-radius-pill);
+  background: none;
+  color: var(--g-ink-soft);
+  font: inherit;
+  font-size: 14px;
+  font-weight: var(--g-weight-heavy);
+  cursor: pointer;
+  white-space: nowrap;
+  touch-action: manipulation;
+}
+.scene-seg button[aria-pressed="true"] {
+  background: var(--g-surface-raised);
+  color: var(--g-ink);
+  box-shadow: var(--g-shadow-tile);
+}
+.scene-seg button:focus-visible,
+.scene-range input:focus-visible {
+  outline: 3px solid var(--g-sky-deep);
+  outline-offset: 1px;
+}
+.scene-range {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-right: 8px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.scene-rain-label {
+  min-width: 2.6em;
+}
+.scene-range input {
+  width: 110px;
+  height: 40px;
+  margin: 0;
+  accent-color: var(--g-sky-deep);
+  touch-action: pan-x;
+}
+/* 舞台矮或窄（手機）：只留圖示 */
+@media (max-height: 460px), (max-width: 700px) {
+  .gstage-hud .scene-weather-ui {
+    top: 8px;
+    left: 8px;
+    gap: 4px;
+    padding: 3px;
+    max-width: calc(100% - 130px);
+  }
+  /* 右上角：回小鎮只留圖示，讓出空間給天氣列 */
+  .gstage-hud .town-hud-tr .town-back-town span {
+    display: none;
+  }
+  .gstage-hud .town-hud-tr .town-back-town {
+    padding: 0 12px;
+  }
+  .scene-seg button {
+    min-height: 36px;
+    padding: 0 9px;
+  }
+  .scene-seg button span {
+    display: none;
+  }
+  .scene-range {
+    padding-right: 4px;
+  }
+  .scene-rain-label {
+    display: none;
+  }
+  .scene-range input {
+    width: 64px;
+    height: 36px;
+  }
+}
+
+/* 背景平鋪接縫：每張圖多畫 1px 疊住下一張，避免小數像素露出細縫 */
+.town-stage .gstage-lay:not(.gstage-lay--fixed) svg {
+  width: calc(50% + 1px);
+  margin-right: -1px;
+}
+
+
+/* ================= 夜光墓園玩法與特技（第三階段 3b-3，graveyardPlay.ts；從工作室搬來） ================= */
+/* 魔拐杖與南瓜糖果桶特技效果 */
+.studio-fx-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 25;
+}
+
+@keyframes magic-shard-burst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.4) rotate(0deg);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(1.1) rotate(var(--trot));
+  }
+}
+
+@keyframes magic-firework-ring {
+  0% {
+    opacity: 0.95;
+    transform: translate(-50%, -50%) scale(0.1);
+  }
+  70% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.6);
+  }
+}
+
+@keyframes magic-meteor-flight {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.3) rotate(var(--rot));
+  }
+  12% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(1.05) rotate(var(--rot));
+  }
+}
+
+@keyframes candy-fall-to-ground {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  6% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+    transform: translate(calc(var(--tx) * 0.95), var(--ty)) rotate(var(--trot));
+  }
+  88% {
+    opacity: 1;
+    transform: translate(var(--tx), calc(var(--ty) - 10px)) rotate(calc(var(--trot) + 12deg));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--tx) + 4px), var(--ty)) rotate(calc(var(--trot) + 20deg));
+  }
+}
+
+.magic-shard {
+  position: absolute;
+  font-weight: bold;
+  user-select: none;
+  animation: magic-shard-burst 1.35s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+}
+
+.magic-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 3.5px dashed var(--g-sun);
+  box-shadow: 0 0 16px var(--g-sun-soft);
+  animation: magic-firework-ring 1.3s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+}
+
+.magic-meteor {
+  position: absolute;
+  pointer-events: none;
+  animation: magic-meteor-flight 1.3s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+}
+
+.candy-drop {
+  position: absolute;
+  animation: candy-fall-to-ground 2.1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* 掙脫提示 HUD 與掙扎動態 */
+.studio-struggle-hud {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: rgba(47, 37, 72, 0.92);
+  color: var(--g-sun);
+  padding: 6px 12px;
+  border-radius: var(--g-radius-pill);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), 0 0 0 2px var(--g-sun);
+  font: 900 13px/1.2 var(--g-font-ui);
+  pointer-events: none;
+  z-index: 35;
+  white-space: nowrap;
+  animation: studio-struggle-pop 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.studio-struggle-hud--shake {
+  animation: studio-struggle-wobble 0.12s linear;
+}
+
+@keyframes studio-struggle-pop {
+  0% {
+    transform: translate(-50%, -80%) scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -100%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes studio-struggle-wobble {
+  0% { transform: translate(-50%, -100%) rotate(0deg); }
+  25% { transform: translate(calc(-50% - 4px), -100%) rotate(-3deg); }
+  75% { transform: translate(calc(-50% + 4px), -100%) rotate(3deg); }
+  100% { transform: translate(-50%, -100%) rotate(0deg); }
+}
+
+.studio-struggle-track {
+  width: 90px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.studio-struggle-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--g-sun), var(--g-peach));
+  border-radius: 3px;
+  transition: width 0.08s linear;
+}
+
+/* ---- 地底冒出巨手抓住角色 ---- */
+.studio-hand-erupt svg {
+  animation: studio-hand-burst 0.38s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+  transform-origin: 50% 100%;
+}
+
+@keyframes studio-hand-burst {
+  0% {
+    transform: translateY(100%) scale(0.6);
+    opacity: 0.2;
+  }
+  65% {
+    transform: translateY(-8px) scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.studio-hand-retreat svg {
+  animation: studio-hand-sink 0.8s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
+  transform-origin: 50% 100%;
+}
+
+@keyframes studio-hand-sink {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(14px) scale(0.95);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(100%) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* ---- 墓園場景停留超過 180 秒：蝙蝠群佔據畫面 10 秒 ---- */
+.studio-bat-swarm-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 45;
+}
+
+.studio-swarm-bat {
+  position: absolute;
+  width: 48px;
+  height: 36px;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.studio-swarm-bat .bat-wing {
+  position: absolute;
+  inset: 0;
+}
+
+.studio-swarm-bat .bat-wing--up {
+  animation: studio-bat-wing-up 0.12s steps(1) infinite;
+}
+
+.studio-swarm-bat .bat-wing--down {
+  animation: studio-bat-wing-down 0.12s steps(1) infinite;
+}
+
+@keyframes studio-bat-wing-up {
+  0%, 49.9% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes studio-bat-wing-down {
+  0%, 49.9% { opacity: 0; }
+  50%, 100% { opacity: 1; }
+}
+
+/* 飛行路徑 A：從畫面左側波浪形疾速俯衝掠過至右上，以指定高度為基準 */
+.bat-fly--swoop-lr {
+  animation: bat-path-lr var(--fly-dur, 5.2s) var(--fly-ease, ease-in-out) var(--fly-delay, 0s) forwards;
+}
+
+@keyframes bat-path-lr {
+  0% {
+    transform: translate(-70px, var(--start-y, 30%)) scale(var(--bat-scale, 1)) rotate(16deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  28% {
+    transform: translate(28vw, calc(var(--start-y, 30%) + 28px)) scale(var(--bat-scale, 1)) rotate(-8deg);
+  }
+  52% {
+    transform: translate(56vw, calc(var(--start-y, 30%) - 24px)) scale(var(--bat-scale, 1)) rotate(12deg);
+  }
+  78% {
+    transform: translate(82vw, calc(var(--start-y, 30%) + 18px)) scale(var(--bat-scale, 1)) rotate(-6deg);
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(100vw + 80px), calc(var(--start-y, 30%) - 15px)) scale(var(--bat-scale, 1)) rotate(8deg);
+    opacity: 0;
+  }
+}
+
+/* 飛行路徑 B：從畫面右側反向橫掃俯衝至左上，以指定高度為基準 */
+.bat-fly--swoop-rl {
+  animation: bat-path-rl var(--fly-dur, 5.4s) var(--fly-ease, ease-in-out) var(--fly-delay, 0s) forwards;
+}
+
+@keyframes bat-path-rl {
+  0% {
+    transform: translate(calc(100vw + 70px), var(--start-y, 45%)) scaleX(-1) scale(var(--bat-scale, 1)) rotate(15deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  30% {
+    transform: translate(72vw, calc(var(--start-y, 45%) - 26px)) scaleX(-1) scale(var(--bat-scale, 1)) rotate(-10deg);
+  }
+  55% {
+    transform: translate(46vw, calc(var(--start-y, 45%) + 24px)) scaleX(-1) scale(var(--bat-scale, 1)) rotate(12deg);
+  }
+  78% {
+    transform: translate(20vw, calc(var(--start-y, 45%) - 20px)) scaleX(-1) scale(var(--bat-scale, 1)) rotate(-8deg);
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-80px, calc(var(--start-y, 45%) + 12px)) scaleX(-1) scale(var(--bat-scale, 1)) rotate(10deg);
+    opacity: 0;
+  }
+}
+
+/* 飛行路徑 C：群體盤旋弧形穿梭，以指定高度為基準起伏 */
+.bat-fly--circle-center {
+  animation: bat-path-circle var(--fly-dur, 5.6s) ease-in-out var(--fly-delay, 0s) forwards;
+}
+
+@keyframes bat-path-circle {
+  0% {
+    transform: translate(-70px, calc(var(--start-y, 50%) - 30px)) scale(var(--bat-scale, 1)) rotate(20deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  35% {
+    transform: translate(32vw, calc(var(--start-y, 50%) + 40px)) scale(var(--bat-scale, 1)) rotate(-12deg);
+  }
+  65% {
+    transform: translate(66vw, calc(var(--start-y, 50%) - 35px)) scale(var(--bat-scale, 1)) rotate(16deg);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(100vw + 80px), calc(var(--start-y, 50%) + 15px)) scale(var(--bat-scale, 1)) rotate(-10deg);
+    opacity: 0;
+  }
+}
+
+/* 飛行路徑 D：超大特寫蝙蝠掠過前景鏡頭，以指定高度為基準 */
+.bat-fly--foreground-surge {
+  animation: bat-path-surge var(--fly-dur, 4.8s) cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--fly-delay, 0s) forwards;
+}
+
+@keyframes bat-path-surge {
+  0% {
+    transform: translate(calc(100vw + 90px), calc(var(--start-y, 50%) + 20px)) scaleX(-1) scale(var(--bat-scale, 1.5)) rotate(18deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.95;
+  }
+  45% {
+    transform: translate(52vw, calc(var(--start-y, 50%) - 26px)) scaleX(-1) scale(var(--bat-scale, 1.5)) rotate(-10deg);
+  }
+  80% {
+    transform: translate(18vw, calc(var(--start-y, 50%) + 18px)) scaleX(-1) scale(var(--bat-scale, 1.5)) rotate(14deg);
+  }
+  92% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(-110px, calc(var(--start-y, 50%) - 12px)) scaleX(-1) scale(var(--bat-scale, 1.5)) rotate(-8deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-swarm-bat .bat-wing--up,
+  .studio-swarm-bat .bat-wing--down {
+    animation: none;
+  }
+}
+
+/* ---- 墓園怪物萬聖幽默對話白色對話框 ---- */
+.monster-dialog-bubble {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  background: var(--g-surface-raised, #ffffff);
+  color: var(--g-ink, #35405A);
+  font-family: var(--font-body, system-ui, sans-serif);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.4;
+  padding: 10px 18px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32), 0 2px 6px rgba(0, 0, 0, 0.12);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 100;
+  border: 2px solid var(--g-surface-sunken, #EEF1F5);
+  animation: monster-bubble-pop 0.32s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+.monster-dialog-bubble::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px 8px 0 8px;
+  border-style: solid;
+  border-color: var(--g-surface-raised, #ffffff) transparent transparent transparent;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.12));
+}
+
+.monster-dialog-bubble--fadeout {
+  opacity: 0;
+  transform: translate(-50%, -115%) scale(0.92);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+@keyframes monster-bubble-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -85%) scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -100%) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .monster-dialog-bubble {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* ---- 萬聖限定：裝備正確裝扮提示文字（純白、無特效、常駐數秒） ---- */
+.halloween-costume-notice {
+  position: absolute;
+  top: 26%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--g-surface-raised, #ffffff);
+  font-family: var(--g-font-ui, system-ui, sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 60;
+  background: none;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+  animation: none;
+}
+
+/* ---- 萬聖限定：夜晚骷髏月亮 10 秒神祕幽綠光芒 ---- */
+.moon-mystic-glow {
+  filter: drop-shadow(0 0 16px var(--g-mint)) drop-shadow(0 0 32px var(--g-mint-soft));
+  animation: moon-mystic-pulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes moon-mystic-pulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 12px var(--g-mint)) drop-shadow(0 0 24px var(--g-mint-soft));
+  }
+  100% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 28px var(--g-mint)) drop-shadow(0 0 48px var(--g-mint-soft));
+  }
+}
+
+/* 傳送門破土而出動畫 */
+.studio-portal-burst svg {
+  animation: studio-portal-emerge 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+  transform-origin: 50% 100%;
+}
+
+@keyframes studio-portal-emerge {
+  0% {
+    transform: translateY(100%) scale(0.65);
+    opacity: 0.2;
+  }
+  65% {
+    transform: translateY(-10px) scale(1.05);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* 傳送門常駐微呼吸動態 */
+.studio-portal-active svg {
+  animation: studio-portal-breathe 2.4s ease-in-out infinite alternate;
+  transform-origin: 50% 100%;
+}
+
+@keyframes studio-portal-breathe {
+  0% {
+    filter: drop-shadow(0 0 10px var(--g-mint-soft));
+  }
+  100% {
+    filter: drop-shadow(0 0 24px var(--g-mint));
+  }
+}
+
+/* ---- 萬聖傳送門碰觸詢問彈窗 ---- */
+.halloween-portal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 12, 28, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 120;
+  padding: 20px;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: portal-modal-fade 0.28s ease-out forwards;
+}
+
+@keyframes portal-modal-fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.halloween-portal-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--g-surface-raised);
+  border-radius: var(--g-radius-xl);
+  box-shadow: var(--g-shadow-pop);
+  padding: 28px 24px;
+  text-align: center;
+  color: var(--g-ink);
+  animation: portal-card-pop 0.32s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+@keyframes portal-card-pop {
+  0% { transform: scale(0.75); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.halloween-portal-badge {
+  width: 90px;
+  height: 120px;
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 18px var(--g-mint));
+  animation: portal-badge-float 2s ease-in-out infinite alternate;
+}
+
+.halloween-portal-badge svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+@keyframes portal-badge-float {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
+}
+
+.halloween-portal-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--g-ink);
+  margin-bottom: 10px;
+}
+
+.halloween-portal-desc {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--g-ink-soft);
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+
+.portal-cost-tag {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 12px;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface-sunken);
+  color: var(--g-mint-deep);
+  font-size: 14px;
+  font-weight: 800;
+  border: 1px solid var(--g-mint-soft);
+}
+
+.halloween-portal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.halloween-portal-actions .gbtn {
+  flex: 1;
+}
+
+/* ---- 萬聖傳送門位置指引閃爍箭頭 ---- */
+.portal-nav-arrow {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(21, 15, 38, 0.88);
+  border: 2px solid var(--g-mint);
+  border-radius: var(--g-radius-pill);
+  color: var(--g-mint);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), 0 0 16px var(--g-mint-soft);
+  font-family: var(--g-font-ui, system-ui, sans-serif);
+  font-size: 15px;
+  font-weight: 900;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 55;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  animation: portal-nav-blink 0.65s ease-in-out infinite alternate;
+}
+
+.portal-nav-arrow--right {
+  animation: portal-nav-blink 0.65s ease-in-out infinite alternate, portal-nav-bounce-right 0.65s ease-in-out infinite alternate;
+}
+
+.portal-nav-arrow--left {
+  animation: portal-nav-blink 0.65s ease-in-out infinite alternate, portal-nav-bounce-left 0.65s ease-in-out infinite alternate;
+}
+
+.portal-nav-arrow--down {
+  transform: translateX(-50%);
+  animation: portal-nav-blink 0.65s ease-in-out infinite alternate, portal-nav-bounce-down 0.65s ease-in-out infinite alternate;
+}
+
+.portal-nav-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+@keyframes portal-nav-blink {
+  0% {
+    opacity: 0.55;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), 0 0 8px var(--g-mint-soft);
+  }
+  100% {
+    opacity: 1;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 22px var(--g-mint);
+  }
+}
+
+@keyframes portal-nav-bounce-right {
+  0% { transform: translateY(-50%) translateX(0); }
+  100% { transform: translateY(-50%) translateX(8px); }
+}
+
+@keyframes portal-nav-bounce-left {
+  0% { transform: translateY(-50%) translateX(0); }
+  100% { transform: translateY(-50%) translateX(-8px); }
+}
+
+@keyframes portal-nav-bounce-down {
+  0% { transform: translateX(-50%) translateY(0); }
+  100% { transform: translateX(-50%) translateY(8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moon-mystic-glow,
+  .studio-portal-burst svg,
+  .studio-portal-active svg,
+  .halloween-portal-overlay,
+  .halloween-portal-card,
+  .halloween-portal-badge,
+  .portal-nav-arrow {
+    animation: none;
+    transition: none;
+  }
+}
+
+
+/* ================= 相機、相簿、舞台動作（第三階段：照相館、廣場舞台；樣式同工作室） ================= */
+/* ---- 相機 ---- */
+.studio-camera-bar {
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  transform: translateX(-50%);
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: var(--g-radius-pill);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--g-shadow-lift);
+}
+.studio-camera-bar[hidden],
+.studio-frame[hidden] {
+  display: none;
+}
+.studio-frame {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 35;
+  border: 3px dashed rgba(255, 255, 255, 0.95);
+  border-radius: var(--g-radius-md);
+  box-shadow: 0 0 0 9999px rgba(53, 64, 90, 0.28);
+  pointer-events: none;
+  max-height: 100%;
+}
+.studio-countdown {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(53, 64, 90, 0.18);
+}
+.studio-countdown .g-t-display {
+  color: var(--g-surface-raised);
+  font-size: 120px;
+}
+.studio-countdown .g-t-caption {
+  color: var(--g-surface-raised);
+}
+.studio-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  background: #fff;
+  opacity: 0.9;
+  transition: opacity 0.35s;
+}
+.studio-flash--go {
+  opacity: 0;
+}
+.studio-photo-card {
+  width: min(760px, 100%);
+}
+.studio-photo-big {
+  display: block;
+  width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  border-radius: var(--g-radius-md);
+  background: var(--g-surface-sunken);
+}
+
+/* ---- 面板 ---- */
+.studio-poses {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px;
+  margin-top: 6px;
+}
+.studio-pose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 56px;
+  border: 0;
+  border-radius: var(--g-radius-md);
+  background: var(--g-sun-soft);
+  color: var(--g-sun-deep);
+  font-weight: var(--g-weight-heavy);
+  cursor: pointer;
+}
+.studio-pose--seq {
+  background: var(--g-lilac-soft);
+  color: var(--g-lilac-deep);
+}
+.studio-pose[aria-pressed="true"] {
+  outline: 3px solid currentColor;
+  outline-offset: -3px;
+}
+.studio-seg {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface-sunken);
+}
+.studio-seg button,
+.studio-seg-toggle {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 48px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--g-radius-pill);
+  background: none;
+  color: var(--g-ink-soft);
+  font-weight: var(--g-weight-heavy);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.studio-seg button[aria-pressed="true"],
+.studio-seg-toggle[aria-pressed="true"] {
+  background: var(--g-surface-raised);
+  color: var(--g-ink);
+  box-shadow: var(--g-shadow-tile);
+}
+.studio-album {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 8px;
+  margin-top: 6px;
+}
+.studio-photo {
+  position: relative;
+  padding: 0;
+  border: 0;
+  border-radius: var(--g-radius-md);
+  overflow: hidden;
+  background: var(--g-surface-sunken);
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+}
+.studio-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.studio-photo .g-tag {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+}
+.studio-photo--cover {
+  outline: 3px solid var(--g-sun-deep);
+  outline-offset: -3px;
+}
+.studio-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 8px;
+  text-align: center;
+  color: var(--g-sky-deep);
+}
+
+/* 照相館（tshop--photo）：紀念照的動作、比例、拍照鈕 */
+.tshop--photo .tshop-revert {
+  display: none;
+}
+.tshop-poses {
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+}
+.tshop-photo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+.tshop-photo-row .studio-seg {
+  flex: 1 1 180px;
+}
+.tshop-snap {
+  flex: 1 1 140px;
+}
+.tshop-room .studio-flash {
+  border-radius: inherit;
+}
+
+/* 右上角：相機＋回小鎮（第三階段：照相館） */
+.gstage-hud .town-hud-tr {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+.gstage-hud .town-hud-tr .town-back-town {
+  position: static;
+}
+.town-cam-btn[aria-pressed="true"] {
+  outline: 3px solid var(--g-sun-deep);
+  outline-offset: 2px;
+}
+.gstage-hud .town-camera-bar {
+  pointer-events: auto;
+}
+.gstage-hud .town-frame {
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
+  /* 取景框只是外框：一定要讓點擊穿過去（上架版 CSS 合併順序不同，gamePage.css 的 .gstage-hud > * 會蓋掉 .studio-frame） */
+  pointer-events: none;
+}
+
+/* 廣場舞台：動作面板（左上）＋聚光燈 */
+.gstage-hud .town-perform {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: min(340px, 48%);
+  max-height: calc(100% - 20px);
+  overflow: auto;
+  padding: 10px 12px 12px;
+  border-radius: var(--g-radius-lg);
+  background: var(--g-surface-raised);
+  box-shadow: var(--g-shadow-tile);
+  color: var(--g-ink);
+  pointer-events: auto;
+  overscroll-behavior: contain;
+}
+.town-perform-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.town-perform-head .g-t-label {
+  margin: 0;
+}
+.town-perform-leave {
+  min-height: 40px;
+}
+.town-perform .g-t-caption {
+  margin: 4px 0 0;
+}
+.town-perform-seq {
+  margin: 10px 0 0;
+}
+.town-poses {
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 6px;
+}
+.town-poses .studio-pose {
+  min-height: 44px;
+  font-size: 14px;
+}
+.gstage-hud .town-spot {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 18% 62% at var(--spot-x, 50%) 62%, transparent 55%, color-mix(in srgb, var(--g-ink) 38%, transparent) 100%);
+  animation: town-spot-in var(--g-dur-slow, 400ms) var(--g-ease-soft, ease) both;
+}
+@keyframes town-spot-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (max-height: 460px) {
+  .gstage-hud .town-perform {
+    width: min(280px, 46%);
+    padding: 6px 8px 8px;
+  }
+  .town-perform .g-t-caption,
+  .town-perform-seq {
+    display: none;
+  }
+  .town-poses .studio-pose {
+    min-height: 40px;
+    font-size: 13px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gstage-hud .town-spot {
+    animation: none;
+  }
+}
+
+/* 相機開著：左邊的拍照姿勢面板（面向＋動作），在相機列下面 */
+.gstage-hud .town-cam-pose {
+  top: 64px;
+  max-height: calc(100% - 74px);
+  width: min(300px, 44%);
+}
+.town-cam-face {
+  margin-top: 4px;
+}
+.town-cam-face button {
+  min-height: 40px;
+}
+/* 舞台矮（手機橫放）：相機列移到下面，姿勢面板從上面開始 */
+@media (max-height: 460px) {
+  .gstage-hud .town-camera-bar {
+    top: auto;
+    bottom: 8px;
+    left: auto;
+    right: 8px;
+    transform: none;
+  }
+  .gstage-hud .town-cam-pose {
+    top: 8px;
+    max-height: calc(100% - 16px);
+  }
+}
+@media (max-width: 480px) {
+  .gstage-hud .scene-weather-ui {
+    flex-wrap: nowrap;
+  }
+  .scene-seg button {
+    padding: 0 7px;
+  }
+  .scene-range input {
+    width: 44px;
+  }
+}
+
+/* ================= 美術館：展覽大廳（townGallery.ts） ================= */
+.town-in-gallery .town-blds,
+.town-in-gallery .town-lay,
+.town-in-gallery .gstage-lay,
+.town-in-gallery .gstage-cel {
+  display: none;
+}
+.tgal {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  overflow: hidden;
+  --gal-off: 0px;
+}
+/* 牆：天花板線條、牆板分格、下方護牆板（跟著鏡頭捲動） */
+.tgal-wall {
+  position: absolute;
+  inset: 0 0 12% 0;
+  background:
+    linear-gradient(to bottom, var(--g-stone-soft) 0, var(--g-stone-soft) 3%, var(--g-stone-ledge) 3%, var(--g-stone-ledge) 3.6%, transparent 3.6%),
+    linear-gradient(to top, var(--g-stone-ledge) 0, var(--g-stone-ledge) 2.5%, var(--g-lilac-soft) 2.5%, var(--g-lilac-soft) 21%, var(--g-stone-soft) 21%, var(--g-stone-soft) 23%, transparent 23%),
+    repeating-linear-gradient(90deg, var(--g-surface) 0 236px, color-mix(in srgb, var(--g-stone-soft) 70%, var(--g-surface)) 236px 240px);
+  background-position: 0 0, 0 0, var(--gal-off) 0;
+}
+/* 木地板 */
+.tgal-floor {
+  position: absolute;
+  inset: 88% 0 0 0;
+  background:
+    linear-gradient(to bottom, color-mix(in srgb, var(--g-wood-deep) 35%, transparent) 0, transparent 18%),
+    repeating-linear-gradient(90deg, var(--g-wood-soft) 0 116px, var(--g-wood) 116px 120px);
+  background-position: 0 0, var(--gal-off) 0;
+}
+.tgal-items {
+  position: absolute;
+  inset: 0;
+}
+.tgal-item {
+  position: absolute;
+  left: 0;
+  will-change: transform;
+}
+.tgal-item svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.tgal-door,
+.tgal-floorprop {
+  bottom: 12%;
+}
+.tgal-front {
+  bottom: 9%;
+}
+/* 館名招牌（大門上方） */
+.tgal-sign {
+  top: 6%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2em;
+  padding: 0.8em 2em;
+  border-radius: var(--g-radius-md);
+  background: var(--g-lilac-deep);
+  color: var(--g-surface-raised);
+  box-shadow: var(--g-shadow-tile);
+  font-size: max(12px, 2.6em);
+  white-space: nowrap;
+}
+.tgal-sign strong {
+  font-size: 1.3em;
+}
+.tgal-sign-en,
+.tgal-sign-n {
+  font-size: 0.72em;
+  opacity: 0.9;
+  letter-spacing: 0.08em;
+}
+/* 展廳之間的柱子＋展廳名牌 */
+.tgal-pillar {
+  top: 3.6%;
+  bottom: 12%;
+  width: 5.5em;
+  background: repeating-linear-gradient(90deg, var(--g-stone-soft) 0 0.9em, var(--g-surface-raised) 0.9em 1.4em);
+  box-shadow: inset 0 0 0 0.3em var(--g-stone-ledge);
+}
+.tgal-pillar span {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5em 1.1em;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface-raised);
+  color: var(--g-lilac-deep);
+  box-shadow: var(--g-shadow-tile);
+  font-size: max(11px, 2.4em);
+  font-weight: var(--g-weight-heavy);
+  white-space: nowrap;
+}
+/* 作品：投射燈、光暈、畫框、名牌 */
+.tgal-art {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tgal-lamp {
+  position: absolute;
+  top: -5em;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.tgal-glow {
+  position: absolute;
+  inset: -6em -4em -2em;
+  background: radial-gradient(ellipse 60% 70% at 50% 0%, color-mix(in srgb, var(--g-sun-soft) 75%, transparent), transparent 70%);
+}
+.tgal-frame {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  padding: 0;
+  border: 1.1em solid var(--g-sun-deep);
+  border-radius: 0.6em;
+  background: var(--g-surface-raised);
+  box-shadow: 0 0.8em 1.4em color-mix(in srgb, var(--g-ink) 28%, transparent), inset 0 0 0 0.3em color-mix(in srgb, var(--g-sun) 70%, transparent);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform var(--g-dur-fast, 150ms) var(--g-ease-soft, ease);
+  font: inherit;
+}
+.tgal-frame--wood {
+  border-color: var(--g-wood-deep);
+  box-shadow: 0 0.8em 1.4em color-mix(in srgb, var(--g-ink) 28%, transparent), inset 0 0 0 0.3em var(--g-wood);
+}
+.tgal-frame--white {
+  border-color: var(--g-surface-raised);
+  box-shadow: 0 0.8em 1.4em color-mix(in srgb, var(--g-ink) 22%, transparent), inset 0 0 0 0.3em var(--g-stone-soft);
+}
+.tgal-frame--lilac {
+  border-color: var(--g-lilac-deep);
+  box-shadow: 0 0.8em 1.4em color-mix(in srgb, var(--g-ink) 28%, transparent), inset 0 0 0 0.3em var(--g-lilac);
+}
+.tgal-mat {
+  position: absolute;
+  inset: 0;
+  padding: 0.9em;
+  background: var(--g-surface-raised);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  text-align: center;
+}
+.tgal-mat img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  box-shadow: inset 0 0 0 1px var(--g-stone-soft);
+}
+.tgal-frame--empty {
+  cursor: default;
+  border-style: dashed;
+  border-color: var(--g-stone-ledge);
+}
+.tgal-frame--empty .tgal-mat {
+  color: var(--g-ink-soft);
+  font-size: max(12px, 2.6em);
+  line-height: 1.4;
+  padding: 0.6em 1.4em;
+}
+.tgal-frame--empty .tgal-mat svg {
+  width: 2.4em;
+  height: 2.4em;
+}
+.tgal-frame--empty .tgal-mat p {
+  margin: 0;
+}
+.tgal-art.is-near .tgal-frame,
+.tgal-frame:focus-visible {
+  transform: scale(1.05);
+  outline: 0.5em solid var(--g-sun);
+  outline-offset: 0.4em;
+}
+.tgal-plaque {
+  margin-top: 1.6em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.4em 1em;
+  border-radius: 0.5em;
+  background: var(--g-surface-raised);
+  box-shadow: var(--g-shadow-tile);
+  color: var(--g-ink);
+  font-size: max(11px, 2.3em);
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.tgal-plaque strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+  color: var(--g-lilac-deep);
+}
+.tgal-plaque span {
+  font-size: 0.85em;
+  color: var(--g-ink-soft);
+}
+/* 看大圖 */
+.tgal-view {
+  width: min(760px, 100%);
+  align-items: center;
+}
+.tgal-frame--big {
+  width: 100%;
+  aspect-ratio: auto;
+  border-width: 14px;
+  border-radius: 8px;
+  cursor: default;
+}
+.tgal-frame--big .tgal-mat {
+  position: static;
+  padding: 12px;
+}
+.tgal-frame--big .tgal-mat img {
+  max-height: 56vh;
+  object-fit: contain;
+}
+.tgal-view-title {
+  margin: 8px 0 0;
+  color: var(--g-ink-soft);
+  text-align: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tgal-frame {
+    transition: none;
+  }
+}
+
+/* 舞台 HUD 上只是「看」的圖層：點擊要穿過去（gamePage.css 的 .gstage-hud > * 預設可點；上架版合併順序不同時會蓋掉單一 class 的 pointer-events: none） */
+.gstage-hud > .studio-fx-container,
+.gstage-hud > .studio-bat-swarm-overlay,
+.gstage-hud > .halloween-costume-notice,
+.gstage-hud > .monster-dialog-bubble,
+.gstage-hud > .studio-struggle-hud,
+.gstage-hud > .studio-flash,
+.gstage-hud > .talisman-smoke-container,
+.gstage-hud > .scene-float,
+.gstage-hud > .scene-bubbles,
+.gstage-hud > .town-frame,
+.gstage-hud > .town-spot {
+  pointer-events: none;
+}
+
+/* 按「回小鎮」的過場：舞台淡出淡入（蓋在 HUD 上面，淡出時擋住點擊） */
+.town-fade {
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+  background: var(--g-ink);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 280ms var(--g-ease-soft, ease);
+}
+.town-fade.is-on {
+  opacity: 1;
+  pointer-events: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .town-fade {
+    transition: none;
+  }
+}
+
+/* ================= 我的家・佈置（homeStore.ts renderRoom；docs/plan-town-home-furniture.md） ================= */
+.home-decor {
+  position: absolute;
+  inset: 0;
+}
+button.home-slot {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 10px;
+}
+.home-slot {
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+.home-slot--hl {
+  filter: drop-shadow(0 0 0.8em var(--g-sun)) brightness(1.06);
+  transform: translateY(-0.4em);
+}
+.home-slot--view {
+  overflow: hidden;
+  border-radius: 0.4em;
+}
+.home-slot--view > svg,
+.home-slot--view .home-sky {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.home-slot--empty .home-empty {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 0.35em dashed color-mix(in srgb, var(--g-ink-soft) 35%, transparent);
+  border-radius: 1em;
+}
+.home-slot--deco .home-empty {
+  aspect-ratio: 1 / 1.1;
+}
+.home-portrait {
+  position: absolute;
+  left: 10%;
+  top: 10%;
+  width: 80%;
+  height: 80%;
+  overflow: hidden;
+  border-radius: 6%;
+  background: var(--g-sky-soft);
+}
+.home-portrait svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.home-slot .home-portrait + svg {
+  position: relative;
+}
+.home-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.home-cat {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--g-radius-pill);
+  background: var(--g-surface-sunken);
+  color: var(--g-ink-soft);
+  font: var(--g-weight-heavy) var(--g-text-sm) / 1 var(--g-font-ui);
+  cursor: pointer;
+}
+.home-cat[aria-selected="true"] {
+  background: var(--g-sky-soft);
+  color: var(--g-sky-deep);
+}
+.home-cat-en {
+  margin-left: 6px;
+  color: var(--g-ink-soft);
+  font-family: var(--g-font-number);
+  font-weight: 800;
+}
+.home-items .home-item > svg,
+.home-items .home-item > span:first-child {
+  width: 100%;
+  max-height: 84px;
+}
+.home-swatch {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.6;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--g-ink) 8%, transparent);
+}
+.home-view-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.home-view-thumb svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.home-thumb-portrait {
+  position: relative;
+  display: block;
+  width: 64%;
+  margin: 0 auto;
+  aspect-ratio: 1;
+}
+.home-thumb-portrait > svg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-slot {
+    transition: none;
+  }
+  .home-slot--hl {
+    transform: none;
+  }
+}
+/* 家具店：招牌在家具前面，吊燈不會蓋住店名 */
+.tshop--furniture .tshop-sign {
+  z-index: 7;
+}
+/* 晚上：吊燈、燈飾會亮 */
+.home-slot--glow > svg {
+  filter: drop-shadow(0 0 6px var(--g-sun-soft)) drop-shadow(0 0 16px color-mix(in srgb, var(--g-sun) 70%, transparent));
+}
+/* 房間太矮（手機橫放、平板直放）：「MY HOME」招牌會被說話泡泡蓋住，乾脆不顯示 */
+@container (max-height: 420px) {
+  .tshop--home .tshop-sign {
+    display: none;
+  }
+}
+
+/* 我的家：角色在家具前面（地上的玩具除外）；佈置時先藏起來 */
+.tshop--home .tshop-me {
+  z-index: 5;
+}
+.tshop--decorating .tshop-me {
+  visibility: hidden;
+}
+.home-cam {
+  margin-left: 6px;
+}
+.home-need {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 4px 0 12px;
+  padding: 12px 14px;
+  border-radius: var(--g-radius-md);
+  background: var(--g-sun-soft);
+}
+
+/* ================= 家具店（townShop.ts mode: furniture）：左邊是自己的房間，店長站在房間裡 ================= */
+.tshop--furniture .tshop-me {
+  left: 62%;
+  bottom: 5%;
+  z-index: 5;
+  transition: left 0.45s ease;
+}
+/* 招牌放左上角（窗戶上方），讓出中間給吊燈 */
+.tshop--furniture .tshop-sign {
+  left: 2%;
+  top: 2%;
+  transform: none;
+  font-size: 0.78em;
+  padding: 1.2em 2.6em;
+  white-space: nowrap;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tshop--furniture .tshop-me {
+    transition: none;
+  }
+}
+@container (max-height: 420px) {
+  .tshop--furniture .tshop-sign {
+    display: none;
+  }
+}
+.home-theme {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--g-ink-soft);
+}
+.tshop-price.home-owned {
+  background: var(--g-mint-soft);
+  color: var(--g-mint-deep);
+}
+.tshop-price.home-owned .g-icon,
+.tshop-thumb .tshop-price svg {
+  width: 14px;
+  height: 14px;
+  max-height: none;
+  flex: none;
+}
+
+/* ================= 我的家・在家玩（homePlay.ts） ================= */
+/* 房間佔滿畫面；右邊面板、轉身列先收起來 */
+.tshop.tshop--playing {
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
+}
+.tshop--playing .tshop-panel,
+.tshop--playing .tshop-turn {
+  display: none;
+}
+.tshop--playing .tshop-left .tshop-room {
+  margin: 10px;
+}
+.tshop--playing .tshop-me {
+  transition: none;
+  transform-origin: 50% 50%;
+}
+/* 右上：動作、拍照、整理房間、離開 */
+.home-play-hud {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  max-width: calc(100% - 20px);
+}
+.home-play-btn {
+  min-height: 44px;
+}
+/* 左下、右下：統一按鍵 */
+.home-walk {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+}
+/* 統一按鍵 v2：十字鍵在左下、ABCD 在右下（C、D 沒用到＝半透明） */
+.home-play-hud[hidden],
+.home-walk[hidden] {
+  display: none;
+}
+.home-pad-zone {
+  display: flex;
+  align-items: flex-end;
+  pointer-events: auto;
+}
+/* 家具前的提示鈕（在角色頭上） */
+.home-hint {
+  position: absolute;
+  z-index: 21;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  white-space: nowrap;
+  font: var(--g-weight-heavy) var(--g-text-md) / 1 var(--g-font-ui);
+  color: var(--g-ink);
+  animation: home-hint-in var(--g-dur-fast, 150ms) var(--g-ease-soft, ease) both;
+}
+.home-hint[hidden] {
+  display: none;
+}
+.home-hint-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+.home-hint-btn + .home-hint-btn {
+  margin-left: 6px;
+  padding-left: 12px;
+  border-left: 2px solid var(--g-sky-soft);
+}
+@keyframes home-hint-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(6px);
+  }
+}
+/* 動作面板（左上） */
+.home-pose {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 20;
+  width: min(320px, 44%);
+  max-height: calc(100% - 100px);
+  overflow: auto;
+  padding: 10px;
+  border-radius: var(--g-radius-lg);
+  background: var(--g-surface-raised);
+  box-shadow: var(--g-shadow-tile);
+  overscroll-behavior: contain;
+}
+.home-pose[hidden] {
+  display: none;
+}
+.home-poses {
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 6px;
+  margin-top: 0;
+}
+.home-poses .studio-pose {
+  min-height: 44px;
+  font-size: var(--g-text-sm);
+}
+/* 在家玩・相機：取景框貼著正方形房間；快門列在上方中間；面向＋動作在左邊 */
+.tshop-scene > .home-cam-frame {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  max-height: none;
+  z-index: 8;
+}
+.home-cam-bar {
+  z-index: 25;
+}
+.home-pose--cam {
+  top: 10px;
+}
+.home-pose--cam .town-cam-face {
+  margin-top: 4px;
+}
+.home-pose--cam .town-cam-face button {
+  min-height: 40px;
+}
+.home-pose--cam .town-perform-seq {
+  margin: 10px 0 0;
+}
+/* 手機橫放：快門列放右下（按鍵已收起） */
+@media (max-height: 500px) {
+  .home-cam-bar {
+    top: auto;
+    bottom: 8px;
+    left: auto;
+    right: 8px;
+    transform: none;
+  }
+  .home-pose--cam {
+    max-height: calc(100% - 20px);
+  }
+}
+/* 直放（窄）：房間（正方形）在下面，面向＋動作面板放在上面空牆、整排寬 */
+@media (orientation: portrait) and (max-width: 700px) {
+  .home-pose.home-pose--cam {
+    top: 70px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    max-height: max(150px, calc(100% - 100vw - 80px));
+  }
+}
+/* 躺床：角色側面轉 -90°（臉朝上），不蓋被子 */
+.home-zzz[hidden] {
+  display: none;
+}
+.home-zzz {
+  position: absolute;
+  z-index: 7;
+  pointer-events: none;
+  font: var(--g-weight-heavy) 4.5em / 1 var(--g-font-ui);
+  color: var(--g-sky-deep);
+}
+.home-zzz span {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0.7em;
+  opacity: 0;
+  animation: home-zzz 2.4s linear infinite;
+}
+.home-zzz svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.home-zzz span:nth-child(2) {
+  animation-delay: 0.8s;
+  font-size: 0.8em;
+}
+.home-zzz span:nth-child(3) {
+  animation-delay: 1.6s;
+  font-size: 0.65em;
+}
+@keyframes home-zzz {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(1.6em, -2.6em);
+  }
+}
+/* 玩具、寵物跳一下 */
+.home-slot--hop > svg {
+  animation: home-hop 0.45s var(--g-ease-soft, ease) 2;
+  transform-origin: 50% 100%;
+}
+@keyframes home-hop {
+  0%,
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+  40% {
+    transform: translateY(-22%) scale(0.96, 1.04);
+  }
+  70% {
+    transform: translateY(0) scale(1.04, 0.94);
+  }
+}
+/* 摸寵物：愛心往上飄 */
+.home-hearts {
+  position: absolute;
+  z-index: 8;
+  transform: translateX(-50%);
+  pointer-events: none;
+  color: var(--g-rose-deep);
+  font-size: 1em;
+}
+.home-hearts span {
+  position: absolute;
+  left: calc((var(--i) - 1) * 4em);
+  bottom: 0;
+  width: 5em;
+  opacity: 0;
+  animation: home-heart 1.5s var(--g-ease-soft, ease) calc(var(--i) * 0.18s) both;
+}
+.home-hearts svg {
+  width: 100%;
+  height: auto;
+}
+@keyframes home-heart {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.6);
+  }
+  25% {
+    opacity: 1;
+    transform: translateY(-1.5em) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-7em) scale(1.1);
+  }
+}
+@media (max-height: 500px) {
+  .home-play-btn span {
+    display: none;
+  }
+}
+@media (orientation: portrait) and (max-width: 600px) {
+  .home-play-btn span {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-zzz span,
+  .home-hearts span,
+  .home-slot--hop > svg,
+  .home-hint {
+    animation: none;
+  }
+  .home-zzz span:first-child,
+  .home-hearts span {
+    opacity: 1;
+  }
+}
+/* 在家玩：上方的說話泡泡會跟右上角按鈕重疊，先不顯示 */
+.tshop--playing .tshop-say {
+  display: none;
+}
+/* 躺床：角色轉 90° 時，睡覺動作自帶的 Zzz 也會轉成橫的，改用房間裡的 Zzz */
+.tshop-me.is-lying [data-part="shadow"],
+.tshop-me.is-lying [data-fx="zzz"] {
+  display: none !important;
+}
